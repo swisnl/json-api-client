@@ -1,0 +1,41 @@
+{
+    "name": "swisnl/jsonapi",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2",
+        "art4/json-api-client": "^0.6.3",
+        "jenssegers/model": "^1.1",
+        "illuminate/support": "5.3.*|5.4.*|5.5.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1",
+        "fzaninotto/faker": "^1.6",
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "graham-campbell/testbench": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Swis\\JsonApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests"
+        ]
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hendrik Nijmeijer",
+            "email": "hendrik@swis.nl"
+        },
+        {
+            "name": "Jasper Zonneveld",
+            "email": "jasper@swis.nl"
+        },
+        {
+            "name": "Björn Brala",
+            "email": "bjorn@swis.nl"
+        }
+    ]
+}
