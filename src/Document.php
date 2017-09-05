@@ -34,13 +34,10 @@ class Document implements DocumentInterface
     protected $included;
 
     /**
-     * @var
+     * @var array
      */
     protected $jsonapi = [];
 
-    /**
-     * Document constructor.
-     */
     public function __construct()
     {
         $this->errors = new ErrorCollection();
@@ -82,7 +79,7 @@ class Document implements DocumentInterface
     /**
      * @return \Swis\JsonApi\Errors\ErrorCollection
      */
-    public function getErrors(): Errors\ErrorCollection
+    public function getErrors(): ErrorCollection
     {
         return $this->errors;
     }
@@ -114,7 +111,7 @@ class Document implements DocumentInterface
     /**
      * @param \Swis\JsonApi\Collection $included
      *
-     * @return $this
+     * @return static
      */
     public function setIncluded(Collection $included)
     {
@@ -150,7 +147,7 @@ class Document implements DocumentInterface
     /**
      * @param \Swis\JsonApi\Interfaces\DataInterface $data
      *
-     * @return $this
+     * @return static
      */
     public function setData(DataInterface $data)
     {

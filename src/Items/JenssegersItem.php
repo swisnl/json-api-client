@@ -4,7 +4,6 @@ namespace Swis\JsonApi\Items;
 
 use Jenssegers\Model\Model;
 use Swis\JsonApi\Collection;
-use Swis\JsonApi\Interfaces\DataInterface;
 use Swis\JsonApi\Interfaces\ItemInterface;
 use Swis\JsonApi\Interfaces\RelationInterface;
 use Swis\JsonApi\Relations\HasManyRelation;
@@ -30,7 +29,7 @@ class JenssegersItem extends Model implements ItemInterface
     protected $initial = [];
 
     /**
-     * @var RelationInterface[]
+     * @var \Swis\JsonApi\Interfaces\RelationInterface[]
      */
     protected $relationships = [];
 
@@ -71,7 +70,7 @@ class JenssegersItem extends Model implements ItemInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getType(): string
     {
@@ -81,7 +80,7 @@ class JenssegersItem extends Model implements ItemInterface
     /**
      * @param string $type
      *
-     * @return self
+     * @return static
      */
     public function setType(string $type)
     {
@@ -117,7 +116,7 @@ class JenssegersItem extends Model implements ItemInterface
     /**
      * @param string $id
      *
-     * @return self
+     * @return static
      */
     public function setId($id)
     {
@@ -127,15 +126,13 @@ class JenssegersItem extends Model implements ItemInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return array
      */
     public function getRelationships(): array
     {
         $relationships = [];
 
-        /** @var RelationInterface $relationship */
+        /** @var \Swis\JsonApi\Interfaces\RelationInterface $relationship */
         foreach ($this->relationships as $name => $relationship) {
             if ($relationship instanceof HasOneRelation) {
                 $relationships[$name] = [
@@ -212,7 +209,7 @@ class JenssegersItem extends Model implements ItemInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return bool
      */
@@ -226,7 +223,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @param string $key
      *
-     * @return DataInterface
+     * @return \Swis\JsonApi\Interfaces\DataInterface
      */
     public function getRelationValue($key)
     {
@@ -255,7 +252,7 @@ class JenssegersItem extends Model implements ItemInterface
     /**
      * @param $name
      *
-     * @return RelationInterface
+     * @return \Swis\JsonApi\Interfaces\RelationInterface
      */
     public function getRelationship(string $name): RelationInterface
     {
@@ -317,7 +314,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @param array $initial
      *
-     * @return self
+     * @return static
      */
     public function setInitial(array $initial)
     {
@@ -329,7 +326,7 @@ class JenssegersItem extends Model implements ItemInterface
     /**
      * Returns the initial values of an Item.
      *
-     * @param null $key
+     * @param string|null $key
      *
      * @return array|mixed
      */
@@ -342,6 +339,11 @@ class JenssegersItem extends Model implements ItemInterface
         return $this->initial[$key];
     }
 
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
     public function hasInitial($key): bool
     {
         return isset($this->getInitial()[$key]);
@@ -350,7 +352,7 @@ class JenssegersItem extends Model implements ItemInterface
     /**
      * Prefills the model with values from $initial, when adding new item.
      *
-     * @return self
+     * @return static
      */
     public function useInitial()
     {

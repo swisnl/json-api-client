@@ -42,7 +42,7 @@ class Repository implements ResourceRepositoryInterface
 
         if (!$document instanceof CollectionDocumentInterface) {
             throw new DocumentTypeException(
-                'Expected '.CollectionDocumentInterface::class, ' got '.get_class($document)
+                sprintf('Expected %s got %s', CollectionDocumentInterface::class, get_class($document))
             );
         }
 
@@ -82,7 +82,9 @@ class Repository implements ResourceRepositoryInterface
             throw new DocumentNotFoundException();
         }
         if (!$document instanceof ItemDocumentInterface) {
-            throw new DocumentTypeException('Expected '.ItemDocumentInterface::class.', got '.get_class($document));
+            throw new DocumentTypeException(
+                sprintf('Expected %s got %s', ItemDocumentInterface::class, get_class($document))
+            );
         }
 
         return $document;

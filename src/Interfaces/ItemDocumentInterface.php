@@ -5,7 +5,7 @@ namespace Swis\JsonApi\Interfaces;
 interface ItemDocumentInterface extends DocumentInterface
 {
     /**
-     * @return ItemInterface
+     * @return \Swis\JsonApi\Interfaces\ItemInterface
      */
     public function getData();
 

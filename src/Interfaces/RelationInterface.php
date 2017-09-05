@@ -12,19 +12,19 @@ interface RelationInterface
     /**
      * @param string $type
      *
-     * @return $this
+     * @return static
      */
     public function setType(string $type);
 
     /**
      * @param \Swis\JsonApi\Interfaces\DataInterface $included
      *
-     * @return $this
+     * @return static
      */
     public function associate(DataInterface $included);
 
     /**
-     * @return $this
+     * @return static
      */
     public function dissociate();
 

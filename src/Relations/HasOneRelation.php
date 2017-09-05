@@ -3,12 +3,14 @@
 namespace Swis\JsonApi\Relations;
 
 use Swis\JsonApi\Interfaces\DataInterface;
-use Swis\JsonApi\Interfaces\ItemInterface;
 use Swis\JsonApi\Interfaces\RelationInterface;
+use Swis\JsonApi\Items\JenssegersItem;
 
 class HasOneRelation implements RelationInterface
 {
-    /** @var ItemInterface */
+    /**
+     * @var \Swis\JsonApi\Items\JenssegersItem
+     */
     protected $included;
 
     /**
@@ -32,12 +34,10 @@ class HasOneRelation implements RelationInterface
     protected $omitIncluded = false;
 
     /**
-     * OneToOneRelation constructor.
-     *
-     * @param string                                 $type
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
+     * @param string                             $type
+     * @param \Swis\JsonApi\Items\JenssegersItem $item
      */
-    public function __construct(string $type, ItemInterface $item)
+    public function __construct(string $type, JenssegersItem $item)
     {
         $this->parentItem = $item;
         $this->type = $type;
@@ -48,12 +48,12 @@ class HasOneRelation implements RelationInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return $this
+     * @return static
      */
     public function associate(DataInterface $included)
     {
-        if (!$included instanceof ItemInterface) {
-            throw new \InvalidArgumentException('HasOne expects relation to be an item');
+        if (!$included instanceof JenssegersItem) {
+            throw new \InvalidArgumentException('HasOne expects relation to be a JenssegersItem');
         }
 
         $this->setId($included->getId());
@@ -66,7 +66,7 @@ class HasOneRelation implements RelationInterface
     }
 
     /**
-     * @return $this
+     * @return static
      */
     public function dissociate()
     {
@@ -89,7 +89,7 @@ class HasOneRelation implements RelationInterface
     /**
      * @param mixed $id
      *
-     * @return $this
+     * @return static
      */
     public function setId($id)
     {
@@ -101,7 +101,7 @@ class HasOneRelation implements RelationInterface
     /**
      * @param string $type
      *
-     * @return $this
+     * @return static
      */
     public function setType(string $type)
     {
@@ -119,7 +119,7 @@ class HasOneRelation implements RelationInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Interfaces\DataInterface|null
+     * @return \Swis\JsonApi\Items\JenssegersItem|null
      */
     public function getIncluded()
     {
@@ -131,7 +131,7 @@ class HasOneRelation implements RelationInterface
      */
     public function hasIncluded(): bool
     {
-        return !empty($this->included);
+        return null !== $this->included;
     }
 
     /**

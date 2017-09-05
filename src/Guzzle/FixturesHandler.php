@@ -8,8 +8,14 @@ use Psr\Http\Message\RequestInterface;
 
 class FixturesHandler extends MockHandler
 {
+    /**
+     * @var string
+     */
     const TYPE_BODY = 'mock';
 
+    /**
+     * @var string
+     */
     const TYPE_HEADERS = 'headers';
 
     /**
@@ -23,8 +29,6 @@ class FixturesHandler extends MockHandler
     private $domainAliases = [];
 
     /**
-     * FixturesHandler constructor.
-     *
      * @param string        $fixturesPath
      * @param array|null    $queue
      * @param callable|null $onFulfilled
@@ -60,7 +64,10 @@ class FixturesHandler extends MockHandler
      * @param \Psr\Http\Message\RequestInterface $request
      * @param array                              $options
      *
-     * @return $this|\GuzzleHttp\Promise\Promise|\GuzzleHttp\Promise\PromiseInterface
+     * @throws \Swis\JsonApi\Guzzle\MockNotFoundException
+     * @throws \RuntimeException
+     *
+     * @return \GuzzleHttp\Promise\Promise|\GuzzleHttp\Promise\PromiseInterface
      */
     public function __invoke(RequestInterface $request, array $options)
     {
@@ -80,7 +87,7 @@ class FixturesHandler extends MockHandler
      *
      * @return string
      */
-    protected function getFilePathFromRequest(RequestInterface $request, string $type)
+    protected function getFilePathFromRequest(RequestInterface $request, string $type): string
     {
         $fixturesPath = rtrim($this->fixturesPath, '/');
         $host = $this->getFixtureHost(trim($request->getUri()->getHost(), '/'));

@@ -2,12 +2,10 @@
 
 namespace Swis\JsonApi\Interfaces;
 
-use Illuminate\Support\Collection;
-
 interface CollectionDocumentInterface extends DocumentInterface
 {
     /**
-     * @return Collection
+     * @return \Swis\JsonApi\Collection
      */
     public function getData();
 }

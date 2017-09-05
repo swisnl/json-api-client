@@ -16,6 +16,9 @@ class ItemHydrator
      */
     private $typeMapper;
 
+    /**
+     * @param \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper
+     */
     public function __construct(TypeMapperInterface $typeMapper)
     {
         $this->typeMapper = $typeMapper;
@@ -29,7 +32,7 @@ class ItemHydrator
      *
      * @return \Swis\JsonApi\Interfaces\ItemInterface
      */
-    public function hydrate(ItemInterface $item, array $attributes)
+    public function hydrate(ItemInterface $item, array $attributes): ItemInterface
     {
         $this->fill($item, $attributes);
         $this->fillRelations($item, $attributes);
@@ -76,17 +79,17 @@ class ItemHydrator
 
     /**
      * @param \Swis\JsonApi\Interfaces\ItemInterface $item
-     * @param                                        $availableRelation
+     * @param string                                 $availableRelation
      *
      * @throws \Exception
      *
      * @return \Swis\JsonApi\Interfaces\RelationInterface
      */
-    protected function getRelationFromItem(ItemInterface $item, $availableRelation): RelationInterface
+    protected function getRelationFromItem(ItemInterface $item, string $availableRelation): RelationInterface
     {
         $method = camel_case($availableRelation);
         if (!method_exists($item, $method)) {
-            throw new \Exception("Method $method not found on ".get_class($item));
+            throw new \Exception(sprintf('Method %s not found on %s', $method, get_class($item)));
         }
 
         return $item->$method();
@@ -97,6 +100,8 @@ class ItemHydrator
      * @param array                                  $attributes
      * @param \Swis\JsonApi\Relations\HasOneRelation $relation
      * @param string                                 $availableRelation
+     *
+     * @throws \InvalidArgumentException
      */
     protected function hydrateHasOneRelation(
         ItemInterface $item,
@@ -105,7 +110,7 @@ class ItemHydrator
         string $availableRelation
     ) {
         if (is_array($attributes[$availableRelation])) {
-            $relationItem = $this->buildRelationitem($relation, $attributes[$availableRelation]);
+            $relationItem = $this->buildRelationItem($relation, $attributes[$availableRelation]);
             $relation->associate($relationItem);
         } else {
             $relation->setId($attributes[$availableRelation]);
@@ -117,11 +122,13 @@ class ItemHydrator
      * @param array                                   $attributes
      * @param string                                  $availableRelation
      * @param \Swis\JsonApi\Relations\HasManyRelation $relation
+     *
+     * @throws \InvalidArgumentException
      */
     protected function hydrateHasManyRelation(array $attributes, string $availableRelation, HasManyRelation $relation)
     {
         foreach ($attributes[$availableRelation] as $relationData) {
-            $relationItem = $this->buildRelationitem($relation, $relationData);
+            $relationItem = $this->buildRelationItem($relation, $relationData);
 
             $relation->associate($relation->getIncluded()->push($relationItem));
         }
@@ -135,7 +142,7 @@ class ItemHydrator
      *
      * @return \Swis\JsonApi\Items\JenssegersItem
      */
-    protected function buildRelationitem(RelationInterface $relation, array $relationData): JenssegersItem
+    protected function buildRelationItem(RelationInterface $relation, array $relationData): JenssegersItem
     {
         if ($this->typeMapper->hasMapping($relation->getType())) {
             $relationItem = $this->typeMapper->getMapping($relation->getType());

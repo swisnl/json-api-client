@@ -3,13 +3,12 @@
 namespace Swis\JsonApi;
 
 use Swis\JsonApi\Errors\ErrorCollection;
-use Swis\JsonApi\Interfaces\DataInterface;
 use Swis\JsonApi\Interfaces\DocumentInterface;
 
 class InvalidResponseDocument implements DocumentInterface
 {
     /**
-     * @return DataInterface
+     * @return \Swis\JsonApi\Interfaces\DataInterface
      */
     public function getData()
     {
@@ -19,7 +18,7 @@ class InvalidResponseDocument implements DocumentInterface
     /**
      * @return \Swis\JsonApi\Errors\ErrorCollection
      */
-    public function getErrors(): Errors\ErrorCollection
+    public function getErrors(): ErrorCollection
     {
         return new ErrorCollection();
     }

@@ -12,8 +12,6 @@ class ItemDocumentBuilder
     private $itemHydrator;
 
     /**
-     * ItemDocumentBuilder constructor.
-     *
      * @param \Swis\JsonApi\ItemHydrator $itemHydrator
      */
     public function __construct(ItemHydrator $itemHydrator)
@@ -24,7 +22,7 @@ class ItemDocumentBuilder
     /**
      * @param \Swis\JsonApi\Interfaces\ItemInterface $item
      * @param array                                  $attributes
-     * @param int                                    $id
+     * @param string                                 $id
      *
      * @return \Swis\JsonApi\ItemDocument
      */

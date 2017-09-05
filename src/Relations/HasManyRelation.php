@@ -22,8 +22,6 @@ class HasManyRelation implements RelationInterface
     protected $omitIncluded = false;
 
     /**
-     * OneToOneRelation constructor.
-     *
      * @param string $type
      */
     public function __construct(string $type)
@@ -66,7 +64,7 @@ class HasManyRelation implements RelationInterface
     /**
      * @return \Swis\JsonApi\Collection
      */
-    public function getIncluded(): DataInterface
+    public function getIncluded(): Collection
     {
         return $this->included ?: new Collection();
     }
@@ -76,7 +74,7 @@ class HasManyRelation implements RelationInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return self
+     * @return static
      */
     public function associate(DataInterface $included)
     {
@@ -92,7 +90,7 @@ class HasManyRelation implements RelationInterface
     /**
      * @param string $type
      *
-     * @return self
+     * @return static
      */
     public function setType(string $type)
     {
@@ -102,7 +100,7 @@ class HasManyRelation implements RelationInterface
     }
 
     /**
-     * @return self
+     * @return static
      */
     public function dissociate()
     {
@@ -122,7 +120,7 @@ class HasManyRelation implements RelationInterface
     /**
      * @param bool $omitIncluded
      *
-     * @return HasManyRelation
+     * @return static
      */
     public function setOmitIncluded(bool $omitIncluded)
     {

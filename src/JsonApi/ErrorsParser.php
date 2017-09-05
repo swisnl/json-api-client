@@ -36,7 +36,7 @@ class ErrorsParser
     }
 
     /**
-     * @param $error
+     * @param \Art4\JsonApiClient\Error $error
      *
      * @return \Swis\JsonApi\Errors\Error
      */

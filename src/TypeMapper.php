@@ -48,13 +48,13 @@ class TypeMapper implements TypeMapperInterface
     public function getMapping(string $type)
     {
         if (!array_key_exists($type, $this->typeMappings)) {
-            throw new \InvalidArgumentException("No mapping for type $type");
+            throw new \InvalidArgumentException(sprintf('No mapping for type %s', $type));
         }
 
         $class = $this->typeMappings[$type];
 
         if (!class_exists($class)) {
-            throw new \InvalidArgumentException("Class $class not found.");
+            throw new \InvalidArgumentException(sprintf('Class %s not found.', $class));
         }
 
         return new $class();

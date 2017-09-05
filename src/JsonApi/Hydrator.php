@@ -21,8 +21,6 @@ class Hydrator
 
     /**
      * @param \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper
-     *
-     * @internal param array $typeMappings
      */
     public function __construct(TypeMapperInterface $typeMapper)
     {
@@ -35,10 +33,8 @@ class Hydrator
      *
      * @return \Swis\JsonApi\Collection
      */
-    public function hydrateCollection(
-        JsonApiCollection $jsonApiCollection,
-        Collection $included = null
-    ) {
+    public function hydrateCollection(JsonApiCollection $jsonApiCollection, Collection $included = null)
+    {
         $collection = new Collection();
         foreach ($jsonApiCollection->asArray() as $item) {
             $collection->push($this->hydrateItem($item, $included));
@@ -99,15 +95,10 @@ class Hydrator
      * @param \Swis\JsonApi\Interfaces\ItemInterface     $item
      * @param \Swis\JsonApi\Collection                   $included
      *
-     * @throws \Exception
-     *
      * @return \Swis\JsonApi\Interfaces\ItemInterface
      */
-    protected function hydrateRelationships(
-        JsonApItem $jsonApiItem,
-        ItemInterface $item,
-        Collection $included = null
-    ) {
+    protected function hydrateRelationships(JsonApItem $jsonApiItem, ItemInterface $item, Collection $included = null)
+    {
         if (!$included || !$jsonApiItem->has('relationships')) {
             return $item;
         }

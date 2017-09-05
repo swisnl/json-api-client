@@ -22,8 +22,6 @@ class Response implements ResponseInterface
     private $guzzleResponse;
 
     /**
-     * Response constructor.
-     *
      * @param \GuzzleHttp\Psr7\Response $guzzleResponse
      */
     public function __construct(GuzzleResponse $guzzleResponse)

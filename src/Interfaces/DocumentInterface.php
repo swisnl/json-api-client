@@ -8,7 +8,7 @@ use Swis\JsonApi\Errors\ErrorCollection;
 interface DocumentInterface
 {
     /**
-     * @return DataInterface
+     * @return \Swis\JsonApi\Interfaces\DataInterface
      */
     public function getData();
 
