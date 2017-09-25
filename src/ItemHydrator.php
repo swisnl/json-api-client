@@ -137,6 +137,11 @@ class ItemHydrator
         }
     }
 
+    /**
+     * @param array                                   $attributes
+     * @param \Swis\JsonApi\Relations\MorphToRelation $relation
+     * @param string                                  $availableRelation
+     */
     protected function hydrateMorphToRelation(
         array $attributes,
         MorphToRelation $relation,
