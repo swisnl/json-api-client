@@ -58,6 +58,7 @@ class ItemHydratorTest extends AbstractTest
 
         $this->assertEquals($data['hasone_relation'], $hasOne->getId());
         $this->assertEquals('related-item', $hasOne->getType());
+        $this->assertArrayHasKey('hasone_relation', $item->toJsonApiArray()['relationships']);
     }
 
     /**
@@ -115,5 +116,57 @@ class ItemHydratorTest extends AbstractTest
         ];
 
         $this->assertEquals($expected, $hasMany->getIncluded()->toJsonApiArray());
+        $this->assertArrayHasKey('hasmany_relation', $item->toJsonApiArray()['relationships']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_exception_when_morphto_relationship_without_type_attribute()
+    {
+        $data = [
+            'testattribute1'   => 'test',
+            'testattribute2'   => 'test2',
+            'morphto_relation' => [
+                'id'                      => 1,
+                'test_related_attribute1' => 'test',
+
+            ],
+        ];
+
+        $item = new WithRelationshipJenssegersItem();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->getItemHydrator()->hydrate($item, $data);
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_items_with_morphto_relationship()
+    {
+        $data = [
+            'testattribute1'   => 'test',
+            'testattribute2'   => 'test2',
+            'morphto_relation' => [
+                'id'                      => 1,
+                'type'                    => 'related-item',
+                'test_related_attribute1' => 'test',
+            ],
+        ];
+
+        $item = new WithRelationshipJenssegersItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        $morphTo = $item->getRelationship('morphto_relation');
+
+        $this->assertInstanceOf(
+            \Swis\JsonApi\Relations\MorphToRelation::class,
+            $morphTo
+        );
+        $this->assertEquals($data['testattribute1'], $item->getAttribute('testattribute1'));
+        $this->assertEquals($data['testattribute2'], $item->getAttribute('testattribute2'));
+        $this->assertEquals('related-item', $morphTo->getType());
+        $this->assertArrayHasKey('morphto_relation', $item->toJsonApiArray()['relationships']);
     }
 }

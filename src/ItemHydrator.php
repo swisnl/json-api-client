@@ -8,6 +8,7 @@ use Swis\JsonApi\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Items\JenssegersItem;
 use Swis\JsonApi\Relations\HasManyRelation;
 use Swis\JsonApi\Relations\HasOneRelation;
+use Swis\JsonApi\Relations\MorphToRelation;
 
 class ItemHydrator
 {
@@ -73,6 +74,8 @@ class ItemHydrator
                 $this->hydrateHasOneRelation($item, $attributes, $relation, $availableRelation);
             } elseif ($relation instanceof HasManyRelation) {
                 $this->hydrateHasManyRelation($attributes, $availableRelation, $relation);
+            } elseif ($relation instanceof MorphToRelation) {
+                $this->hydrateMorphToRelation($attributes, $relation, $availableRelation);
             }
         }
     }
@@ -134,21 +137,40 @@ class ItemHydrator
         }
     }
 
+    protected function hydrateMorphToRelation(
+        array $attributes,
+        MorphToRelation $relation,
+        string $availableRelation
+    ) {
+        if (!array_key_exists('type', $attributes[$availableRelation])) {
+            throw new \InvalidArgumentException('Always provide a "type" attribute in a morphTo relationship');
+        }
+
+        $relationItem = $this->buildRelationItem($relation, $attributes[$availableRelation], $attributes[$availableRelation]['type']);
+        $relation->associate($relationItem);
+    }
+
     /**
      * @param \Swis\JsonApi\Interfaces\RelationInterface $relation
      * @param array                                      $relationData
-     *
-     * @throws \InvalidArgumentException
+     * @param string|null                                $relatedType
      *
      * @return \Swis\JsonApi\Items\JenssegersItem
      */
-    protected function buildRelationItem(RelationInterface $relation, array $relationData): JenssegersItem
+    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $relatedType = null): JenssegersItem
     {
-        if ($this->typeMapper->hasMapping($relation->getType())) {
-            $relationItem = $this->typeMapper->getMapping($relation->getType());
+        // Sometimes the relatedType is provided from the relationship, but not always (i.e. Polymorphic Relationships)
+        if ($relatedType) {
+            $type = $relatedType;
+        } else {
+            $type = $relation->getType();
+        }
+
+        if ($this->typeMapper->hasMapping($type)) {
+            $relationItem = $this->typeMapper->getMapping($type);
         } else {
             $relationItem = new JenssegersItem();
-            $relationItem->setType($relation->getType());
+            $relationItem->setType($type);
         }
 
         $relationItem->fill($relationData);

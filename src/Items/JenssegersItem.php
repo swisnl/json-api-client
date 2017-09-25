@@ -8,6 +8,7 @@ use Swis\JsonApi\Interfaces\ItemInterface;
 use Swis\JsonApi\Interfaces\RelationInterface;
 use Swis\JsonApi\Relations\HasManyRelation;
 use Swis\JsonApi\Relations\HasOneRelation;
+use Swis\JsonApi\Relations\MorphToRelation;
 
 class JenssegersItem extends Model implements ItemInterface
 {
@@ -151,7 +152,15 @@ class JenssegersItem extends Model implements ItemInterface
                             'id'   => $item->getId(),
                         ];
                 }
+            } elseif ($relationship instanceof MorphToRelation) {
+                $relationships[$name] = [
+                    'data' => [
+                        'type' => $relationship->getIncluded()->getType(),
+                        'id'   => $relationship->getIncluded()->getId(),
+                    ],
+                ];
             }
+
         }
 
         return $relationships;
@@ -304,6 +313,25 @@ class JenssegersItem extends Model implements ItemInterface
 
         if (!array_key_exists($relationName, $this->relationships)) {
             $this->relationships[$relationName] = new HasManyRelation($itemType);
+        }
+
+        return $this->relationships[$relationName];
+    }
+
+    /**
+     * Create a singular relation to another item.
+     *
+     * @param string      $class
+     * @param string|null $relationName
+     *
+     * @return \Swis\JsonApi\Relations\HasOneRelation
+     */
+    public function morphTo(string $relationName = null)
+    {
+        $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
+
+        if (!array_key_exists($relationName, $this->relationships)) {
+            $this->relationships[$relationName] = new MorphToRelation($this);
         }
 
         return $this->relationships[$relationName];
