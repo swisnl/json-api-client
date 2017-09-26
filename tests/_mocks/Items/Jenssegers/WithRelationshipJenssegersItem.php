@@ -21,6 +21,8 @@ class WithRelationshipJenssegersItem extends \Swis\JsonApi\Items\JenssegersItem
     protected $availableRelations = [
         'hasone_relation',
         'hasmany_relation',
+        'morphto_relation',
+        'morphtomany_relation',
     ];
 
     public function hasoneRelation()
@@ -31,5 +33,15 @@ class WithRelationshipJenssegersItem extends \Swis\JsonApi\Items\JenssegersItem
     public function hasmanyRelation()
     {
         return $this->hasMany(RelatedJenssegersItem::class);
+    }
+
+    public function morphtoRelation()
+    {
+        return $this->morphTo();
+    }
+
+    public function morphtomanyRelation()
+    {
+        return $this->morphToMany();
     }
 }

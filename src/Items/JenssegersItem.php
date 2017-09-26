@@ -8,6 +8,8 @@ use Swis\JsonApi\Interfaces\ItemInterface;
 use Swis\JsonApi\Interfaces\RelationInterface;
 use Swis\JsonApi\Relations\HasManyRelation;
 use Swis\JsonApi\Relations\HasOneRelation;
+use Swis\JsonApi\Relations\MorphToManyRelation;
+use Swis\JsonApi\Relations\MorphToRelation;
 
 class JenssegersItem extends Model implements ItemInterface
 {
@@ -151,7 +153,25 @@ class JenssegersItem extends Model implements ItemInterface
                             'id'   => $item->getId(),
                         ];
                 }
+            } elseif ($relationship instanceof MorphToRelation) {
+                $relationships[$name] = [
+                    'data' => [
+                        'type' => $relationship->getIncluded()->getType(),
+                        'id'   => $relationship->getIncluded()->getId(),
+                    ],
+                ];
+            } elseif ($relationship instanceof MorphToManyRelation) {
+                $relationships[$name]['data'] = [];
+
+                foreach ($relationship->getIncluded() as $item) {
+                    $relationships[$name]['data'][] =
+                        [
+                            'type' => $item->getType(),
+                            'id'   => $item->getId(),
+                        ];
+                }
             }
+
         }
 
         return $relationships;
@@ -290,7 +310,7 @@ class JenssegersItem extends Model implements ItemInterface
     }
 
     /**
-     * Create a singular relation to another item.
+     * Create a plural relation to another item.
      *
      * @param string      $class
      * @param string|null $relationName
@@ -304,6 +324,43 @@ class JenssegersItem extends Model implements ItemInterface
 
         if (!array_key_exists($relationName, $this->relationships)) {
             $this->relationships[$relationName] = new HasManyRelation($itemType);
+        }
+
+        return $this->relationships[$relationName];
+    }
+
+    /**
+     * Create a singular relation to another item.
+     *
+     * @param string|null $relationName
+     *
+     * @return \Swis\JsonApi\Relations\MorphToRelation
+     */
+    public function morphTo(string $relationName = null)
+    {
+        $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
+
+        if (!array_key_exists($relationName, $this->relationships)) {
+            $this->relationships[$relationName] = new MorphToRelation($this);
+        }
+
+        return $this->relationships[$relationName];
+    }
+
+
+    /**
+     * Create a plural relation to another item.
+     *
+     * @param string|null $relationName
+     *
+     * @return \Swis\JsonApi\Relations\MorphToManyRelation
+     */
+    public function morphToMany(string $relationName = null)
+    {
+        $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
+
+        if (!array_key_exists($relationName, $this->relationships)) {
+            $this->relationships[$relationName] = new MorphToManyRelation();
         }
 
         return $this->relationships[$relationName];

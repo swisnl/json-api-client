@@ -35,10 +35,22 @@ class MasterJenssegersItem extends \Swis\JsonApi\Items\JenssegersItem
      */
     protected $availableRelations = [
         'child',
+        'morph',
+        'morphmany',
     ];
 
     public function child()
     {
         return $this->hasOne(ChildJenssegersItem::class);
+    }
+
+    public function morph()
+    {
+        return $this->morphTo();
+    }
+
+    public function morphmany()
+    {
+        return $this->morphToMany();
     }
 }
