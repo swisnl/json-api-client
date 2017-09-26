@@ -22,6 +22,7 @@ class WithRelationshipJenssegersItem extends \Swis\JsonApi\Items\JenssegersItem
         'hasone_relation',
         'hasmany_relation',
         'morphto_relation',
+        'morphtomany_relation',
     ];
 
     public function hasoneRelation()
@@ -37,5 +38,10 @@ class WithRelationshipJenssegersItem extends \Swis\JsonApi\Items\JenssegersItem
     public function morphtoRelation()
     {
         return $this->morphTo();
+    }
+
+    public function morphtomanyRelation()
+    {
+        return $this->morphToMany();
     }
 }

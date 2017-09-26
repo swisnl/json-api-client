@@ -169,4 +169,44 @@ class ItemHydratorTest extends AbstractTest
         $this->assertEquals('related-item', $morphTo->getType());
         $this->assertArrayHasKey('morphto_relation', $item->toJsonApiArray()['relationships']);
     }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_items_with_morphtomany_relationship()
+    {
+        $data = [
+            'testattribute1'       => 'test',
+            'testattribute2'       => 'test2',
+            'morphtomany_relation' => [
+                [
+                    'id'                      => 1,
+                    'type'                    => 'related-item',
+                    'test_related_attribute1' => 'test',
+                ],
+                [
+                    'id'                      => 2,
+                    'type'                    => 'related-item',
+                    'test_related_attribute1' => 'test',
+                ],
+            ],
+        ];
+
+        $item = new WithRelationshipJenssegersItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        $morphTo = $item->getRelationship('morphtomany_relation');
+
+        $this->assertInstanceOf(
+            \Swis\JsonApi\Relations\MorphToManyRelation::class,
+            $morphTo
+        );
+        $this->assertEquals($data['testattribute1'], $item->getAttribute('testattribute1'));
+        $this->assertEquals($data['testattribute2'], $item->getAttribute('testattribute2'));
+
+
+        $this->assertEquals('related-item', $morphTo->getIncluded()[0]->getType());
+        $this->assertEquals('related-item', $morphTo->getIncluded()[1]->getType());
+        $this->assertArrayHasKey('morphtomany_relation', $item->toJsonApiArray()['relationships']);
+    }
 }

@@ -69,10 +69,32 @@ class HydratorTest extends AbstractTest
                     'active'      => true,
                 ],
                 'relationships' => [
-                    'child' => [
+                    'child'     => [
                         'data' => [
                             'type' => 'child',
                             'id'   => '2',
+                        ],
+                    ],
+                    'morph'     => [
+                        'data' => [
+                            'type' => 'child',
+                            'id'   => '3',
+                        ],
+                    ],
+                    'morphmany' => [
+                        'data' => [
+                            [
+                                'type' => 'child',
+                                'id'   => '4',
+                            ],
+                            [
+                                'type' => 'child',
+                                'id'   => '5',
+                            ],
+                            [
+                                'type' => 'child',
+                                'id'   => '6',
+                            ],
                         ],
                     ],
                 ],
@@ -83,6 +105,38 @@ class HydratorTest extends AbstractTest
                     'id'         => '2',
                     'attributes' => [
                         'description' => 'test',
+                        'active'      => true,
+                    ],
+                ],
+                [
+                    'type'       => 'child',
+                    'id'         => '3',
+                    'attributes' => [
+                        'description' => 'test3',
+                        'active'      => true,
+                    ],
+                ],
+                [
+                    'type'       => 'child',
+                    'id'         => '4',
+                    'attributes' => [
+                        'description' => 'test4',
+                        'active'      => true,
+                    ],
+                ],
+                [
+                    'type'       => 'child',
+                    'id'         => '5',
+                    'attributes' => [
+                        'description' => 'test5',
+                        'active'      => true,
+                    ],
+                ],
+                [
+                    'type'       => 'child',
+                    'id'         => '6',
+                    'attributes' => [
+                        'description' => 'test6',
                         'active'      => true,
                     ],
                 ],
@@ -174,5 +228,55 @@ class HydratorTest extends AbstractTest
         static::assertInstanceOf(\Swis\JsonApi\Items\JenssegersItem::class, $item);
         static::assertEquals($type, $item->getType());
         static::assertEquals($id, $item->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_a_morph_to_relation()
+    {
+        // Register the mocked type
+        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper->setMapping('child', ChildJenssegersItem::class);
+        $typeMapper->setMapping('master', MasterJenssegersItem::class);
+        $hydrator = new \Swis\JsonApi\JsonApi\Hydrator($typeMapper);
+
+        $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 3), null);
+        $included = new \Swis\JsonApi\Collection([$childItem]);
+        $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('master', 1), $included);
+
+        static::assertInstanceOf(\Swis\JsonApi\Relations\MorphToRelation::class, $masterItem->getRelationship('morph'));
+
+        static::assertEquals('child', $masterItem->getRelationship('morph')->getType());
+        static::assertEquals(3, $masterItem->getRelationship('morph')->getId());
+
+        static::assertEquals(3, $masterItem->morph->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_a_morph_to_many_relation()
+    {
+        // Register the mocked type
+        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper->setMapping('child', ChildJenssegersItem::class);
+        $typeMapper->setMapping('master', MasterJenssegersItem::class);
+        $hydrator = new \Swis\JsonApi\JsonApi\Hydrator($typeMapper);
+
+        $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 4), null);
+        $included = new \Swis\JsonApi\Collection([$childItem]);
+        $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('master', 1), $included);
+
+        static::assertInstanceOf(\Swis\JsonApi\Relations\MorphToManyRelation::class, $masterItem->getRelationship('morphmany'));
+
+        static::assertEquals('child', $masterItem->getRelationship('morphmany')->getIncluded()[0]->getType());
+        static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());
+
+        static::assertEquals(4, $masterItem->morphmany[0]->getId());
+
+
     }
 }

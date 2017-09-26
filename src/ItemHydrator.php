@@ -8,6 +8,7 @@ use Swis\JsonApi\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Items\JenssegersItem;
 use Swis\JsonApi\Relations\HasManyRelation;
 use Swis\JsonApi\Relations\HasOneRelation;
+use Swis\JsonApi\Relations\MorphToManyRelation;
 use Swis\JsonApi\Relations\MorphToRelation;
 
 class ItemHydrator
@@ -76,6 +77,8 @@ class ItemHydrator
                 $this->hydrateHasManyRelation($attributes, $availableRelation, $relation);
             } elseif ($relation instanceof MorphToRelation) {
                 $this->hydrateMorphToRelation($attributes, $relation, $availableRelation);
+            } elseif ($relation instanceof MorphToManyRelation) {
+                $this->hydrateMorphToManyRelation($attributes, $relation, $availableRelation);
             }
         }
     }
@@ -153,6 +156,25 @@ class ItemHydrator
 
         $relationItem = $this->buildRelationItem($relation, $attributes[$availableRelation], $attributes[$availableRelation]['type']);
         $relation->associate($relationItem);
+    }
+
+    /**
+     * @param array                                   $attributes
+     * @param string                                  $availableRelation
+     * @param \Swis\JsonApi\Relations\HasManyRelation $relation
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function hydrateMorphToManyRelation(array $attributes, MorphToManyRelation $relation, string $availableRelation)
+    {
+        foreach ($attributes[$availableRelation] as $relationData) {
+            if (!array_key_exists('type', $relationData)) {
+                throw new \InvalidArgumentException('Always provide a "type" attribute in a morphToMany relationship entry');
+            }
+            $relationItem = $this->buildRelationItem($relation, $relationData, $relationData['type']);
+
+            $relation->associate($relation->getIncluded()->push($relationItem));
+        }
     }
 
     /**
