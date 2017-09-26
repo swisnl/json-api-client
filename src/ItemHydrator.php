@@ -144,12 +144,11 @@ class ItemHydrator
      * @param array                                   $attributes
      * @param \Swis\JsonApi\Relations\MorphToRelation $relation
      * @param string                                  $availableRelation
+     *
+     * @throws \InvalidArgumentException
      */
-    protected function hydrateMorphToRelation(
-        array $attributes,
-        MorphToRelation $relation,
-        string $availableRelation
-    ) {
+    protected function hydrateMorphToRelation(array $attributes, MorphToRelation $relation, string $availableRelation)
+    {
         if (!array_key_exists('type', $attributes[$availableRelation])) {
             throw new \InvalidArgumentException('Always provide a "type" attribute in a morphTo relationship');
         }
@@ -159,9 +158,9 @@ class ItemHydrator
     }
 
     /**
-     * @param array                                   $attributes
-     * @param string                                  $availableRelation
-     * @param \Swis\JsonApi\Relations\HasManyRelation $relation
+     * @param array                                       $attributes
+     * @param \Swis\JsonApi\Relations\MorphToManyRelation $relation
+     * @param string                                      $availableRelation
      *
      * @throws \InvalidArgumentException
      */
@@ -180,16 +179,14 @@ class ItemHydrator
     /**
      * @param \Swis\JsonApi\Interfaces\RelationInterface $relation
      * @param array                                      $relationData
-     * @param string|null                                $relatedType
+     * @param string|null                                $type
      *
      * @return \Swis\JsonApi\Items\JenssegersItem
      */
-    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $relatedType = null): JenssegersItem
+    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): JenssegersItem
     {
         // Sometimes the relatedType is provided from the relationship, but not always (i.e. Polymorphic Relationships)
-        if ($relatedType) {
-            $type = $relatedType;
-        } else {
+        if (null === $type) {
             $type = $relation->getType();
         }
 

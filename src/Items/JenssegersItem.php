@@ -310,7 +310,7 @@ class JenssegersItem extends Model implements ItemInterface
     }
 
     /**
-     * Create a singular relation to another item.
+     * Create a plural relation to another item.
      *
      * @param string      $class
      * @param string|null $relationName
@@ -334,7 +334,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @param string|null $relationName
      *
-     * @return \Swis\JsonApi\Relations\HasOneRelation
+     * @return \Swis\JsonApi\Relations\MorphToRelation
      */
     public function morphTo(string $relationName = null)
     {
@@ -349,7 +349,7 @@ class JenssegersItem extends Model implements ItemInterface
 
 
     /**
-     * Create a singular relation to another item.
+     * Create a plural relation to another item.
      *
      * @param string|null $relationName
      *

@@ -21,10 +21,14 @@ class MorphToManyRelation implements RelationInterface
      */
     protected $omitIncluded = false;
 
-
+    /**
+     * @throws \LogicException
+     *
+     * @return string
+     */
     public function getType(): string
     {
-        throw new \LogicException('Type is not set in a MorphToMany-relationships');
+        throw new \LogicException('Type is not set in a MorphToMany-relationship');
     }
 
     /**
@@ -76,7 +80,7 @@ class MorphToManyRelation implements RelationInterface
     public function associate(DataInterface $included)
     {
         if (!$included instanceof Collection) {
-            throw new \InvalidArgumentException('HasMany expects relation to be a collection');
+            throw new \InvalidArgumentException('MorphToMany expects relation to be a collection');
         }
 
         $this->included = $included;
@@ -87,8 +91,9 @@ class MorphToManyRelation implements RelationInterface
     /**
      * @param string $type
      *
-     * @return static
      * @throws \LogicException
+     *
+     * @return static
      */
     public function setType(string $type)
     {

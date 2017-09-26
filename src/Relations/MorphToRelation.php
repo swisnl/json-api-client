@@ -34,7 +34,6 @@ class MorphToRelation implements RelationInterface
     protected $omitIncluded = false;
 
     /**
-     * @param string                             $type
      * @param \Swis\JsonApi\Items\JenssegersItem $item
      */
     public function __construct(JenssegersItem $item)
@@ -52,7 +51,7 @@ class MorphToRelation implements RelationInterface
     public function associate(DataInterface $included)
     {
         if (!$included instanceof JenssegersItem) {
-            throw new \InvalidArgumentException('HasOne expects relation to be a JenssegersItem');
+            throw new \InvalidArgumentException('MorphTo expects relation to be a JenssegersItem');
         }
 
         $this->setId($included->getId());
