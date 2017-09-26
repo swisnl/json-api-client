@@ -1,5 +1,20 @@
 <?php
 
+namespace Swis\JsonApi\Tests\JsonApi;
+
+use Art4\JsonApiClient\Resource\CollectionInterface;
+use Art4\JsonApiClient\Utils\Manager;
+use Swis\JsonApi\Collection;
+use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\JsonApi\Hydrator;
+use Swis\JsonApi\Relations\HasOneRelation;
+use Swis\JsonApi\Relations\MorphToManyRelation;
+use Swis\JsonApi\Relations\MorphToRelation;
+use Swis\JsonApi\Tests\AbstractTest;
+use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
+use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
+use Swis\JsonApi\TypeMapper;
+
 /**
  * @TODO: We need tests for included objects.
  *
@@ -20,7 +35,7 @@ class HydratorTest extends AbstractTest
 
             $item = $hydrator->hydrateItem($this->getJsonApiItemMock($type, $id));
 
-            static::assertInstanceOf(\Swis\JsonApi\Items\JenssegersItem::class, $item);
+            static::assertInstanceOf(JenssegersItem::class, $item);
             static::assertEquals($type, $item->getType());
             static::assertEquals($id, $item->getId());
         }
@@ -29,9 +44,9 @@ class HydratorTest extends AbstractTest
     /**
      * @return \Swis\JsonApi\JsonApi\Hydrator
      */
-    protected function getHydrator(): \Swis\JsonApi\JsonApi\Hydrator
+    protected function getHydrator(): Hydrator
     {
-        return new \Swis\JsonApi\JsonApi\Hydrator($this->getTypeMapperMock());
+        return new Hydrator($this->getTypeMapperMock());
     }
 
     /**
@@ -39,12 +54,12 @@ class HydratorTest extends AbstractTest
      */
     protected function getTypeMapperMock()
     {
-        $typeMapper = $this->createMock(\Swis\JsonApi\TypeMapper::class);
+        $typeMapper = $this->createMock(TypeMapper::class);
         $typeMapper->method('hasMapping')->willReturn(true);
         $typeMapper->method('getMapping')->will(
             $this->returnCallback(
                 function () {
-                    return new \Swis\JsonApi\Items\JenssegersItem();
+                    return new JenssegersItem();
                 }
             )
         );
@@ -143,7 +158,7 @@ class HydratorTest extends AbstractTest
             ],
         ];
 
-        $manager = new \Art4\JsonApiClient\Utils\Manager();
+        $manager = new Manager();
         $jsonApiItem = $manager->parse(json_encode($data));
 
         return $jsonApiItem->get('data');
@@ -156,20 +171,20 @@ class HydratorTest extends AbstractTest
     {
         // Register the mocked type
         /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildJenssegersItem::class);
         $typeMapper->setMapping('master', MasterJenssegersItem::class);
-        $hydrator = new \Swis\JsonApi\JsonApi\Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper);
 
         $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 2), null);
-        $included = new \Swis\JsonApi\Collection([$childItem]);
+        $included = new Collection([$childItem]);
         $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('master', 1), $included);
 
         static::assertEquals('master', $masterItem->getType());
         static::assertEquals(1, $masterItem->getId());
 
         static::assertInstanceOf(MasterJenssegersItem::class, $masterItem);
-        static::assertInstanceOf(\Swis\JsonApi\Relations\HasOneRelation::class, $masterItem->getRelationship('child'));
+        static::assertInstanceOf(HasOneRelation::class, $masterItem->getRelationship('child'));
 
         static::assertEquals('child', $masterItem->getRelationship('child')->getType());
         static::assertEquals(2, $masterItem->getRelationship('child')->getId());
@@ -181,7 +196,7 @@ class HydratorTest extends AbstractTest
      */
     protected function getJsonApiItemCollectionMock()
     {
-        $jsonApiCollection = $this->createMock(\Art4\JsonApiClient\Resource\CollectionInterface::class);
+        $jsonApiCollection = $this->createMock(CollectionInterface::class);
 
         $jsonApiCollection->method('asArray')
             ->willReturn(
@@ -204,10 +219,10 @@ class HydratorTest extends AbstractTest
 
         $collection = $hydrator->hydrateCollection($this->getJsonApiItemCollectionMock());
 
-        static::assertInstanceOf(\Swis\JsonApi\Collection::class, $collection);
+        static::assertInstanceOf(Collection::class, $collection);
 
         foreach ($collection as $item) {
-            static::assertInstanceOf(\Swis\JsonApi\Items\JenssegersItem::class, $item);
+            static::assertInstanceOf(JenssegersItem::class, $item);
             static::assertNotEmpty($item->getType());
             static::assertNotEmpty($item->getId());
         }
@@ -225,7 +240,7 @@ class HydratorTest extends AbstractTest
 
         $item = $hydrator->hydrateItem($this->getJsonApiItemMock($type, $id));
 
-        static::assertInstanceOf(\Swis\JsonApi\Items\JenssegersItem::class, $item);
+        static::assertInstanceOf(JenssegersItem::class, $item);
         static::assertEquals($type, $item->getType());
         static::assertEquals($id, $item->getId());
     }
@@ -237,16 +252,16 @@ class HydratorTest extends AbstractTest
     {
         // Register the mocked type
         /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildJenssegersItem::class);
         $typeMapper->setMapping('master', MasterJenssegersItem::class);
-        $hydrator = new \Swis\JsonApi\JsonApi\Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper);
 
         $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 3), null);
-        $included = new \Swis\JsonApi\Collection([$childItem]);
+        $included = new Collection([$childItem]);
         $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('master', 1), $included);
 
-        static::assertInstanceOf(\Swis\JsonApi\Relations\MorphToRelation::class, $masterItem->getRelationship('morph'));
+        static::assertInstanceOf(MorphToRelation::class, $masterItem->getRelationship('morph'));
 
         static::assertEquals('child', $masterItem->getRelationship('morph')->getType());
         static::assertEquals(3, $masterItem->getRelationship('morph')->getId());
@@ -261,16 +276,16 @@ class HydratorTest extends AbstractTest
     {
         // Register the mocked type
         /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildJenssegersItem::class);
         $typeMapper->setMapping('master', MasterJenssegersItem::class);
-        $hydrator = new \Swis\JsonApi\JsonApi\Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper);
 
         $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 4), null);
-        $included = new \Swis\JsonApi\Collection([$childItem]);
+        $included = new Collection([$childItem]);
         $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('master', 1), $included);
 
-        static::assertInstanceOf(\Swis\JsonApi\Relations\MorphToManyRelation::class, $masterItem->getRelationship('morphmany'));
+        static::assertInstanceOf(MorphToManyRelation::class, $masterItem->getRelationship('morphmany'));
 
         static::assertEquals('child', $masterItem->getRelationship('morphmany')->getIncluded()[0]->getType());
         static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());

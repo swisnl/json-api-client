@@ -1,5 +1,10 @@
 <?php
 
+namespace Swis\JsonApi\Tests\Items;
+
+use Swis\JsonApi\Items\EloquentItem;
+use Swis\JsonApi\Tests\AbstractTest;
+
 class EloquentItemTest extends AbstractTest
 {
     protected $attributes;
@@ -19,8 +24,8 @@ class EloquentItemTest extends AbstractTest
      */
     public function it_can_instantiate_an_item()
     {
-        $item = new \Swis\JsonApi\Items\EloquentItem();
-        $this->assertInstanceOf(\Swis\JsonApi\Items\EloquentItem::class, $item);
+        $item = new EloquentItem();
+        $this->assertInstanceOf(EloquentItem::class, $item);
     }
 
     /**
@@ -28,7 +33,7 @@ class EloquentItemTest extends AbstractTest
      */
     public function is_shows_type_and_id_and_attributes_in_to_json_api_array()
     {
-        $item = new \Swis\JsonApi\Items\EloquentItem();
+        $item = new EloquentItem();
         $item->forceFill($this->attributes);
         $item->exists = true;
         $item->setType('testType');
@@ -49,7 +54,7 @@ class EloquentItemTest extends AbstractTest
      */
     public function it_gets_and_sets_type()
     {
-        $item = new \Swis\JsonApi\Items\EloquentItem();
+        $item = new EloquentItem();
         $item->setType('testType');
 
         $this->assertEquals('testType', $item->getType());
@@ -61,7 +66,7 @@ class EloquentItemTest extends AbstractTest
     public function it_is_new_when_no_id_isset()
     {
         $this->markTestIncomplete('Fix handling of new vs. existing');
-        $item = new \Swis\JsonApi\Items\EloquentItem();
+        $item = new EloquentItem();
         $item->setType('testType');
         $item->setId(1);
 
@@ -75,7 +80,7 @@ class EloquentItemTest extends AbstractTest
      */
     public function it_returns_has_id_when_id_isset()
     {
-        $item = new \Swis\JsonApi\Items\EloquentItem();
+        $item = new EloquentItem();
         $item->setType('testType');
         $this->assertFalse($item->hasId());
 
@@ -88,7 +93,7 @@ class EloquentItemTest extends AbstractTest
      */
     public function it_returns_id_when_id_isset()
     {
-        $item = new \Swis\JsonApi\Items\EloquentItem();
+        $item = new EloquentItem();
 
         $item->setId(1234);
         $this->assertEquals(1234, $item->getId());
@@ -99,7 +104,7 @@ class EloquentItemTest extends AbstractTest
      */
     public function it_returns_attributes()
     {
-        $item = new \Swis\JsonApi\Items\EloquentItem();
+        $item = new EloquentItem();
         $item->forceFill($this->attributes);
         $this->assertEquals($this->attributes, $item->getAttributes());
     }

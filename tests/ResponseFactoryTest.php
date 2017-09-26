@@ -1,5 +1,11 @@
 <?php
 
+namespace Swis\JsonApi\Tests;
+
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
+use Swis\JsonApi\Response;
+use Swis\JsonApi\ResponseFactory;
+
 class ResponseFactoryTest extends AbstractTest
 {
     /**
@@ -7,10 +13,10 @@ class ResponseFactoryTest extends AbstractTest
      */
     public function it_builds_a_response_from_psrresponse()
     {
-        $psrResponse = new \GuzzleHttp\Psr7\Response(200, [], 'test response');
-        $response = (new \Swis\JsonApi\ResponseFactory())->make($psrResponse);
+        $psrResponse = new GuzzleResponse(200, [], 'test response');
+        $response = (new ResponseFactory())->make($psrResponse);
 
-        $this->assertInstanceOf(\Swis\JsonApi\Response::class, $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(true, $response->hasSuccessfulStatusCode());
         $this->assertEquals('test response', $response->getBody());
     }

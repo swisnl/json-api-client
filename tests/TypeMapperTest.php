@@ -1,5 +1,11 @@
 <?php
 
+namespace Swis\JsonApi\Tests;
+
+use InvalidArgumentException;
+use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\TypeMapper;
+
 class TypeMapperTest extends AbstractTest
 {
     /**
@@ -7,11 +13,11 @@ class TypeMapperTest extends AbstractTest
      */
     public function it_remembers_type_mappings_after_setting()
     {
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
-        $typeMapper->setMapping('item', \Swis\JsonApi\Items\JenssegersItem::class);
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('item', JenssegersItem::class);
 
         static::assertTrue($typeMapper->hasMapping('item'));
-        static::assertInstanceOf(\Swis\JsonApi\Items\JenssegersItem::class, $typeMapper->getMapping('item'));
+        static::assertInstanceOf(JenssegersItem::class, $typeMapper->getMapping('item'));
     }
 
     /**
@@ -19,8 +25,8 @@ class TypeMapperTest extends AbstractTest
      */
     public function it_forgets_type_mappings_after_removing()
     {
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
-        $typeMapper->setMapping('item', \Swis\JsonApi\Items\JenssegersItem::class);
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('item', JenssegersItem::class);
         $typeMapper->removeMapping('item');
 
         static::assertFalse($typeMapper->hasMapping('item'));
@@ -33,7 +39,7 @@ class TypeMapperTest extends AbstractTest
     {
         static::expectException(InvalidArgumentException::class);
 
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper = new TypeMapper();
         $typeMapper->getMapping('item');
     }
 
@@ -44,7 +50,7 @@ class TypeMapperTest extends AbstractTest
     {
         static::expectException(InvalidArgumentException::class);
 
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', '\Non\Existing\Class');
         $typeMapper->getMapping('item');
     }

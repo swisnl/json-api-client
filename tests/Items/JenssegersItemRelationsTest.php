@@ -1,5 +1,13 @@
 <?php
 
+namespace Swis\JsonApi\Tests\Items;
+
+use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\Relations\HasOneRelation;
+use Swis\JsonApi\Tests\AbstractTest;
+use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
+use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
+
 class JenssegersItemRelationsTest extends AbstractTest
 {
     /**
@@ -8,7 +16,7 @@ class JenssegersItemRelationsTest extends AbstractTest
     public function it_has_relationships_when_added()
     {
         $masterItem = new MasterJenssegersItem();
-        $this->assertInstanceOf(\Swis\JsonApi\Relations\HasOneRelation::class, $masterItem->child());
+        $this->assertInstanceOf(HasOneRelation::class, $masterItem->child());
 
         $childItem = new ChildJenssegersItem();
         $childItem->setId(1);
@@ -24,7 +32,7 @@ class JenssegersItemRelationsTest extends AbstractTest
      */
     public function it_can_check_for_relations()
     {
-        $item = new \Swis\JsonApi\Items\JenssegersItem();
+        $item = new JenssegersItem();
         $this->assertFalse($item->hasRelationship('test'));
 
         $masterItem = new MasterJenssegersItem();

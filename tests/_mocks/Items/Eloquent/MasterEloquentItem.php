@@ -1,6 +1,10 @@
 <?php
 
-class MasterEloquentItem extends \Swis\JsonApi\Items\EloquentItem
+namespace Swis\JsonApi\Tests\Mocks\Items\Eloquent;
+
+use Swis\JsonApi\Items\EloquentItem;
+
+class MasterEloquentItem extends EloquentItem
 {
     /**
      * @var string

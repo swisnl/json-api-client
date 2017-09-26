@@ -1,6 +1,11 @@
 <?php
 
-abstract class AbstractTest extends Orchestra\Testbench\TestCase
+namespace Swis\JsonApi\Tests;
+
+use Faker\Factory;
+use Orchestra\Testbench\TestCase;
+
+abstract class AbstractTest extends TestCase
 {
     /**
      * @var \Faker\Generator
@@ -9,7 +14,7 @@ abstract class AbstractTest extends Orchestra\Testbench\TestCase
 
     protected function setUp()
     {
-        $this->faker = \Faker\Factory::create();
+        $this->faker = Factory::create();
     }
 
     /**

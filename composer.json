@@ -20,9 +20,10 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests"
-        ]
+        "psr-4" : {
+            "Swis\\JsonApi\\Tests\\" : "tests/",
+            "Swis\\JsonApi\\Tests\\Mocks\\" : "tests/_mocks/"
+        }
     },
     "license": "MIT",
     "authors": [

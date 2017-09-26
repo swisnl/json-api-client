@@ -1,6 +1,10 @@
 <?php
 
-class ChildEloquentItem extends \Swis\JsonApi\Items\EloquentItem
+namespace Swis\JsonApi\Tests\Mocks\Items\Eloquent;
+
+use Swis\JsonApi\Items\EloquentItem;
+
+class ChildEloquentItem extends EloquentItem
 {
     /**
      * @var string

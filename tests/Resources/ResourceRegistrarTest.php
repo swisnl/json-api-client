@@ -1,5 +1,13 @@
 <?php
 
+namespace Swis\JsonApi\Tests\Resources;
+
+use Swis\JsonApi\Resource\Interfaces\ResourceInterface;
+use Swis\JsonApi\Resource\ResourceRegistrar;
+use Swis\JsonApi\Tests\AbstractTest;
+use Swis\JsonApi\Tests\Mocks\ResourceRegistrar\MockItem;
+use Swis\JsonApi\TypeMapper;
+
 class ResourceRegistrarTest extends AbstractTest
 {
     /**
@@ -7,13 +15,13 @@ class ResourceRegistrarTest extends AbstractTest
      */
     public function it_registers_the_resource_item_in_type_mappings()
     {
-        $typeMapper = new \Swis\JsonApi\TypeMapper();
+        $typeMapper = new TypeMapper();
 
-        $resourceRegistrar = new \Swis\JsonApi\Resource\ResourceRegistrar($typeMapper);
+        $resourceRegistrar = new ResourceRegistrar($typeMapper);
         $item = new MockItem();
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Swis\JsonApi\Resource\Interfaces\ResourceInterface $resource */
-        $resource = $this->createMock(\Swis\JsonApi\Resource\Interfaces\ResourceInterface::class);
+        $resource = $this->createMock(ResourceInterface::class);
         $resource->method('getItem')->willReturn($item);
 
         $resourceRegistrar->registerTypeMapping($resource);

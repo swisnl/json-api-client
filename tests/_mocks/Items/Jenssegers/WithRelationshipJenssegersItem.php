@@ -1,6 +1,10 @@
 <?php
 
-class WithRelationshipJenssegersItem extends \Swis\JsonApi\Items\JenssegersItem
+namespace Swis\JsonApi\Tests\Mocks\Items\Jenssegers;
+
+use Swis\JsonApi\Items\JenssegersItem;
+
+class WithRelationshipJenssegersItem extends JenssegersItem
 {
     /**
      * @var string

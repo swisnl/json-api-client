@@ -1,5 +1,9 @@
 <?php
 
+namespace Swis\JsonApi\Tests\Items;
+
+use Swis\JsonApi\Tests\AbstractTest;
+
 class EloquentItemRelationsTest extends AbstractTest
 {
     /**

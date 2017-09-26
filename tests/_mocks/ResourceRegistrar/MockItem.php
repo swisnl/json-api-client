@@ -1,6 +1,10 @@
 <?php
 
-class MockItem extends \Swis\JsonApi\Items\JenssegersItem
+namespace Swis\JsonApi\Tests\Mocks\ResourceRegistrar;
+
+use Swis\JsonApi\Items\JenssegersItem;
+
+class MockItem extends JenssegersItem
 {
     /**
      * @var string

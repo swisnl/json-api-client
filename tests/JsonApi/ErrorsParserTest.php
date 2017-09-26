@@ -1,5 +1,14 @@
 <?php
 
+namespace Swis\JsonApi\Tests\JsonApi;
+
+use Art4\JsonApiClient\Utils\Manager;
+use Swis\JsonApi\Errors\Error;
+use Swis\JsonApi\Errors\ErrorCollection;
+use Swis\JsonApi\Errors\ErrorSource;
+use Swis\JsonApi\JsonApi\ErrorsParser;
+use Swis\JsonApi\Tests\AbstractTest;
+
 class ErrorsParserTest extends AbstractTest
 {
     /** @var \Swis\JsonApi\JsonApi\ErrorsParser */
@@ -7,7 +16,7 @@ class ErrorsParserTest extends AbstractTest
 
     public static function setUpBeforeClass()
     {
-        self::$parser = new \Swis\JsonApi\JsonApi\ErrorsParser();
+        self::$parser = new ErrorsParser();
     }
 
     /** @test */
@@ -15,13 +24,13 @@ class ErrorsParserTest extends AbstractTest
     {
         $errorCollection = self::$parser->parse($this->getValidJsonApiErrorCollection());
 
-        $this->assertInstanceOf(\Swis\JsonApi\Errors\ErrorCollection::class, $errorCollection);
+        $this->assertInstanceOf(ErrorCollection::class, $errorCollection);
         $this->assertEquals(2, $errorCollection->count());
 
         $errorCollection->each(
-            function (\Swis\JsonApi\Errors\Error $error) {
-                $this->assertInstanceOf(\Swis\JsonApi\Errors\Error::class, $error);
-                $this->assertInstanceOf(\Swis\JsonApi\Errors\ErrorSource::class, $error->getSource());
+            function (Error $error) {
+                $this->assertInstanceOf(Error::class, $error);
+                $this->assertInstanceOf(ErrorSource::class, $error->getSource());
 
                 $this->assertEquals('400', $error->getStatus());
                 $this->assertEquals('json_client_content_id_in_object_not_equal_to_id_parameter', $error->getCode());
@@ -68,7 +77,7 @@ class ErrorsParserTest extends AbstractTest
                 ],
         ];
 
-        $manager = new \Art4\JsonApiClient\Utils\Manager();
+        $manager = new Manager();
         $jsonApiItem = $manager->parse(json_encode($errors));
 
         return $jsonApiItem->get('errors');
@@ -95,7 +104,7 @@ class ErrorsParserTest extends AbstractTest
                 ],
         ];
 
-        $manager = new \Art4\JsonApiClient\Utils\Manager();
+        $manager = new Manager();
         $jsonApiItem = $manager->parse(json_encode($errors));
 
         return $jsonApiItem->get('errors');

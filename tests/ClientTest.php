@@ -1,5 +1,12 @@
 <?php
 
+namespace Swis\JsonApi\Tests;
+
+use GuzzleHttp\ClientInterface;
+use Swis\JsonApi\Client;
+use Swis\JsonApi\RequestFactory;
+use Swis\JsonApi\ResponseFactory;
+
 class ClientTest extends AbstractTest
 {
     /**
@@ -7,11 +14,11 @@ class ClientTest extends AbstractTest
      */
     public function the_base_url_can_be_changed_after_instantiation()
     {
-        $guzzle = $this->createMock(\GuzzleHttp\ClientInterface::class);
-        $requestFactory = $this->createMock(\Swis\JsonApi\RequestFactory::class);
-        $responseFactory = $this->createMock(\Swis\JsonApi\ResponseFactory::class);
+        $guzzle = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactory::class);
+        $responseFactory = $this->createMock(ResponseFactory::class);
 
-        $client = new \Swis\JsonApi\Client(
+        $client = new Client(
             $guzzle,
             'http://www.test.com',
             $requestFactory,
@@ -31,15 +38,15 @@ class ClientTest extends AbstractTest
         $baseUri = 'http://www.test.com';
         $endpoint = '/test/1';
 
-        $guzzle = $this->createMock(\GuzzleHttp\ClientInterface::class);
-        $requestFactory = $this->createMock(\Swis\JsonApi\RequestFactory::class);
-        $responseFactory = $this->createMock(\Swis\JsonApi\ResponseFactory::class);
+        $guzzle = $this->createMock(ClientInterface::class);
+        $requestFactory = $this->createMock(RequestFactory::class);
+        $responseFactory = $this->createMock(ResponseFactory::class);
 
         $guzzle->method('send');
 
         $requestFactory->expects($this->once())->method('make')->with('GET', $baseUri.$endpoint);
 
-        $client = new \Swis\JsonApi\Client(
+        $client = new Client(
             $guzzle,
             $baseUri,
             $requestFactory,

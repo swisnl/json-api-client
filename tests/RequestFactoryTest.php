@@ -1,5 +1,10 @@
 <?php
 
+namespace Swis\JsonApi\Tests;
+
+use Psr\Http\Message\RequestInterface;
+use Swis\JsonApi\RequestFactory;
+
 class RequestFactoryTest extends AbstractTest
 {
     /**
@@ -10,9 +15,9 @@ class RequestFactoryTest extends AbstractTest
      */
     public function it_builds_a_request_without_body($method)
     {
-        $request = (new \Swis\JsonApi\RequestFactory())->make($method, 'http://www.test.com');
+        $request = (new RequestFactory())->make($method, 'http://www.test.com');
 
-        $this->assertInstanceOf(\Psr\Http\Message\RequestInterface::class, $request);
+        $this->assertInstanceOf(RequestInterface::class, $request);
         $this->assertEquals($method, $request->getMethod());
         $this->assertEmpty($request->getBody()->getContents());
     }
@@ -25,9 +30,9 @@ class RequestFactoryTest extends AbstractTest
      */
     public function it_builds_a_request_with_body($method)
     {
-        $request = (new \Swis\JsonApi\RequestFactory())->make($method, 'http://www.test.com', 'test body content');
+        $request = (new RequestFactory())->make($method, 'http://www.test.com', 'test body content');
 
-        $this->assertInstanceOf(\Psr\Http\Message\RequestInterface::class, $request);
+        $this->assertInstanceOf(RequestInterface::class, $request);
         $this->assertEquals($method, $request->getMethod());
         $this->assertEquals('test body content', $request->getBody()->getContents());
     }
