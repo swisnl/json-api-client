@@ -78,7 +78,7 @@ class Repository implements ResourceRepositoryInterface
     {
         $document = $this->getClient()->get($this->getEndpoint().'/'.urlencode($id).'?'.http_build_query($parameters));
 
-        if ($document->getData() === null) {
+        if (null === $document->getData()) {
             throw new DocumentNotFoundException();
         }
         if (!$document instanceof ItemDocumentInterface) {

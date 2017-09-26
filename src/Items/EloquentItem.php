@@ -33,7 +33,7 @@ class EloquentItem extends Model implements ItemInterface
      */
     public function hasId(): bool
     {
-        return $this->getKey() !== null;
+        return null !== $this->getKey();
     }
 
     /**
