@@ -276,7 +276,5 @@ class HydratorTest extends AbstractTest
         static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());
 
         static::assertEquals(4, $masterItem->morphmany[0]->getId());
-
-
     }
 }

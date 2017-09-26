@@ -171,7 +171,6 @@ class JenssegersItem extends Model implements ItemInterface
                         ];
                 }
             }
-
         }
 
         return $relationships;
@@ -346,7 +345,6 @@ class JenssegersItem extends Model implements ItemInterface
 
         return $this->relationships[$relationName];
     }
-
 
     /**
      * Create a plural relation to another item.

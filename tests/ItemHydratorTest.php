@@ -183,8 +183,8 @@ class ItemHydratorTest extends AbstractTest
     public function it_throws_exception_when_morphtomany_relationship_without_type_attribute()
     {
         $data = [
-            'testattribute1'   => 'test',
-            'testattribute2'   => 'test2',
+            'testattribute1'       => 'test',
+            'testattribute2'       => 'test2',
             'morphtomany_relation' => [
                 [
                     'id'                      => 1,

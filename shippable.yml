@@ -6,8 +6,16 @@ php:
 
 build:
   ci:
+    # Setup
     - composer global require hirak/prestissimo
-    - composer install
     - mkdir -p shippable/testresults
     - mkdir -p shippable/codecoverage
-    - vendor/bin/phpunit  --log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage
+
+    # Install
+    - composer install
+
+    # Code Style
+    - vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
+
+    # Tests
+    - vendor/bin/phpunit --log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage
