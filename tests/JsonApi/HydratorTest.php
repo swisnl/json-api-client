@@ -13,6 +13,7 @@ use Swis\JsonApi\Relations\MorphToRelation;
 use Swis\JsonApi\Tests\AbstractTest;
 use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
 use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
+use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\WithoutRelationshipsJenssegersItem;
 use Swis\JsonApi\TypeMapper;
 
 /**
@@ -284,6 +285,52 @@ class HydratorTest extends AbstractTest
         $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 4), null);
         $included = new Collection([$childItem]);
         $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('master', 1), $included);
+
+        static::assertInstanceOf(MorphToManyRelation::class, $masterItem->getRelationship('morphmany'));
+
+        static::assertEquals('child', $masterItem->getRelationship('morphmany')->getIncluded()[0]->getType());
+        static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());
+
+        static::assertEquals(4, $masterItem->morphmany[0]->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_an_unknown_relation_as_morph_to()
+    {
+        // Register the mocked type
+        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsJenssegersItem::class);
+        $hydrator = new Hydrator($typeMapper);
+
+        $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 3), null);
+        $included = new Collection([$childItem]);
+        $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('item-without-relationships', 1), $included);
+
+        static::assertInstanceOf(MorphToRelation::class, $masterItem->getRelationship('morph'));
+
+        static::assertEquals('child', $masterItem->getRelationship('morph')->getType());
+        static::assertEquals(3, $masterItem->getRelationship('morph')->getId());
+
+        static::assertEquals(3, $masterItem->morph->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_an_unknown_relation_as_morph_to_many()
+    {
+        // Register the mocked type
+        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsJenssegersItem::class);
+        $hydrator = new Hydrator($typeMapper);
+
+        $childItem = $hydrator->hydrateItem($this->getJsonApiItemMock('child', 4), null);
+        $included = new Collection([$childItem]);
+        $masterItem = $hydrator->hydrateItem($this->getJsonApiItemMock('item-without-relationships', 1), $included);
 
         static::assertInstanceOf(MorphToManyRelation::class, $masterItem->getRelationship('morphmany'));
 

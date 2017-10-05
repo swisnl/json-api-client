@@ -110,20 +110,18 @@ class Hydrator
             $data = $relationship->get('data');
             $method = camel_case($name);
 
-            if (method_exists($item, $method)) {
-                if ($data->isIdentifier()) {
-                    $includedItem = $this->getIncludedItem($included, $data);
+            if ($data->isIdentifier()) {
+                $includedItem = $this->getIncludedItem($included, $data);
 
-                    if ($includedItem instanceof NullItem) {
-                        continue;
-                    }
-
-                    $item->setRelation($method, $includedItem);
-                } elseif ($data->isCollection()) {
-                    $collection = $this->getIncludedItems($included, $data);
-
-                    $item->setRelation($method, $collection);
+                if ($includedItem instanceof NullItem) {
+                    continue;
                 }
+
+                $item->setRelation($method, $includedItem);
+            } elseif ($data->isCollection()) {
+                $collection = $this->getIncludedItems($included, $data);
+
+                $item->setRelation($method, $collection);
             }
         }
 
