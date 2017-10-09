@@ -251,6 +251,12 @@ class JenssegersItem extends Model implements ItemInterface
         if (method_exists($this, $key)) {
             return $this->$key()->getIncluded();
         }
+
+        // If the "attribute" exists as a relationship on the model, we will return
+        // the included items in the relationship
+        if ($this->hasRelationship($key)) {
+            return $this->getRelationship($key)->getIncluded();
+        }
     }
 
     /**
@@ -434,8 +440,16 @@ class JenssegersItem extends Model implements ItemInterface
      */
     public function setRelation($relation, $value)
     {
-        /** @var \Swis\JsonApi\Interfaces\RelationInterface $relationObject */
-        $relationObject = $this->$relation();
+        if (method_exists($this, $relation)) {
+            /** @var \Swis\JsonApi\Interfaces\RelationInterface $relationObject */
+            $relationObject = $this->$relation();
+        } else {
+            if ($value instanceof Collection) {
+                $relationObject = $this->morphToMany($relation);
+            } else {
+                $relationObject = $this->morphTo($relation);
+            }
+        }
 
         $relationObject->associate($value);
 
