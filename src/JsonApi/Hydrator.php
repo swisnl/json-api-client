@@ -2,8 +2,8 @@
 
 namespace Swis\JsonApi\JsonApi;
 
+use Art4\JsonApiClient\AccessInterface;
 use Art4\JsonApiClient\Resource\CollectionInterface as JsonApiCollection;
-use Art4\JsonApiClient\Resource\Identifier;
 use Art4\JsonApiClient\Resource\IdentifierCollection;
 use Art4\JsonApiClient\Resource\ItemInterface as JsonApItem;
 use Swis\JsonApi\Collection;
@@ -29,15 +29,14 @@ class Hydrator
 
     /**
      * @param \Art4\JsonApiClient\Resource\CollectionInterface $jsonApiCollection
-     * @param \Swis\JsonApi\Collection|null                    $included
      *
      * @return \Swis\JsonApi\Collection
      */
-    public function hydrateCollection(JsonApiCollection $jsonApiCollection, Collection $included = null)
+    public function hydrateCollection(JsonApiCollection $jsonApiCollection)
     {
         $collection = new Collection();
         foreach ($jsonApiCollection->asArray() as $item) {
-            $collection->push($this->hydrateItem($item, $included));
+            $collection->push($this->hydrateItem($item));
         }
 
         return $collection;
@@ -45,11 +44,10 @@ class Hydrator
 
     /**
      * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
-     * @param \Swis\JsonApi\Collection                   $included
      *
      * @return \Swis\JsonApi\Interfaces\ItemInterface
      */
-    public function hydrateItem(JsonApItem $jsonApiItem, Collection $included = null)
+    public function hydrateItem(JsonApItem $jsonApiItem)
     {
         $item = $this->getItemClass($jsonApiItem);
 
@@ -57,9 +55,6 @@ class Hydrator
             ->setId($jsonApiItem->get('id'));
 
         $this->hydrateAttributes($jsonApiItem, $item);
-        if ($included) {
-            $this->hydrateRelationships($jsonApiItem, $item, $included);
-        }
 
         return $item;
     }
@@ -91,41 +86,46 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
-     * @param \Swis\JsonApi\Interfaces\ItemInterface     $item
-     * @param \Swis\JsonApi\Collection                   $included
-     *
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @param \Swis\JsonApi\Collection $jsonApiItems
+     * @param \Swis\JsonApi\Collection $items
      */
-    protected function hydrateRelationships(JsonApItem $jsonApiItem, ItemInterface $item, Collection $included = null)
+    public function hydrateRelationships(Collection $jsonApiItems, Collection $items)
     {
-        if (!$included || !$jsonApiItem->has('relationships')) {
-            return $item;
-        }
-
-        $relationships = $this->getJsonApiDocumentRelationships($jsonApiItem);
-
-        foreach ($relationships as $name => $relationship) {
-            /** @var \Art4\JsonApiClient\Resource\ResourceInterface $data */
-            $data = $relationship->get('data');
-            $method = camel_case($name);
-
-            if ($data->isIdentifier()) {
-                $includedItem = $this->getIncludedItem($included, $data);
-
-                if ($includedItem instanceof NullItem) {
-                    continue;
+        $jsonApiItems->each(
+            function (JsonApItem $jsonApiItem) use ($items) {
+                if (!$jsonApiItem->has('relationships')) {
+                    return;
                 }
 
-                $item->setRelation($method, $includedItem);
-            } elseif ($data->isCollection()) {
-                $collection = $this->getIncludedItems($included, $data);
+                $item = $this->getIncludedItem($items, $jsonApiItem);
 
-                $item->setRelation($method, $collection);
+                if ($item instanceof NullItem) {
+                    return;
+                }
+
+                $relationships = $this->getJsonApiDocumentRelationships($jsonApiItem);
+
+                foreach ($relationships as $name => $relationship) {
+                    /** @var \Art4\JsonApiClient\Resource\ResourceInterface $data */
+                    $data = $relationship->get('data');
+                    $method = camel_case($name);
+
+                    if ($data->isIdentifier()) {
+                        $includedItem = $this->getIncludedItem($items, $data);
+
+                        if ($includedItem instanceof NullItem) {
+                            continue;
+                        }
+
+                        $item->setRelation($method, $includedItem);
+                    } elseif ($data->isCollection()) {
+                        $collection = $this->getIncludedItems($items, $data);
+
+                        $item->setRelation($method, $collection);
+                    }
+                }
             }
-        }
-
-        return $item;
+        );
     }
 
     /**
@@ -139,31 +139,31 @@ class Hydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Collection                $included
-     * @param \Art4\JsonApiClient\Resource\Identifier $identifier
+     * @param \Swis\JsonApi\Collection            $included
+     * @param \Art4\JsonApiClient\AccessInterface $accessor
      *
      * @return \Swis\JsonApi\Interfaces\ItemInterface
      */
-    protected function getIncludedItem(Collection $included, Identifier $identifier): ItemInterface
+    protected function getIncludedItem(Collection $included, AccessInterface $accessor): ItemInterface
     {
         return $included->first(
-            function (ItemInterface $item) use ($identifier) {
-                return $this->identifierBelongsToItem($identifier, $item);
+            function (ItemInterface $item) use ($accessor) {
+                return $this->accessorBelongsToItem($accessor, $item);
             },
             new NullItem()
         );
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\Identifier $identifier
-     * @param \Swis\JsonApi\Interfaces\ItemInterface  $item
+     * @param \Art4\JsonApiClient\AccessInterface    $accessor
+     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
      *
      * @return bool
      */
-    protected function identifierBelongsToItem(Identifier $identifier, ItemInterface $item): bool
+    protected function accessorBelongsToItem(AccessInterface $accessor, ItemInterface $item): bool
     {
-        return $item->getType() === $identifier->get('type')
-            && (string)$item->getId() === $identifier->get('id');
+        return $item->getType() === $accessor->get('type')
+            && (string)$item->getId() === $accessor->get('id');
     }
 
     /**
@@ -190,7 +190,7 @@ class Hydrator
     protected function itemExistsInRelatedIdentifiers(array $relatedIdentifiers, ItemInterface $item): bool
     {
         foreach ($relatedIdentifiers as $relatedIdentifier) {
-            if ($this->identifierBelongsToItem($relatedIdentifier, $item)) {
+            if ($this->accessorBelongsToItem($relatedIdentifier, $item)) {
                 return true;
             }
         }
