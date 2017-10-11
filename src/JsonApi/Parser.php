@@ -5,6 +5,7 @@ namespace Swis\JsonApi\JsonApi;
 use Art4\JsonApiClient\DocumentInterface as JsonApiDocumentInterface;
 use Art4\JsonApiClient\Resource\ResourceInterface as JsonApiResourceInterface;
 use Art4\JsonApiClient\Utils\Manager as Art4JsonApiClientManager;
+use Swis\JsonApi\Collection;
 use Swis\JsonApi\CollectionDocument;
 use Swis\JsonApi\Document;
 use Swis\JsonApi\Errors\ErrorCollection;
@@ -104,30 +105,38 @@ class Parser implements ParserInterface
         $data = $this->getJsonApiDocumentData($jsonApiDocument);
         $includedInDocument = $this->getJsonApiDocumentIncluded($jsonApiDocument);
 
+        $allHydratedItems = new Collection();
+        $allJsonApiItems = new Collection();
+
         $included = null;
         if ($includedInDocument) {
-            // @TODO: Make the collection hydrator smarter so that it first creates the items and then the relationships. In that way, we don't have to convert the items to a collection like we have to now.
-            $included = $this->hydrator->hydrateCollection($includedInDocument, $this->hydrator->hydrateCollection($includedInDocument));
+            $included = $this->hydrator->hydrateCollection($includedInDocument);
+            $allHydratedItems = $allHydratedItems->concat($included);
+            $allJsonApiItems = $allJsonApiItems->concat($includedInDocument->asArray());
         }
 
         if ($data->isCollection()) {
+            $collection = $this->hydrator->hydrateCollection($jsonApiDocument->get('data'));
+            $allHydratedItems = $allHydratedItems->concat($collection);
+            $allJsonApiItems = $allJsonApiItems->concat($jsonApiDocument->get('data')->asArray());
+
             $document = new CollectionDocument();
-            $document->setData(
-                $this->hydrator->hydrateCollection($jsonApiDocument->get('data'), $included)
-            );
+            $document->setData($collection);
         } elseif ($data->isItem()) {
+            $item = $this->hydrator->hydrateItem($jsonApiDocument->get('data'));
+            $allHydratedItems->push($item);
+            $allJsonApiItems->push($jsonApiDocument->get('data'));
+
             $document = new ItemDocument();
-            $document->setData(
-                $this->hydrator->hydrateItem($jsonApiDocument->get('data'), $included)
-            );
+            $document->setData($item);
         } else {
             throw new \DomainException('Data is not Collection or Item');
         }
 
+        $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
+
         if ($included) {
             $document->setIncluded($included);
-
-            return $document;
         }
 
         return $document;
