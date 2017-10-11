@@ -4,6 +4,7 @@ namespace Swis\JsonApi\Tests\Items;
 
 use Swis\JsonApi\Items\JenssegersItem;
 use Swis\JsonApi\Tests\AbstractTest;
+use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\WithGetMutatorJenssegersItem;
 
 class JenssegersItemTest extends AbstractTest
 {
@@ -103,6 +104,16 @@ class JenssegersItemTest extends AbstractTest
     {
         $item = new JenssegersItem($this->attributes);
         $this->assertEquals($this->attributes, $item->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_attribute_from_get_mutator()
+    {
+        $item = new WithGetMutatorJenssegersItem();
+
+        $this->assertEquals('test', $item->getAttribute('test_attribute'));
     }
 
     /**

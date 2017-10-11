@@ -220,7 +220,7 @@ class JenssegersItem extends Model implements ItemInterface
      */
     public function getAttribute($key)
     {
-        if ($this->hasAttribute($key)) {
+        if ($this->hasAttribute($key) || $this->hasGetMutator($key)) {
             return parent::getAttribute($key);
         }
 
