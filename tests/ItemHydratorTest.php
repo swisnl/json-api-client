@@ -264,4 +264,39 @@ class ItemHydratorTest extends AbstractTest
         );
         $this->assertArrayHasKey('morphtomany_relation', $item->toJsonApiArray()['relationships']);
     }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_nested_relationship_items()
+    {
+        $data = [
+            'testattribute1'  => 'test',
+            'testattribute2'  => 'test2',
+            'hasone_relation' => [
+                'id'              => 1,
+                'parent_relation' => 5,
+            ],
+        ];
+
+        $item = new WithRelationshipJenssegersItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Relations\HasOneRelation $hasOne */
+        $hasOne = $item->getRelationship('hasone_relation');
+        $this->assertInstanceOf(HasOneRelation::class, $hasOne);
+
+        $this->assertEquals($data['testattribute1'], $item->getAttribute('testattribute1'));
+        $this->assertEquals($data['testattribute2'], $item->getAttribute('testattribute2'));
+
+        $this->assertEquals($data['hasone_relation']['id'], $hasOne->getId());
+        $this->assertEquals('related-item', $hasOne->getType());
+
+        /** @var \Swis\JsonApi\Relations\HasOneRelation $hasOne */
+        $hasOneParent = $hasOne->getIncluded()->getRelationship('parent_relation');
+        $this->assertInstanceOf(HasOneRelation::class, $hasOneParent);
+
+        $this->assertEquals($data['hasone_relation']['parent_relation'], $hasOneParent->getId());
+        $this->assertEquals('item-with-relationship', $hasOneParent->getType());
+    }
 }

@@ -18,4 +18,16 @@ class RelatedJenssegersItem extends JenssegersItem
         'test_related_attribute1',
         'test_related_attribute2',
     ];
+
+    /**
+     * @var array
+     */
+    protected $availableRelations = [
+        'parent_relation',
+    ];
+
+    public function parentRelation()
+    {
+        return $this->hasOne(WithRelationshipJenssegersItem::class);
+    }
 }
