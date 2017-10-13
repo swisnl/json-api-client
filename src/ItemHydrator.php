@@ -181,6 +181,8 @@ class ItemHydrator
      * @param array                                      $relationData
      * @param string|null                                $type
      *
+     * @throws \Exception
+     *
      * @return \Swis\JsonApi\Items\JenssegersItem
      */
     protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): JenssegersItem
@@ -197,7 +199,9 @@ class ItemHydrator
             $relationItem->setType($type);
         }
 
-        $relationItem->fill($relationData);
+        $this->fill($relationItem, $relationData);
+        $this->fillRelations($relationItem, $relationData);
+
         $relationItem->setId($relationData['id']);
 
         return $relationItem;
