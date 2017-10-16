@@ -134,7 +134,11 @@ class ItemHydrator
     protected function hydrateHasManyRelation(array $attributes, string $availableRelation, HasManyRelation $relation)
     {
         foreach ($attributes[$availableRelation] as $relationData) {
-            $relationItem = $this->buildRelationItem($relation, $relationData);
+            if (is_array($relationData)) {
+                $relationItem = $this->buildRelationItem($relation, $relationData);
+            } else {
+                $relationItem = $this->buildRelationItem($relation, ['id' => $relationData]);
+            }
 
             $relation->associate($relation->getIncluded()->push($relationItem));
         }
