@@ -299,4 +299,47 @@ class ItemHydratorTest extends AbstractTest
         $this->assertEquals($data['hasone_relation']['parent_relation'], $hasOneParent->getId());
         $this->assertEquals('item-with-relationship', $hasOneParent->getType());
     }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_a_hasmany_relationship_by_id()
+    {
+        $data = [
+            'testattribute1'   => 'test',
+            'testattribute2'   => 'test2',
+            'hasmany_relation' => [
+                1,
+                2,
+            ],
+        ];
+
+        $item = new WithRelationshipJenssegersItem();
+
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+        /** @var \Swis\JsonApi\Relations\HasManyRelation $hasMany */
+        $hasMany = $item->getRelationship('hasmany_relation');
+
+        $this->assertInstanceOf(
+            HasManyRelation::class,
+            $hasMany
+        );
+
+        $this->assertInstanceOf(Collection::class, $hasMany->getIncluded());
+        $this->assertCount(2, $hasMany->getIncluded());
+
+        $expected = [
+            [
+                'id'         => 1,
+                'type'       => 'related-item',
+            ],
+            [
+                'id'         => 2,
+                'type'       => 'related-item',
+            ],
+        ];
+
+        $this->assertEquals($expected, $hasMany->getIncluded()->toJsonApiArray());
+        $this->assertArrayHasKey('hasmany_relation', $item->toJsonApiArray()['relationships']);
+    }
 }
