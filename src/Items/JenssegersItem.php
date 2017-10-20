@@ -445,9 +445,9 @@ class JenssegersItem extends Model implements ItemInterface
             $relationObject = $this->$relation();
         } else {
             if ($value instanceof Collection) {
-                $relationObject = $this->morphToMany($relation);
+                $relationObject = $this->morphToMany(snake_case($relation));
             } else {
-                $relationObject = $this->morphTo($relation);
+                $relationObject = $this->morphTo(snake_case($relation));
             }
         }
 
