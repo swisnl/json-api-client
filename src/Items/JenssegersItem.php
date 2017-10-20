@@ -224,7 +224,7 @@ class JenssegersItem extends Model implements ItemInterface
             return parent::getAttribute($key);
         }
 
-        return $this->getRelationValue(camel_case($key));
+        return $this->getRelationValue($key);
     }
 
     /**
@@ -248,8 +248,9 @@ class JenssegersItem extends Model implements ItemInterface
     {
         // If the "attribute" exists as a method on the model, we will just assume
         // it is a relationship and will load and return the included items in the relationship
-        if (method_exists($this, $key)) {
-            return $this->$key()->getIncluded();
+        $method = camel_case($key);
+        if (method_exists($this, $method)) {
+            return $this->$method()->getIncluded();
         }
 
         // If the "attribute" exists as a relationship on the model, we will return
@@ -445,9 +446,9 @@ class JenssegersItem extends Model implements ItemInterface
             $relationObject = $this->$relation();
         } else {
             if ($value instanceof Collection) {
-                $relationObject = $this->morphToMany($relation);
+                $relationObject = $this->morphToMany(snake_case($relation));
             } else {
-                $relationObject = $this->morphTo($relation);
+                $relationObject = $this->morphTo(snake_case($relation));
             }
         }
 

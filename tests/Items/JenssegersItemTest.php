@@ -140,4 +140,15 @@ class JenssegersItemTest extends AbstractTest
 
         $this->assertEquals(['testKey' => 9999, 'anotherTestKey' => 'someValue'], $itemBuilder->getAttributes());
     }
+
+    /**
+     * @test
+     */
+    public function it_adds_unknown_relationships_in_snake_case()
+    {
+        $item = new JenssegersItem();
+        $item->setRelation('someRelation', (new JenssegersItem())->setType('type')->setId(1));
+
+        $this->assertTrue($item->hasRelationship('some_relation'));
+    }
 }
