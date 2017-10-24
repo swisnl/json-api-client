@@ -108,13 +108,6 @@ class Parser implements ParserInterface
         $allHydratedItems = new Collection();
         $allJsonApiItems = new Collection();
 
-        $included = null;
-        if ($includedInDocument) {
-            $included = $this->hydrator->hydrateCollection($includedInDocument);
-            $allHydratedItems = $allHydratedItems->concat($included);
-            $allJsonApiItems = $allJsonApiItems->concat($includedInDocument->asArray());
-        }
-
         if ($data->isCollection()) {
             $collection = $this->hydrator->hydrateCollection($jsonApiDocument->get('data'));
             $allHydratedItems = $allHydratedItems->concat($collection);
@@ -131,6 +124,13 @@ class Parser implements ParserInterface
             $document->setData($item);
         } else {
             throw new \DomainException('Data is not Collection or Item');
+        }
+
+        $included = null;
+        if ($includedInDocument) {
+            $included = $this->hydrator->hydrateCollection($includedInDocument);
+            $allHydratedItems = $allHydratedItems->concat($included);
+            $allJsonApiItems = $allJsonApiItems->concat($includedInDocument->asArray());
         }
 
         $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
