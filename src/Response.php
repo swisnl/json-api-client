@@ -8,15 +8,6 @@ use Swis\JsonApi\Interfaces\ResponseInterface;
 class Response implements ResponseInterface
 {
     /**
-     * @var array
-     */
-    protected $successfulStatusCodes = [
-        200,
-        202,
-        204,
-    ];
-
-    /**
      * @var \GuzzleHttp\Psr7\Response
      */
     private $guzzleResponse;
@@ -34,7 +25,7 @@ class Response implements ResponseInterface
      */
     public function hasSuccessfulStatusCode(): bool
     {
-        return in_array($this->guzzleResponse->getStatusCode(), $this->successfulStatusCodes, false);
+        return $this->guzzleResponse->getStatusCode() >= 200 && $this->guzzleResponse->getStatusCode() < 300;
     }
 
     /**
@@ -43,6 +34,14 @@ class Response implements ResponseInterface
     public function hasServerErrorStatusCode(): bool
     {
         return $this->guzzleResponse->getStatusCode() >= 500 && $this->guzzleResponse->getStatusCode() < 600;
+    }
+
+    /**
+     * @return GuzzleResponse
+     */
+    public function getGuzzleResponse(): GuzzleResponse
+    {
+        return $this->guzzleResponse;
     }
 
     /**
