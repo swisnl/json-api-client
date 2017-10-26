@@ -19,5 +19,6 @@ class ResponseFactoryTest extends AbstractTest
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(true, $response->hasSuccessfulStatusCode());
         $this->assertEquals('test response', $response->getBody());
+        $this->assertEquals($psrResponse, $response->getGuzzleResponse());
     }
 }
