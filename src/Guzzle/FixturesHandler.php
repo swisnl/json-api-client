@@ -22,6 +22,11 @@ class FixturesHandler extends MockHandler
     /**
      * @var string
      */
+    const TYPE_STATUS = 'status';
+
+    /**
+     * @var string
+     */
     private $fixturesPath;
 
     /**
@@ -88,10 +93,31 @@ class FixturesHandler extends MockHandler
     protected function getResponseFromRequest(RequestInterface $request): Response
     {
         return new Response(
-            200,
+            $this->getMockStatusForRequest($request),
             $this->getMockHeadersForRequest($request),
             $this->getMockBodyForRequest($request)
         );
+    }
+
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @throws \RuntimeException
+     *
+     * @return int
+     */
+    protected function getMockStatusForRequest(RequestInterface $request): int
+    {
+        $status = 200;
+
+        try {
+            $file = $this->getMockFilePathForRequest($request, self::TYPE_STATUS);
+
+            $status = (int)file_get_contents($file);
+        } catch (MockNotFoundException $e) {
+        }
+
+        return $status;
     }
 
     /**
@@ -176,8 +202,8 @@ class FixturesHandler extends MockHandler
         $fixturesPath = $this->getFixturesPath();
         $host = $this->getHostFromRequest($request);
         $path = $this->getPathFromRequest($request);
-        $query = $this->getQueryFromRequest($request);
         $method = $this->getMethodFromRequest($request);
+        $query = $this->getQueryFromRequest($request);
 
         $basePathToFile = implode('/', [$fixturesPath, $host, $path]);
 
