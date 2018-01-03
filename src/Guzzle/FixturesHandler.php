@@ -4,6 +4,7 @@ namespace Swis\JsonApi\Guzzle;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Str;
 use Psr\Http\Message\RequestInterface;
 
 class FixturesHandler extends MockHandler
@@ -71,11 +72,62 @@ class FixturesHandler extends MockHandler
      */
     public function __invoke(RequestInterface $request, array $options)
     {
-        $file = $this->getFilePathFromRequest($request, self::TYPE_BODY);
-        $headers = $this->getHeadersFromRequest($request);
-        $this->append(new Response(200, $headers, file_get_contents($file)));
+        $this->append($this->getResponseFromRequest($request));
 
         return parent::__invoke($request, $options);
+    }
+
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @throws \RuntimeException
+     * @throws \Swis\JsonApi\Guzzle\MockNotFoundException
+     *
+     * @return \GuzzleHttp\Psr7\Response
+     */
+    protected function getResponseFromRequest(RequestInterface $request): Response
+    {
+        return new Response(
+            200,
+            $this->getMockHeadersForRequest($request),
+            $this->getMockBodyForRequest($request)
+        );
+    }
+
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @throws \RuntimeException
+     *
+     * @return array
+     */
+    protected function getMockHeadersForRequest(RequestInterface $request): array
+    {
+        $headers = [];
+
+        try {
+            $file = $this->getMockFilePathForRequest($request, self::TYPE_HEADERS);
+
+            $headers = \GuzzleHttp\json_decode(file_get_contents($file), true);
+        } catch (MockNotFoundException $e) {
+        }
+
+        return $headers;
+    }
+
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @throws \RuntimeException
+     * @throws \Swis\JsonApi\Guzzle\MockNotFoundException
+     *
+     * @return string
+     */
+    protected function getMockBodyForRequest(RequestInterface $request): string
+    {
+        $file = $this->getMockFilePathForRequest($request, self::TYPE_BODY);
+
+        return file_get_contents($file);
     }
 
     /**
@@ -87,28 +139,26 @@ class FixturesHandler extends MockHandler
      *
      * @return string
      */
-    protected function getFilePathFromRequest(RequestInterface $request, string $type): string
+    protected function getMockFilePathForRequest(RequestInterface $request, string $type): string
     {
-        $fixturesPath = rtrim($this->fixturesPath, '/');
-        $host = $this->getFixtureHost(trim($request->getUri()->getHost(), '/'));
-        $path = trim($request->getUri()->getPath(), '/');
+        $possiblePaths = $this->getPossibleMockFilePathsForRequest($request, $type);
 
-        $pathToFile = implode('/', [$fixturesPath, $host, $path]);
-        $fileWithMethod = implode('.', [$pathToFile, strtolower($request->getMethod()), $type]);
-
-        if (file_exists($fileWithMethod)) {
-            $file = $fileWithMethod;
-        } else {
-            $file = implode('.', [$pathToFile, $type]);
+        $file = null;
+        foreach ($possiblePaths as $path) {
+            if (file_exists($path)) {
+                $file = $path;
+                break;
+            }
         }
 
-        if (!file_exists($file)) {
-            throw new MockNotFoundException("File $file does not exist.");
+        if (null === $file) {
+            throw new MockNotFoundException(
+                'No fixture file found. Check possiblePaths for files that can be used.',
+                $possiblePaths
+            );
         }
 
-        $realDir = realpath(dirname($file));
-
-        if ($realDir !== dirname($file)) {
+        if (realpath(\dirname($file)) !== \dirname($file)) {
             throw new \RuntimeException("Path to $file is out of bounds.");
         }
 
@@ -116,12 +166,43 @@ class FixturesHandler extends MockHandler
     }
 
     /**
-     * @param string $host
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param string                             $type
+     *
+     * @return array
+     */
+    protected function getPossibleMockFilePathsForRequest(RequestInterface $request, string $type): array
+    {
+        $fixturesPath = $this->getFixturesPath();
+        $host = $this->getHostFromRequest($request);
+        $path = $this->getPathFromRequest($request);
+        $query = $this->getQueryFromRequest($request);
+        $method = $this->getMethodFromRequest($request);
+
+        $basePathToFile = implode('/', [$fixturesPath, $host, $path]);
+
+        $possibleFiles = [];
+
+        if ('' !== $query) {
+            $possibleFiles[] = implode('.', [$basePathToFile, $query, $method, $type]);
+            $possibleFiles[] = implode('.', [$basePathToFile, $query, $type]);
+        }
+
+        $possibleFiles[] = implode('.', [$basePathToFile, $method, $type]);
+        $possibleFiles[] = implode('.', [$basePathToFile, $type]);
+
+        return $possibleFiles;
+    }
+
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
      *
      * @return string
      */
-    protected function getFixtureHost(string $host): string
+    protected function getHostFromRequest(RequestInterface $request): string
     {
+        $host = trim($request->getUri()->getHost(), '/');
+
         if (array_key_exists($host, $this->domainAliases)) {
             return $this->domainAliases[$host];
         }
@@ -132,21 +213,48 @@ class FixturesHandler extends MockHandler
     /**
      * @param \Psr\Http\Message\RequestInterface $request
      *
-     * @throws \RuntimeException
-     *
-     * @return array
+     * @return string
      */
-    protected function getHeadersFromRequest(RequestInterface $request): array
+    protected function getPathFromRequest(RequestInterface $request): string
     {
-        $headers = [];
+        return trim($request->getUri()->getPath(), '/');
+    }
 
-        try {
-            $file = $this->getFilePathFromRequest($request, self::TYPE_HEADERS);
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @return string
+     */
+    protected function getMethodFromRequest(RequestInterface $request): string
+    {
+        return strtolower($request->getMethod());
+    }
 
-            $headers = \GuzzleHttp\json_decode(file_get_contents($file), true);
-        } catch (MockNotFoundException $e) {
-        }
+    /**
+     * @param \Psr\Http\Message\RequestInterface $request
+     * @param string                             $separator
+     *
+     * @return string
+     */
+    protected function getQueryFromRequest(RequestInterface $request, $separator = '-'): string
+    {
+        $query = urldecode($request->getUri()->getQuery());
+        $parts = array_map(
+            function (string $part) use ($separator) {
+                return str_replace('=', $separator, $part);
+            },
+            explode('&', $query)
+        );
+        sort($parts);
 
-        return $headers;
+        return Str::slug(implode($separator, $parts), $separator);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFixturesPath(): string
+    {
+        return rtrim($this->fixturesPath, '/');
     }
 }
