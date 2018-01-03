@@ -9,6 +9,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Swis\JsonApi\Client as ApiClient;
 use Swis\JsonApi\DocumentClient as ApiDocumentClient;
+use Swis\JsonApi\Guzzle\FixtureResponseBuilder;
 use Swis\JsonApi\Guzzle\FixturesHandler;
 use Swis\JsonApi\Interfaces\ClientInterface as ApiClientInterface;
 use Swis\JsonApi\Interfaces\DocumentClientInterface as ApiDocumentClientInterface;
@@ -107,14 +108,17 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerGuzzleHandlers(): HandlerStack
     {
+        $handler = null;
+
         if (app()->environment('testing')) {
-            $handler = new FixturesHandler(config('jsonapi.fixtures.path'));
-            $handler->setDomainAliases(config('jsonapi.fixtures.domain_aliases', []));
-            $stack = HandlerStack::create($handler);
-        } else {
-            $stack = HandlerStack::create();
+            $handler = new FixturesHandler(
+                new FixtureResponseBuilder(
+                    config('jsonapi.fixtures.path'),
+                    config('jsonapi.fixtures.domain_aliases', [])
+                )
+            );
         }
 
-        return $stack;
+        return HandlerStack::create($handler);
     }
 }
