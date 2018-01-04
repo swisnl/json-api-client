@@ -21,6 +21,7 @@ return PhpCsFixer\Config::create()
         'ordered_imports' => true,
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
         'phpdoc_order' => true,
+        'yoda_style' => null,
     ])
     ->setFinder($finder)
 ;
