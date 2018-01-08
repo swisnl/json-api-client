@@ -124,7 +124,7 @@ class DocumentClient implements DocumentClientInterface
      */
     protected function sanitizeJson(string $json): string
     {
-        return str_replace('\r\n', '\\\\n', $json);
+        return str_replace('\r\n', '\\n', $json);
     }
 
     /**
