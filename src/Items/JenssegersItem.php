@@ -183,7 +183,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @return \Swis\JsonApi\Collection
      */
-    public function getIncluded()
+    public function getIncluded(): Collection
     {
         $included = new Collection();
 
@@ -192,17 +192,19 @@ class JenssegersItem extends Model implements ItemInterface
                 continue;
             }
 
-            if ($relationship->getIncluded() instanceof ItemInterface) {
-                $item = $relationship->getIncluded();
-                if (!empty($item->getType()) && null !== $item->getId()) {
-                    $included->push($item->toJsonApiArray());
+            $includedFromRelationship = $relationship->getIncluded();
+            if ($includedFromRelationship instanceof ItemInterface) {
+                if (!empty($includedFromRelationship->getType()) && null !== $includedFromRelationship->getId()) {
+                    $included->push($includedFromRelationship->toJsonApiArray());
                 }
-            } elseif ($relationship->getIncluded() instanceof Collection) {
-                $relationship->getIncluded()->each(
-                    function (ItemInterface $item) use ($included) {
+                $included = $included->merge($includedFromRelationship->getIncluded());
+            } elseif ($includedFromRelationship instanceof Collection) {
+                $includedFromRelationship->each(
+                    function (ItemInterface $item) use (&$included) {
                         if (!empty($item->getType()) && null !== $item->getId()) {
                             $included->push($item->toJsonApiArray());
                         }
+                        $included = $included->merge($item->getIncluded());
                     }
                 );
             } else {
@@ -210,7 +212,11 @@ class JenssegersItem extends Model implements ItemInterface
             }
         }
 
-        return $included;
+        return $included->unique(
+            function (array $item) {
+                return $item['type'].':'.$item['id'];
+            }
+        );
     }
 
     /**
