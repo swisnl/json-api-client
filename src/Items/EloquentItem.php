@@ -119,7 +119,7 @@ class EloquentItem extends Model implements ItemInterface
      *
      * @return \Swis\JsonApi\Collection
      */
-    public function getIncluded()
+    public function getIncluded(): Collection
     {
         $included = new Collection();
 
@@ -128,12 +128,14 @@ class EloquentItem extends Model implements ItemInterface
                 if (!empty($relation->getType()) && null !== $relation->getId()) {
                     $included->push($relation->toJsonApiArray());
                 }
+                $included = $included->merge($relation->getIncluded());
             } elseif ($relation instanceof IlluminateCollection) {
                 $relation->each(
-                    function (ItemInterface $item) use ($included) {
+                    function (ItemInterface $item) use (&$included) {
                         if (!empty($item->getType()) && null !== $item->getId()) {
                             $included->push($item->toJsonApiArray());
                         }
+                        $included = $included->merge($item->getIncluded());
                     }
                 );
             } else {
@@ -141,6 +143,10 @@ class EloquentItem extends Model implements ItemInterface
             }
         }
 
-        return $included;
+        return $included->unique(
+            function (array $item) {
+                return $item['type'].':'.$item['id'];
+            }
+        );
     }
 }

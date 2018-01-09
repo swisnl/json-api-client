@@ -48,7 +48,7 @@ class ItemHydrator
      */
     protected function fill(ItemInterface $item, array $attributes = null)
     {
-        $item->fill($attributes);
+        $item->fill(array_diff_key($attributes, array_combine($item->getAvailableRelations(), $item->getAvailableRelations())));
     }
 
     /**
