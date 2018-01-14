@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Guzzle;
+namespace Swis\JsonApi\Tests\Fixtures;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
-use Swis\JsonApi\Guzzle\FixtureResponseBuilderInterface;
-use Swis\JsonApi\Guzzle\FixturesHandler;
+use Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface;
+use Swis\JsonApi\Fixtures\Guzzle\FixturesHandler;
 use Swis\JsonApi\Tests\AbstractTest;
 
 class FixturesHandlerTest extends AbstractTest
@@ -17,7 +17,7 @@ class FixturesHandlerTest extends AbstractTest
     public function it_calls_the_fixture_response_builder_on_invoke()
     {
         $request = new Request('GET', new Uri('http://example.com'));
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swis\JsonApi\Guzzle\FixtureResponseBuilderInterface $responseBuilder */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface $responseBuilder */
         $responseBuilder = $this->getMockBuilder(FixtureResponseBuilderInterface::class)->getMock();
         $responseBuilder->expects($this->once())
             ->method('build')

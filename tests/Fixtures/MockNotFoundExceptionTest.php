@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Guzzle;
+namespace Swis\JsonApi\Tests\Fixtures;
 
-use Swis\JsonApi\Guzzle\MockNotFoundException;
+use Swis\JsonApi\Fixtures\MockNotFoundException;
 use Swis\JsonApi\Tests\AbstractTest;
 
 class MockNotFoundExceptionTest extends AbstractTest

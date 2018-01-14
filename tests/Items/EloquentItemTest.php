@@ -4,6 +4,7 @@ namespace Swis\JsonApi\Tests\Items;
 
 use Swis\JsonApi\Items\EloquentItem;
 use Swis\JsonApi\Tests\AbstractTest;
+use Swis\JsonApi\Tests\Mocks\Items\Eloquent\TypeLessEloquentItem;
 
 class EloquentItemTest extends AbstractTest
 {
@@ -107,5 +108,15 @@ class EloquentItemTest extends AbstractTest
         $item = new EloquentItem();
         $item->forceFill($this->attributes);
         $this->assertEquals($this->attributes, $item->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_type_by_classname()
+    {
+        $item = new TypeLessEloquentItem();
+
+        $this->assertEquals('type_less_eloquent_item', $item->getType());
     }
 }
