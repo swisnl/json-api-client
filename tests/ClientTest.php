@@ -2,10 +2,9 @@
 
 namespace Swis\JsonApi\Tests;
 
-use GuzzleHttp\ClientInterface;
+use Http\Client\Exception\HttpException;
+use Http\Discovery\MessageFactoryDiscovery;
 use Swis\JsonApi\Client;
-use Swis\JsonApi\RequestFactory;
-use Swis\JsonApi\ResponseFactory;
 
 class ClientTest extends AbstractTest
 {
@@ -14,15 +13,12 @@ class ClientTest extends AbstractTest
      */
     public function the_base_url_can_be_changed_after_instantiation()
     {
-        $guzzle = $this->createMock(ClientInterface::class);
-        $requestFactory = $this->createMock(RequestFactory::class);
-        $responseFactory = $this->createMock(ResponseFactory::class);
+        $httpclient = new \Http\Mock\Client();
 
         $client = new Client(
-            $guzzle,
+            $httpclient,
             'http://www.test.com',
-            $requestFactory,
-            $responseFactory
+            MessageFactoryDiscovery::find()
         );
 
         $this->assertEquals('http://www.test.com', $client->getBaseUri());
@@ -31,27 +27,112 @@ class ClientTest extends AbstractTest
     }
 
     /**
-     * TODO.
+     * @test
      */
     public function it_builds_a_get_request()
     {
         $baseUri = 'http://www.test.com';
         $endpoint = '/test/1';
 
-        $guzzle = $this->createMock(ClientInterface::class);
-        $requestFactory = $this->createMock(RequestFactory::class);
-        $responseFactory = $this->createMock(ResponseFactory::class);
-
-        $guzzle->method('send');
-
-        $requestFactory->expects($this->once())->method('make')->with('GET', $baseUri.$endpoint);
+        $httpClient = new \Http\Mock\Client();
 
         $client = new Client(
-            $guzzle,
+            $httpClient,
             $baseUri,
-            $requestFactory,
-            $responseFactory
+            MessageFactoryDiscovery::find()
         );
         $client->get($endpoint);
+        $this->assertEquals('GET', $httpClient->getLastRequest()->getMethod());
+        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+    }
+
+    /**
+     * @test
+     */
+    public function it_builds_a_delete_request()
+    {
+        $baseUri = 'http://www.test.com';
+        $endpoint = '/test/1';
+
+        $httpClient = new \Http\Mock\Client();
+
+        $client = new Client(
+            $httpClient,
+            $baseUri,
+            MessageFactoryDiscovery::find()
+        );
+        $client->delete($endpoint);
+        $this->assertEquals('DELETE', $httpClient->getLastRequest()->getMethod());
+        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+    }
+
+    /**
+     * @test
+     */
+    public function it_builds_a_patch_request()
+    {
+        $baseUri = 'http://www.test.com';
+        $endpoint = '/test/1';
+
+        $httpClient = new \Http\Mock\Client();
+
+        $client = new Client(
+            $httpClient,
+            $baseUri,
+            MessageFactoryDiscovery::find()
+        );
+        $client->patch($endpoint, 'testvar=testvalue');
+        $this->assertEquals('PATCH', $httpClient->getLastRequest()->getMethod());
+        $this->assertEquals('testvar=testvalue', $httpClient->getLastRequest()->getBody()->getContents());
+        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+    }
+
+    /**
+     * @test
+     */
+    public function it_builds_a_post_request()
+    {
+        $baseUri = 'http://www.test.com';
+        $endpoint = '/test/1';
+
+        $httpClient = new \Http\Mock\Client();
+
+        $client = new Client(
+            $httpClient,
+            $baseUri,
+            MessageFactoryDiscovery::find()
+        );
+        $client->post($endpoint, 'testvar=testvalue');
+        $this->assertEquals('POST', $httpClient->getLastRequest()->getMethod());
+        $this->assertEquals('testvar=testvalue', $httpClient->getLastRequest()->getBody()->getContents());
+        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+    }
+
+    /**
+     * @test
+     */
+    public function it_passes_http_exeptions()
+    {
+        $baseUri = 'http://www.test.com';
+        $endpoint = '/test/1';
+
+        $httpClient = new \Http\Mock\Client();
+
+        $request = $this->createMock(\Psr\Http\Message\RequestInterface::class);
+        $response = $this->createMock(\Psr\Http\Message\ResponseInterface::class);
+
+        $exception = HttpException::create($request, $response);
+        $httpClient->setDefaultException($exception);
+
+        $client = new Client(
+            $httpClient,
+            $baseUri,
+            MessageFactoryDiscovery::find()
+        );
+
+        $response = $client->get($endpoint);
+
+        $this->assertEquals(false, $response->hasServerErrorStatusCode());
+        $this->assertEquals(false, $response->hasSuccessfulStatusCode());
     }
 }

@@ -2,22 +2,19 @@
 
 namespace Swis\JsonApi;
 
-use GuzzleHttp\Psr7\Response as GuzzleResponse;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Swis\JsonApi\Interfaces\ResponseInterface;
 
 class Response implements ResponseInterface
 {
     /**
-     * @var \GuzzleHttp\Psr7\Response
+     * @var HttpResponseInterface
      */
-    private $guzzleResponse;
+    private $response;
 
-    /**
-     * @param \GuzzleHttp\Psr7\Response $guzzleResponse
-     */
-    public function __construct(GuzzleResponse $guzzleResponse)
+    public function __construct(HttpResponseInterface $response)
     {
-        $this->guzzleResponse = $guzzleResponse;
+        $this->response = $response;
     }
 
     /**
@@ -25,7 +22,7 @@ class Response implements ResponseInterface
      */
     public function hasSuccessfulStatusCode(): bool
     {
-        return $this->guzzleResponse->getStatusCode() >= 200 && $this->guzzleResponse->getStatusCode() < 300;
+        return $this->response->getStatusCode() >= 200 && $this->response->getStatusCode() < 300;
     }
 
     /**
@@ -33,15 +30,12 @@ class Response implements ResponseInterface
      */
     public function hasServerErrorStatusCode(): bool
     {
-        return $this->guzzleResponse->getStatusCode() >= 500 && $this->guzzleResponse->getStatusCode() < 600;
+        return $this->response->getStatusCode() >= 500 && $this->response->getStatusCode() < 600;
     }
 
-    /**
-     * @return GuzzleResponse
-     */
-    public function getGuzzleResponse(): GuzzleResponse
+    public function getResponse(): HttpResponseInterface
     {
-        return $this->guzzleResponse;
+        return $this->response;
     }
 
     /**
@@ -49,7 +43,7 @@ class Response implements ResponseInterface
      */
     public function hasBody(): bool
     {
-        return (bool)$this->guzzleResponse->getBody()->getSize();
+        return (bool)$this->response->getBody()->getSize();
     }
 
     /**
@@ -57,7 +51,7 @@ class Response implements ResponseInterface
      */
     public function getBody(): string
     {
-        return (string)$this->guzzleResponse->getBody();
+        return (string)$this->response->getBody();
     }
 
     /**
@@ -67,7 +61,7 @@ class Response implements ResponseInterface
      */
     public function hasHeader(string $header): bool
     {
-        return $this->guzzleResponse->hasHeader($header);
+        return $this->response->hasHeader($header);
     }
 
     /**
@@ -77,6 +71,6 @@ class Response implements ResponseInterface
      */
     public function getHeader(string $header): string
     {
-        return array_first($this->guzzleResponse->getHeader($header));
+        return array_first($this->response->getHeader($header));
     }
 }

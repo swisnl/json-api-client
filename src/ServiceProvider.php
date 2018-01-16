@@ -3,14 +3,16 @@
 namespace Swis\JsonApi;
 
 use Art4\JsonApiClient\Utils\Manager as JsonApiClientManger;
-use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\HandlerStack;
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Message\MessageFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Swis\JsonApi\Client as ApiClient;
 use Swis\JsonApi\DocumentClient as ApiDocumentClient;
-use Swis\JsonApi\Guzzle\FixtureResponseBuilder;
-use Swis\JsonApi\Guzzle\FixturesHandler;
+use Swis\JsonApi\Fixtures\FixtureResponseBuilder;
+use Swis\JsonApi\Fixtures\FixturesClient;
 use Swis\JsonApi\Interfaces\ClientInterface as ApiClientInterface;
 use Swis\JsonApi\Interfaces\DocumentClientInterface as ApiDocumentClientInterface;
 use Swis\JsonApi\Interfaces\ParserInterface;
@@ -55,10 +57,9 @@ class ServiceProvider extends BaseServiceProvider
             ApiClientInterface::class,
             function () {
                 return new ApiClient(
-                    $this->getGuzzleClient(),
+                    $this->getHttpClient(),
                     config('jsonapi.base_uri'),
-                    new RequestFactory(),
-                    new ResponseFactory()
+                    $this->getMessageFactory()
                 );
             }
         );
@@ -86,39 +87,37 @@ class ServiceProvider extends BaseServiceProvider
         );
     }
 
-    /**
-     * @return \GuzzleHttp\Client
-     */
-    protected function getGuzzleClient(): GuzzleClient
+    protected function getHttpClient(): HttpClient
     {
-        return new GuzzleClient(
-            [
-                'base_uri' => config('jsonapi.base_uri'),
-                'headers'  => [
-                    'Accept'       => 'application/vnd.api+json',
-                    'Content-Type' => 'application/vnd.api+json',
-                ],
-                'handler'  => $this->registerGuzzleHandlers(),
-            ]
-        );
+        if (app()->environment('testing')) {
+            return $this->getFixturesClient();
+        }
+
+        return HttpClientDiscovery::find();
     }
 
     /**
-     * @return \GuzzleHttp\HandlerStack
+     * Should return a MessageFactory which has 2 method. get.
+     *
+     * @return \Http\Message\MessageFactory
      */
-    protected function registerGuzzleHandlers(): HandlerStack
+    protected function getMessageFactory(): MessageFactory
     {
-        $handler = null;
+        return MessageFactoryDiscovery::find();
+    }
 
-        if (app()->environment('testing')) {
-            $handler = new FixturesHandler(
-                new FixtureResponseBuilder(
-                    config('jsonapi.fixtures.path'),
-                    config('jsonapi.fixtures.domain_aliases', [])
-                )
-            );
-        }
+    /**
+     * @return FixturesClient
+     */
+    protected function getFixturesClient(): FixturesClient
+    {
+        $httpClient = new FixturesClient(
+            new FixtureResponseBuilder(
+                config('jsonapi.fixtures.path'),
+                config('jsonapi.fixtures.domain_aliases', [])
+            )
+        );
 
-        return HandlerStack::create($handler);
+        return $httpClient;
     }
 }

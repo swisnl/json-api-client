@@ -60,8 +60,6 @@ class DocumentClient implements DocumentClientInterface
     /**
      * @param string $endpoint
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     *
      * @return \Swis\JsonApi\Interfaces\DocumentInterface
      */
     public function get(string $endpoint): DocumentInterface
@@ -72,8 +70,6 @@ class DocumentClient implements DocumentClientInterface
     /**
      * @param string                                         $endpoint
      * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $body
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
      *
      * @return \Swis\JsonApi\Interfaces\DocumentInterface
      */
@@ -86,8 +82,6 @@ class DocumentClient implements DocumentClientInterface
      * @param string                                         $endpoint
      * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $body
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     *
      * @return \Swis\JsonApi\Interfaces\DocumentInterface
      */
     public function patch(string $endpoint, ItemDocumentInterface $body): DocumentInterface
@@ -97,8 +91,6 @@ class DocumentClient implements DocumentClientInterface
 
     /**
      * @param string $endpoint
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
      *
      * @return \Swis\JsonApi\Interfaces\DocumentInterface
      */
@@ -128,7 +120,7 @@ class DocumentClient implements DocumentClientInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ResponseInterface $response
+     * @param ResponseInterface $response
      *
      * @return \Swis\JsonApi\Interfaces\DocumentInterface
      */

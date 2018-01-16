@@ -92,8 +92,6 @@ class MorphToManyRelation implements RelationInterface
      * @param string $type
      *
      * @throws \LogicException
-     *
-     * @return static
      */
     public function setType(string $type)
     {

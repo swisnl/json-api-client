@@ -1,8 +1,9 @@
 <?php
 
-namespace Swis\JsonApi\Guzzle;
+namespace Swis\JsonApi\Fixtures;
 
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 interface FixtureResponseBuilderInterface
 {
@@ -11,5 +12,5 @@ interface FixtureResponseBuilderInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function build(RequestInterface $request);
+    public function build(RequestInterface $request): ResponseInterface;
 }

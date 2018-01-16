@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Guzzle;
+namespace Swis\JsonApi\Fixtures;
 
 class MockNotFoundException extends \Exception
 {

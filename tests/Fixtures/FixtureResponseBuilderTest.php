@@ -1,12 +1,11 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Guzzle;
+namespace Swis\JsonApi\Tests\Fixtures;
 
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Uri;
-use Swis\JsonApi\Guzzle\FixtureResponseBuilder;
-use Swis\JsonApi\Guzzle\MockNotFoundException;
+use Http\Discovery\MessageFactoryDiscovery;
+use Swis\JsonApi\Fixtures\FixtureResponseBuilder;
+use Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface;
+use Swis\JsonApi\Fixtures\MockNotFoundException;
 use Swis\JsonApi\Tests\AbstractTest;
 use function GuzzleHttp\Psr7\stream_for;
 
@@ -24,12 +23,17 @@ class FixtureResponseBuilderTest extends AbstractTest
     {
         $builder = $this->getBuilder();
 
-        $expectedResponse = new Response(
+        $messageFactory = MessageFactoryDiscovery::find();
+
+        $expectedResponse = $messageFactory->createResponse(
             200,
+            null,
             [],
             stream_for(file_get_contents($this->getFixturesPath().'/'.$expectedMock))
         );
-        $actualResponse = $builder->build(new Request($method, new Uri($url)));
+        $actualResponse = $builder->build(
+            $messageFactory->createRequest($method, $url)
+        );
 
         $this->assertEquals($expectedResponse->getBody()->__toString(), $actualResponse->getBody()->__toString());
     }
@@ -62,7 +66,9 @@ class FixtureResponseBuilderTest extends AbstractTest
     public function it_throws_an_exception_when_it_cant_find_a_fixture()
     {
         $this->expectException(MockNotFoundException::class);
-        $this->getBuilder()->build(new Request('GET', new Uri('http://example.com/api/lorem-ipsum')));
+
+        $messageFactory = MessageFactoryDiscovery::find();
+        $this->getBuilder()->build($messageFactory->createRequest('GET', 'http://example.com/api/lorem-ipsum'));
     }
 
     /**
@@ -71,7 +77,9 @@ class FixtureResponseBuilderTest extends AbstractTest
     public function it_throws_an_exception_when_path_is_out_of_bounds()
     {
         $this->expectException(\RuntimeException::class);
-        $this->getBuilder()->build(new Request('GET', new Uri('http://example.com/../../out-of-bounds')));
+
+        $messageFactory = MessageFactoryDiscovery::find();
+        $this->getBuilder()->build($messageFactory->createRequest('GET', 'http://example.com/../../out-of-bounds'));
     }
 
     /**
@@ -79,14 +87,16 @@ class FixtureResponseBuilderTest extends AbstractTest
      */
     public function it_can_build_a_response_using_domain_aliases()
     {
-        $builder = $this->getBuilder();
+        $messageFactory = MessageFactoryDiscovery::find();
 
-        $expectedResponse = new Response(
+        $expectedResponse = $messageFactory->createResponse(
             200,
+            '',
             [],
             stream_for(file_get_contents($this->getFixturesPath().'/example.com/api/articles.mock'))
         );
-        $actualResponse = $builder->build(new Request('GET', new Uri('http://foo.bar/api/articles')));
+
+        $actualResponse = $this->getBuilder()->build($messageFactory->createRequest('GET', 'http://foo.bar/api/articles'));
 
         $this->assertEquals($expectedResponse->getBody()->__toString(), $actualResponse->getBody()->__toString());
     }
@@ -96,14 +106,16 @@ class FixtureResponseBuilderTest extends AbstractTest
      */
     public function it_can_build_a_response_with_custom_headers()
     {
-        $builder = $this->getBuilder();
+        $messageFactory = MessageFactoryDiscovery::find();
 
-        $expectedResponse = new Response(
+        $expectedResponse = $messageFactory->createResponse(
             200,
+            '',
             ['X-Made-With' => 'PHPUnit'],
             stream_for(file_get_contents($this->getFixturesPath().'/example.com/api/articles.mock'))
         );
-        $actualResponse = $builder->build(new Request('GET', new Uri('http://example.com/api/articles')));
+
+        $actualResponse = $this->getBuilder()->build($messageFactory->createRequest('GET', 'http://example.com/api/articles'));
 
         $this->assertEquals($expectedResponse->getHeaders(), $actualResponse->getHeaders());
     }
@@ -114,21 +126,23 @@ class FixtureResponseBuilderTest extends AbstractTest
     public function it_can_build_a_response_with_custom_status()
     {
         $builder = $this->getBuilder();
+        $messageFactory = MessageFactoryDiscovery::find();
 
-        $expectedResponse = new Response(
+        $expectedResponse = $messageFactory->createResponse(
             500,
+            '',
             [],
             stream_for(file_get_contents($this->getFixturesPath().'/example.com/api/articles.mock'))
         );
-        $actualResponse = $builder->build(new Request('GET', new Uri('http://example.com/api/articles')));
+        $actualResponse = $this->getBuilder()->build($messageFactory->createRequest('GET', 'http://example.com/api/articles'));
 
         $this->assertEquals($expectedResponse->getStatusCode(), $actualResponse->getStatusCode());
     }
 
     /**
-     * @return \Swis\JsonApi\Guzzle\FixtureResponseBuilder
+     * @return \Swis\JsonApi\Fixtures\Guzzle\FixtureResponseBuilder
      */
-    protected function getBuilder(): FixtureResponseBuilder
+    protected function getBuilder(): FixtureResponseBuilderInterface
     {
         return new FixtureResponseBuilder($this->getFixturesPath(), ['foo.bar' => 'example.com']);
     }

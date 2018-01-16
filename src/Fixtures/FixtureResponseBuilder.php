@@ -1,10 +1,11 @@
 <?php
 
-namespace Swis\JsonApi\Guzzle;
+namespace Swis\JsonApi\Fixtures;
 
-use GuzzleHttp\Psr7\Response;
+use Http\Discovery\MessageFactoryDiscovery;
 use Illuminate\Support\Str;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class FixtureResponseBuilder implements FixtureResponseBuilderInterface
 {
@@ -47,14 +48,15 @@ class FixtureResponseBuilder implements FixtureResponseBuilderInterface
      * @param \Psr\Http\Message\RequestInterface $request
      *
      * @throws \RuntimeException
-     * @throws \Swis\JsonApi\Guzzle\MockNotFoundException
+     * @throws \Swis\JsonApi\Fixtures\MockNotFoundException
      *
-     * @return \GuzzleHttp\Psr7\Response
+     * @return ResponseInterface
      */
-    public function build(RequestInterface $request): Response
+    public function build(RequestInterface $request): ResponseInterface
     {
-        return new Response(
+        return MessageFactoryDiscovery::find()->createResponse(
             $this->getMockStatusForRequest($request),
+            '',
             $this->getMockHeadersForRequest($request),
             $this->getMockBodyForRequest($request)
         );
@@ -95,7 +97,7 @@ class FixtureResponseBuilder implements FixtureResponseBuilderInterface
         try {
             $file = $this->getMockFilePathForRequest($request, self::TYPE_HEADERS);
 
-            $headers = \GuzzleHttp\json_decode(file_get_contents($file), true);
+            $headers = json_decode(file_get_contents($file), true);
         } catch (MockNotFoundException $e) {
         }
 
@@ -106,7 +108,7 @@ class FixtureResponseBuilder implements FixtureResponseBuilderInterface
      * @param \Psr\Http\Message\RequestInterface $request
      *
      * @throws \RuntimeException
-     * @throws \Swis\JsonApi\Guzzle\MockNotFoundException
+     * @throws \Swis\JsonApi\Fixtures\MockNotFoundException
      *
      * @return string
      */
@@ -121,7 +123,7 @@ class FixtureResponseBuilder implements FixtureResponseBuilderInterface
      * @param \Psr\Http\Message\RequestInterface $request
      * @param string                             $type
      *
-     * @throws \Swis\JsonApi\Guzzle\MockNotFoundException
+     * @throws \Swis\JsonApi\Fixtures\MockNotFoundException
      * @throws \RuntimeException
      *
      * @return string

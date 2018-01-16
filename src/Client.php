@@ -2,9 +2,9 @@
 
 namespace Swis\JsonApi;
 
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
+use Http\Client\Exception\HttpException;
+use Http\Client\HttpClient;
+use Http\Message\MessageFactory;
 use Psr\Http\Message\RequestInterface;
 use Swis\JsonApi\Interfaces\ClientInterface;
 
@@ -31,7 +31,7 @@ class Client implements ClientInterface
     const METHOD_POST = 'POST';
 
     /**
-     * @var \GuzzleHttp\ClientInterface
+     * @var \Http\Client\HttpClient
      */
     private $client;
 
@@ -41,31 +41,28 @@ class Client implements ClientInterface
     private $baseUri;
 
     /**
-     * @var \Swis\JsonApi\RequestFactory
+     * @var MessageFactory
      */
-    private $requestFactory;
+    private $messageFactory;
+
+    protected $defaultHeaders = [
+        'Accept'       => 'application/vnd.api+json',
+        'Content-Type' => 'application/vnd.api+json',
+    ];
 
     /**
-     * @var \Swis\JsonApi\ResponseFactory
-     */
-    private $responseFactory;
-
-    /**
-     * @param \GuzzleHttp\ClientInterface   $client
-     * @param string                        $baseUri
-     * @param \Swis\JsonApi\RequestFactory  $requestFactory
-     * @param \Swis\JsonApi\ResponseFactory $responseFactory
+     * @param \Http\Client\HttpClient $client
+     * @param string                  $baseUri
+     * @param MessageFactory          $messageFactory
      */
     public function __construct(
-        GuzzleClientInterface $client,
+        HttpClient $client,
         string $baseUri,
-        RequestFactory $requestFactory,
-        ResponseFactory $responseFactory
+        MessageFactory $messageFactory
     ) {
         $this->client = $client;
         $this->baseUri = $baseUri;
-        $this->requestFactory = $requestFactory;
-        $this->responseFactory = $responseFactory;
+        $this->messageFactory = $messageFactory;
     }
 
     /**
@@ -88,8 +85,6 @@ class Client implements ClientInterface
      * @param string $endpoint
      * @param array  $headers
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     *
      * @return \Swis\JsonApi\Interfaces\ResponseInterface
      */
     public function get(string $endpoint, array $headers = [])
@@ -101,8 +96,6 @@ class Client implements ClientInterface
      * @param string                                                                         $endpoint
      * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
      * @param array                                                                          $headers
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
      *
      * @return \Swis\JsonApi\Interfaces\ResponseInterface
      */
@@ -116,8 +109,6 @@ class Client implements ClientInterface
      * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
      * @param array                                                                          $headers
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     *
      * @return \Swis\JsonApi\Interfaces\ResponseInterface
      */
     public function patch(string $endpoint, $body, array $headers = [])
@@ -128,8 +119,6 @@ class Client implements ClientInterface
     /**
      * @param string $endpoint
      * @param array  $headers
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
      *
      * @return \Swis\JsonApi\Interfaces\ResponseInterface
      */
@@ -144,8 +133,6 @@ class Client implements ClientInterface
      * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
      * @param array                                                                          $headers
      *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     *
      * @return \Swis\JsonApi\Interfaces\ResponseInterface
      */
     public function request(string $method, string $endpoint, $body = null, array $headers = [])
@@ -153,14 +140,12 @@ class Client implements ClientInterface
         $request = $this->buildRequest($method, $endpoint, $body, $headers);
 
         try {
-            $response = $this->responseFactory->make($this->client->send($request));
-        } catch (ClientException $e) {
-            $response = $this->responseFactory->make($e->getResponse());
-        } catch (ServerException $e) {
-            $response = $this->responseFactory->make($e->getResponse());
+            $response = $this->client->sendRequest($request);
+        } catch (HttpException $e) {
+            $response = $e->getResponse();
         }
 
-        return $response;
+        return new Response($response);
     }
 
     /**
@@ -173,7 +158,7 @@ class Client implements ClientInterface
      */
     protected function buildRequest(string $method, string $endpoint, $body = null, array $headers = []): RequestInterface
     {
-        return $this->requestFactory->make($method, $this->getEndpoint($endpoint), $body, $headers);
+        return $this->messageFactory->createRequest($method, $this->getEndpoint($endpoint), [], $body, $this->mergeHeaders($headers));
     }
 
     /**
@@ -184,5 +169,20 @@ class Client implements ClientInterface
     protected function getEndpoint(string $endpoint): string
     {
         return $this->baseUri.$endpoint;
+    }
+
+    protected function mergeHeaders(array $headers = [])
+    {
+        return array_merge($this->defaultHeaders, $headers);
+    }
+
+    public function getDefaultHeaders(): array
+    {
+        return $this->defaultHeaders;
+    }
+
+    public function setDefaultHeaders(array $defaultHeaders)
+    {
+        $this->defaultHeaders = $defaultHeaders;
     }
 }
