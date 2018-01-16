@@ -6,6 +6,7 @@ use Art4\JsonApiClient\Utils\Manager as JsonApiClientManger;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
+use Http\Message\MessageFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Swis\JsonApi\Client as ApiClient;
@@ -58,7 +59,7 @@ class ServiceProvider extends BaseServiceProvider
                 return new ApiClient(
                     $this->getHttpClient(),
                     config('jsonapi.base_uri'),
-                    MessageFactoryDiscovery::find()
+                    $this->getMessageFactory()
                 );
             }
         );
@@ -93,6 +94,16 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         return HttpClientDiscovery::find();
+    }
+
+    /**
+     * Should return a MessageFactory which has 2 method. get.
+     *
+     * @return \Http\Message\MessageFactory
+     */
+    protected function getMessageFactory(): MessageFactory
+    {
+        return MessageFactoryDiscovery::find();
     }
 
     /**
