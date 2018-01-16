@@ -11,14 +11,14 @@ class FixturesClient extends Client
     protected $fixtureResponseBuilder;
 
     /**
-     * @param FixtureResponseBuilderInterface $fixtureReponseBuilder
+     * @param FixtureResponseBuilderInterface $fixtureResponseBuilder
      * @param ResponseFactory|null            $responseFactory
      */
-    public function __construct(FixtureResponseBuilderInterface $fixtureReponseBuilder, ResponseFactory $responseFactory = null)
+    public function __construct(FixtureResponseBuilderInterface $fixtureResponseBuilder, ResponseFactory $responseFactory = null)
     {
         parent::__construct($responseFactory);
 
-        $this->fixtureResponseBuilder = $fixtureReponseBuilder;
+        $this->fixtureResponseBuilder = $fixtureResponseBuilder;
     }
 
     public function sendRequest(RequestInterface $request)
