@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Fixtures\FixtureResponseBuilder as BaseFixtureResponseBuilder;
 use Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface;
 
-class FixtureResponseBuilder extends BaseFixtureResponseBuilder implements FixtureResponseBuilderInterface
+class FixtureResponseBuilder extends BaseFixtureResponseBuilder
 {
     /**
      * @param \Psr\Http\Message\RequestInterface $request
