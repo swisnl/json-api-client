@@ -8,7 +8,7 @@ use Psr\Http\Message\RequestInterface;
 
 class FixturesClient extends Client
 {
-    protected $fixtureReponseBuilder;
+    protected $fixtureResponseBuilder;
 
     /**
      * @param FixtureResponseBuilderInterface $fixtureReponseBuilder
@@ -18,12 +18,12 @@ class FixturesClient extends Client
     {
         parent::__construct($responseFactory);
 
-        $this->fixtureReponseBuilder = $fixtureReponseBuilder;
+        $this->fixtureResponseBuilder = $fixtureReponseBuilder;
     }
 
     public function sendRequest(RequestInterface $request)
     {
-        $this->setDefaultResponse($this->fixtureReponseBuilder->build($request));
+        $this->setDefaultResponse($this->fixtureResponseBuilder->build($request));
 
         return parent::sendRequest($request);
     }
