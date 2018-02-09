@@ -17,6 +17,9 @@
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/mock-client": "^1.1"
     },
+    "suggest": {
+        "swisnl/php-http-fixture-client": "Allows for easily mocking API calls with fixtures in your tests"
+    },
     "autoload": {
         "psr-4": {
             "Swis\\JsonApi\\Client\\": "src/"
