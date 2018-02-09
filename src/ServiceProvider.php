@@ -11,8 +11,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Swis\JsonApi\Client\Client as ApiClient;
 use Swis\JsonApi\Client\DocumentClient as ApiDocumentClient;
-use Swis\JsonApi\Client\Fixtures\FixtureResponseBuilder;
-use Swis\JsonApi\Client\Fixtures\FixturesClient;
 use Swis\JsonApi\Client\Interfaces\ClientInterface as ApiClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface as ApiDocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
@@ -89,10 +87,6 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function getHttpClient(): HttpClient
     {
-        if (app()->environment('testing')) {
-            return $this->getFixturesClient();
-        }
-
         return HttpClientDiscovery::find();
     }
 
@@ -104,20 +98,5 @@ class ServiceProvider extends BaseServiceProvider
     protected function getMessageFactory(): MessageFactory
     {
         return MessageFactoryDiscovery::find();
-    }
-
-    /**
-     * @return FixturesClient
-     */
-    protected function getFixturesClient(): FixturesClient
-    {
-        $httpClient = new FixturesClient(
-            new FixtureResponseBuilder(
-                config('jsonapi.fixtures.path'),
-                config('jsonapi.fixtures.domain_aliases', [])
-            )
-        );
-
-        return $httpClient;
     }
 }

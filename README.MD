@@ -63,6 +63,5 @@ Explain relations.
 
 - CHANGELOG.MD
 - Testing
-- Extract fixtures client?
 - Remove resources? Seems redundant.         
 - Split serviceprovider binds.

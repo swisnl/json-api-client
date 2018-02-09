@@ -13,7 +13,6 @@
         "fzaninotto/faker": "^1.6",
         "friendsofphp/php-cs-fixer": "^2.0",
         "graham-campbell/testbench": "^4.0",
-        "guzzlehttp/psr7": "^1.0",
         "phpunit/phpunit": "^6.1",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/mock-client": "^1.1"
