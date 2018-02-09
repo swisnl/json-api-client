@@ -32,7 +32,7 @@ If you are using Laravel < 5.5 or have disabled package auto discover, you must 
 ``` php
 'providers' => [
     ...,
-    Swis\JsonApi\Client\Providers\ServiceProvider::class,
+    \Swis\JsonApi\Client\Providers\ServiceProvider::class,
 ],
 ```
 
@@ -124,12 +124,12 @@ Short description
 
 By default, all objects are an instance of `JenssegersItem`.
 You can, however, define your own items by registering them with the `TypeMapper`.
-This `TypeMapper` maps JSON API types to custom item models (please see below for more information about item models).
+This `TypeMapper` maps JSON API types to custom item models (please see below for more information about [item models](#item-models)).
 This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
 
 ### Mapping types
 
-You can manually register item with the `\Swis\JsonApi\Client\TypeMapper` or use the supplied `\Swis\JsonApi\Client\Providers\TypeMapperServiceProvider`:
+You can manually register items with the `\Swis\JsonApi\Client\TypeMapper` or use the supplied `\Swis\JsonApi\Client\Providers\TypeMapperServiceProvider`:
 
 ``` php
 use Swis\JsonApi\Providers\TypeMapperServiceProvider as BaseTypeMapperServiceProvider;
@@ -152,15 +152,61 @@ class TypeMapperServiceProvider extends BaseTypeMapperServiceProvider
 
 ## Item models
 
-Short description
+By default, all objects are an instance of `JenssegersItem`, but you can define your own models by implementing the `\Swis\JsonApi\Client\Interfaces\ItemInterface`.
+This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
+Please don't forget to register them with the `TypeMapper` as mentioned [above](#typemapper)!
 
-### Jenssegers
+### JenssegersItem
 
-Explain relations.
+The `JenssegersItem` extends [jenssegers/model](jenssegers/model), which provides a Laravel Eloquent-like base class.
+Please see it's documentation about the features it provides.
+On top of that, this package has implemented Laravel Eloquent-like relations.
 
-### Eloquent (EXPERIMENTAL)
+#### Relations
+
+The relations are basic variants of [Laravel Eloquent relationships](https://laravel.com/docs/eloquent-relationships) and provide a fluent interface to retrieve the related items.
+There are currently four relations available:
+
+ * `HasManyRelation`
+ * `HasOneRelation`
+ * `MorphToManyRelation`
+ * `MorphToRelation`
+
+Please see the following example about defining the relationships:
+
+``` php
+use Swis\JsonApi\Items\JenssegersItem;
+
+class AuthorItem extends JenssegersItem
+{
+    protected $type = 'author';
+
+    public function blogs()
+    {
+        return $this->hasMany(BlogItem::class);
+    }
+}
+
+class BlogItem extends JenssegersItem
+{
+    protected $type = 'blog';
+
+    public function author()
+    {
+        return $this->hasOne(AuthorItem::class);
+    }
+}
+```
+
+### EloquentItem (EXPERIMENTAL)
+
+The `EloquentItem` directly extends the [Laravel Eloquent Model](https://laravel.com/docs/eloquent) and uses the provided relations.
+Please note that this implementation is experimental and should not be used in production.
+
 
 ## Collections
+
+This package uses [Laravel Collections](https://laravel.com/docs/collections) as a wrapper for item arrays.
 
 
 ## ServiceProvider
