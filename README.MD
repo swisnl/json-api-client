@@ -39,18 +39,83 @@ If you are using Laravel < 5.5 or have disabled package auto discover, you must 
 
 ## Getting started
 
-Short description
+You can simply require the client as a dependency and use it in your class.
+You can, for example, make a repository that uses the DocumentClient:
+
+``` php
+use Swis\JsonApi\Interfaces\DocumentClientInterface;
+use Swis\JsonApi\Interfaces\ItemDocumentInterface;
+
+class BlogRepository
+{
+    protected $client;
+
+    public function __construct(DocumentClientInterface $client)
+    {
+        $this->client = $client;
+    }
+
+    public function all(array $parameters = [])
+    {
+        return $this->client->get('blogs?'.http_build_query($parameters));
+    }
+
+    public function create(ItemDocumentInterface $document, array $parameters = [])
+    {
+        return $this->client->post('blogs?'.http_build_query($parameters), $document);
+    }
+
+    public function find(string $id, array $parameters = [])
+    {
+        return $this->client->get('blogs/'.urlencode($id).'?'.http_build_query($parameters));
+    }
+
+    public function update(ItemDocumentInterface $document, array $parameters = [])
+    {
+        return $this->client->patch('blogs/'.urlencode($document->getData()->getId()).'?'.http_build_query($parameters), $document);
+    }
+
+    public function delete(string $id, array $parameters = [])
+    {
+        return $this->client->delete('blogs/'.urlencode($id).'?'.http_build_query($parameters));
+    }
+}
+```
+
+## Configuration
+
+The following is the default configuration provided by this package:
+
+``` php
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Base URI
+    |--------------------------------------------------------------------------
+    |
+    | Specify a base uri which will be prepended to every URI.
+    |
+    | Default: empty string
+    |
+    */
+    'base_uri' => '',
+];
+```
         
-### Publish configuration
+### Publish Configuration
 
-### Configure endpoint
+If you would like to make changes to the default configuration, publish and edit the configuration file:
+
+``` bash
+php artisan vendor:publish --provider="Swis\JsonApi\Client\ServiceProvider" --tag="config"
+```
 
 
-## Package flow 
+## Package flow
    
-Short description   
+Short description
    
-### DocumentClient 
+### DocumentClient
 
 ### Client (domme versie voor bijvoorbeeld binary bestanden)
 
