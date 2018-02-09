@@ -36,7 +36,8 @@ class ServiceProvider extends BaseServiceProvider
         );
 
         $this->registerSharedTypeMapper();
-        $this->registerApiClients();
+        $this->registerParser();
+        $this->registerClients();
     }
 
     protected function registerSharedTypeMapper()
@@ -49,7 +50,21 @@ class ServiceProvider extends BaseServiceProvider
         );
     }
 
-    protected function registerApiClients()
+    protected function registerParser()
+    {
+        $this->app->bind(
+            ParserInterface::class,
+            function (Application $app) {
+                return new Parser(
+                    new JsonApiClientManger(),
+                    new Hydrator($app->make(TypeMapperInterface::class)),
+                    new ErrorsParser()
+                );
+            }
+        );
+    }
+
+    protected function registerClients()
     {
         $this->app->bind(
             ApiClientInterface::class,
@@ -58,17 +73,6 @@ class ServiceProvider extends BaseServiceProvider
                     $this->getHttpClient(),
                     config('jsonapi.base_uri'),
                     $this->getMessageFactory()
-                );
-            }
-        );
-
-        $this->app->bind(
-            ParserInterface::class,
-            function (Application $app) {
-                return new Parser(
-                    new JsonApiClientManger(),
-                    new Hydrator($app->make(TypeMapperInterface::class)),
-                    new ErrorsParser()
                 );
             }
         );
@@ -90,11 +94,6 @@ class ServiceProvider extends BaseServiceProvider
         return HttpClientDiscovery::find();
     }
 
-    /**
-     * Should return a MessageFactory which has 2 method. get.
-     *
-     * @return \Http\Message\MessageFactory
-     */
     protected function getMessageFactory(): MessageFactory
     {
         return MessageFactoryDiscovery::find();

@@ -43,6 +43,11 @@
             "email": "bjorn@swis.nl"
         }
     ],
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "php-cs-fixer fix --dry-run -v",
+        "fix-style": "php-cs-fixer fix"
+    },
     "extra": {
         "laravel": {
             "providers": [
