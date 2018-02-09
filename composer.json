@@ -43,5 +43,12 @@
             "name": "Björn Brala",
             "email": "bjorn@swis.nl"
         }
-    ]
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Swis\\JsonApi\\ServiceProvider"
+            ]
+        }
+    }
 }
