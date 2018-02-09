@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Mocks\Items\Eloquent;
+namespace Swis\JsonApi\Client\Tests\Mocks\Items\Eloquent;
 
-use Swis\JsonApi\Items\EloquentItem;
+use Swis\JsonApi\Client\Items\EloquentItem;
 
 class MasterEloquentItem extends EloquentItem
 {

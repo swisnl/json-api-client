@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Items;
+namespace Swis\JsonApi\Client\Tests\Items;
 
-use Swis\JsonApi\Items\EloquentItem;
-use Swis\JsonApi\Tests\AbstractTest;
-use Swis\JsonApi\Tests\Mocks\Items\Eloquent\TypeLessEloquentItem;
+use Swis\JsonApi\Client\Items\EloquentItem;
+use Swis\JsonApi\Client\Tests\AbstractTest;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Eloquent\TypeLessEloquentItem;
 
 class EloquentItemTest extends AbstractTest
 {

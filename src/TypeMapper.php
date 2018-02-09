@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Interfaces\TypeMapperInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 
 class TypeMapper implements TypeMapperInterface
 {
@@ -43,7 +43,7 @@ class TypeMapper implements TypeMapperInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     public function getMapping(string $type)
     {

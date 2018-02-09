@@ -1,35 +1,35 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Interfaces\ClientInterface;
-use Swis\JsonApi\Interfaces\DocumentClientInterface;
-use Swis\JsonApi\Interfaces\DocumentInterface;
-use Swis\JsonApi\Interfaces\ItemDocumentInterface;
-use Swis\JsonApi\Interfaces\ParserInterface;
-use Swis\JsonApi\Interfaces\ResponseInterface;
+use Swis\JsonApi\Client\Interfaces\ClientInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentInterface;
+use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
+use Swis\JsonApi\Client\Interfaces\ParserInterface;
+use Swis\JsonApi\Client\Interfaces\ResponseInterface;
 
 class DocumentClient implements DocumentClientInterface
 {
     /**
-     * @var \Swis\JsonApi\Interfaces\ClientInterface
+     * @var \Swis\JsonApi\Client\Interfaces\ClientInterface
      */
     private $client;
 
     /**
-     * @var \Swis\JsonApi\ItemDocumentSerializer
+     * @var \Swis\JsonApi\Client\ItemDocumentSerializer
      */
     private $itemDocumentSerializer;
 
     /**
-     * @var \Swis\JsonApi\Interfaces\ParserInterface
+     * @var \Swis\JsonApi\Client\Interfaces\ParserInterface
      */
     private $parser;
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ClientInterface $client
-     * @param \Swis\JsonApi\ItemDocumentSerializer     $itemDocumentSerializer
-     * @param \Swis\JsonApi\Interfaces\ParserInterface $parser
+     * @param \Swis\JsonApi\Client\Interfaces\ClientInterface $client
+     * @param \Swis\JsonApi\Client\ItemDocumentSerializer     $itemDocumentSerializer
+     * @param \Swis\JsonApi\Client\Interfaces\ParserInterface $parser
      */
     public function __construct(
         ClientInterface $client,
@@ -60,7 +60,7 @@ class DocumentClient implements DocumentClientInterface
     /**
      * @param string $endpoint
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function get(string $endpoint): DocumentInterface
     {
@@ -68,10 +68,10 @@ class DocumentClient implements DocumentClientInterface
     }
 
     /**
-     * @param string                                         $endpoint
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $body
+     * @param string                                                $endpoint
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $body
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function post(string $endpoint, ItemDocumentInterface $body): DocumentInterface
     {
@@ -79,10 +79,10 @@ class DocumentClient implements DocumentClientInterface
     }
 
     /**
-     * @param string                                         $endpoint
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $body
+     * @param string                                                $endpoint
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $body
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function patch(string $endpoint, ItemDocumentInterface $body): DocumentInterface
     {
@@ -92,7 +92,7 @@ class DocumentClient implements DocumentClientInterface
     /**
      * @param string $endpoint
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function delete(string $endpoint): DocumentInterface
     {
@@ -100,7 +100,7 @@ class DocumentClient implements DocumentClientInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $body
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $body
      *
      * @return string
      */
@@ -122,7 +122,7 @@ class DocumentClient implements DocumentClientInterface
     /**
      * @param ResponseInterface $response
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     protected function parseResponse(ResponseInterface $response): DocumentInterface
     {

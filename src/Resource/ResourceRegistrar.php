@@ -1,19 +1,19 @@
 <?php
 
-namespace Swis\JsonApi\Resource;
+namespace Swis\JsonApi\Client\Resource;
 
-use Swis\JsonApi\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Resource\Interfaces\ResourceInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
+use Swis\JsonApi\Client\Resource\Interfaces\ResourceInterface;
 
 class ResourceRegistrar
 {
     /**
-     * @var \Swis\JsonApi\Interfaces\TypeMapperInterface
+     * @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface
      */
     private $typeMapper;
 
     /**
-     * @param \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper
+     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
      */
     public function __construct(TypeMapperInterface $typeMapper)
     {
@@ -21,7 +21,7 @@ class ResourceRegistrar
     }
 
     /**
-     * @param \Swis\JsonApi\Resource\Interfaces\ResourceInterface $resource
+     * @param \Swis\JsonApi\Client\Resource\Interfaces\ResourceInterface $resource
      */
     public function registerTypeMapping(ResourceInterface $resource)
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Interfaces\CollectionDocumentInterface;
+use Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface;
 
 class CollectionDocument extends Document implements CollectionDocumentInterface, \JsonSerializable
 {

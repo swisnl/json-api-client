@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Fixtures;
+namespace Swis\JsonApi\Client\Fixtures;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;

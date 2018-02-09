@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Errors;
+namespace Swis\JsonApi\Client\Errors;
 
 class Error
 {
@@ -30,23 +30,23 @@ class Error
     protected $detail;
 
     /**
-     * @var \Swis\JsonApi\Errors\ErrorSource|null
+     * @var \Swis\JsonApi\Client\Errors\ErrorSource|null
      */
     protected $source;
 
     /**
-     * @var \Swis\JsonApi\Errors\ErrorMeta|null
+     * @var \Swis\JsonApi\Client\Errors\ErrorMeta|null
      */
     protected $meta;
 
     /**
-     * @param string|null                           $id
-     * @param string|null                           $status
-     * @param string|null                           $code
-     * @param string|null                           $title
-     * @param string|null                           $detail
-     * @param \Swis\JsonApi\Errors\ErrorSource|null $source
-     * @param \Swis\JsonApi\Errors\ErrorMeta|null   $meta
+     * @param string|null                                  $id
+     * @param string|null                                  $status
+     * @param string|null                                  $code
+     * @param string|null                                  $title
+     * @param string|null                                  $detail
+     * @param \Swis\JsonApi\Client\Errors\ErrorSource|null $source
+     * @param \Swis\JsonApi\Client\Errors\ErrorMeta|null   $meta
      */
     public function __construct(
         string $id = null,
@@ -107,7 +107,7 @@ class Error
     }
 
     /**
-     * @return \Swis\JsonApi\Errors\ErrorSource|null
+     * @return \Swis\JsonApi\Client\Errors\ErrorSource|null
      */
     public function getSource()
     {
@@ -115,7 +115,7 @@ class Error
     }
 
     /**
-     * @return \Swis\JsonApi\Errors\ErrorMeta|null
+     * @return \Swis\JsonApi\Client\Errors\ErrorMeta|null
      */
     public function getMeta()
     {

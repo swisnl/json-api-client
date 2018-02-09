@@ -20,13 +20,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Swis\\JsonApi\\": "src/"
+            "Swis\\JsonApi\\Client\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4" : {
-            "Swis\\JsonApi\\Tests\\" : "tests/",
-            "Swis\\JsonApi\\Tests\\Mocks\\" : "tests/_mocks/"
+            "Swis\\JsonApi\\Client\\Tests\\" : "tests/",
+            "Swis\\JsonApi\\Client\\Tests\\Mocks\\" : "tests/_mocks/"
         }
     },
     "license": "MIT",

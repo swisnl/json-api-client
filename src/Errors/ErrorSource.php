@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Errors;
+namespace Swis\JsonApi\Client\Errors;
 
 class ErrorSource
 {

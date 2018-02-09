@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Fixtures;
+namespace Swis\JsonApi\Client\Fixtures;
 
 use Http\Discovery\MessageFactoryDiscovery;
 use Illuminate\Support\Str;
@@ -48,7 +48,7 @@ class FixtureResponseBuilder implements FixtureResponseBuilderInterface
      * @param \Psr\Http\Message\RequestInterface $request
      *
      * @throws \RuntimeException
-     * @throws \Swis\JsonApi\Fixtures\MockNotFoundException
+     * @throws \Swis\JsonApi\Client\Fixtures\MockNotFoundException
      *
      * @return ResponseInterface
      */
@@ -108,7 +108,7 @@ class FixtureResponseBuilder implements FixtureResponseBuilderInterface
      * @param \Psr\Http\Message\RequestInterface $request
      *
      * @throws \RuntimeException
-     * @throws \Swis\JsonApi\Fixtures\MockNotFoundException
+     * @throws \Swis\JsonApi\Client\Fixtures\MockNotFoundException
      *
      * @return string
      */
@@ -123,7 +123,7 @@ class FixtureResponseBuilder implements FixtureResponseBuilderInterface
      * @param \Psr\Http\Message\RequestInterface $request
      * @param string                             $type
      *
-     * @throws \Swis\JsonApi\Fixtures\MockNotFoundException
+     * @throws \Swis\JsonApi\Client\Fixtures\MockNotFoundException
      * @throws \RuntimeException
      *
      * @return string

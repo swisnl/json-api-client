@@ -1,23 +1,23 @@
 <?php
 
-namespace Swis\JsonApi\Fixtures\Guzzle;
+namespace Swis\JsonApi\Client\Fixtures\Guzzle;
 
 use GuzzleHttp\Handler\MockHandler;
 use Psr\Http\Message\RequestInterface;
-use Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface;
+use Swis\JsonApi\Client\Fixtures\FixtureResponseBuilderInterface;
 
 class FixturesHandler extends MockHandler
 {
     /**
-     * @var string|\Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface
+     * @var string|\Swis\JsonApi\Client\Fixtures\FixtureResponseBuilderInterface
      */
     protected $responseBuilder;
 
     /**
-     * @param \Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface $responseBuilder
-     * @param array|null                                             $queue
-     * @param callable|null                                          $onFulfilled
-     * @param callable|null                                          $onRejected
+     * @param \Swis\JsonApi\Client\Fixtures\FixtureResponseBuilderInterface $responseBuilder
+     * @param array|null                                                    $queue
+     * @param callable|null                                                 $onFulfilled
+     * @param callable|null                                                 $onRejected
      */
     public function __construct(
         FixtureResponseBuilderInterface $responseBuilder,

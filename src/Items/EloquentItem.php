@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\JsonApi\Items;
+namespace Swis\JsonApi\Client\Items;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection as IlluminateCollection;
 use Illuminate\Support\Str;
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 
 class EloquentItem extends Model implements ItemInterface
 {
@@ -117,7 +117,7 @@ class EloquentItem extends Model implements ItemInterface
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Collection
+     * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded(): Collection
     {

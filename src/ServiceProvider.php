@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
 use Art4\JsonApiClient\Utils\Manager as JsonApiClientManger;
 use Http\Client\HttpClient;
@@ -9,17 +9,17 @@ use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Swis\JsonApi\Client as ApiClient;
-use Swis\JsonApi\DocumentClient as ApiDocumentClient;
-use Swis\JsonApi\Fixtures\FixtureResponseBuilder;
-use Swis\JsonApi\Fixtures\FixturesClient;
-use Swis\JsonApi\Interfaces\ClientInterface as ApiClientInterface;
-use Swis\JsonApi\Interfaces\DocumentClientInterface as ApiDocumentClientInterface;
-use Swis\JsonApi\Interfaces\ParserInterface;
-use Swis\JsonApi\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\JsonApi\ErrorsParser;
-use Swis\JsonApi\JsonApi\Hydrator;
-use Swis\JsonApi\JsonApi\Parser;
+use Swis\JsonApi\Client\Client as ApiClient;
+use Swis\JsonApi\Client\DocumentClient as ApiDocumentClient;
+use Swis\JsonApi\Client\Fixtures\FixtureResponseBuilder;
+use Swis\JsonApi\Client\Fixtures\FixturesClient;
+use Swis\JsonApi\Client\Interfaces\ClientInterface as ApiClientInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentClientInterface as ApiDocumentClientInterface;
+use Swis\JsonApi\Client\Interfaces\ParserInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
+use Swis\JsonApi\Client\JsonApi\ErrorsParser;
+use Swis\JsonApi\Client\JsonApi\Hydrator;
+use Swis\JsonApi\Client\JsonApi\Parser;
 
 class ServiceProvider extends BaseServiceProvider
 {

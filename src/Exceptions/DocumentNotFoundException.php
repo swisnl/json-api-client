@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Exceptions;
+namespace Swis\JsonApi\Client\Exceptions;
 
 class DocumentNotFoundException extends \Exception
 {

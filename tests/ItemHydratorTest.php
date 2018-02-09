@@ -1,19 +1,19 @@
 <?php
 
-namespace Swis\JsonApi\Tests;
+namespace Swis\JsonApi\Client\Tests;
 
 use InvalidArgumentException;
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\ItemHydrator;
-use Swis\JsonApi\Items\JenssegersItem;
-use Swis\JsonApi\Relations\HasManyRelation;
-use Swis\JsonApi\Relations\HasOneRelation;
-use Swis\JsonApi\Relations\MorphToManyRelation;
-use Swis\JsonApi\Relations\MorphToRelation;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\AnotherRelatedJenssegersItem;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\RelatedJenssegersItem;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\WithRelationshipJenssegersItem;
-use Swis\JsonApi\TypeMapper;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\ItemHydrator;
+use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Relations\HasManyRelation;
+use Swis\JsonApi\Client\Relations\HasOneRelation;
+use Swis\JsonApi\Client\Relations\MorphToManyRelation;
+use Swis\JsonApi\Client\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\AnotherRelatedJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\RelatedJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithRelationshipJenssegersItem;
+use Swis\JsonApi\Client\TypeMapper;
 
 class ItemHydratorTest extends AbstractTest
 {
@@ -35,7 +35,7 @@ class ItemHydratorTest extends AbstractTest
     }
 
     /**
-     * @return \Swis\JsonApi\ItemHydrator
+     * @return \Swis\JsonApi\Client\ItemHydrator
      */
     private function getItemHydrator()
     {
@@ -62,7 +62,7 @@ class ItemHydratorTest extends AbstractTest
         $item = new WithRelationshipJenssegersItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Relations\HasOneRelation $hasOne */
+        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
         $hasOne = $item->getRelationship('hasone_relation');
 
         $this->assertInstanceOf(
@@ -103,7 +103,7 @@ class ItemHydratorTest extends AbstractTest
         $item = new WithRelationshipJenssegersItem();
 
         $item = $this->getItemHydrator()->hydrate($item, $data);
-        /** @var \Swis\JsonApi\Relations\HasManyRelation $hasMany */
+        /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
         $hasMany = $item->getRelationship('hasmany_relation');
 
         $this->assertInstanceOf(
@@ -175,7 +175,7 @@ class ItemHydratorTest extends AbstractTest
         $item = new WithRelationshipJenssegersItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Relations\MorphToRelation $morphTo */
+        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
         $morphTo = $item->getRelationship('morphto_relation');
 
         $this->assertInstanceOf(
@@ -239,7 +239,7 @@ class ItemHydratorTest extends AbstractTest
         $item = new WithRelationshipJenssegersItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Relations\MorphToManyRelation $morphToMany */
+        /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
         $morphToMany = $item->getRelationship('morphtomany_relation');
 
         $this->assertInstanceOf(
@@ -282,7 +282,7 @@ class ItemHydratorTest extends AbstractTest
         $item = new WithRelationshipJenssegersItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Relations\HasOneRelation $hasOne */
+        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
         $hasOne = $item->getRelationship('hasone_relation');
         $this->assertInstanceOf(HasOneRelation::class, $hasOne);
 
@@ -292,7 +292,7 @@ class ItemHydratorTest extends AbstractTest
         $this->assertEquals($data['hasone_relation']['id'], $hasOne->getId());
         $this->assertEquals('related-item', $hasOne->getType());
 
-        /** @var \Swis\JsonApi\Relations\HasOneRelation $hasOne */
+        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
         $hasOneParent = $hasOne->getIncluded()->getRelationship('parent_relation');
         $this->assertInstanceOf(HasOneRelation::class, $hasOneParent);
 
@@ -317,7 +317,7 @@ class ItemHydratorTest extends AbstractTest
         $item = new WithRelationshipJenssegersItem();
 
         $item = $this->getItemHydrator()->hydrate($item, $data);
-        /** @var \Swis\JsonApi\Relations\HasManyRelation $hasMany */
+        /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
         $hasMany = $item->getRelationship('hasmany_relation');
 
         $this->assertInstanceOf(

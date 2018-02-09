@@ -1,11 +1,11 @@
 <?php
 
-namespace Swis\JsonApi\Interfaces;
+namespace Swis\JsonApi\Client\Interfaces;
 
 interface ItemDocumentInterface extends DocumentInterface
 {
     /**
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     public function getData();
 

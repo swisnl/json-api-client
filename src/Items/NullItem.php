@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Items;
+namespace Swis\JsonApi\Client\Items;
 
 class NullItem extends JenssegersItem
 {

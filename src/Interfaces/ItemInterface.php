@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Interfaces;
+namespace Swis\JsonApi\Client\Interfaces;
 
 interface ItemInterface extends DataInterface
 {
@@ -90,7 +90,7 @@ interface ItemInterface extends DataInterface
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Collection
+     * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded();
 }

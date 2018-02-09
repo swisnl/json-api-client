@@ -1,15 +1,15 @@
 <?php
 
-namespace Swis\JsonApi\Relations;
+namespace Swis\JsonApi\Client\Relations;
 
-use Swis\JsonApi\Interfaces\DataInterface;
-use Swis\JsonApi\Interfaces\RelationInterface;
-use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
+use Swis\JsonApi\Client\Interfaces\RelationInterface;
+use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class HasOneRelation implements RelationInterface
 {
     /**
-     * @var \Swis\JsonApi\Items\JenssegersItem
+     * @var \Swis\JsonApi\Client\Items\JenssegersItem
      */
     protected $included;
 
@@ -24,7 +24,7 @@ class HasOneRelation implements RelationInterface
     protected $id;
 
     /**
-     * @var \Swis\JsonApi\Items\JenssegersItem
+     * @var \Swis\JsonApi\Client\Items\JenssegersItem
      */
     protected $parentItem;
 
@@ -34,8 +34,8 @@ class HasOneRelation implements RelationInterface
     protected $omitIncluded = false;
 
     /**
-     * @param string                             $type
-     * @param \Swis\JsonApi\Items\JenssegersItem $item
+     * @param string                                    $type
+     * @param \Swis\JsonApi\Client\Items\JenssegersItem $item
      */
     public function __construct(string $type, JenssegersItem $item)
     {
@@ -44,7 +44,7 @@ class HasOneRelation implements RelationInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\DataInterface $included
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $included
      *
      * @throws \InvalidArgumentException
      *
@@ -119,7 +119,7 @@ class HasOneRelation implements RelationInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Items\JenssegersItem|null
+     * @return \Swis\JsonApi\Client\Items\JenssegersItem|null
      */
     public function getIncluded()
     {

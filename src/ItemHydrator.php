@@ -1,25 +1,25 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Interfaces\ItemInterface;
-use Swis\JsonApi\Interfaces\RelationInterface;
-use Swis\JsonApi\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Items\JenssegersItem;
-use Swis\JsonApi\Relations\HasManyRelation;
-use Swis\JsonApi\Relations\HasOneRelation;
-use Swis\JsonApi\Relations\MorphToManyRelation;
-use Swis\JsonApi\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\RelationInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
+use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Relations\HasManyRelation;
+use Swis\JsonApi\Client\Relations\HasOneRelation;
+use Swis\JsonApi\Client\Relations\MorphToManyRelation;
+use Swis\JsonApi\Client\Relations\MorphToRelation;
 
 class ItemHydrator
 {
     /**
-     * @var \Swis\JsonApi\TypeMapper
+     * @var \Swis\JsonApi\Client\TypeMapper
      */
     private $typeMapper;
 
     /**
-     * @param \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper
+     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
      */
     public function __construct(TypeMapperInterface $typeMapper)
     {
@@ -27,12 +27,12 @@ class ItemHydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
-     * @param array                                  $attributes
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array                                         $attributes
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     public function hydrate(ItemInterface $item, array $attributes): ItemInterface
     {
@@ -43,8 +43,8 @@ class ItemHydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
-     * @param array|null                             $attributes
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array|null                                    $attributes
      */
     protected function fill(ItemInterface $item, array $attributes = null)
     {
@@ -54,8 +54,8 @@ class ItemHydrator
     /**
      * Get relationships from the attributes and add them to the item.
      *
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
-     * @param array                                  $attributes
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array                                         $attributes
      *
      * @throws \Exception
      */
@@ -84,12 +84,12 @@ class ItemHydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
-     * @param string                                 $availableRelation
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param string                                        $availableRelation
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Interfaces\RelationInterface
+     * @return \Swis\JsonApi\Client\Interfaces\RelationInterface
      */
     protected function getRelationFromItem(ItemInterface $item, string $availableRelation): RelationInterface
     {
@@ -102,10 +102,10 @@ class ItemHydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
-     * @param array                                  $attributes
-     * @param \Swis\JsonApi\Relations\HasOneRelation $relation
-     * @param string                                 $availableRelation
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array                                         $attributes
+     * @param \Swis\JsonApi\Client\Relations\HasOneRelation $relation
+     * @param string                                        $availableRelation
      *
      * @throws \InvalidArgumentException
      */
@@ -125,9 +125,9 @@ class ItemHydrator
     }
 
     /**
-     * @param array                                   $attributes
-     * @param string                                  $availableRelation
-     * @param \Swis\JsonApi\Relations\HasManyRelation $relation
+     * @param array                                          $attributes
+     * @param string                                         $availableRelation
+     * @param \Swis\JsonApi\Client\Relations\HasManyRelation $relation
      *
      * @throws \InvalidArgumentException
      */
@@ -145,9 +145,9 @@ class ItemHydrator
     }
 
     /**
-     * @param array                                   $attributes
-     * @param \Swis\JsonApi\Relations\MorphToRelation $relation
-     * @param string                                  $availableRelation
+     * @param array                                          $attributes
+     * @param \Swis\JsonApi\Client\Relations\MorphToRelation $relation
+     * @param string                                         $availableRelation
      *
      * @throws \InvalidArgumentException
      */
@@ -162,9 +162,9 @@ class ItemHydrator
     }
 
     /**
-     * @param array                                       $attributes
-     * @param \Swis\JsonApi\Relations\MorphToManyRelation $relation
-     * @param string                                      $availableRelation
+     * @param array                                              $attributes
+     * @param \Swis\JsonApi\Client\Relations\MorphToManyRelation $relation
+     * @param string                                             $availableRelation
      *
      * @throws \InvalidArgumentException
      */
@@ -181,13 +181,13 @@ class ItemHydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\RelationInterface $relation
-     * @param array                                      $relationData
-     * @param string|null                                $type
+     * @param \Swis\JsonApi\Client\Interfaces\RelationInterface $relation
+     * @param array                                             $relationData
+     * @param string|null                                       $type
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Items\JenssegersItem
+     * @return \Swis\JsonApi\Client\Items\JenssegersItem
      */
     protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): JenssegersItem
     {

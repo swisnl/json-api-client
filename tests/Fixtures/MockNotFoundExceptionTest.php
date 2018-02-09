@@ -1,9 +1,9 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Fixtures;
+namespace Swis\JsonApi\Client\Tests\Fixtures;
 
-use Swis\JsonApi\Fixtures\MockNotFoundException;
-use Swis\JsonApi\Tests\AbstractTest;
+use Swis\JsonApi\Client\Fixtures\MockNotFoundException;
+use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class MockNotFoundExceptionTest extends AbstractTest
 {

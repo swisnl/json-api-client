@@ -1,36 +1,36 @@
 <?php
 
-namespace Swis\JsonApi\Interfaces;
+namespace Swis\JsonApi\Client\Interfaces;
 
 interface DocumentClientInterface
 {
     /**
      * @param string $endpoint
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function get(string $endpoint): DocumentInterface;
 
     /**
-     * @param string                                         $endpoint
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $document
+     * @param string                                                $endpoint
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function patch(string $endpoint, ItemDocumentInterface $document): DocumentInterface;
 
     /**
-     * @param string                                         $endpoint
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $document
+     * @param string                                                $endpoint
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function post(string $endpoint, ItemDocumentInterface $document): DocumentInterface;
 
     /**
      * @param string $endpoint
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function delete(string $endpoint): DocumentInterface;
 

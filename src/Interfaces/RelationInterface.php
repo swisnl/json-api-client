@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Interfaces;
+namespace Swis\JsonApi\Client\Interfaces;
 
 interface RelationInterface
 {
@@ -17,7 +17,7 @@ interface RelationInterface
     public function setType(string $type);
 
     /**
-     * @param \Swis\JsonApi\Interfaces\DataInterface $included
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $included
      *
      * @return static
      */
@@ -29,7 +29,7 @@ interface RelationInterface
     public function dissociate();
 
     /**
-     * @return null|\Swis\JsonApi\Collection|\Swis\JsonApi\Interfaces\DataInterface|\Swis\JsonApi\Interfaces\ItemInterface
+     * @return null|\Swis\JsonApi\Client\Collection|\Swis\JsonApi\Client\Interfaces\DataInterface|\Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     public function getIncluded();
 

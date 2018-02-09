@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Resources;
+namespace Swis\JsonApi\Client\Tests\Resources;
 
-use Swis\JsonApi\Resource\Interfaces\ResourceInterface;
-use Swis\JsonApi\Resource\ResourceRegistrar;
-use Swis\JsonApi\Tests\AbstractTest;
-use Swis\JsonApi\Tests\Mocks\ResourceRegistrar\MockItem;
-use Swis\JsonApi\TypeMapper;
+use Swis\JsonApi\Client\Resource\Interfaces\ResourceInterface;
+use Swis\JsonApi\Client\Resource\ResourceRegistrar;
+use Swis\JsonApi\Client\Tests\AbstractTest;
+use Swis\JsonApi\Client\Tests\Mocks\ResourceRegistrar\MockItem;
+use Swis\JsonApi\Client\TypeMapper;
 
 class ResourceRegistrarTest extends AbstractTest
 {
@@ -20,7 +20,7 @@ class ResourceRegistrarTest extends AbstractTest
         $resourceRegistrar = new ResourceRegistrar($typeMapper);
         $item = new MockItem();
 
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swis\JsonApi\Resource\Interfaces\ResourceInterface $resource */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swis\JsonApi\Client\Resource\Interfaces\ResourceInterface $resource */
         $resource = $this->createMock(ResourceInterface::class);
         $resource->method('getItem')->willReturn($item);
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Tests;
+namespace Swis\JsonApi\Client\Tests;
 
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\CollectionDocumentBuilder;
-use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\CollectionDocumentBuilder;
+use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class CollectionDocumentBuilderTest extends AbstractTest
 {
@@ -22,7 +22,7 @@ class CollectionDocumentBuilderTest extends AbstractTest
 
         $collectionDocument = $collectionDocumentBuilder->build($data);
 
-        /** @var \Swis\JsonApi\Collection $items */
+        /** @var \Swis\JsonApi\Client\Collection $items */
         $items = $collectionDocument->getData();
         static::assertInstanceOf(Collection::class, $items);
 

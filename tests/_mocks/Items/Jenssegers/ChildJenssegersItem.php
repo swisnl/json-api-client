@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Mocks\Items\Jenssegers;
+namespace Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers;
 
-use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class ChildJenssegersItem extends JenssegersItem
 {

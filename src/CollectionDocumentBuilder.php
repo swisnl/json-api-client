@@ -1,13 +1,13 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
 class CollectionDocumentBuilder
 {
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemInterface[] $items
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface[] $items
      *
-     * @return \Swis\JsonApi\CollectionDocument
+     * @return \Swis\JsonApi\Client\CollectionDocument
      */
     public function build(array $items)
     {

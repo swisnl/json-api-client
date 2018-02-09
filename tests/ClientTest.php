@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Tests;
+namespace Swis\JsonApi\Client\Tests;
 
 use Http\Client\Exception\HttpException;
 use Http\Discovery\MessageFactoryDiscovery;
-use Swis\JsonApi\Client;
+use Swis\JsonApi\Client\Client;
 
 class ClientTest extends AbstractTest
 {

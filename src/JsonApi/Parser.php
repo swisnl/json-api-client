@@ -1,17 +1,17 @@
 <?php
 
-namespace Swis\JsonApi\JsonApi;
+namespace Swis\JsonApi\Client\JsonApi;
 
 use Art4\JsonApiClient\DocumentInterface as JsonApiDocumentInterface;
 use Art4\JsonApiClient\Resource\ResourceInterface as JsonApiResourceInterface;
 use Art4\JsonApiClient\Utils\Manager as Art4JsonApiClientManager;
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\CollectionDocument;
-use Swis\JsonApi\Document;
-use Swis\JsonApi\Errors\ErrorCollection;
-use Swis\JsonApi\Interfaces\DocumentInterface;
-use Swis\JsonApi\Interfaces\ParserInterface;
-use Swis\JsonApi\ItemDocument;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\CollectionDocument;
+use Swis\JsonApi\Client\Document;
+use Swis\JsonApi\Client\Errors\ErrorCollection;
+use Swis\JsonApi\Client\Interfaces\DocumentInterface;
+use Swis\JsonApi\Client\Interfaces\ParserInterface;
+use Swis\JsonApi\Client\ItemDocument;
 
 class Parser implements ParserInterface
 {
@@ -21,19 +21,19 @@ class Parser implements ParserInterface
     protected $manager;
 
     /**
-     * @var \Swis\JsonApi\JsonApi\Hydrator
+     * @var \Swis\JsonApi\Client\JsonApi\Hydrator
      */
     private $hydrator;
 
     /**
-     * @var \Swis\JsonApi\JsonApi\ErrorsParser
+     * @var \Swis\JsonApi\Client\JsonApi\ErrorsParser
      */
     private $errorsParser;
 
     /**
-     * @param \Art4\JsonApiClient\Utils\Manager  $manager
-     * @param \Swis\JsonApi\JsonApi\Hydrator     $hydrator
-     * @param \Swis\JsonApi\JsonApi\ErrorsParser $errorsParser
+     * @param \Art4\JsonApiClient\Utils\Manager         $manager
+     * @param \Swis\JsonApi\Client\JsonApi\Hydrator     $hydrator
+     * @param \Swis\JsonApi\Client\JsonApi\ErrorsParser $errorsParser
      */
     public function __construct(Art4JsonApiClientManager $manager, Hydrator $hydrator, ErrorsParser $errorsParser)
     {
@@ -43,7 +43,7 @@ class Parser implements ParserInterface
     }
 
     /**
-     * @return \Swis\JsonApi\JsonApi\Hydrator
+     * @return \Swis\JsonApi\Client\JsonApi\Hydrator
      */
     public function getHydrator(): Hydrator
     {
@@ -55,7 +55,7 @@ class Parser implements ParserInterface
      *
      * @throws \DomainException
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function deserialize(string $json): DocumentInterface
     {
@@ -98,7 +98,7 @@ class Parser implements ParserInterface
      *
      * @throws \DomainException
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     protected function buildDataDocument(JsonApiDocumentInterface $jsonApiDocument): DocumentInterface
     {
@@ -192,7 +192,7 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
-     * @return \Swis\JsonApi\Errors\ErrorCollection
+     * @return \Swis\JsonApi\Client\Errors\ErrorCollection
      */
     private function parseErrors(JsonApiDocumentInterface $document): ErrorCollection
     {
@@ -218,7 +218,7 @@ class Parser implements ParserInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\DocumentInterface $document
+     * @param \Swis\JsonApi\Client\Interfaces\DocumentInterface $document
      *
      * @return string
      */

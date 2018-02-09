@@ -1,18 +1,18 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Exceptions\DocumentNotFoundException;
-use Swis\JsonApi\Exceptions\DocumentTypeException;
-use Swis\JsonApi\Interfaces\CollectionDocumentInterface;
-use Swis\JsonApi\Interfaces\DocumentClientInterface;
-use Swis\JsonApi\Interfaces\ItemDocumentInterface;
-use Swis\JsonApi\Resource\Interfaces\ResourceRepositoryInterface;
+use Swis\JsonApi\Client\Exceptions\DocumentNotFoundException;
+use Swis\JsonApi\Client\Exceptions\DocumentTypeException;
+use Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
+use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
+use Swis\JsonApi\Client\Resource\Interfaces\ResourceRepositoryInterface;
 
 class Repository implements ResourceRepositoryInterface
 {
     /**
-     * @var \Swis\JsonApi\Interfaces\DocumentClientInterface
+     * @var \Swis\JsonApi\Client\Interfaces\DocumentClientInterface
      */
     protected $client;
 
@@ -22,7 +22,7 @@ class Repository implements ResourceRepositoryInterface
     protected $endpoint = '';
 
     /**
-     * @param \Swis\JsonApi\Interfaces\DocumentClientInterface $client
+     * @param \Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client
      */
     public function __construct(DocumentClientInterface $client)
     {
@@ -32,9 +32,9 @@ class Repository implements ResourceRepositoryInterface
     /**
      * @param array $parameters
      *
-     * @throws \Swis\JsonApi\Exceptions\DocumentTypeException
+     * @throws \Swis\JsonApi\Client\Exceptions\DocumentTypeException
      *
-     * @return \Swis\JsonApi\Interfaces\CollectionDocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface
      */
     public function all(array $parameters = [])
     {
@@ -50,7 +50,7 @@ class Repository implements ResourceRepositoryInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Interfaces\DocumentClientInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentClientInterface
      */
     public function getClient()
     {
@@ -69,10 +69,10 @@ class Repository implements ResourceRepositoryInterface
      * @param       $id
      * @param array $parameters
      *
-     * @throws \Swis\JsonApi\Exceptions\DocumentNotFoundException
-     * @throws \Swis\JsonApi\Exceptions\DocumentTypeException
+     * @throws \Swis\JsonApi\Client\Exceptions\DocumentNotFoundException
+     * @throws \Swis\JsonApi\Client\Exceptions\DocumentTypeException
      *
-     * @return \Swis\JsonApi\Interfaces\ItemDocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface
      */
     public function find($id, array $parameters = [])
     {
@@ -91,10 +91,10 @@ class Repository implements ResourceRepositoryInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $document
-     * @param array                                          $parameters
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
+     * @param array                                                 $parameters
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function save(ItemDocumentInterface $document, array $parameters = [])
     {
@@ -106,10 +106,10 @@ class Repository implements ResourceRepositoryInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $document
-     * @param array                                          $parameters
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
+     * @param array                                                 $parameters
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     protected function saveNew(ItemDocumentInterface $document, array $parameters = [])
     {
@@ -117,10 +117,10 @@ class Repository implements ResourceRepositoryInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $document
-     * @param array                                          $parameters
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
+     * @param array                                                 $parameters
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     protected function saveExisting(ItemDocumentInterface $document, array $parameters = [])
     {
@@ -131,10 +131,10 @@ class Repository implements ResourceRepositoryInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $document
-     * @param array                                          $parameters
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
+     * @param array                                                 $parameters
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function delete(ItemDocumentInterface $document, array $parameters = [])
     {
@@ -145,7 +145,7 @@ class Repository implements ResourceRepositoryInterface
      * @param       $id
      * @param array $parameters
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function deleteById($id, array $parameters = [])
     {

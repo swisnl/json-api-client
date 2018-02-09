@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Mocks\ResourceRegistrar;
+namespace Swis\JsonApi\Client\Tests\Mocks\ResourceRegistrar;
 
-use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class MockItem extends JenssegersItem
 {

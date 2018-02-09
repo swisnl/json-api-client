@@ -1,13 +1,13 @@
 <?php
 
-namespace Swis\JsonApi\Resource\Interfaces;
+namespace Swis\JsonApi\Client\Resource\Interfaces;
 
-use Swis\JsonApi\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 
 interface ResourceInterface
 {
     /**
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     public function getItem(): ItemInterface;
 }

@@ -1,18 +1,18 @@
 <?php
 
-namespace Swis\JsonApi\Resource;
+namespace Swis\JsonApi\Client\Resource;
 
 use Illuminate\Support\ServiceProvider;
 
 class ResourceServiceProvider extends ServiceProvider
 {
     /**
-     * @var \Swis\JsonApi\Resource\Interfaces\ResourceInterface[]
+     * @var \Swis\JsonApi\Client\Resource\Interfaces\ResourceInterface[]
      */
     protected $resources = [];
 
     /**
-     * @param \Swis\JsonApi\Resource\ResourceRegistrar $resourceRegistrar
+     * @param \Swis\JsonApi\Client\Resource\ResourceRegistrar $resourceRegistrar
      */
     public function boot(ResourceRegistrar $resourceRegistrar)
     {

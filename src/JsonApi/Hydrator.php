@@ -1,26 +1,26 @@
 <?php
 
-namespace Swis\JsonApi\JsonApi;
+namespace Swis\JsonApi\Client\JsonApi;
 
 use Art4\JsonApiClient\AccessInterface;
 use Art4\JsonApiClient\Resource\CollectionInterface as JsonApiCollection;
 use Art4\JsonApiClient\Resource\IdentifierCollection;
 use Art4\JsonApiClient\Resource\ItemInterface as JsonApItem;
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\Interfaces\ItemInterface;
-use Swis\JsonApi\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Items\JenssegersItem;
-use Swis\JsonApi\Items\NullItem;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
+use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Items\NullItem;
 
 class Hydrator
 {
     /**
-     * @var \Swis\JsonApi\Interfaces\TypeMapperInterface
+     * @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface
      */
     private $typeMapper;
 
     /**
-     * @param \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper
+     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
      */
     public function __construct(TypeMapperInterface $typeMapper)
     {
@@ -30,7 +30,7 @@ class Hydrator
     /**
      * @param \Art4\JsonApiClient\Resource\CollectionInterface $jsonApiCollection
      *
-     * @return \Swis\JsonApi\Collection
+     * @return \Swis\JsonApi\Client\Collection
      */
     public function hydrateCollection(JsonApiCollection $jsonApiCollection)
     {
@@ -45,7 +45,7 @@ class Hydrator
     /**
      * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
      *
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     public function hydrateItem(JsonApItem $jsonApiItem)
     {
@@ -62,7 +62,7 @@ class Hydrator
     /**
      * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
      *
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     protected function getItemClass(JsonApItem $jsonApiItem): ItemInterface
     {
@@ -75,8 +75,8 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
-     * @param \Swis\JsonApi\Interfaces\ItemInterface     $item
+     * @param \Art4\JsonApiClient\Resource\ItemInterface    $jsonApiItem
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      */
     protected function hydrateAttributes(JsonApItem $jsonApiItem, ItemInterface $item)
     {
@@ -86,8 +86,8 @@ class Hydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Collection $jsonApiItems
-     * @param \Swis\JsonApi\Collection $items
+     * @param \Swis\JsonApi\Client\Collection $jsonApiItems
+     * @param \Swis\JsonApi\Client\Collection $items
      */
     public function hydrateRelationships(Collection $jsonApiItems, Collection $items)
     {
@@ -139,10 +139,10 @@ class Hydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Collection            $included
+     * @param \Swis\JsonApi\Client\Collection     $included
      * @param \Art4\JsonApiClient\AccessInterface $accessor
      *
-     * @return \Swis\JsonApi\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     protected function getIncludedItem(Collection $included, AccessInterface $accessor): ItemInterface
     {
@@ -155,8 +155,8 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\AccessInterface    $accessor
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
+     * @param \Art4\JsonApiClient\AccessInterface           $accessor
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      *
      * @return bool
      */
@@ -167,10 +167,10 @@ class Hydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Collection                          $included
+     * @param \Swis\JsonApi\Client\Collection                   $included
      * @param \Art4\JsonApiClient\Resource\IdentifierCollection $collection
      *
-     * @return \Swis\JsonApi\Collection
+     * @return \Swis\JsonApi\Client\Collection
      */
     protected function getIncludedItems(Collection $included, IdentifierCollection $collection): Collection
     {
@@ -182,8 +182,8 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\Identifier[] $relatedIdentifiers
-     * @param \Swis\JsonApi\Interfaces\ItemInterface    $item
+     * @param \Art4\JsonApiClient\Resource\Identifier[]     $relatedIdentifiers
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      *
      * @return bool
      */

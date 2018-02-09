@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\JsonApi\Tests\Items;
+namespace Swis\JsonApi\Client\Tests\Items;
 
-use Swis\JsonApi\Items\JenssegersItem;
-use Swis\JsonApi\Relations\HasOneRelation;
-use Swis\JsonApi\Tests\AbstractTest;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
+use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Relations\HasOneRelation;
+use Swis\JsonApi\Client\Tests\AbstractTest;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
 
 class JenssegersItemRelationsTest extends AbstractTest
 {

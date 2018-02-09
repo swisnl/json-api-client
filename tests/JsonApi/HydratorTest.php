@@ -1,20 +1,20 @@
 <?php
 
-namespace Swis\JsonApi\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\JsonApi;
 
 use Art4\JsonApiClient\Resource\CollectionInterface;
 use Art4\JsonApiClient\Utils\Manager;
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\Items\JenssegersItem;
-use Swis\JsonApi\JsonApi\Hydrator;
-use Swis\JsonApi\Relations\HasOneRelation;
-use Swis\JsonApi\Relations\MorphToManyRelation;
-use Swis\JsonApi\Relations\MorphToRelation;
-use Swis\JsonApi\Tests\AbstractTest;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
-use Swis\JsonApi\Tests\Mocks\Items\Jenssegers\WithoutRelationshipsJenssegersItem;
-use Swis\JsonApi\TypeMapper;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\JsonApi\Hydrator;
+use Swis\JsonApi\Client\Relations\HasOneRelation;
+use Swis\JsonApi\Client\Relations\MorphToManyRelation;
+use Swis\JsonApi\Client\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Tests\AbstractTest;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithoutRelationshipsJenssegersItem;
+use Swis\JsonApi\Client\TypeMapper;
 
 class HydratorTest extends AbstractTest
 {
@@ -38,7 +38,7 @@ class HydratorTest extends AbstractTest
     }
 
     /**
-     * @return \Swis\JsonApi\JsonApi\Hydrator
+     * @return \Swis\JsonApi\Client\JsonApi\Hydrator
      */
     protected function getHydrator(): Hydrator
     {
@@ -46,7 +46,7 @@ class HydratorTest extends AbstractTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Swis\JsonApi\Interfaces\TypeMapperInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Swis\JsonApi\Client\Interfaces\TypeMapperInterface
      */
     protected function getTypeMapperMock()
     {
@@ -204,7 +204,7 @@ class HydratorTest extends AbstractTest
     public function it_hydrates_relationships()
     {
         // Register the mocked type
-        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildJenssegersItem::class);
         $typeMapper->setMapping('master', MasterJenssegersItem::class);
@@ -292,7 +292,7 @@ class HydratorTest extends AbstractTest
     public function it_hydrates_a_morph_to_relation()
     {
         // Register the mocked type
-        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildJenssegersItem::class);
         $typeMapper->setMapping('master', MasterJenssegersItem::class);
@@ -323,7 +323,7 @@ class HydratorTest extends AbstractTest
     public function it_hydrates_a_morph_to_many_relation()
     {
         // Register the mocked type
-        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildJenssegersItem::class);
         $typeMapper->setMapping('master', MasterJenssegersItem::class);
@@ -354,7 +354,7 @@ class HydratorTest extends AbstractTest
     public function it_hydrates_an_unknown_relation_as_morph_to()
     {
         // Register the mocked type
-        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsJenssegersItem::class);
         $hydrator = new Hydrator($typeMapper);
@@ -384,7 +384,7 @@ class HydratorTest extends AbstractTest
     public function it_hydrates_an_unknown_relation_as_morph_to_many()
     {
         // Register the mocked type
-        /** @var \Swis\JsonApi\Interfaces\TypeMapperInterface $typeMapper */
+        /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsJenssegersItem::class);
         $hydrator = new Hydrator($typeMapper);

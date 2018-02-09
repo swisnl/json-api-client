@@ -1,9 +1,9 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
-use Swis\JsonApi\Interfaces\ResponseInterface;
+use Swis\JsonApi\Client\Interfaces\ResponseInterface;
 
 class Response implements ResponseInterface
 {

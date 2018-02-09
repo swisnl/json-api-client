@@ -1,8 +1,8 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Interfaces\DataInterface;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
 
 class Collection extends \Illuminate\Support\Collection implements DataInterface
 {

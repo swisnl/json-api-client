@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Tests;
+namespace Swis\JsonApi\Client\Tests;
 
 use InvalidArgumentException;
-use Swis\JsonApi\Items\JenssegersItem;
-use Swis\JsonApi\TypeMapper;
+use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\TypeMapper;
 
 class TypeMapperTest extends AbstractTest
 {

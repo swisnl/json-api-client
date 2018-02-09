@@ -1,27 +1,27 @@
 <?php
 
-namespace Swis\JsonApi\Interfaces;
+namespace Swis\JsonApi\Client\Interfaces;
 
-use Swis\JsonApi\JsonApi\Hydrator;
+use Swis\JsonApi\Client\JsonApi\Hydrator;
 
 interface ParserInterface
 {
     /**
      * @param string $json
      *
-     * @return \Swis\JsonApi\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function deserialize(string $json): DocumentInterface;
 
     /**
-     * @param \Swis\JsonApi\Interfaces\DocumentInterface $json
+     * @param \Swis\JsonApi\Client\Interfaces\DocumentInterface $json
      *
      * @return string
      */
     public function serialize(DocumentInterface $json): string;
 
     /**
-     * @return \Swis\JsonApi\JsonApi\Hydrator
+     * @return \Swis\JsonApi\Client\JsonApi\Hydrator
      */
     public function getHydrator(): Hydrator;
 }

@@ -1,17 +1,17 @@
 <?php
 
-namespace Swis\JsonApi\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\JsonApi;
 
 use Art4\JsonApiClient\Utils\Manager;
-use Swis\JsonApi\Errors\Error;
-use Swis\JsonApi\Errors\ErrorCollection;
-use Swis\JsonApi\Errors\ErrorSource;
-use Swis\JsonApi\JsonApi\ErrorsParser;
-use Swis\JsonApi\Tests\AbstractTest;
+use Swis\JsonApi\Client\Errors\Error;
+use Swis\JsonApi\Client\Errors\ErrorCollection;
+use Swis\JsonApi\Client\Errors\ErrorSource;
+use Swis\JsonApi\Client\JsonApi\ErrorsParser;
+use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class ErrorsParserTest extends AbstractTest
 {
-    /** @var \Swis\JsonApi\JsonApi\ErrorsParser */
+    /** @var \Swis\JsonApi\Client\JsonApi\ErrorsParser */
     public static $parser;
 
     public static function setUpBeforeClass()

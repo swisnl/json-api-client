@@ -1,14 +1,14 @@
 <?php
 
-namespace Swis\JsonApi\Relations;
+namespace Swis\JsonApi\Client\Relations;
 
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\Interfaces\DataInterface;
-use Swis\JsonApi\Interfaces\RelationInterface;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
+use Swis\JsonApi\Client\Interfaces\RelationInterface;
 
 class MorphToManyRelation implements RelationInterface
 {
-    /** @var \Swis\JsonApi\Collection */
+    /** @var \Swis\JsonApi\Client\Collection */
     protected $included;
 
     /**
@@ -63,7 +63,7 @@ class MorphToManyRelation implements RelationInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Collection
+     * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded(): Collection
     {
@@ -71,7 +71,7 @@ class MorphToManyRelation implements RelationInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\DataInterface $included
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $included
      *
      * @throws \InvalidArgumentException
      *

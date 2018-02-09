@@ -1,12 +1,12 @@
 <?php
 
-namespace Swis\JsonApi\Fixtures\Guzzle;
+namespace Swis\JsonApi\Client\Fixtures\Guzzle;
 
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Swis\JsonApi\Fixtures\FixtureResponseBuilder as BaseFixtureResponseBuilder;
-use Swis\JsonApi\Fixtures\FixtureResponseBuilderInterface;
+use Swis\JsonApi\Client\Fixtures\FixtureResponseBuilder as BaseFixtureResponseBuilder;
+use Swis\JsonApi\Client\Fixtures\FixtureResponseBuilderInterface;
 
 class FixtureResponseBuilder extends BaseFixtureResponseBuilder
 {
@@ -14,7 +14,7 @@ class FixtureResponseBuilder extends BaseFixtureResponseBuilder
      * @param \Psr\Http\Message\RequestInterface $request
      *
      * @throws \RuntimeException
-     * @throws \Swis\JsonApi\Fixtures\MockNotFoundException
+     * @throws \Swis\JsonApi\Client\Fixtures\MockNotFoundException
      *
      * @return ResponseInterface
      */

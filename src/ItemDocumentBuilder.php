@@ -1,18 +1,18 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 
 class ItemDocumentBuilder
 {
     /**
-     * @var \Swis\JsonApi\ItemHydrator
+     * @var \Swis\JsonApi\Client\ItemHydrator
      */
     private $itemHydrator;
 
     /**
-     * @param \Swis\JsonApi\ItemHydrator $itemHydrator
+     * @param \Swis\JsonApi\Client\ItemHydrator $itemHydrator
      */
     public function __construct(ItemHydrator $itemHydrator)
     {
@@ -20,11 +20,11 @@ class ItemDocumentBuilder
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemInterface $item
-     * @param array                                  $attributes
-     * @param string                                 $id
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array                                         $attributes
+     * @param string                                        $id
      *
-     * @return \Swis\JsonApi\ItemDocument
+     * @return \Swis\JsonApi\Client\ItemDocument
      */
     public function build(ItemInterface $item, array $attributes, $id = null)
     {

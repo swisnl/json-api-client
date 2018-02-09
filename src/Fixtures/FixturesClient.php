@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Fixtures;
+namespace Swis\JsonApi\Client\Fixtures;
 
 use Http\Message\ResponseFactory;
 use Http\Mock\Client;

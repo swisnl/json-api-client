@@ -1,15 +1,15 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Errors\ErrorCollection;
-use Swis\JsonApi\Interfaces\DataInterface;
-use Swis\JsonApi\Interfaces\DocumentInterface;
+use Swis\JsonApi\Client\Errors\ErrorCollection;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 
 class Document implements DocumentInterface
 {
     /**
-     * @var \Swis\JsonApi\Interfaces\DataInterface
+     * @var \Swis\JsonApi\Client\Interfaces\DataInterface
      */
     protected $data;
 
@@ -24,12 +24,12 @@ class Document implements DocumentInterface
     protected $links = [];
 
     /**
-     * @var \Swis\JsonApi\Errors\ErrorCollection
+     * @var \Swis\JsonApi\Client\Errors\ErrorCollection
      */
     protected $errors;
 
     /**
-     * @var \Swis\JsonApi\Collection
+     * @var \Swis\JsonApi\Client\Collection
      */
     protected $included;
 
@@ -77,7 +77,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Errors\ErrorCollection
+     * @return \Swis\JsonApi\Client\Errors\ErrorCollection
      */
     public function getErrors(): ErrorCollection
     {
@@ -85,7 +85,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Errors\ErrorCollection $errors
+     * @param \Swis\JsonApi\Client\Errors\ErrorCollection $errors
      */
     public function setErrors(ErrorCollection $errors)
     {
@@ -101,7 +101,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Collection
+     * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded(): Collection
     {
@@ -109,7 +109,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Collection $included
+     * @param \Swis\JsonApi\Client\Collection $included
      *
      * @return static
      */
@@ -137,7 +137,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Interfaces\DataInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DataInterface
      */
     public function getData()
     {
@@ -145,7 +145,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Interfaces\DataInterface $data
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $data
      *
      * @return static
      */

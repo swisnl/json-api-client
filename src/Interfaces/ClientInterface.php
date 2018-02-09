@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Interfaces;
+namespace Swis\JsonApi\Client\Interfaces;
 
 interface ClientInterface
 {
@@ -8,7 +8,7 @@ interface ClientInterface
      * @param string $endpoint
      * @param array  $headers
      *
-     * @return \Swis\JsonApi\Interfaces\ResponseInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
      */
     public function get(string $endpoint, array $headers = []);
 
@@ -17,7 +17,7 @@ interface ClientInterface
      * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
      * @param array                                                                          $headers
      *
-     * @return \Swis\JsonApi\Interfaces\ResponseInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
      */
     public function patch(string $endpoint, $body, array $headers = []);
 
@@ -26,7 +26,7 @@ interface ClientInterface
      * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
      * @param array                                                                          $headers
      *
-     * @return \Swis\JsonApi\Interfaces\ResponseInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
      */
     public function post(string $endpoint, $body, array $headers = []);
 
@@ -34,7 +34,7 @@ interface ClientInterface
      * @param string $endpoint
      * @param array  $headers
      *
-     * @return \Swis\JsonApi\Interfaces\ResponseInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
      */
     public function delete(string $endpoint, array $headers = []);
 

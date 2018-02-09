@@ -1,15 +1,15 @@
 <?php
 
-namespace Swis\JsonApi\Items;
+namespace Swis\JsonApi\Client\Items;
 
 use Jenssegers\Model\Model;
-use Swis\JsonApi\Collection;
-use Swis\JsonApi\Interfaces\ItemInterface;
-use Swis\JsonApi\Interfaces\RelationInterface;
-use Swis\JsonApi\Relations\HasManyRelation;
-use Swis\JsonApi\Relations\HasOneRelation;
-use Swis\JsonApi\Relations\MorphToManyRelation;
-use Swis\JsonApi\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\RelationInterface;
+use Swis\JsonApi\Client\Relations\HasManyRelation;
+use Swis\JsonApi\Client\Relations\HasOneRelation;
+use Swis\JsonApi\Client\Relations\MorphToManyRelation;
+use Swis\JsonApi\Client\Relations\MorphToRelation;
 
 class JenssegersItem extends Model implements ItemInterface
 {
@@ -31,7 +31,7 @@ class JenssegersItem extends Model implements ItemInterface
     protected $initial = [];
 
     /**
-     * @var \Swis\JsonApi\Interfaces\RelationInterface[]
+     * @var \Swis\JsonApi\Client\Interfaces\RelationInterface[]
      */
     protected $relationships = [];
 
@@ -134,7 +134,7 @@ class JenssegersItem extends Model implements ItemInterface
     {
         $relationships = [];
 
-        /** @var \Swis\JsonApi\Interfaces\RelationInterface $relationship */
+        /** @var \Swis\JsonApi\Client\Interfaces\RelationInterface $relationship */
         foreach ($this->relationships as $name => $relationship) {
             if ($relationship instanceof HasOneRelation) {
                 $relationships[$name] = [
@@ -181,7 +181,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Collection
+     * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded(): Collection
     {
@@ -222,7 +222,7 @@ class JenssegersItem extends Model implements ItemInterface
     /**
      * @param string $key
      *
-     * @return \Swis\JsonApi\Interfaces\DataInterface|mixed
+     * @return \Swis\JsonApi\Client\Interfaces\DataInterface|mixed
      */
     public function getAttribute($key)
     {
@@ -248,7 +248,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @param string $key
      *
-     * @return \Swis\JsonApi\Interfaces\DataInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DataInterface
      */
     public function getRelationValue($key)
     {
@@ -284,7 +284,7 @@ class JenssegersItem extends Model implements ItemInterface
     /**
      * @param $name
      *
-     * @return \Swis\JsonApi\Interfaces\RelationInterface
+     * @return \Swis\JsonApi\Client\Interfaces\RelationInterface
      */
     public function getRelationship(string $name): RelationInterface
     {
@@ -307,7 +307,7 @@ class JenssegersItem extends Model implements ItemInterface
      * @param string      $class
      * @param string|null $relationName
      *
-     * @return \Swis\JsonApi\Relations\HasOneRelation
+     * @return \Swis\JsonApi\Client\Relations\HasOneRelation
      */
     public function hasOne(string $class, string $relationName = null)
     {
@@ -327,7 +327,7 @@ class JenssegersItem extends Model implements ItemInterface
      * @param string      $class
      * @param string|null $relationName
      *
-     * @return \Swis\JsonApi\Relations\HasManyRelation
+     * @return \Swis\JsonApi\Client\Relations\HasManyRelation
      */
     public function hasMany(string $class, string $relationName = null)
     {
@@ -346,7 +346,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @param string|null $relationName
      *
-     * @return \Swis\JsonApi\Relations\MorphToRelation
+     * @return \Swis\JsonApi\Client\Relations\MorphToRelation
      */
     public function morphTo(string $relationName = null)
     {
@@ -364,7 +364,7 @@ class JenssegersItem extends Model implements ItemInterface
      *
      * @param string|null $relationName
      *
-     * @return \Swis\JsonApi\Relations\MorphToManyRelation
+     * @return \Swis\JsonApi\Client\Relations\MorphToManyRelation
      */
     public function morphToMany(string $relationName = null)
     {
@@ -448,7 +448,7 @@ class JenssegersItem extends Model implements ItemInterface
     public function setRelation($relation, $value)
     {
         if (method_exists($this, $relation)) {
-            /** @var \Swis\JsonApi\Interfaces\RelationInterface $relationObject */
+            /** @var \Swis\JsonApi\Client\Interfaces\RelationInterface $relationObject */
             $relationObject = $this->$relation();
         } else {
             if ($value instanceof Collection) {

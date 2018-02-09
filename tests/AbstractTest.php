@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Tests;
+namespace Swis\JsonApi\Client\Tests;
 
 use Faker\Factory;
 use Orchestra\Testbench\TestCase;

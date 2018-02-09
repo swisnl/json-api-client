@@ -1,13 +1,13 @@
 <?php
 
-namespace Swis\JsonApi;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Interfaces\ItemDocumentInterface;
+use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
 
 class ItemDocumentSerializer
 {
     /**
-     * @param \Swis\JsonApi\Interfaces\ItemDocumentInterface $itemDocument
+     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $itemDocument
      *
      * @return string
      */
