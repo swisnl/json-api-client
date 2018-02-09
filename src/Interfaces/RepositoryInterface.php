@@ -1,10 +1,8 @@
 <?php
 
-namespace Swis\JsonApi\Client\Resource\Interfaces;
+namespace Swis\JsonApi\Client\Interfaces;
 
-use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
-
-interface ResourceRepositoryInterface
+interface RepositoryInterface
 {
     /**
      * @throws \Swis\JsonApi\Client\Exceptions\DocumentTypeException

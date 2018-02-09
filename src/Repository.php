@@ -7,9 +7,9 @@ use Swis\JsonApi\Client\Exceptions\DocumentTypeException;
 use Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
-use Swis\JsonApi\Client\Resource\Interfaces\ResourceRepositoryInterface;
+use Swis\JsonApi\Client\Interfaces\RepositoryInterface;
 
-class Repository implements ResourceRepositoryInterface
+class Repository implements RepositoryInterface
 {
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DocumentClientInterface

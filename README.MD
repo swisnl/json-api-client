@@ -6,7 +6,7 @@
 [![Run Status](https://api.shippable.com/projects/59ae7fe68a02980600016631/badge?branch=master)](https://app.shippable.com/github/swisnl/jsonapi)
 [![Coverage Badge](https://api.shippable.com/projects/59ae7fe68a02980600016631/coverageBadge?branch=master)](https://app.shippable.com/github/swisnl/jsonapi) 
 
-A PHP package for mapping remote { json:api } resources to Eloquent like models and collections.
+A PHP package for mapping remote [{json:api}](http://jsonapi.org/) resources to Eloquent like models and collections.
 
 
 ## Installation
@@ -32,7 +32,7 @@ If you are using Laravel < 5.5 or have disabled package auto discover, you must 
 ``` php
 'providers' => [
     ...,
-    Swis\JsonApi\Client\ServiceProvider::class,
+    Swis\JsonApi\Client\Providers\ServiceProvider::class,
 ],
 ```
 
@@ -107,7 +107,7 @@ return [
 If you would like to make changes to the default configuration, publish and edit the configuration file:
 
 ``` bash
-php artisan vendor:publish --provider="Swis\JsonApi\Client\ServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Swis\JsonApi\Client\Providers\ServiceProvider" --tag="config"
 ```
 
 
@@ -122,20 +122,32 @@ Short description
 
 ## TypeMapper
 
-Short description
+By default, all objects are an instance of `JenssegersItem`.
+You can, however, define your own items by registering them with the `TypeMapper`.
+This `TypeMapper` maps JSON API types to custom item models (please see below for more information about item models).
+This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
 
 ### Mapping types
 
+You can manually register item with the `\Swis\JsonApi\Client\TypeMapper` or use the supplied `\Swis\JsonApi\Client\Providers\TypeMapperServiceProvider`:
 
-## ServiceProvider
+``` php
+use Swis\JsonApi\Providers\TypeMapperServiceProvider as BaseTypeMapperServiceProvider;
 
-Short description
-
-### Bind TypeMapper
-
-### Bind Parser
-
-### Bind Clients
+class TypeMapperServiceProvider extends BaseTypeMapperServiceProvider
+{
+    /**
+     * A list of class names implementing \Swis\JsonApi\Client\Interfaces\ItemInterface.
+     *
+     * @var string[]
+     */
+    protected $items = [
+        \App\Items\Author::class,
+        \App\Items\Blog::class,
+        \App\Items\Comment::class,
+    ];
+}
+```
 
 
 ## Item models
@@ -151,10 +163,21 @@ Explain relations.
 ## Collections
 
 
+## ServiceProvider
+
+Short description
+
+### Bind TypeMapper
+
+### Bind Parser
+
+### Bind Clients
+
+
 ## Todo
 
  - [ ] CHANGELOG.MD
- - [ ] Remove resources? Seems redundant.
+ - [ ] Increase test coverage
 
 
 ## Testing
