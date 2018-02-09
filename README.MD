@@ -158,7 +158,7 @@ Please don't forget to register them with the `TypeMapper` as mentioned [above](
 
 ### JenssegersItem
 
-The `JenssegersItem` extends [jenssegers/model](jenssegers/model), which provides a Laravel Eloquent-like base class.
+The `JenssegersItem` extends [jenssegers/model](https://github.com/jenssegers/model), which provides a Laravel Eloquent-like base class.
 Please see it's documentation about the features it provides.
 On top of that, this package has implemented Laravel Eloquent-like relations.
 
@@ -209,15 +209,39 @@ Please note that this implementation is experimental and should not be used in p
 This package uses [Laravel Collections](https://laravel.com/docs/collections) as a wrapper for item arrays.
 
 
-## ServiceProvider
+## Service Provider
 
-Short description
+The `\Swis\JsonApi\Client\Providers\ServiceProvider` registers the `TypeMapper`, `JsonApi\Parser` and both clients; `Client` and `DocumentClient`.
+Each section can be overwritten to allow extended customization.
 
 ### Bind TypeMapper
 
-### Bind Parser
+The service provider registers the `TypeMapper` as a singleton so your entire application has the same mappings available.
 
 ### Bind Clients
+
+The service provider registers the `Client` and `DocumentClient` to your application.
+By default it uses [php-http/discovery](https://github.com/php-http/discovery) to find a HTTP client and message factory.
+You can specify your own HTTP client by overwriting the `getHttpClient()` method.
+This method should return a client that implements HTTPlug.
+It is the perfect place to add extra options to your HTTP client or register a mock HTTP client for your tests:
+
+``` php
+protected function getHttpClient(): HttpClient
+{
+    if (app()->environment('testing')) {
+        return new \Swis\Http\Fixture\Client(
+            new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures');
+        );
+    }
+
+    return \Http\Adapter\Guzzle6\Client::createWithConfig(
+        [
+            'timeout' => 2,
+        ]
+    );
+}
+```
 
 
 ## Todo
