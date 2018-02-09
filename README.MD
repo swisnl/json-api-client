@@ -243,6 +243,18 @@ protected function getHttpClient(): HttpClient
 }
 ```
 
+If you register your own service provider and use package auto discover, don't forget to exclude this package in your `package.json`:
+
+``` json
+"extra": {
+  "laravel": {
+    "dont-discover": [
+      "swisnl/jsonapi"
+    ]
+  }
+},
+```
+
 
 ## Todo
 
