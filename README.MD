@@ -40,7 +40,7 @@ If you are using Laravel < 5.5 or have disabled package auto discover, you must 
 ## Getting started
 
 You can simply require the client as a dependency and use it in your class.
-You can, for example, make a repository that uses the DocumentClient:
+This allows you to, for example, make a repository that uses the [DocumentClient](#documentclient):
 
 ``` php
 use Swis\JsonApi\Interfaces\DocumentClientInterface;
@@ -117,7 +117,15 @@ Short description
    
 ### DocumentClient
 
+This is the client that you would generally use.
+Per the [JSON API spec](http://jsonapi.org/format/#document-structure), all requests and responses are documents.
+Therefore, this client always expects a `\Swis\JsonApi\Client\Interfaces\DocumentInterface` as input when posting data and always returns this same interface.
+This can be an `ItemDocument`, `CollectionDocument` or an `InvalidResponseDocument`.
+
 ### Client
+
+This client is a more low level client and can be used, for example, for posting binary data such as images.
+It can take everything your request factory takes as input data and returns the 'raw' `\Psr\Http\Message\ResponseInterface` wrapped in a `\Swis\JsonApi\Client\Response`.
 
 
 ## Item models
@@ -221,9 +229,9 @@ The service provider registers the `TypeMapper` as a singleton so your entire ap
 
 The service provider registers the `Client` and `DocumentClient` to your application.
 By default it uses [php-http/discovery](https://github.com/php-http/discovery) to find a HTTP client and message factory.
-You can specify your own HTTP client by overwriting the `getHttpClient()` method.
-This method should return a client that implements HTTPlug.
-It is the perfect place to add extra options to your HTTP client or register a mock HTTP client for your tests:
+You can specify your own message factory by overwriting the `getMessageFactory()` method and your own HTTP client by overwriting the `getHttpClient()` method.
+The first should return a message factory and the latter should return a HTTP client, both implementing HTTPlug.
+These methods are the perfect place to add extra options to your HTTP client or register a mock HTTP client for your tests:
 
 ``` php
 protected function getHttpClient(): HttpClient
