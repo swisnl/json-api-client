@@ -117,44 +117,15 @@ Short description
    
 ### DocumentClient
 
-### Client (domme versie voor bijvoorbeeld binary bestanden)
-
-
-## TypeMapper
-
-By default, all objects are an instance of `JenssegersItem`.
-You can, however, define your own items by registering them with the `TypeMapper`.
-This `TypeMapper` maps JSON API types to custom item models (please see below for more information about [item models](#item-models)).
-This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
-
-### Mapping types
-
-You can manually register items with the `\Swis\JsonApi\Client\TypeMapper` or use the supplied `\Swis\JsonApi\Client\Providers\TypeMapperServiceProvider`:
-
-``` php
-use Swis\JsonApi\Providers\TypeMapperServiceProvider as BaseTypeMapperServiceProvider;
-
-class TypeMapperServiceProvider extends BaseTypeMapperServiceProvider
-{
-    /**
-     * A list of class names implementing \Swis\JsonApi\Client\Interfaces\ItemInterface.
-     *
-     * @var string[]
-     */
-    protected $items = [
-        \App\Items\Author::class,
-        \App\Items\Blog::class,
-        \App\Items\Comment::class,
-    ];
-}
-```
+### Client
 
 
 ## Item models
 
-By default, all objects are an instance of `JenssegersItem`, but you can define your own models by implementing the `\Swis\JsonApi\Client\Interfaces\ItemInterface`.
+By default, all items are an instance of `JenssegersItem`.
+You can define your own models by extending the `JenssegersItem` or by implementing the `\Swis\JsonApi\Client\Interfaces\ItemInterface` yourself.
 This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
-Please don't forget to register them with the `TypeMapper` as mentioned [above](#typemapper)!
+If you use custom models, you must register them with the [TypeMapper](#typemapper).
 
 ### JenssegersItem
 
@@ -167,10 +138,10 @@ On top of that, this package has implemented Laravel Eloquent-like relations.
 The relations are basic variants of [Laravel Eloquent relationships](https://laravel.com/docs/eloquent-relationships) and provide a fluent interface to retrieve the related items.
 There are currently four relations available:
 
- * `HasManyRelation`
  * `HasOneRelation`
- * `MorphToManyRelation`
+ * `HasManyRelation`
  * `MorphToRelation`
+ * `MorphToManyRelation`
 
 Please see the following example about defining the relationships:
 
@@ -201,12 +172,40 @@ class BlogItem extends JenssegersItem
 ### EloquentItem (EXPERIMENTAL)
 
 The `EloquentItem` directly extends the [Laravel Eloquent Model](https://laravel.com/docs/eloquent) and uses the provided relations.
-Please note that this implementation is experimental and should not be used in production.
+Please note that this implementation is experimental and should not be used in production!
 
 
 ## Collections
 
 This package uses [Laravel Collections](https://laravel.com/docs/collections) as a wrapper for item arrays.
+
+
+## TypeMapper
+
+All custom models must be registered with the `TypeMapper`.
+This `TypeMapper` maps, as the name suggests, JSON API types to custom [item models](#item-models).
+
+### Mapping types
+
+You can manually register items with the `\Swis\JsonApi\Client\TypeMapper` or use the supplied `\Swis\JsonApi\Client\Providers\TypeMapperServiceProvider`:
+
+``` php
+use Swis\JsonApi\Providers\TypeMapperServiceProvider as BaseTypeMapperServiceProvider;
+
+class TypeMapperServiceProvider extends BaseTypeMapperServiceProvider
+{
+    /**
+     * A list of class names implementing \Swis\JsonApi\Client\Interfaces\ItemInterface.
+     *
+     * @var string[]
+     */
+    protected $items = [
+        \App\Items\Author::class,
+        \App\Items\Blog::class,
+        \App\Items\Comment::class,
+    ];
+}
+```
 
 
 ## Service Provider
