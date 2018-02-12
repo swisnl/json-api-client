@@ -111,15 +111,9 @@ php artisan vendor:publish --provider="Swis\JsonApi\Client\Providers\ServiceProv
 ```
 
 
-## Package flow
+## Clients
 
-This package follows the following steps internally:
- 1. Send the request using your HTTP client;
- 2. Use [art4/json-api-client](https://github.com/art4/json-api-client) to parse and validate the response;
- 3. Create the correct document instance;
- 4. Hydrate every item by using the item model registered with the `TypeMapper` or a `JenssegersItem` as fallback;
- 5. Hydrate all relationships;
- 6. Add meta data to the document such as [errors](http://jsonapi.org/format/#errors), [links](http://jsonapi.org/format/#document-links) and [meta](http://jsonapi.org/format/#document-meta).
+This package offers two clients; `DocumentClient` and `Client`.
    
 ### DocumentClient
 
@@ -127,6 +121,14 @@ This is the client that you would generally use.
 Per the [JSON API spec](http://jsonapi.org/format/#document-structure), all requests and responses are documents.
 Therefore, this client always expects a `\Swis\JsonApi\Client\Interfaces\DocumentInterface` as input when posting data and always returns this same interface.
 This can be a plain `Document` when there is no data, an `ItemDocument` for an item, a `CollectionDocument` for a collection or an `InvalidResponseDocument` when the server responds with a non 2xx response.
+
+The `DocumentClient` follows the following steps internally:
+ 1. Send the request using your HTTP client;
+ 2. Use [art4/json-api-client](https://github.com/art4/json-api-client) to parse and validate the response;
+ 3. Create the correct document instance;
+ 4. Hydrate every item by using the item model registered with the `TypeMapper` or a `JenssegersItem` as fallback;
+ 5. Hydrate all relationships;
+ 6. Add meta data to the document such as [errors](http://jsonapi.org/format/#errors), [links](http://jsonapi.org/format/#document-links) and [meta](http://jsonapi.org/format/#document-meta).
 
 ### Client
 
