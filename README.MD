@@ -132,6 +132,7 @@ This can be a plain `Document` when there is no data, an `ItemDocument` for an i
 
 This client is a more low level client and can be used, for example, for posting binary data such as images.
 It can take everything your request factory takes as input data and returns the 'raw' `\Psr\Http\Message\ResponseInterface` wrapped in a `\Swis\JsonApi\Client\Response`.
+It does not parse or validate the response or hydrate items!
 
 
 ## Item models
