@@ -259,6 +259,10 @@ protected function getHttpClient(): HttpClient
 }
 ```
 
+N.B. This example uses our [swisnl/php-http-fixture-client](https://github.com/swisnl/php-http-fixture-client) when in testing environment.
+This package allows you to easily mock requests with static fixtures.
+Definitely worth a try!
+
 If you register your own service provider and use package auto discover, don't forget to exclude this package in your `package.json`:
 
 ``` json
