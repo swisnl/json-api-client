@@ -272,12 +272,6 @@ If you register your own service provider and use package auto discover, don't f
 ```
 
 
-## Todo
-
- - [ ] CHANGELOG.MD
- - [ ] Increase test coverage
-
-
 ## Testing
 
 ``` bash
