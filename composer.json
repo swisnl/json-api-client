@@ -1,5 +1,5 @@
 {
-    "name": "swisnl/jsonapi",
+    "name": "swisnl/json-api-client",
     "type": "library",
     "require": {
         "php": ">=7.0",
@@ -54,7 +54,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Swis\\JsonApi\\ServiceProvider"
+                "Swis\\JsonApi\\Client\\Providers"
             ]
         }
     }
