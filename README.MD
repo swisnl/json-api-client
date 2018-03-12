@@ -1,10 +1,10 @@
 # { json:api } Client
 
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/swisnl/jsonapi.svg)](https://packagist.org/packages/swisnl/jsonapi)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/jsonapi.svg)](https://packagist.org/packages/swisnl/jsonapi)
-[![Software License](https://img.shields.io/packagist/l/swisnl/jsonapi.svg)](LICENSE)
-[![Run Status](https://api.shippable.com/projects/59ae7fe68a02980600016631/badge?branch=master)](https://app.shippable.com/github/swisnl/jsonapi)
-[![Coverage Badge](https://api.shippable.com/projects/59ae7fe68a02980600016631/coverageBadge?branch=master)](https://app.shippable.com/github/swisnl/jsonapi) 
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/swisnl/json-api-client.svg)](https://packagist.org/packages/swisnl/json-api-client)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/json-api-client.svg)](https://packagist.org/packages/swisnl/json-api-client)
+[![Software License](https://img.shields.io/packagist/l/swisnl/json-api-client.svg)](LICENSE)
+[![Run Status](https://api.shippable.com/projects/59ae7fe68a02980600016631/badge?branch=master)](https://app.shippable.com/github/swisnl/json-api-client)
+[![Coverage Badge](https://api.shippable.com/projects/59ae7fe68a02980600016631/coverageBadge?branch=master)](https://app.shippable.com/github/swisnl/json-api-client) 
 
 A PHP package for mapping remote [{json:api}](http://jsonapi.org/) resources to Eloquent like models and collections.
 
@@ -12,7 +12,7 @@ A PHP package for mapping remote [{json:api}](http://jsonapi.org/) resources to 
 ## Installation
 
 ``` bash
-composer require swisnl/jsonapi
+composer require swisnl/json-api-client
 ```
 
 ### HTTP Client
@@ -269,7 +269,7 @@ If you register your own service provider and use package auto discover, don't f
 "extra": {
   "laravel": {
     "dont-discover": [
-      "swisnl/jsonapi"
+      "swisnl/json-api-client"
     ]
   }
 },
