@@ -1,6 +1,7 @@
 {
     "name": "swisnl/json-api-client",
     "type": "library",
+    "description": "A PHP package for mapping remote {json:api} resources to Eloquent like models and collections.",
     "require": {
         "php": ">=7.0",
         "art4/json-api-client": "^0.6.3",
