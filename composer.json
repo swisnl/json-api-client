@@ -55,7 +55,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Swis\\JsonApi\\Client\\Providers"
+                "Swis\\JsonApi\\Client\\Providers\\ServiceProvider"
             ]
         }
     }
