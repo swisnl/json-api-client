@@ -2,8 +2,9 @@
 
 namespace Swis\JsonApi\Client\JsonApi;
 
-use Art4\JsonApiClient\DocumentInterface as JsonApiDocumentInterface;
-use Art4\JsonApiClient\Resource\ResourceInterface as JsonApiResourceInterface;
+use Art4\JsonApiClient\DocumentInterface as Art4JsonApiDocumentInterface;
+use Art4\JsonApiClient\ResourceCollectionInterface;
+use Art4\JsonApiClient\ResourceItemInterface;
 use Art4\JsonApiClient\Utils\Manager as Art4JsonApiClientManager;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
@@ -81,12 +82,12 @@ class Parser implements ParserInterface
      *
      * @return \Art4\JsonApiClient\DocumentInterface
      */
-    private function getJsonApiDocument(string $json): JsonApiDocumentInterface
+    private function getJsonApiDocument(string $json): Art4JsonApiDocumentInterface
     {
         /** @var \Art4\JsonApiClient\DocumentInterface $jsonApiDocument */
         $jsonApiDocument = $this->manager->parse($json);
 
-        if (!$jsonApiDocument instanceof JsonApiDocumentInterface) {
+        if (!$jsonApiDocument instanceof Art4JsonApiDocumentInterface) {
             throw new \DomainException('Result is not a JSON API Document');
         }
 
@@ -100,7 +101,7 @@ class Parser implements ParserInterface
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    protected function buildDataDocument(JsonApiDocumentInterface $jsonApiDocument): DocumentInterface
+    protected function buildDataDocument(Art4JsonApiDocumentInterface $jsonApiDocument): DocumentInterface
     {
         $data = $this->getJsonApiDocumentData($jsonApiDocument);
         $includedInDocument = $this->getJsonApiDocumentIncluded($jsonApiDocument);
@@ -108,14 +109,14 @@ class Parser implements ParserInterface
         $allHydratedItems = new Collection();
         $allJsonApiItems = new Collection();
 
-        if ($data->isCollection()) {
+        if ($data instanceof ResourceCollectionInterface) {
             $collection = $this->hydrator->hydrateCollection($jsonApiDocument->get('data'));
             $allHydratedItems = $allHydratedItems->concat($collection);
             $allJsonApiItems = $allJsonApiItems->concat($jsonApiDocument->get('data')->asArray());
 
             $document = new CollectionDocument();
             $document->setData($collection);
-        } elseif ($data->isItem()) {
+        } elseif ($data instanceof ResourceItemInterface) {
             $item = $this->hydrator->hydrateItem($jsonApiDocument->get('data'));
             $allHydratedItems->push($item);
             $allJsonApiItems->push($jsonApiDocument->get('data'));
@@ -147,14 +148,13 @@ class Parser implements ParserInterface
      *
      * @throws \DomainException
      *
-     * @return \Art4\JsonApiClient\Resource\ResourceInterface
+     * @return \Art4\JsonApiClient\ResourceItemInterface|\Art4\JsonApiClient\ResourceCollectionInterface
      */
-    private function getJsonApiDocumentData(JsonApiDocumentInterface $document): JsonApiResourceInterface
+    private function getJsonApiDocumentData(Art4JsonApiDocumentInterface $document)
     {
-        /** @var \Art4\JsonApiClient\Resource\ResourceInterface $resource */
         $resource = $document->get('data');
 
-        if (!$resource instanceof JsonApiResourceInterface) {
+        if (!$resource instanceof ResourceItemInterface && !$resource instanceof ResourceCollectionInterface) {
             throw new \DomainException('Result is not a Json API Resource');
         }
 
@@ -164,9 +164,9 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
-     * @return \Art4\JsonApiClient\Resource\Collection|null
+     * @return \Art4\JsonApiClient\ResourceCollection|null
      */
-    private function getJsonApiDocumentIncluded(JsonApiDocumentInterface $document)
+    private function getJsonApiDocumentIncluded(Art4JsonApiDocumentInterface $document)
     {
         if ($document->has('included')) {
             return $document->get('included');
@@ -180,7 +180,7 @@ class Parser implements ParserInterface
      *
      * @return array
      */
-    private function parseLinks(JsonApiDocumentInterface $document): array
+    private function parseLinks(Art4JsonApiDocumentInterface $document): array
     {
         if (!$document->has('links')) {
             return [];
@@ -194,7 +194,7 @@ class Parser implements ParserInterface
      *
      * @return \Swis\JsonApi\Client\Errors\ErrorCollection
      */
-    private function parseErrors(JsonApiDocumentInterface $document): ErrorCollection
+    private function parseErrors(Art4JsonApiDocumentInterface $document): ErrorCollection
     {
         if (!$document->has('errors')) {
             return new ErrorCollection();
@@ -208,7 +208,7 @@ class Parser implements ParserInterface
      *
      * @return array
      */
-    private function parseMeta(JsonApiDocumentInterface $document): array
+    private function parseMeta(Art4JsonApiDocumentInterface $document): array
     {
         if (!$document->has('meta')) {
             return [];

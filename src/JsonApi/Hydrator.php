@@ -3,9 +3,12 @@
 namespace Swis\JsonApi\Client\JsonApi;
 
 use Art4\JsonApiClient\AccessInterface;
-use Art4\JsonApiClient\Resource\CollectionInterface as JsonApiCollection;
-use Art4\JsonApiClient\Resource\IdentifierCollection;
-use Art4\JsonApiClient\Resource\ItemInterface as JsonApItem;
+use Art4\JsonApiClient\ResourceCollectionInterface;
+use Art4\JsonApiClient\ResourceCollectionInterface as JsonApiCollection;
+use Art4\JsonApiClient\ResourceIdentifierCollection as IdentifierCollection;
+use Art4\JsonApiClient\ResourceIdentifierCollectionInterface;
+use Art4\JsonApiClient\ResourceIdentifierInterface;
+use Art4\JsonApiClient\ResourceItemInterface as JsonApItem;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
@@ -28,7 +31,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\CollectionInterface $jsonApiCollection
+     * @param \Art4\JsonApiClient\ResourceCollectionInterface $jsonApiCollection
      *
      * @return \Swis\JsonApi\Client\Collection
      */
@@ -43,7 +46,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
+     * @param \Art4\JsonApiClient\ResourceItemInterface $jsonApiItem
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
@@ -60,7 +63,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
+     * @param \Art4\JsonApiClient\ResourceItemInterface $jsonApiItem
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
@@ -75,7 +78,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\ItemInterface    $jsonApiItem
+     * @param \Art4\JsonApiClient\ResourceItemInterface    $jsonApiItem
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      */
     protected function hydrateAttributes(JsonApItem $jsonApiItem, ItemInterface $item)
@@ -106,11 +109,11 @@ class Hydrator
                 $relationships = $this->getJsonApiDocumentRelationships($jsonApiItem);
 
                 foreach ($relationships as $name => $relationship) {
-                    /** @var \Art4\JsonApiClient\Resource\ResourceInterface $data */
+                    /** @var \Art4\JsonApiClient\ResourceItemInterface $data */
                     $data = $relationship->get('data');
                     $method = camel_case($name);
 
-                    if ($data->isIdentifier()) {
+                    if ($data instanceof ResourceIdentifierInterface) {
                         $includedItem = $this->getIncludedItem($items, $data);
 
                         if ($includedItem instanceof NullItem) {
@@ -118,7 +121,7 @@ class Hydrator
                         }
 
                         $item->setRelation($method, $includedItem);
-                    } elseif ($data->isCollection()) {
+                    } elseif ($data instanceof ResourceCollectionInterface || $data instanceof ResourceIdentifierCollectionInterface) {
                         $collection = $this->getIncludedItems($items, $data);
 
                         $item->setRelation($method, $collection);
@@ -129,7 +132,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\ItemInterface $jsonApiItem
+     * @param \Art4\JsonApiClient\ResourceItemInterface $jsonApiItem
      *
      * @return \Art4\JsonApiClient\Relationship[]
      */
@@ -168,7 +171,7 @@ class Hydrator
 
     /**
      * @param \Swis\JsonApi\Client\Collection                   $included
-     * @param \Art4\JsonApiClient\Resource\IdentifierCollection $collection
+     * @param \Art4\JsonApiClient\ResourceIdentifierCollection $collection
      *
      * @return \Swis\JsonApi\Client\Collection
      */
@@ -182,7 +185,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\Resource\Identifier[]     $relatedIdentifiers
+     * @param \Art4\JsonApiClient\ResourceIdentifier[]     $relatedIdentifiers
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      *
      * @return bool
