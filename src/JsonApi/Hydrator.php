@@ -78,7 +78,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\ResourceItemInterface    $jsonApiItem
+     * @param \Art4\JsonApiClient\ResourceItemInterface     $jsonApiItem
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      */
     protected function hydrateAttributes(JsonApItem $jsonApiItem, ItemInterface $item)
@@ -170,7 +170,7 @@ class Hydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Collection                   $included
+     * @param \Swis\JsonApi\Client\Collection                  $included
      * @param \Art4\JsonApiClient\ResourceIdentifierCollection $collection
      *
      * @return \Swis\JsonApi\Client\Collection
@@ -185,7 +185,7 @@ class Hydrator
     }
 
     /**
-     * @param \Art4\JsonApiClient\ResourceIdentifier[]     $relatedIdentifiers
+     * @param \Art4\JsonApiClient\ResourceIdentifier[]      $relatedIdentifiers
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      *
      * @return bool
