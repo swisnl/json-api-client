@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests\JsonApi;
 
-use Art4\JsonApiClient\Resource\CollectionInterface;
+use Art4\JsonApiClient\ResourceCollectionInterface as CollectionInterface;
 use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Items\JenssegersItem;
@@ -233,7 +233,7 @@ class HydratorTest extends AbstractTest
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Art4\JsonApiClient\Resource\CollectionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Art4\JsonApiClient\ResourceCollectionInterface
      */
     protected function getJsonApiItemCollectionMock()
     {

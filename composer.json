@@ -4,7 +4,7 @@
     "description": "A PHP package for mapping remote {json:api} resources to Eloquent like models and collections.",
     "require": {
         "php": ">=7.0",
-        "art4/json-api-client": "^0.6.3",
+        "art4/json-api-client": "^0.9.1",
         "illuminate/support": "5.3.*|5.4.*|5.5.*",
         "jenssegers/model": "^1.1",
         "php-http/client-implementation": "^1.0",
@@ -55,7 +55,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Swis\\JsonApi\\Client\\Providers"
+                "Swis\\JsonApi\\Client\\Providers\\ServiceProvider"
             ]
         }
     }
