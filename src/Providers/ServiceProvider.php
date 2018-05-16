@@ -26,14 +26,14 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->publishes([
-            dirname(__DIR__).'/config/' => config_path(),
+            dirname(__DIR__, 2).'/config/' => config_path(),
         ], 'config');
     }
 
     public function register()
     {
         $this->mergeConfigFrom(
-            dirname(__DIR__).'/config/jsonapi.php',
+            dirname(__DIR__, 2).'/config/jsonapi.php',
             'jsonapi'
         );
 
