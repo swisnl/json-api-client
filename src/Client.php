@@ -158,7 +158,7 @@ class Client implements ClientInterface
      */
     protected function buildRequest(string $method, string $endpoint, $body = null, array $headers = []): RequestInterface
     {
-        return $this->messageFactory->createRequest($method, $this->getEndpoint($endpoint), [], $body, $this->mergeHeaders($headers));
+        return $this->messageFactory->createRequest($method, $this->getEndpoint($endpoint), $this->mergeHeaders($headers), $body);
     }
 
     /**
