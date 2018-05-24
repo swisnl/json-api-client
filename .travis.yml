@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - '7.0'
+  - '7.1'
+  - '7.2'
+
+sudo: false
+
+install:
+  - travis_retry composer install --no-interaction --prefer-dist
+
+script:
+  - vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+
+branches:
+  only: master
