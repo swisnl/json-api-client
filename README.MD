@@ -6,6 +6,7 @@
 [![Build Status](https://travis-ci.org/swisnl/json-api-client.svg?branch=master)](https://travis-ci.org/swisnl/json-api-client)
 [![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/swisnl/json-api-client.svg)](https://scrutinizer-ci.com/g/swisnl/json-api-client/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/swisnl/json-api-client.svg)](https://scrutinizer-ci.com/g/swisnl/json-api-client/?branch=master)
+[![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%23D9021B.svg)](https://www.swis.nl)
 
 A PHP package for mapping remote [{json:api}](http://jsonapi.org/) resources to Eloquent like models and collections.
 
@@ -292,3 +293,7 @@ If you discover any security related issues, please email security@swis.nl inste
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
+
+## SWIS
+
+[SWIS](https://www.swis.nl) is a web agency from Leiden, the Netherlands. We love working with open source software.
