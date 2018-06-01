@@ -16,7 +16,7 @@ class ItemHydrator
     /**
      * @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface
      */
-    private $typeMapper;
+    protected $typeMapper;
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
