@@ -54,8 +54,8 @@ class HydratorTest extends AbstractTest
         $typeMapper->method('hasMapping')->willReturn(true);
         $typeMapper->method('getMapping')->will(
             $this->returnCallback(
-                function () {
-                    return new JenssegersItem();
+                function (string $type) {
+                    return (new JenssegersItem())->setType($type);
                 }
             )
         );
