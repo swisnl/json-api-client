@@ -2,10 +2,10 @@
 
 namespace Swis\JsonApi\Client\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 
-class TypeMapperServiceProvider extends ServiceProvider
+class TypeMapperServiceProvider extends BaseServiceProvider
 {
     /**
      * A list of class names implementing \Swis\JsonApi\Client\Interfaces\ItemInterface.

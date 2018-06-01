@@ -14,9 +14,9 @@ use Swis\JsonApi\Client\Relations\MorphToRelation;
 class ItemHydrator
 {
     /**
-     * @var \Swis\JsonApi\Client\TypeMapper
+     * @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface
      */
-    private $typeMapper;
+    protected $typeMapper;
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
@@ -44,9 +44,9 @@ class ItemHydrator
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
-     * @param array|null                                    $attributes
+     * @param array                                         $attributes
      */
-    protected function fill(ItemInterface $item, array $attributes = null)
+    protected function fill(ItemInterface $item, array $attributes)
     {
         $item->fill(array_diff_key($attributes, array_combine($item->getAvailableRelations(), $item->getAvailableRelations())));
     }
@@ -59,7 +59,7 @@ class ItemHydrator
      *
      * @throws \Exception
      */
-    protected function fillRelations(ItemInterface $item, array $attributes = null)
+    protected function fillRelations(ItemInterface $item, array $attributes)
     {
         // Fill Relations
         foreach ($item->getAvailableRelations() as $availableRelation) {

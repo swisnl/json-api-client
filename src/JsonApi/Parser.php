@@ -84,7 +84,6 @@ class Parser implements ParserInterface
      */
     private function getJsonApiDocument(string $json): Art4JsonApiDocumentInterface
     {
-        /** @var \Art4\JsonApiClient\DocumentInterface $jsonApiDocument */
         $jsonApiDocument = $this->manager->parse($json);
 
         if (!$jsonApiDocument instanceof Art4JsonApiDocumentInterface) {
@@ -109,20 +108,20 @@ class Parser implements ParserInterface
         $allHydratedItems = new Collection();
         $allJsonApiItems = new Collection();
 
-        if ($data instanceof ResourceCollectionInterface) {
-            $collection = $this->hydrator->hydrateCollection($jsonApiDocument->get('data'));
-            $allHydratedItems = $allHydratedItems->concat($collection);
-            $allJsonApiItems = $allJsonApiItems->concat($jsonApiDocument->get('data')->asArray());
-
-            $document = new CollectionDocument();
-            $document->setData($collection);
-        } elseif ($data instanceof ResourceItemInterface) {
-            $item = $this->hydrator->hydrateItem($jsonApiDocument->get('data'));
+        if ($data instanceof ResourceItemInterface) {
+            $item = $this->hydrator->hydrateItem($data);
             $allHydratedItems->push($item);
-            $allJsonApiItems->push($jsonApiDocument->get('data'));
+            $allJsonApiItems->push($data);
 
             $document = new ItemDocument();
             $document->setData($item);
+        } elseif ($data instanceof ResourceCollectionInterface) {
+            $collection = $this->hydrator->hydrateCollection($data);
+            $allHydratedItems = $allHydratedItems->concat($collection);
+            $allJsonApiItems = $allJsonApiItems->concat(new Collection($data->asArray()));
+
+            $document = new CollectionDocument();
+            $document->setData($collection);
         } else {
             throw new \DomainException('Data is not Collection or Item');
         }
@@ -131,7 +130,7 @@ class Parser implements ParserInterface
         if ($includedInDocument) {
             $included = $this->hydrator->hydrateCollection($includedInDocument);
             $allHydratedItems = $allHydratedItems->concat($included);
-            $allJsonApiItems = $allJsonApiItems->concat($includedInDocument->asArray());
+            $allJsonApiItems = $allJsonApiItems->concat(new Collection($includedInDocument->asArray()));
         }
 
         $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
