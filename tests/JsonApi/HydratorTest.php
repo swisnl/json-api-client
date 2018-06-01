@@ -13,6 +13,7 @@ use Swis\JsonApi\Client\Relations\MorphToRelation;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\PlainJenssegersItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithoutRelationshipsJenssegersItem;
 use Swis\JsonApi\Client\TypeMapper;
 
@@ -31,7 +32,7 @@ class HydratorTest extends AbstractTest
 
             $item = $hydrator->hydrateItem($this->getJsonApiItemMock($type, $id));
 
-            static::assertInstanceOf(JenssegersItem::class, $item);
+            static::assertInstanceOf(PlainJenssegersItem::class, $item);
             static::assertEquals($type, $item->getType());
             static::assertEquals($id, $item->getId());
         }
@@ -55,7 +56,7 @@ class HydratorTest extends AbstractTest
         $typeMapper->method('getMapping')->will(
             $this->returnCallback(
                 function (string $type) {
-                    return (new JenssegersItem())->setType($type);
+                    return (new PlainJenssegersItem())->setType($type);
                 }
             )
         );
