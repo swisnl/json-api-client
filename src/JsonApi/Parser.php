@@ -108,20 +108,20 @@ class Parser implements ParserInterface
         $allHydratedItems = new Collection();
         $allJsonApiItems = new Collection();
 
-        if ($data instanceof ResourceCollectionInterface) {
-            $collection = $this->hydrator->hydrateCollection($data);
-            $allHydratedItems = $allHydratedItems->concat($collection);
-            $allJsonApiItems = $allJsonApiItems->concat(new Collection($data->asArray()));
-
-            $document = new CollectionDocument();
-            $document->setData($collection);
-        } elseif ($data instanceof ResourceItemInterface) {
+        if ($data instanceof ResourceItemInterface) {
             $item = $this->hydrator->hydrateItem($data);
             $allHydratedItems->push($item);
             $allJsonApiItems->push($data);
 
             $document = new ItemDocument();
             $document->setData($item);
+        } elseif ($data instanceof ResourceCollectionInterface) {
+            $collection = $this->hydrator->hydrateCollection($data);
+            $allHydratedItems = $allHydratedItems->concat($collection);
+            $allJsonApiItems = $allJsonApiItems->concat(new Collection($data->asArray()));
+
+            $document = new CollectionDocument();
+            $document->setData($collection);
         } else {
             throw new \DomainException('Data is not Collection or Item');
         }
