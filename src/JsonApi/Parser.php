@@ -84,7 +84,6 @@ class Parser implements ParserInterface
      */
     private function getJsonApiDocument(string $json): Art4JsonApiDocumentInterface
     {
-        /** @var \Art4\JsonApiClient\DocumentInterface $jsonApiDocument */
         $jsonApiDocument = $this->manager->parse($json);
 
         if (!$jsonApiDocument instanceof Art4JsonApiDocumentInterface) {
