@@ -44,9 +44,9 @@ class ItemHydrator
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
-     * @param array|null                                    $attributes
+     * @param array                                         $attributes
      */
-    protected function fill(ItemInterface $item, array $attributes = null)
+    protected function fill(ItemInterface $item, array $attributes)
     {
         $item->fill(array_diff_key($attributes, array_combine($item->getAvailableRelations(), $item->getAvailableRelations())));
     }
@@ -59,7 +59,7 @@ class ItemHydrator
      *
      * @throws \Exception
      */
-    protected function fillRelations(ItemInterface $item, array $attributes = null)
+    protected function fillRelations(ItemInterface $item, array $attributes)
     {
         // Fill Relations
         foreach ($item->getAvailableRelations() as $availableRelation) {
