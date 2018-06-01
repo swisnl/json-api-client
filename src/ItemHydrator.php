@@ -14,7 +14,7 @@ use Swis\JsonApi\Client\Relations\MorphToRelation;
 class ItemHydrator
 {
     /**
-     * @var \Swis\JsonApi\Client\TypeMapper
+     * @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface
      */
     private $typeMapper;
 
