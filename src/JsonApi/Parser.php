@@ -109,16 +109,16 @@ class Parser implements ParserInterface
         $allJsonApiItems = new Collection();
 
         if ($data instanceof ResourceCollectionInterface) {
-            $collection = $this->hydrator->hydrateCollection($jsonApiDocument->get('data'));
+            $collection = $this->hydrator->hydrateCollection($data);
             $allHydratedItems = $allHydratedItems->concat($collection);
-            $allJsonApiItems = $allJsonApiItems->concat(new Collection($jsonApiDocument->get('data')->asArray()));
+            $allJsonApiItems = $allJsonApiItems->concat(new Collection($data->asArray()));
 
             $document = new CollectionDocument();
             $document->setData($collection);
         } elseif ($data instanceof ResourceItemInterface) {
-            $item = $this->hydrator->hydrateItem($jsonApiDocument->get('data'));
+            $item = $this->hydrator->hydrateItem($data);
             $allHydratedItems->push($item);
-            $allJsonApiItems->push($jsonApiDocument->get('data'));
+            $allJsonApiItems->push($data);
 
             $document = new ItemDocument();
             $document->setData($item);
