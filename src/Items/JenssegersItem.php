@@ -60,12 +60,14 @@ class JenssegersItem extends Model implements ItemInterface
             $data['id'] = $this->getId();
         }
 
-        if (!empty($this->getAttributes())) {
-            $data['attributes'] = $this->toArray();
+        $attributes = $this->toArray();
+        if (!empty($attributes)) {
+            $data['attributes'] = $attributes;
         }
 
-        if (!empty($this->getRelationships())) {
-            $data['relationships'] = $this->getRelationships();
+        $relationships = $this->getRelationships();
+        if (!empty($relationships)) {
+            $data['relationships'] = $relationships;
         }
 
         return $data;
