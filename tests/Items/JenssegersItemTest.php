@@ -5,6 +5,7 @@ namespace Swis\JsonApi\Client\Tests\Items;
 use Swis\JsonApi\Client\Items\JenssegersItem;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithGetMutatorJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithHiddenJenssegersItem;
 
 class JenssegersItemTest extends AbstractTest
 {
@@ -150,5 +151,23 @@ class JenssegersItemTest extends AbstractTest
         $item->setRelation('someRelation', (new JenssegersItem())->setType('type')->setId(1));
 
         $this->assertTrue($item->hasRelationship('some_relation'));
+    }
+
+    /**
+     * @test
+     */
+    public function is_does_not_show_attributes_in_to_json_api_array_when_it_has_no_attributes()
+    {
+        $item = new WithHiddenJenssegersItem($this->attributes);
+        $item->setType('testType');
+        $item->setId(1234);
+
+        $this->assertEquals(
+            [
+                'type' => 'testType',
+                'id'   => 1234,
+            ],
+            $item->toJsonApiArray()
+        );
     }
 }
