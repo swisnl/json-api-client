@@ -188,11 +188,6 @@ class BlogItem extends JenssegersItem
 }
 ```
 
-### EloquentItem (EXPERIMENTAL)
-
-The `EloquentItem` directly extends the [Laravel Eloquent Model](https://laravel.com/docs/eloquent) and uses the provided relations.
-Please note that this implementation is experimental and should not be used in production!
-
 
 ## Collections
 
