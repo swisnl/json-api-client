@@ -11,7 +11,6 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Items\JenssegersItem;
-use Swis\JsonApi\Client\Items\NullItem;
 
 class Hydrator
 {
@@ -81,7 +80,7 @@ class Hydrator
 
                 $item = $this->getItem($keyedItems, $jsonApiItem);
 
-                if ($item instanceof NullItem) {
+                if ($item === null) {
                     return;
                 }
 
@@ -93,7 +92,7 @@ class Hydrator
                     if ($data instanceof ResourceIdentifierInterface) {
                         $includedItem = $this->getItem($keyedItems, $data);
 
-                        if ($includedItem instanceof NullItem) {
+                        if ($includedItem === null) {
                             continue;
                         }
 
@@ -126,16 +125,11 @@ class Hydrator
      * @param \Swis\JsonApi\Client\Collection                                                           $included
      * @param \Art4\JsonApiClient\ResourceIdentifierInterface|\Art4\JsonApiClient\ResourceItemInterface $identifier
      *
-     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
      */
-    protected function getItem(Collection $included, $identifier): ItemInterface
+    protected function getItem(Collection $included, $identifier)
     {
-        return $included->get(
-            $this->getElementKey($identifier),
-            function () {
-                return new NullItem();
-            }
-        );
+        return $included->get($this->getElementKey($identifier));
     }
 
     /**
@@ -151,7 +145,7 @@ class Hydrator
         foreach ($identifierCollection->asArray() as $identifier) {
             $item = $this->getItem($included, $identifier);
 
-            if ($item instanceof NullItem) {
+            if ($item === null) {
                 continue;
             }
 
