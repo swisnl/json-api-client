@@ -45,8 +45,8 @@ You can simply require the client as a dependency and use it in your class.
 This allows you to, for example, make a repository that uses the [DocumentClient](#documentclient):
 
 ``` php
-use Swis\JsonApi\Interfaces\DocumentClientInterface;
-use Swis\JsonApi\Interfaces\ItemDocumentInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
+use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
 
 class BlogRepository
 {
@@ -165,7 +165,7 @@ There are currently four relations available:
 Please see the following example about defining the relationships:
 
 ``` php
-use Swis\JsonApi\Items\JenssegersItem;
+use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class AuthorItem extends JenssegersItem
 {
@@ -209,7 +209,7 @@ This `TypeMapper` maps, as the name suggests, JSON API types to custom [item mod
 You can manually register items with the `\Swis\JsonApi\Client\TypeMapper` or use the supplied `\Swis\JsonApi\Client\Providers\TypeMapperServiceProvider`:
 
 ``` php
-use Swis\JsonApi\Providers\TypeMapperServiceProvider as BaseTypeMapperServiceProvider;
+use Swis\JsonApi\Client\Providers\TypeMapperServiceProvider as BaseTypeMapperServiceProvider;
 
 class TypeMapperServiceProvider extends BaseTypeMapperServiceProvider
 {
