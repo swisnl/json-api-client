@@ -3,13 +3,13 @@
 namespace Swis\JsonApi\Client\Relations;
 
 use Swis\JsonApi\Client\Interfaces\DataInterface;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\RelationInterface;
-use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class MorphToRelation implements RelationInterface
 {
     /**
-     * @var \Swis\JsonApi\Client\Items\JenssegersItem
+     * @var \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     protected $included;
 
@@ -24,7 +24,7 @@ class MorphToRelation implements RelationInterface
     protected $id;
 
     /**
-     * @var \Swis\JsonApi\Client\Items\JenssegersItem
+     * @var \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     protected $parentItem;
 
@@ -34,9 +34,9 @@ class MorphToRelation implements RelationInterface
     protected $omitIncluded = false;
 
     /**
-     * @param \Swis\JsonApi\Client\Items\JenssegersItem $item
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      */
-    public function __construct(JenssegersItem $item)
+    public function __construct(ItemInterface $item)
     {
         $this->parentItem = $item;
     }
@@ -50,8 +50,10 @@ class MorphToRelation implements RelationInterface
      */
     public function associate(DataInterface $included)
     {
-        if (!$included instanceof JenssegersItem) {
-            throw new \InvalidArgumentException('MorphTo expects relation to be a JenssegersItem');
+        if (!$included instanceof ItemInterface) {
+            throw new \InvalidArgumentException(
+                sprintf('MorphTo expects relation to be an instance of %s', ItemInterface::class)
+            );
         }
 
         $this->setId($included->getId());
@@ -113,7 +115,7 @@ class MorphToRelation implements RelationInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Items\JenssegersItem|null
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
      */
     public function getIncluded()
     {

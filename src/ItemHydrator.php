@@ -187,9 +187,9 @@ class ItemHydrator
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Client\Items\JenssegersItem
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
-    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): JenssegersItem
+    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): ItemInterface
     {
         // Sometimes the relatedType is provided from the relationship, but not always (i.e. Polymorphic Relationships)
         if (null === $type) {
