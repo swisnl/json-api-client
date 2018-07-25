@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers;
+namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 
-class RelatedJenssegersItem extends JenssegersItem
+class RelatedItem extends Item
 {
     /**
      * @var string
@@ -28,6 +28,6 @@ class RelatedJenssegersItem extends JenssegersItem
 
     public function parentRelation()
     {
-        return $this->hasOne(WithRelationshipJenssegersItem::class);
+        return $this->hasOne(WithRelationshipItem::class);
     }
 }

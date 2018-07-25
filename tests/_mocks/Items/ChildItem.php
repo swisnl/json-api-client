@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers;
+namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 
-class ChildJenssegersItem extends JenssegersItem
+class ChildItem extends Item
 {
     /**
      * @var string

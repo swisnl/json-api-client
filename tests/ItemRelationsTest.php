@@ -1,24 +1,23 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\Items;
+namespace Swis\JsonApi\Client\Tests;
 
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
-use Swis\JsonApi\Client\Tests\AbstractTest;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
 
-class JenssegersItemRelationsTest extends AbstractTest
+class ItemRelationsTest extends AbstractTest
 {
     /**
      * @test
      */
     public function it_has_relationships_when_added()
     {
-        $masterItem = new MasterJenssegersItem();
+        $masterItem = new MasterItem();
         $this->assertInstanceOf(HasOneRelation::class, $masterItem->child());
 
-        $childItem = new ChildJenssegersItem();
+        $childItem = new ChildItem();
         $childItem->setId(1);
         $this->assertEquals(1, $childItem->getId());
         $masterItem->child()->associate($childItem);
@@ -32,13 +31,13 @@ class JenssegersItemRelationsTest extends AbstractTest
      */
     public function it_can_check_for_relations()
     {
-        $item = new JenssegersItem();
+        $item = new Item();
         $this->assertFalse($item->hasRelationship('test'));
 
-        $masterItem = new MasterJenssegersItem();
+        $masterItem = new MasterItem();
         $this->assertFalse($masterItem->hasRelationship('child'));
 
-        $childItem = new ChildJenssegersItem();
+        $childItem = new ChildItem();
         $childItem->setId(1);
         $masterItem->child()->associate($childItem);
         $this->assertTrue($masterItem->hasRelationship('child'));
@@ -49,8 +48,8 @@ class JenssegersItemRelationsTest extends AbstractTest
      */
     public function it_can_get_all_relations()
     {
-        $masterItem = new MasterJenssegersItem();
-        $childItem = new ChildJenssegersItem();
+        $masterItem = new MasterItem();
+        $childItem = new ChildItem();
         $childItem->setId(1);
         $masterItem->child()->setId(1);
         $masterItem->child()->associate($childItem);

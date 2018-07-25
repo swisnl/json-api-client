@@ -128,7 +128,7 @@ The `DocumentClient` follows the following steps internally:
  1. Send the request using your HTTP client;
  2. Use [art4/json-api-client](https://github.com/art4/json-api-client) to parse and validate the response;
  3. Create the correct document instance;
- 4. Hydrate every item by using the item model registered with the `TypeMapper` or a `JenssegersItem` as fallback;
+ 4. Hydrate every item by using the item model registered with the `TypeMapper` or a `\Swis\JsonApi\Client\Item` as fallback;
  5. Hydrate all relationships;
  6. Add meta data to the document such as [errors](http://jsonapi.org/format/#errors), [links](http://jsonapi.org/format/#document-links) and [meta](http://jsonapi.org/format/#document-meta).
 
@@ -139,22 +139,20 @@ It can take everything your request factory takes as input data and returns the 
 It does not parse or validate the response or hydrate items!
 
 
-## Item models
+## Items
 
-By default, all items are an instance of `JenssegersItem`.
-You can define your own models by extending the `JenssegersItem` or by implementing the `\Swis\JsonApi\Client\Interfaces\ItemInterface` yourself.
+By default, all items are an instance of `\Swis\JsonApi\Client\Item`.
+The `Item` extends [jenssegers/model](https://github.com/jenssegers/model), which provides a Laravel Eloquent-like base class.
+Please see it's documentation about the features it provides.
+You can define your own models by extending `\Swis\JsonApi\Client\Item` or by implementing the `\Swis\JsonApi\Client\Interfaces\ItemInterface` yourself.
 This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
 If you use custom models, you must register them with the [TypeMapper](#typemapper).
 
-### JenssegersItem
 
-The `JenssegersItem` extends [jenssegers/model](https://github.com/jenssegers/model), which provides a Laravel Eloquent-like base class.
-Please see it's documentation about the features it provides.
-On top of that, this package has implemented Laravel Eloquent-like relations.
+### Relations
 
-#### Relations
-
-The relations are basic variants of [Laravel Eloquent relationships](https://laravel.com/docs/eloquent-relationships) and provide a fluent interface to retrieve the related items.
+On top of [jenssegers/model](https://github.com/jenssegers/model), this package has implemented [Laravel Eloquent-like relations](https://laravel.com/docs/eloquent-relationships).
+These relations provide a fluent interface to retrieve the related items.
 There are currently four relations available:
 
  * `HasOneRelation`
@@ -165,9 +163,9 @@ There are currently four relations available:
 Please see the following example about defining the relationships:
 
 ``` php
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 
-class AuthorItem extends JenssegersItem
+class AuthorItem extends Item
 {
     protected $type = 'author';
 
@@ -177,7 +175,7 @@ class AuthorItem extends JenssegersItem
     }
 }
 
-class BlogItem extends JenssegersItem
+class BlogItem extends Item
 {
     protected $type = 'blog';
 

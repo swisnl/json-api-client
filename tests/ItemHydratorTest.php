@@ -4,15 +4,15 @@ namespace Swis\JsonApi\Client\Tests;
 
 use InvalidArgumentException;
 use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\ItemHydrator;
-use Swis\JsonApi\Client\Items\JenssegersItem;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\AnotherRelatedJenssegersItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\RelatedJenssegersItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithRelationshipJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\AnotherRelatedItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 use Swis\JsonApi\Client\TypeMapper;
 
 class ItemHydratorTest extends AbstractTest
@@ -27,7 +27,7 @@ class ItemHydratorTest extends AbstractTest
             'testattribute2' => 'test2',
         ];
 
-        $item = new JenssegersItem();
+        $item = new Item();
 
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
@@ -40,10 +40,10 @@ class ItemHydratorTest extends AbstractTest
     private function getItemHydrator()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('hydratedItem', JenssegersItem::class);
+        $typeMapper->setMapping('hydratedItem', Item::class);
 
-        $typeMapper->setMapping('related-item', RelatedJenssegersItem::class);
-        $typeMapper->setMapping('another-related-item', AnotherRelatedJenssegersItem::class);
+        $typeMapper->setMapping('related-item', RelatedItem::class);
+        $typeMapper->setMapping('another-related-item', AnotherRelatedItem::class);
 
         return new ItemHydrator($typeMapper);
     }
@@ -59,7 +59,7 @@ class ItemHydratorTest extends AbstractTest
             'hasone_relation' => 1,
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
@@ -100,7 +100,7 @@ class ItemHydratorTest extends AbstractTest
             ],
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
 
         $item = $this->getItemHydrator()->hydrate($item, $data);
         /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
@@ -151,7 +151,7 @@ class ItemHydratorTest extends AbstractTest
             ],
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
 
         $this->expectException(InvalidArgumentException::class);
         $this->getItemHydrator()->hydrate($item, $data);
@@ -172,7 +172,7 @@ class ItemHydratorTest extends AbstractTest
             ],
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
@@ -208,7 +208,7 @@ class ItemHydratorTest extends AbstractTest
             ],
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
 
         $this->expectException(InvalidArgumentException::class);
         $this->getItemHydrator()->hydrate($item, $data);
@@ -236,7 +236,7 @@ class ItemHydratorTest extends AbstractTest
             ],
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
@@ -279,7 +279,7 @@ class ItemHydratorTest extends AbstractTest
             ],
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
@@ -314,7 +314,7 @@ class ItemHydratorTest extends AbstractTest
             ],
         ];
 
-        $item = new WithRelationshipJenssegersItem();
+        $item = new WithRelationshipItem();
 
         $item = $this->getItemHydrator()->hydrate($item, $data);
         /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */

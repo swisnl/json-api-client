@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers;
+namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 
-class MasterJenssegersItem extends JenssegersItem
+class MasterItem extends Item
 {
     /**
      * @var string
@@ -45,7 +45,7 @@ class MasterJenssegersItem extends JenssegersItem
 
     public function child()
     {
-        return $this->hasOne(ChildJenssegersItem::class);
+        return $this->hasOne(ChildItem::class);
     }
 
     public function morph()

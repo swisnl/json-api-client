@@ -2,9 +2,9 @@
 
 namespace Swis\JsonApi\Client\Tests\Mocks\ResourceRegistrar;
 
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 
-class MockItem extends JenssegersItem
+class MockItem extends Item
 {
     /**
      * @var string

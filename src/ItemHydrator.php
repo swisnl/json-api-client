@@ -5,7 +5,6 @@ namespace Swis\JsonApi\Client;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\RelationInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Client\Items\JenssegersItem;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
@@ -199,7 +198,7 @@ class ItemHydrator
         if ($this->typeMapper->hasMapping($type)) {
             $relationItem = $this->typeMapper->getMapping($type);
         } else {
-            $relationItem = new JenssegersItem();
+            $relationItem = new Item();
             $relationItem->setType($type);
         }
 

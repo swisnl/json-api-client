@@ -10,7 +10,7 @@ use Art4\JsonApiClient\ResourceItemInterface;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 
 class Hydrator
 {
@@ -118,7 +118,7 @@ class Hydrator
             return $this->typeMapper->getMapping($type);
         }
 
-        return (new JenssegersItem())->setType($type);
+        return (new Item())->setType($type);
     }
 
     /**
