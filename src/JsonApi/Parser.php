@@ -97,6 +97,7 @@ class Parser implements ParserInterface
      * @param \Art4\JsonApiClient\DocumentInterface $jsonApiDocument
      *
      * @throws \DomainException
+     *includedInDocument
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
@@ -104,7 +105,7 @@ class Parser implements ParserInterface
     {
         $data = $this->getJsonApiDocumentData($jsonApiDocument);
         $includedInDocument = $this->getJsonApiDocumentIncluded($jsonApiDocument);
-
+        $relationshipsInDocument = $this->getJsonApiDocumentRelationShips($jsonApiDocument);
         $allHydratedItems = new Collection();
         $allJsonApiItems = new Collection();
 
@@ -133,8 +134,30 @@ class Parser implements ParserInterface
             $allJsonApiItems = $allJsonApiItems->concat(new Collection($includedInDocument->asArray()));
         }
 
-        $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
+        if ($relationshipsInDocument) {
+            $relationships = $this->hydrator->hydrateRelationCollection($relationshipsInDocument);
+            if ($includedInDocument) {
+                $newRelationships = new Collection();
+                foreach ($relationships as $relationship) {
+                    $id = $relationship->getId();
+                    $type = $relationship->getType();
+                    $desiredObject = null;
 
+                    //check duplicate
+                    $desiredObject = $included->first(function ($item) use ($id, $type) {
+                        return ($item->getId() == $id) && ($item->getType() == $type);
+                    });
+                    if (is_null($desiredObject)) {
+                        $newRelationships->push($relationship);
+                    }
+                }
+            } else {
+                $newRelationships = $relationships;
+            }
+        }
+
+        //$allHydratedItems Items will be in response
+        $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
         if ($included) {
             $document->setIncluded($included);
         }
@@ -169,6 +192,20 @@ class Parser implements ParserInterface
     {
         if ($document->has('included')) {
             return $document->get('included');
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Art4\JsonApiClient\DocumentInterface $document
+     *
+     * @return \Art4\JsonApiClient\ResourceCollection|null
+     */
+    private function getJsonApiDocumentRelationShips(Art4JsonApiDocumentInterface $document)
+    {
+        if ($document->has('data.relationships')) {
+            return $document->get('data.relationships');
         }
 
         return null;

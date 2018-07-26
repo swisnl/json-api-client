@@ -149,28 +149,28 @@ class JenssegersItem extends Model implements ItemInterface
                 $relationships[$name]['data'] = [];
 
                 foreach ($relationship->getIncluded() as $item) {
-                    $relationships[$name]['data'][] =
-                        [
-                            'type' => $relationship->getType(),
-                            'id'   => $item->getId(),
-                        ];
+                    $data = [
+                        'type' => $relationship->getType(),
+                        'id'   => $item->getId(),
+                    ];
+                    $relationships[$name]['data'][] = $data + $item->getAttributes();
                 }
             } elseif ($relationship instanceof MorphToRelation) {
-                $relationships[$name] = [
-                    'data' => [
-                        'type' => $relationship->getIncluded()->getType(),
-                        'id'   => $relationship->getIncluded()->getId(),
-                    ],
+                $relationships[$name]['data'] = [];
+                $data = [
+                    'type' => $relationship->getIncluded()->getType(),
+                    'id'   => $relationship->getIncluded()->getId(),
                 ];
+                $relationships[$name]['data'] = $data + $relationship->getIncluded()->getAttributes();
             } elseif ($relationship instanceof MorphToManyRelation) {
                 $relationships[$name]['data'] = [];
 
                 foreach ($relationship->getIncluded() as $item) {
-                    $relationships[$name]['data'][] =
-                        [
-                            'type' => $item->getType(),
-                            'id'   => $item->getId(),
-                        ];
+                    $data = [
+                        'type' => $item->getType(),
+                        'id'   => $item->getId(),
+                    ];
+                    $relationships[$name]['data'][] = $data + $item->getAttributes();
                 }
             }
         }
