@@ -145,7 +145,6 @@ class JenssegersItem extends Model implements ItemInterface
                         'id'   => $relationship->getId(),
                     ],
                 ];
-
             } elseif ($relationship instanceof HasManyRelation) {
                 $relationships[$name]['data'] = [];
 
@@ -156,7 +155,6 @@ class JenssegersItem extends Model implements ItemInterface
                     ];
                     $relationships[$name]['data'][] = $data + $item->getAttributes();
                 }
-
             } elseif ($relationship instanceof MorphToRelation) {
                 $relationships[$name]['data'] = [];
                 $data = [
@@ -164,7 +162,6 @@ class JenssegersItem extends Model implements ItemInterface
                     'id'   => $relationship->getIncluded()->getId(),
                 ];
                 $relationships[$name]['data'] = $data + $relationship->getIncluded()->getAttributes();
-
             } elseif ($relationship instanceof MorphToManyRelation) {
                 $relationships[$name]['data'] = [];
 
@@ -180,7 +177,6 @@ class JenssegersItem extends Model implements ItemInterface
 
         return $relationships;
     }
-
 
     /**
      * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc
