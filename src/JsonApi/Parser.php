@@ -13,6 +13,7 @@ use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\ItemDocument;
+use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class Parser implements ParserInterface
 {
@@ -97,14 +98,14 @@ class Parser implements ParserInterface
      * @param \Art4\JsonApiClient\DocumentInterface $jsonApiDocument
      *
      * @throws \DomainException
-     *
+     *includedInDocument
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     protected function buildDataDocument(Art4JsonApiDocumentInterface $jsonApiDocument): DocumentInterface
     {
         $data = $this->getJsonApiDocumentData($jsonApiDocument);
         $includedInDocument = $this->getJsonApiDocumentIncluded($jsonApiDocument);
-
+        $relationshipsInDocument = $this->getJsonApiDocumentRelationShips($jsonApiDocument);
         $allHydratedItems = new Collection();
         $allJsonApiItems = new Collection();
 
@@ -133,14 +134,35 @@ class Parser implements ParserInterface
             $allJsonApiItems = $allJsonApiItems->concat(new Collection($includedInDocument->asArray()));
         }
 
-        $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
+        if ($relationshipsInDocument) {
+            $relationships = $this->hydrator->hydrateRelationCollection($relationshipsInDocument);
+            $newRelationships=new Collection();
+            foreach ($relationships as $relationship) {
 
+                $id = $relationship->getId();
+                $type = $relationship->getType();
+                $desired_object = null;
+                $desired_object = $included->first(function ($item) use ($id, $type) {
+                    return ($item->getId() == $id) && ($item->getType() == $type);
+                });
+                if (is_null($desired_object)) {
+                    $newRelationships->push($relationship);
+                }
+            }
+
+            $allHydratedItems = $allHydratedItems->concat($newRelationships);
+            $allJsonApiItems = $allJsonApiItems->concat(new Collection($relationshipsInDocument->asArray()));
+        }
+
+        //$allHydratedItems Items will be in response
+        $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
         if ($included) {
             $document->setIncluded($included);
         }
 
         return $document;
     }
+
 
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
@@ -177,6 +199,20 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
+     * @return \Art4\JsonApiClient\ResourceCollection|null
+     */
+    private function getJsonApiDocumentRelationShips(Art4JsonApiDocumentInterface $document)
+    {
+        if ($document->has('data.relationships')) {
+            return $document->get('data.relationships');
+        }
+        return null;
+    }
+
+
+    /**
+     * @param \Art4\JsonApiClient\DocumentInterface $document
+     *
      * @return array
      */
     private function parseLinks(Art4JsonApiDocumentInterface $document): array
@@ -184,7 +220,6 @@ class Parser implements ParserInterface
         if (!$document->has('links')) {
             return [];
         }
-
         return $document->get('links')->asArray(true);
     }
 

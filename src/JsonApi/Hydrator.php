@@ -62,6 +62,51 @@ class Hydrator
     }
 
     /**
+     * @param $jsonApiCollection
+     * @return Collection
+     */
+    public function hydrateRelationCollection($jsonApiCollection): Collection
+    {
+        $collection = new Collection();
+        foreach ($jsonApiCollection->asArray() as $item) {
+            $returnItem=$this->hydrateRelationItem($item);
+            if($returnItem instanceof Collection)
+            {
+                $collection=  $collection->merge($returnItem);
+            }else{
+                $collection->push($this->hydrateRelationItem($item));
+
+            }
+        }
+        return $collection;
+    }
+
+    /**
+     * @param $jsonApiItem
+     * @return null|Collection|ItemInterface
+     */
+    public function hydrateRelationItem($jsonApiItem)
+    {
+        if ($jsonApiItem->has('data.type')) {
+            $item = $this->getItemClass($jsonApiItem->get('data.type'));
+            $item->setId($jsonApiItem->get('data.id'));
+        } elseif ($jsonApiItem->has('data.0.type')) {
+            $collection = new Collection();
+
+            foreach ($jsonApiItem->get('data')->getKeys() as $key)
+            {
+                $item = $this->getItemClass($jsonApiItem->get('data.'.$key.'.type'));
+                $item->setId($jsonApiItem->get('data.'.$key.'.id'));
+                $collection->push($item);
+
+            }
+            return $collection;
+        }
+        return $item ?? null;
+    }
+
+
+    /**
      * @param \Swis\JsonApi\Client\Collection $jsonApiItems
      * @param \Swis\JsonApi\Client\Collection $items
      */
@@ -74,7 +119,7 @@ class Hydrator
         );
 
         $jsonApiItems->each(
-            function (ResourceItemInterface $jsonApiItem) use ($keyedItems) {
+            function ( $jsonApiItem) use ($keyedItems) {
                 if (!$jsonApiItem->has('relationships')) {
                     return;
                 }
