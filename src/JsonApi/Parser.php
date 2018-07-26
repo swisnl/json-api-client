@@ -136,25 +136,29 @@ class Parser implements ParserInterface
 
         if ($relationshipsInDocument) {
             $relationships = $this->hydrator->hydrateRelationCollection($relationshipsInDocument);
-            $newRelationships=new Collection();
-            foreach ($relationships as $relationship) {
+            if ($includedInDocument) {
+                $newRelationships = new Collection();
+                foreach ($relationships as $relationship) {
 
-                $id = $relationship->getId();
-                $type = $relationship->getType();
-                $desired_object = null;
-                $desired_object = $included->first(function ($item) use ($id, $type) {
-                    return ($item->getId() == $id) && ($item->getType() == $type);
-                });
-                if (is_null($desired_object)) {
-                    $newRelationships->push($relationship);
+                    $id = $relationship->getId();
+                    $type = $relationship->getType();
+                    $desiredObject = null;
+
+                    //check duplicate
+                    $desiredObject = $included->first(function ($item) use ($id, $type) {
+                        return ($item->getId() == $id) && ($item->getType() == $type);
+                    });
+                    if (is_null($desiredObject)) {
+                        $newRelationships->push($relationship);
+                    }
                 }
+            } else {
+                $newRelationships = $relationships;
             }
-
-            $allHydratedItems = $allHydratedItems->concat($newRelationships);
-            $allJsonApiItems = $allJsonApiItems->concat(new Collection($relationshipsInDocument->asArray()));
         }
 
-        //$allHydratedItems Items will be in response
+
+            //$allHydratedItems Items will be in response
         $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
         if ($included) {
             $document->setIncluded($included);
