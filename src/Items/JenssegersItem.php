@@ -145,38 +145,42 @@ class JenssegersItem extends Model implements ItemInterface
                         'id'   => $relationship->getId(),
                     ],
                 ];
+
             } elseif ($relationship instanceof HasManyRelation) {
                 $relationships[$name]['data'] = [];
 
                 foreach ($relationship->getIncluded() as $item) {
-                    $relationships[$name]['data'][] =
-                        [
-                            'type' => $relationship->getType(),
-                            'id'   => $item->getId(),
-                        ];
+                    $data = [
+                        'type' => $relationship->getType(),
+                        'id'   => $item->getId(),
+                    ];
+                    $relationships[$name]['data'][] = $data + $item->getAttributes();
                 }
+
             } elseif ($relationship instanceof MorphToRelation) {
-                $relationships[$name] = [
-                    'data' => [
-                        'type' => $relationship->getIncluded()->getType(),
-                        'id'   => $relationship->getIncluded()->getId(),
-                    ],
+                $relationships[$name]['data'] = [];
+                $data = [
+                    'type' => $relationship->getIncluded()->getType(),
+                    'id'   => $relationship->getIncluded()->getId(),
                 ];
+                $relationships[$name]['data'] = $data + $relationship->getIncluded()->getAttributes();
+
             } elseif ($relationship instanceof MorphToManyRelation) {
                 $relationships[$name]['data'] = [];
 
                 foreach ($relationship->getIncluded() as $item) {
-                    $relationships[$name]['data'][] =
-                        [
-                            'type' => $item->getType(),
-                            'id'   => $item->getId(),
-                        ];
+                    $data = [
+                        'type' => $item->getType(),
+                        'id'   => $item->getId(),
+                    ];
+                    $relationships[$name]['data'][] = $data + $item->getAttributes();
                 }
             }
         }
 
         return $relationships;
     }
+
 
     /**
      * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc
