@@ -13,7 +13,6 @@ use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\ItemDocument;
-use Swis\JsonApi\Client\Items\JenssegersItem;
 
 class Parser implements ParserInterface
 {
@@ -99,6 +98,7 @@ class Parser implements ParserInterface
      *
      * @throws \DomainException
      *includedInDocument
+     *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     protected function buildDataDocument(Art4JsonApiDocumentInterface $jsonApiDocument): DocumentInterface
@@ -139,7 +139,6 @@ class Parser implements ParserInterface
             if ($includedInDocument) {
                 $newRelationships = new Collection();
                 foreach ($relationships as $relationship) {
-
                     $id = $relationship->getId();
                     $type = $relationship->getType();
                     $desiredObject = null;
@@ -157,8 +156,7 @@ class Parser implements ParserInterface
             }
         }
 
-
-            //$allHydratedItems Items will be in response
+        //$allHydratedItems Items will be in response
         $this->hydrator->hydrateRelationships($allJsonApiItems, $allHydratedItems);
         if ($included) {
             $document->setIncluded($included);
@@ -166,7 +164,6 @@ class Parser implements ParserInterface
 
         return $document;
     }
-
 
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
@@ -210,9 +207,9 @@ class Parser implements ParserInterface
         if ($document->has('data.relationships')) {
             return $document->get('data.relationships');
         }
+
         return null;
     }
-
 
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
@@ -224,6 +221,7 @@ class Parser implements ParserInterface
         if (!$document->has('links')) {
             return [];
         }
+
         return $document->get('links')->asArray(true);
     }
 
