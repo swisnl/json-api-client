@@ -108,6 +108,7 @@ class Parser implements ParserInterface
         $relationshipsInDocument = $this->getJsonApiDocumentRelationShips($jsonApiDocument);
         $allHydratedItems = new Collection();
         $allJsonApiItems = new Collection();
+//dd($jsonApiDocument->get('included'));
 
         if ($data instanceof ResourceItemInterface) {
             $item = $this->hydrator->hydrateItem($data);
@@ -134,11 +135,14 @@ class Parser implements ParserInterface
             $allJsonApiItems = $allJsonApiItems->concat(new Collection($includedInDocument->asArray()));
         }
 
+
         if ($relationshipsInDocument) {
             $relationships = $this->hydrator->hydrateRelationCollection($relationshipsInDocument);
+
             if ($includedInDocument) {
                 $newRelationships = new Collection();
                 foreach ($relationships as $relationship) {
+
                     $id = $relationship->getId();
                     $type = $relationship->getType();
                     $desiredObject = null;
@@ -154,6 +158,10 @@ class Parser implements ParserInterface
             } else {
                 $newRelationships = $relationships;
             }
+
+
+            $allHydratedItems = $allHydratedItems->concat($newRelationships);
+            $allJsonApiItems = $allJsonApiItems->concat(new Collection($relationshipsInDocument->asArray()));
         }
 
         //$allHydratedItems Items will be in response
@@ -161,6 +169,7 @@ class Parser implements ParserInterface
         if ($included) {
             $document->setIncluded($included);
         }
+
 
         return $document;
     }
