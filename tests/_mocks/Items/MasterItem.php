@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\Mocks\Items\Eloquent;
+namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
-use Swis\JsonApi\Client\Items\EloquentItem;
+use Swis\JsonApi\Client\Item;
 
-class MasterEloquentItem extends EloquentItem
+class MasterItem extends Item
 {
     /**
      * @var string
@@ -39,12 +39,22 @@ class MasterEloquentItem extends EloquentItem
      */
     protected $availableRelations = [
         'child',
+        'morph',
+        'morphmany',
     ];
-
-    protected $guarded = [];
 
     public function child()
     {
-        return $this->hasOne(ChildEloquentItem::class);
+        return $this->hasOne(ChildItem::class);
+    }
+
+    public function morph()
+    {
+        return $this->morphTo();
+    }
+
+    public function morphmany()
+    {
+        return $this->morphToMany();
     }
 }

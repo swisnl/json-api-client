@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Changed
+
+* Refactored name(space) of `\Swis\JsonApi\Client\Items\JenssegersItem` to `\Swis\JsonApi\Client\Item` as we only have one item now.
+
+### Removed
+
+* `EloquentItem` is removed because it had some limitations which could not be fixed without being too opinionated.
+* `NullItem` is removed in favor of simply `null`. This item was only used internally so this should not affect you.
+
 ## [0.7.5] - 2018-07-04
 
 ### Fixed

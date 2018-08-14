@@ -5,7 +5,6 @@ namespace Swis\JsonApi\Client;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\RelationInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Client\Items\JenssegersItem;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
@@ -187,9 +186,9 @@ class ItemHydrator
      *
      * @throws \Exception
      *
-     * @return \Swis\JsonApi\Client\Items\JenssegersItem
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
-    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): JenssegersItem
+    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): ItemInterface
     {
         // Sometimes the relatedType is provided from the relationship, but not always (i.e. Polymorphic Relationships)
         if (null === $type) {
@@ -199,7 +198,7 @@ class ItemHydrator
         if ($this->typeMapper->hasMapping($type)) {
             $relationItem = $this->typeMapper->getMapping($type);
         } else {
-            $relationItem = new JenssegersItem();
+            $relationItem = new Item();
             $relationItem->setType($type);
         }
 

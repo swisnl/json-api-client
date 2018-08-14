@@ -1,13 +1,12 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\Items;
+namespace Swis\JsonApi\Client\Tests;
 
-use Swis\JsonApi\Client\Items\JenssegersItem;
-use Swis\JsonApi\Client\Tests\AbstractTest;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithGetMutatorJenssegersItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithHiddenJenssegersItem;
+use Swis\JsonApi\Client\Item;
+use Swis\JsonApi\Client\Tests\Mocks\Items\WithGetMutatorItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
 
-class JenssegersItemTest extends AbstractTest
+class ItemTest extends AbstractTest
 {
     protected $attributes;
 
@@ -26,8 +25,8 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_can_instantiate_an_item()
     {
-        $item = new JenssegersItem();
-        $this->assertInstanceOf(JenssegersItem::class, $item);
+        $item = new Item();
+        $this->assertInstanceOf(Item::class, $item);
     }
 
     /**
@@ -35,7 +34,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function is_shows_type_and_id_and_attributes_in_to_json_api_array()
     {
-        $item = new JenssegersItem($this->attributes);
+        $item = new Item($this->attributes);
         $item->setType('testType');
         $item->setId(1234);
 
@@ -54,7 +53,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_gets_and_sets_type()
     {
-        $item = new JenssegersItem();
+        $item = new Item();
         $item->setType('testType');
 
         $this->assertEquals('testType', $item->getType());
@@ -65,7 +64,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_is_new_when_no_id_isset()
     {
-        $item = new JenssegersItem();
+        $item = new Item();
         $item->setType('testType');
         $item->setId(1);
 
@@ -79,7 +78,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_returns_has_id_when_id_isset()
     {
-        $item = new JenssegersItem();
+        $item = new Item();
         $item->setType('testType');
         $this->assertFalse($item->hasId());
 
@@ -92,7 +91,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_returns_id_when_id_isset()
     {
-        $item = new JenssegersItem();
+        $item = new Item();
 
         $item->setId(1234);
         $this->assertEquals(1234, $item->getId());
@@ -103,7 +102,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_returns_attributes()
     {
-        $item = new JenssegersItem($this->attributes);
+        $item = new Item($this->attributes);
         $this->assertEquals($this->attributes, $item->getAttributes());
     }
 
@@ -112,7 +111,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_returns_attribute_from_get_mutator()
     {
-        $item = new WithGetMutatorJenssegersItem();
+        $item = new WithGetMutatorItem();
 
         $this->assertEquals('test', $item->getAttribute('test_attribute'));
     }
@@ -122,7 +121,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_sets_initial_values()
     {
-        $item = new JenssegersItem();
+        $item = new Item();
         $response = $item->setInitial(['testKey' => 'testValue']);
 
         $this->assertEquals($item, $response);
@@ -134,7 +133,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_uses_initial_values()
     {
-        $itemBuilder = new JenssegersItem();
+        $itemBuilder = new Item();
         $itemBuilder->fill(['testKey' => 1, 'anotherTestKey' => 'someValue']);
         $itemBuilder->setInitial(['testKey' => 9999]);
         $itemBuilder->useInitial();
@@ -147,8 +146,8 @@ class JenssegersItemTest extends AbstractTest
      */
     public function it_adds_unknown_relationships_in_snake_case()
     {
-        $item = new JenssegersItem();
-        $item->setRelation('someRelation', (new JenssegersItem())->setType('type')->setId(1));
+        $item = new Item();
+        $item->setRelation('someRelation', (new Item())->setType('type')->setId(1));
 
         $this->assertTrue($item->hasRelationship('some_relation'));
     }
@@ -158,7 +157,7 @@ class JenssegersItemTest extends AbstractTest
      */
     public function is_does_not_show_attributes_in_to_json_api_array_when_it_has_no_attributes()
     {
-        $item = new WithHiddenJenssegersItem($this->attributes);
+        $item = new WithHiddenItem($this->attributes);
         $item->setType('testType');
         $item->setId(1234);
 

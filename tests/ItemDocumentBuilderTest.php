@@ -2,9 +2,9 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\ItemDocumentBuilder;
 use Swis\JsonApi\Client\ItemHydrator;
-use Swis\JsonApi\Client\Items\JenssegersItem;
 use Swis\JsonApi\Client\TypeMapper;
 
 class ItemDocumentBuilderTest extends AbstractTest
@@ -20,10 +20,10 @@ class ItemDocumentBuilderTest extends AbstractTest
         $itemHydrator = new ItemHydrator($typeMapper);
         $itemDocumentBuilder = new ItemDocumentBuilder($itemHydrator);
 
-        $itemDocument = $itemDocumentBuilder->build(new JenssegersItem(), $data, 123);
+        $itemDocument = $itemDocumentBuilder->build(new Item(), $data, 123);
 
         $item = $itemDocument->getData();
-        static::assertInstanceOf(JenssegersItem::class, $item);
+        static::assertInstanceOf(Item::class, $item);
         static::assertEquals($item->key1, $data['key1']);
         static::assertEquals($item->key2, $data['key2']);
     }

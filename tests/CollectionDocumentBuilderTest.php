@@ -4,7 +4,7 @@ namespace Swis\JsonApi\Client\Tests;
 
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocumentBuilder;
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 
 class CollectionDocumentBuilderTest extends AbstractTest
 {
@@ -16,8 +16,8 @@ class CollectionDocumentBuilderTest extends AbstractTest
         $collectionDocumentBuilder = new CollectionDocumentBuilder();
 
         $data = [
-            (new JenssegersItem(['key1' => 'value1']))->setId(1),
-            (new JenssegersItem(['key2' => 'value2']))->setId(2),
+            (new Item(['key1' => 'value1']))->setId(1),
+            (new Item(['key2' => 'value2']))->setId(2),
         ];
 
         $collectionDocument = $collectionDocumentBuilder->build($data);
@@ -26,11 +26,11 @@ class CollectionDocumentBuilderTest extends AbstractTest
         $items = $collectionDocument->getData();
         static::assertInstanceOf(Collection::class, $items);
 
-        static::assertInstanceOf(JenssegersItem::class, $items[0]);
+        static::assertInstanceOf(Item::class, $items[0]);
         static::assertEquals(1, $items[0]->getId());
         static::assertEquals($data[0]['key1'], $items[0]->key1);
 
-        static::assertInstanceOf(JenssegersItem::class, $items[1]);
+        static::assertInstanceOf(Item::class, $items[1]);
         static::assertEquals(2, $items[1]->getId());
         static::assertEquals($data[1]['key2'], $items[1]->key2);
     }

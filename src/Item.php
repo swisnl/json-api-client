@@ -1,9 +1,8 @@
 <?php
 
-namespace Swis\JsonApi\Client\Items;
+namespace Swis\JsonApi\Client;
 
 use Jenssegers\Model\Model;
-use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\RelationInterface;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
@@ -11,7 +10,7 @@ use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
 
-class JenssegersItem extends Model implements ItemInterface
+class Item extends Model implements ItemInterface
 {
     /**
      * @var string

@@ -5,16 +5,16 @@ namespace Swis\JsonApi\Client\Tests\JsonApi;
 use Art4\JsonApiClient\ResourceCollectionInterface as CollectionInterface;
 use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\JsonApi\Hydrator;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
 use Swis\JsonApi\Client\Tests\AbstractTest;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\ChildJenssegersItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\MasterJenssegersItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\PlainJenssegersItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\Jenssegers\WithoutRelationshipsJenssegersItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\PlainItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\WithoutRelationshipsItem;
 use Swis\JsonApi\Client\TypeMapper;
 
 class HydratorTest extends AbstractTest
@@ -32,7 +32,7 @@ class HydratorTest extends AbstractTest
 
             $item = $hydrator->hydrateItem($this->getJsonApiItemMock($type, $id));
 
-            static::assertInstanceOf(PlainJenssegersItem::class, $item);
+            static::assertInstanceOf(PlainItem::class, $item);
             static::assertEquals($type, $item->getType());
             static::assertEquals($id, $item->getId());
         }
@@ -56,7 +56,7 @@ class HydratorTest extends AbstractTest
         $typeMapper->method('getMapping')->will(
             $this->returnCallback(
                 function (string $type) {
-                    return (new PlainJenssegersItem())->setType($type);
+                    return (new PlainItem())->setType($type);
                 }
             )
         );
@@ -207,8 +207,8 @@ class HydratorTest extends AbstractTest
         // Register the mocked type
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('child', ChildJenssegersItem::class);
-        $typeMapper->setMapping('master', MasterJenssegersItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $typeMapper->setMapping('master', MasterItem::class);
         $hydrator = new Hydrator($typeMapper);
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(2, 'master', 1);
@@ -224,7 +224,7 @@ class HydratorTest extends AbstractTest
         static::assertEquals('master', $masterItem->getType());
         static::assertEquals(1, $masterItem->getId());
 
-        static::assertInstanceOf(MasterJenssegersItem::class, $masterItem);
+        static::assertInstanceOf(MasterItem::class, $masterItem);
         static::assertInstanceOf(HasOneRelation::class, $masterItem->getRelationship('child'));
 
         static::assertSame($childItem, $masterItem->getRelationship('child')->getIncluded());
@@ -264,7 +264,7 @@ class HydratorTest extends AbstractTest
         static::assertInstanceOf(Collection::class, $collection);
 
         foreach ($collection as $item) {
-            static::assertInstanceOf(JenssegersItem::class, $item);
+            static::assertInstanceOf(Item::class, $item);
             static::assertNotEmpty($item->getType());
             static::assertNotEmpty($item->getId());
         }
@@ -282,7 +282,7 @@ class HydratorTest extends AbstractTest
 
         $item = $hydrator->hydrateItem($this->getJsonApiItemMock($type, $id));
 
-        static::assertInstanceOf(JenssegersItem::class, $item);
+        static::assertInstanceOf(Item::class, $item);
         static::assertEquals($type, $item->getType());
         static::assertEquals($id, $item->getId());
     }
@@ -295,8 +295,8 @@ class HydratorTest extends AbstractTest
         // Register the mocked type
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('child', ChildJenssegersItem::class);
-        $typeMapper->setMapping('master', MasterJenssegersItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $typeMapper->setMapping('master', MasterItem::class);
         $hydrator = new Hydrator($typeMapper);
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(3);
@@ -326,8 +326,8 @@ class HydratorTest extends AbstractTest
         // Register the mocked type
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('child', ChildJenssegersItem::class);
-        $typeMapper->setMapping('master', MasterJenssegersItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $typeMapper->setMapping('master', MasterItem::class);
         $hydrator = new Hydrator($typeMapper);
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(4);
@@ -357,7 +357,7 @@ class HydratorTest extends AbstractTest
         // Register the mocked type
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsJenssegersItem::class);
+        $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
         $hydrator = new Hydrator($typeMapper);
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(3);
@@ -387,7 +387,7 @@ class HydratorTest extends AbstractTest
         // Register the mocked type
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsJenssegersItem::class);
+        $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
         $hydrator = new Hydrator($typeMapper);
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(4);

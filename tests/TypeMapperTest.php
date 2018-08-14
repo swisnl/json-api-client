@@ -3,7 +3,7 @@
 namespace Swis\JsonApi\Client\Tests;
 
 use InvalidArgumentException;
-use Swis\JsonApi\Client\Items\JenssegersItem;
+use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\TypeMapper;
 
 class TypeMapperTest extends AbstractTest
@@ -14,10 +14,10 @@ class TypeMapperTest extends AbstractTest
     public function it_remembers_type_mappings_after_setting()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('item', JenssegersItem::class);
+        $typeMapper->setMapping('item', Item::class);
 
         static::assertTrue($typeMapper->hasMapping('item'));
-        static::assertInstanceOf(JenssegersItem::class, $typeMapper->getMapping('item'));
+        static::assertInstanceOf(Item::class, $typeMapper->getMapping('item'));
     }
 
     /**
@@ -26,7 +26,7 @@ class TypeMapperTest extends AbstractTest
     public function it_forgets_type_mappings_after_removing()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('item', JenssegersItem::class);
+        $typeMapper->setMapping('item', Item::class);
         $typeMapper->removeMapping('item');
 
         static::assertFalse($typeMapper->hasMapping('item'));
