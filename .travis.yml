@@ -1,17 +1,28 @@
 language: php
 
-php:
-  - '7.0'
-  - '7.1'
-  - '7.2'
+matrix:
+  include:
+  - php: "7.0"
+    env: LARAVEL_VERSION="5.3.*"
+  - php: "7.0"
+    env: LARAVEL_VERSION="5.4.*"
+  - php: "7.0"
+    env: LARAVEL_VERSION="5.5.*"
+  - php: "7.1"
+    env: LARAVEL_VERSION="5.5.*"
+  - php: "7.2"
+    env: LARAVEL_VERSION="5.5.*"
+  - php: "7.2"
+    env: LARAVEL_VERSION="5.6.*" RUN_CS_FIXER=1
 
 sudo: false
 
 install:
+  - composer require "illuminate/support:${LARAVEL_VERSION}" --no-update --no-interaction
   - travis_retry composer install --no-interaction --prefer-dist
 
 script:
-  - vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
+  - if [ "$RUN_CS_FIXER" ] ; then vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no ; fi
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
 
 after_script:
