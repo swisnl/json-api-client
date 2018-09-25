@@ -55,7 +55,7 @@ class Item extends Model implements ItemInterface
             'type' => $this->getType(),
         ];
 
-        if (!$this->isNew()) {
+        if ($this->hasId()) {
             $data['id'] = $this->getId();
         }
 
