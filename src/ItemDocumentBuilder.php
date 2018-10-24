@@ -22,7 +22,7 @@ class ItemDocumentBuilder
     /**
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $attributes
-     * @param string                                        $id
+     * @param string|null                                   $id
      *
      * @return \Swis\JsonApi\Client\ItemDocument
      */
@@ -30,7 +30,7 @@ class ItemDocumentBuilder
     {
         $this->itemHydrator->hydrate($item, $attributes);
 
-        if ($id) {
+        if ($id !== null && $id !== '') {
             $item->setId($id);
         }
 
