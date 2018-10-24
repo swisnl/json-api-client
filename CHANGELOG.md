@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.10.2] - 2018-10-24
+
+### Fixed
+
+* Allow '0' as id in ItemDocumentBuilder [#27](https://github.com/swisnl/json-api-client/pull/27)
+
 ## [0.10.1] - 2018-09-25
 
 ### Fixed
