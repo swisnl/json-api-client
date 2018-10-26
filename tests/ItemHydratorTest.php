@@ -185,11 +185,36 @@ class ItemHydratorTest extends AbstractTest
         $this->assertEquals($data['testattribute1'], $item->getAttribute('testattribute1'));
         $this->assertEquals($data['testattribute2'], $item->getAttribute('testattribute2'));
         $this->assertEquals('related-item', $morphTo->getType());
+        $this->assertEquals('related-item', $morphTo->getIncluded()->getType());
         $this->assertEquals(
             $data['morphto_relation']['test_related_attribute1'],
             $morphTo->getIncluded()->getAttribute('test_related_attribute1')
         );
         $this->assertArrayHasKey('morphto_relation', $item->toJsonApiArray()['relationships']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_unmapped_items_with_morphto_relationship()
+    {
+        $data = [
+            'morphto_relation' => [
+                'id'                      => 1,
+                'type'                    => 'unmapped-item',
+                'test_related_attribute1' => 'test',
+            ],
+        ];
+
+        $item = new WithRelationshipItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        $morphTo = $item->getRelationship('morphto_relation');
+
+        $this->assertEquals('unmapped-item', $morphTo->getType());
+        $this->assertEquals('unmapped-item', $morphTo->getIncluded()->getType());
+        $this->assertArrayNotHasKey('type', $morphTo->getIncluded()->getAttributes());
     }
 
     /**
@@ -263,6 +288,38 @@ class ItemHydratorTest extends AbstractTest
             $morphToMany->getIncluded()[1]->getAttribute('test_related_attribute1')
         );
         $this->assertArrayHasKey('morphtomany_relation', $item->toJsonApiArray()['relationships']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_unmapped_items_with_morphtomany_relationship()
+    {
+        $data = [
+            'morphtomany_relation' => [
+                [
+                    'id'                      => 1,
+                    'type'                    => 'unmapped-item',
+                    'test_related_attribute1' => 'test1',
+                ],
+                [
+                    'id'                      => 2,
+                    'type'                    => 'unmapped-item',
+                    'test_related_attribute1' => 'test2',
+                ],
+            ],
+        ];
+
+        $item = new WithRelationshipItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
+        $morphToMany = $item->getRelationship('morphtomany_relation');
+
+        $this->assertEquals('unmapped-item', $morphToMany->getIncluded()[0]->getType());
+        $this->assertEquals('unmapped-item', $morphToMany->getIncluded()[1]->getType());
+        $this->assertArrayNotHasKey('type', $morphToMany->getIncluded()[0]->getAttributes());
+        $this->assertArrayNotHasKey('type', $morphToMany->getIncluded()[1]->getAttributes());
     }
 
     /**

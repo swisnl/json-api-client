@@ -152,11 +152,12 @@ class ItemHydrator
      */
     protected function hydrateMorphToRelation(array $attributes, MorphToRelation $relation, string $availableRelation)
     {
-        if (!array_key_exists('type', $attributes[$availableRelation])) {
+        $relationData = $attributes[$availableRelation];
+        if (!array_key_exists('type', $relationData)) {
             throw new \InvalidArgumentException('Always provide a "type" attribute in a morphTo relationship');
         }
+        $relationItem = $this->buildRelationItem($relation, array_diff_key($relationData, ['type' => 'type']), $relationData['type']);
 
-        $relationItem = $this->buildRelationItem($relation, $attributes[$availableRelation], $attributes[$availableRelation]['type']);
         $relation->associate($relationItem);
     }
 
@@ -173,7 +174,7 @@ class ItemHydrator
             if (!array_key_exists('type', $relationData)) {
                 throw new \InvalidArgumentException('Always provide a "type" attribute in a morphToMany relationship entry');
             }
-            $relationItem = $this->buildRelationItem($relation, $relationData, $relationData['type']);
+            $relationItem = $this->buildRelationItem($relation, array_diff_key($relationData, ['type' => 'type']), $relationData['type']);
 
             $relation->associate($relation->getIncluded()->push($relationItem));
         }
