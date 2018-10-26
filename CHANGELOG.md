@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.10.3] - 2018-10-26
+
+### Fixed
+
+* Omit 'type' attribute when filling attributes for a morph relationship [#28](https://github.com/swisnl/json-api-client/pull/28)
+
 ## [0.10.2] - 2018-10-24
 
 ### Fixed
