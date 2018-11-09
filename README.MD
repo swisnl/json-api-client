@@ -17,6 +17,8 @@ A PHP package for mapping remote [{json:api}](http://jsonapi.org/) resources to 
 composer require swisnl/json-api-client
 ```
 
+N.B. Make sure you have installed a HTTP Client before you install this package or install one at the same time e.g. `composer require swisnl/json-api-client php-http/guzzle6-adapter`.
+
 ### HTTP Client
 
 We are decoupled from any HTTP messaging client with the help of [PHP-HTTP](http://php-http.org/).
