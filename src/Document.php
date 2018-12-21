@@ -6,7 +6,7 @@ use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 
-class Document implements DocumentInterface, \JsonSerializable
+class Document implements DocumentInterface
 {
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface

@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Removed
+
+* Removed obsolete `ItemDocumentSerializer` in favor of `JsonSerializable`.
+N.B. This is a breaking change if you use this class directly, construct the `DocumentClient` yourself or have overwritten `\Swis\JsonApi\Client\Providers\ServiceProvider::registerClients`. The `ItemDocument` can now be serialized using its `jsonSerialize` method.
+
 ## [0.11.0] - 2018-12-21
 
 ### Changed

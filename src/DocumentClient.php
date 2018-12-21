@@ -17,27 +17,17 @@ class DocumentClient implements DocumentClientInterface
     private $client;
 
     /**
-     * @var \Swis\JsonApi\Client\ItemDocumentSerializer
-     */
-    private $itemDocumentSerializer;
-
-    /**
      * @var \Swis\JsonApi\Client\Interfaces\ParserInterface
      */
     private $parser;
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\ClientInterface $client
-     * @param \Swis\JsonApi\Client\ItemDocumentSerializer     $itemDocumentSerializer
      * @param \Swis\JsonApi\Client\Interfaces\ParserInterface $parser
      */
-    public function __construct(
-        ClientInterface $client,
-        ItemDocumentSerializer $itemDocumentSerializer,
-        ParserInterface $parser
-    ) {
+    public function __construct(ClientInterface $client, ParserInterface $parser)
+    {
         $this->client = $client;
-        $this->itemDocumentSerializer = $itemDocumentSerializer;
         $this->parser = $parser;
     }
 
@@ -106,7 +96,7 @@ class DocumentClient implements DocumentClientInterface
      */
     protected function prepareBody(ItemDocumentInterface $body): string
     {
-        return $this->sanitizeJson($this->itemDocumentSerializer->serialize($body));
+        return $this->sanitizeJson($body->jsonSerialize());
     }
 
     /**

@@ -5,7 +5,7 @@ namespace Swis\JsonApi\Client\Interfaces;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 
-interface DocumentInterface
+interface DocumentInterface extends \JsonSerializable
 {
     /**
      * @return \Swis\JsonApi\Client\Interfaces\DataInterface

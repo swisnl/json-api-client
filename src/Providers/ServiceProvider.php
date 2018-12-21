@@ -15,7 +15,6 @@ use Swis\JsonApi\Client\Interfaces\ClientInterface as ApiClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface as ApiDocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Client\ItemDocumentSerializer;
 use Swis\JsonApi\Client\JsonApi\ErrorsParser;
 use Swis\JsonApi\Client\JsonApi\Hydrator;
 use Swis\JsonApi\Client\JsonApi\Parser;
@@ -84,7 +83,6 @@ class ServiceProvider extends BaseServiceProvider
             function (Application $app) {
                 return new ApiDocumentClient(
                     $app->make(ApiClientInterface::class),
-                    new ItemDocumentSerializer(),
                     $app->make(ParserInterface::class)
                 );
             }
