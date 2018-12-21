@@ -24,6 +24,14 @@ class InvalidResponseDocument implements DocumentInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasErrors(): bool
+    {
+        return false;
+    }
+
+    /**
      * @return mixed
      */
     public function getMeta(): array
@@ -56,10 +64,10 @@ class InvalidResponseDocument implements DocumentInterface
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function hasErrors(): bool
+    public function toArray(): array
     {
-        return false;
+        return [];
     }
 }

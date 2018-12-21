@@ -18,6 +18,11 @@ interface DocumentInterface
     public function getErrors(): ErrorCollection;
 
     /**
+     * @return bool
+     */
+    public function hasErrors(): bool;
+
+    /**
      * @return mixed
      */
     public function getMeta(): array;
@@ -38,7 +43,7 @@ interface DocumentInterface
     public function getJsonapi();
 
     /**
-     * @return bool
+     * @return array
      */
-    public function hasErrors(): bool;
+    public function toArray(): array;
 }
