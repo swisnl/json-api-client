@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2018-12-21
+
+### Changed
+
+* Implement `JsonSerializable` in `Document` [#32](https://github.com/swisnl/json-api-client/pull/32)
+* Add toArray to `DocumentInterface` and `Document` so `CollectionDocument` and `ItemDocument` now share the same toArray method [#32](https://github.com/swisnl/json-api-client/pull/32) 
+
 ## [0.10.3] - 2018-10-26
 
 ### Fixed
