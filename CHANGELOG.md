@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Add headers to request methods in `DocumentClientInterface`.
+N.B. This is a breaking change if you implement the interface yourself or extend the `DocumentClient`.
+
 ### Removed
 
 * Removed obsolete `ItemDocumentSerializer` in favor of `JsonSerializable`.

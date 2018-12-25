@@ -49,44 +49,48 @@ class DocumentClient implements DocumentClientInterface
 
     /**
      * @param string $endpoint
+     * @param array  $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function get(string $endpoint): DocumentInterface
+    public function get(string $endpoint, array $headers = []): DocumentInterface
     {
-        return $this->parseResponse($this->client->get($endpoint));
+        return $this->parseResponse($this->client->get($endpoint, $headers));
     }
 
     /**
      * @param string                                                $endpoint
      * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $body
+     * @param array                                                 $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function post(string $endpoint, ItemDocumentInterface $body): DocumentInterface
+    public function post(string $endpoint, ItemDocumentInterface $body, array $headers = []): DocumentInterface
     {
-        return $this->parseResponse($this->client->post($endpoint, $this->prepareBody($body)));
+        return $this->parseResponse($this->client->post($endpoint, $this->prepareBody($body), $headers));
     }
 
     /**
      * @param string                                                $endpoint
      * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $body
+     * @param array                                                 $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function patch(string $endpoint, ItemDocumentInterface $body): DocumentInterface
+    public function patch(string $endpoint, ItemDocumentInterface $body, array $headers = []): DocumentInterface
     {
-        return $this->parseResponse($this->client->patch($endpoint, $this->prepareBody($body)));
+        return $this->parseResponse($this->client->patch($endpoint, $this->prepareBody($body), $headers));
     }
 
     /**
      * @param string $endpoint
+     * @param array  $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function delete(string $endpoint): DocumentInterface
+    public function delete(string $endpoint, array $headers = []): DocumentInterface
     {
-        return $this->parseResponse($this->client->delete($endpoint));
+        return $this->parseResponse($this->client->delete($endpoint, $headers));
     }
 
     /**
