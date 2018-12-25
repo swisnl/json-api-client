@@ -6,33 +6,37 @@ interface DocumentClientInterface
 {
     /**
      * @param string $endpoint
+     * @param array  $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function get(string $endpoint): DocumentInterface;
+    public function get(string $endpoint, array $headers = []): DocumentInterface;
 
     /**
      * @param string                                                $endpoint
      * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
+     * @param array                                                 $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function patch(string $endpoint, ItemDocumentInterface $document): DocumentInterface;
+    public function patch(string $endpoint, ItemDocumentInterface $document, array $headers = []): DocumentInterface;
 
     /**
      * @param string                                                $endpoint
      * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
+     * @param array                                                 $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function post(string $endpoint, ItemDocumentInterface $document): DocumentInterface;
+    public function post(string $endpoint, ItemDocumentInterface $document, array $headers = []): DocumentInterface;
 
     /**
      * @param string $endpoint
+     * @param array  $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function delete(string $endpoint): DocumentInterface;
+    public function delete(string $endpoint, array $headers = []): DocumentInterface;
 
     /**
      * @return string
