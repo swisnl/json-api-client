@@ -10,6 +10,8 @@
 
 A PHP package for mapping remote [{json:api}](http://jsonapi.org/) resources to Eloquent like models and collections.
 
+:bulb: Before we start, please note that this library can only be used for [{json:api}](http://jsonapi.org/) resources and requires some basic knowledge of the specification. If you are not familiar with {json:api}, please read [the excellent blog](https://laravel-news.com/json-api-introduction) by [Björn Brala](https://github.com/bbrala) for a quick introduction.
+
 
 ## Installation
 
