@@ -234,6 +234,54 @@ class HydratorTest extends AbstractTest
     }
 
     /**
+     * @test
+     */
+    public function it_does_not_hydrate_relationships_without_data()
+    {
+        // Register the mocked type
+        /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('master', MasterItem::class);
+        $hydrator = new Hydrator($typeMapper);
+
+        $data = [
+            'data' => [
+                'type'          => 'master',
+                'id'            => 1,
+                'attributes'    => [
+                    'description' => 'test',
+                    'active'      => true,
+                ],
+                'relationships' => [
+                    'child' => [
+                        'links' => [
+                            'self'    => 'http://example.com/master/1/relationships/child',
+                            'related' => 'http://example.com/master/1/child',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $manager = new Manager();
+        $jsonApiItem = $manager->parse(json_encode($data));
+
+        $masterJsonApiItem = $jsonApiItem->get('data');
+        $masterItem = $hydrator->hydrateItem($masterJsonApiItem);
+
+        $hydrator->hydrateRelationships(
+            new Collection([$masterJsonApiItem]),
+            new Collection([$masterItem])
+        );
+
+        static::assertEquals('master', $masterItem->getType());
+        static::assertEquals(1, $masterItem->getId());
+
+        static::assertInstanceOf(MasterItem::class, $masterItem);
+        static::assertFalse($masterItem->hasRelationship('child'));
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Art4\JsonApiClient\ResourceCollectionInterface
      */
     protected function getJsonApiItemCollectionMock()
