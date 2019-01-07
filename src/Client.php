@@ -94,7 +94,7 @@ class Client implements ClientInterface
 
     /**
      * @param string                                                                         $endpoint
-     * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
+     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
@@ -106,7 +106,7 @@ class Client implements ClientInterface
 
     /**
      * @param string                                                                         $endpoint
-     * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
+     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
@@ -130,7 +130,7 @@ class Client implements ClientInterface
     /**
      * @param string                                                                         $method
      * @param string                                                                         $endpoint
-     * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
+     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
@@ -151,7 +151,7 @@ class Client implements ClientInterface
     /**
      * @param string                                                                         $method
      * @param string                                                                         $endpoint
-     * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
+     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
      * @return \Psr\Http\Message\RequestInterface

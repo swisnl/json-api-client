@@ -14,7 +14,7 @@ interface ClientInterface
 
     /**
      * @param string                                                                         $endpoint
-     * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
+     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
@@ -23,7 +23,7 @@ interface ClientInterface
 
     /**
      * @param string                                                                         $endpoint
-     * @param resource|string|null|int|float|bool|\Psr\Http\Message\StreamInterface|callable $body
+     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface

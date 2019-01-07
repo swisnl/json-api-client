@@ -29,7 +29,7 @@ interface RelationInterface
     public function dissociate();
 
     /**
-     * @return null|\Swis\JsonApi\Client\Collection|\Swis\JsonApi\Client\Interfaces\DataInterface|\Swis\JsonApi\Client\Interfaces\ItemInterface
+     * @return \Swis\JsonApi\Client\Collection|\Swis\JsonApi\Client\Interfaces\DataInterface|\Swis\JsonApi\Client\Interfaces\ItemInterface|null
      */
     public function getIncluded();
 
