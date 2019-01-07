@@ -13,6 +13,26 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
+    public function it_knows_if_hasErrors()
+    {
+        $document = new Document();
+        $this->assertEquals($document->isSuccess(), true);
+        $this->assertEquals($document->hasErrors(), false);
+
+        $document->setErrors(
+          new ErrorCollection(
+              [
+                  ['id' => 'error-1'],
+              ]
+          )
+      );
+        $this->assertEquals($document->hasErrors(), true);
+        $this->assertEquals($document->isSuccess(), false);
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_only_filled_properties_in_toArray()
     {
         $document = new Document();

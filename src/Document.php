@@ -101,6 +101,14 @@ class Document implements DocumentInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isSuccess(): bool
+    {
+        return $this->errors->isEmpty();
+    }
+
+    /**
      * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded(): Collection
