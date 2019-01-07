@@ -85,6 +85,10 @@ class Hydrator
                 }
 
                 foreach ($jsonApiItem->get('relationships')->asArray() as $name => $relationship) {
+                    if (!$relationship->has('data')) {
+                        continue;
+                    }
+
                     /** @var \Art4\JsonApiClient\ElementInterface $data */
                     $data = $relationship->get('data');
                     $method = camel_case($name);
