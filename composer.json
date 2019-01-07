@@ -4,6 +4,7 @@
     "description": "A PHP package for mapping remote {json:api} resources to Eloquent like models and collections.",
     "require": {
         "php": ">=7.0",
+        "ext-json": "*",
         "art4/json-api-client": "^0.9.1",
         "illuminate/support": "5.3.*|5.4.*|5.5.*|5.6.*|5.7.*",
         "jenssegers/model": "^1.1",
