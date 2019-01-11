@@ -29,7 +29,7 @@ abstract class AbstractRelation implements RelationInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getType(): string
     {

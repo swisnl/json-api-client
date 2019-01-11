@@ -2,20 +2,33 @@
 
 namespace Swis\JsonApi\Client\Relations;
 
-use Swis\JsonApi\Client\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
 
 class MorphToRelation extends AbstractOneRelation
 {
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\ItemInterface
+     * {@inheritdoc}
      */
-    protected $parentItem;
+    public function associate(DataInterface $included)
+    {
+        parent::associate($included);
+
+        /* @var \Swis\JsonApi\Client\Interfaces\ItemInterface $included */
+
+        $this->type = $included->getType();
+
+        return $this;
+    }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * {@inheritdoc}
      */
-    public function __construct(ItemInterface $item)
+    public function dissociate()
     {
-        $this->parentItem = $item;
+        parent::dissociate();
+
+        $this->type = null;
+
+        return $this;
     }
 }

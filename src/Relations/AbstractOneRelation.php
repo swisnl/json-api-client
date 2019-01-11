@@ -8,7 +8,7 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 abstract class AbstractOneRelation extends AbstractRelation
 {
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\ItemInterface
+     * @var \Swis\JsonApi\Client\Interfaces\ItemInterface|null
      */
     protected $included;
 
@@ -33,7 +33,6 @@ abstract class AbstractOneRelation extends AbstractRelation
         }
 
         $this->setId($included->getId());
-        $this->setType($included->getType());
 
         $this->included = $included;
 
@@ -45,6 +44,8 @@ abstract class AbstractOneRelation extends AbstractRelation
      */
     public function dissociate()
     {
+        $this->setId(null);
+
         $this->included = null;
 
         return $this;
