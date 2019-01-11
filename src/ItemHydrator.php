@@ -71,9 +71,9 @@ class ItemHydrator
 
             // It is a valid relation
             if ($relation instanceof HasOneRelation) {
-                $this->hydrateHasOneRelation($item, $attributes, $relation, $availableRelation);
+                $this->hydrateHasOneRelation($attributes, $relation, $availableRelation);
             } elseif ($relation instanceof HasManyRelation) {
-                $this->hydrateHasManyRelation($attributes, $availableRelation, $relation);
+                $this->hydrateHasManyRelation($attributes, $relation, $availableRelation);
             } elseif ($relation instanceof MorphToRelation) {
                 $this->hydrateMorphToRelation($attributes, $relation, $availableRelation);
             } elseif ($relation instanceof MorphToManyRelation) {
@@ -101,26 +101,21 @@ class ItemHydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $attributes
      * @param \Swis\JsonApi\Client\Relations\HasOneRelation $relation
      * @param string                                        $availableRelation
      *
      * @throws \InvalidArgumentException
      */
-    protected function hydrateHasOneRelation(
-        ItemInterface $item,
-        array $attributes,
-        HasOneRelation $relation,
-        string $availableRelation
-    ) {
+    protected function hydrateHasOneRelation(array $attributes, HasOneRelation $relation, string $availableRelation)
+    {
         if (is_array($attributes[$availableRelation])) {
             $relationItem = $this->buildRelationItem($relation, $attributes[$availableRelation]);
-            $relation->associate($relationItem);
         } else {
-            $relation->setId($attributes[$availableRelation]);
-            $item->setAttribute($availableRelation.'_id', $attributes[$availableRelation]);
+            $relationItem = $this->buildRelationItem($relation, ['id' => $attributes[$availableRelation]]);
         }
+
+        $relation->associate($relationItem);
     }
 
     /**
@@ -130,7 +125,7 @@ class ItemHydrator
      *
      * @throws \InvalidArgumentException
      */
-    protected function hydrateHasManyRelation(array $attributes, string $availableRelation, HasManyRelation $relation)
+    protected function hydrateHasManyRelation(array $attributes, HasManyRelation $relation, string $availableRelation)
     {
         foreach ($attributes[$availableRelation] as $relationData) {
             if (is_array($relationData)) {
