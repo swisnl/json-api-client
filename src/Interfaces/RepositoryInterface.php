@@ -5,16 +5,12 @@ namespace Swis\JsonApi\Client\Interfaces;
 interface RepositoryInterface
 {
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\DocumentTypeException
-     *
      * @return \Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface
      */
     public function all();
 
     /**
      * @param $id
-     *
-     * @throws \Swis\JsonApi\Client\Exceptions\DocumentTypeException
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface
      */

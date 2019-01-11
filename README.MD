@@ -45,46 +45,23 @@ If you are using Laravel < 5.5 or have disabled package auto discover, you must 
 
 ## Getting started
 
-You can simply require the client as a dependency and use it in your class.
-This allows you to, for example, make a repository that uses the [DocumentClient](#documentclient):
+You can simply require the [DocumentClient](#documentclient) as a dependency and use it in your class.
+Alternatively, you can create a repository based on `\Swis\JsonApi\Client\Repository`:
 
 ``` php
-use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
-use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
+use Swis\JsonApi\Client\Repository
 
-class BlogRepository
+class BlogRepository extends Repository
 {
-    protected $client;
+    protected $endpoint = 'blogs';
+}
 
-    public function __construct(DocumentClientInterface $client)
-    {
-        $this->client = $client;
-    }
-
-    public function all(array $parameters = [])
-    {
-        return $this->client->get('blogs?'.http_build_query($parameters));
-    }
-
-    public function create(ItemDocumentInterface $document, array $parameters = [])
-    {
-        return $this->client->post('blogs?'.http_build_query($parameters), $document);
-    }
-
-    public function find(string $id, array $parameters = [])
-    {
-        return $this->client->get('blogs/'.urlencode($id).'?'.http_build_query($parameters));
-    }
-
-    public function update(ItemDocumentInterface $document, array $parameters = [])
-    {
-        return $this->client->patch('blogs/'.urlencode($document->getData()->getId()).'?'.http_build_query($parameters), $document);
-    }
-
-    public function delete(string $id, array $parameters = [])
-    {
-        return $this->client->delete('blogs/'.urlencode($id).'?'.http_build_query($parameters));
-    }
+$repository = new BlogRepository();
+$document = $repository->all();
+if ($document->hasErrors()) {
+   // do something with errors
+} else {
+  $blogs = $document->getData();
 }
 ```
 

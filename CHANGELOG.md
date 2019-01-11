@@ -14,11 +14,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Add headers to request methods in `DocumentClientInterface`.
 N.B. This is a breaking change if you implement the interface yourself or extend the `DocumentClient`. [#34](https://github.com/swisnl/json-api-client/pull/34)
+* `Repository` doesn't throw exceptions anymore.
+N.B. This is a breaking change if you catch `DocumentNotFoundException` or `DocumentTypeException`. If you would like the old behaviour, you can simply extend the `Repository` and implement it yourself.
 
 ### Removed
 
 * Removed obsolete `ItemDocumentSerializer` in favor of `JsonSerializable`.
 N.B. This is a breaking change if you use this class directly, construct the `DocumentClient` yourself or have overwritten `\Swis\JsonApi\Client\Providers\ServiceProvider::registerClients`. The `ItemDocument` can now be serialized using its `jsonSerialize` method.
+* Removed obsolete `DocumentNotFoundException` and `DocumentTypeException`.
+N.B. This is a breaking change if you catch these exceptions.
 
 ### Fixed
 
