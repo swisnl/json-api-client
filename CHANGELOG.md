@@ -23,12 +23,12 @@ N.B. This is a breaking change if you catch `DocumentNotFoundException` or `Docu
 * Removed obsolete `ItemDocumentSerializer` in favor of `JsonSerializable`.
 N.B. This is a breaking change if you use this class directly, construct the `DocumentClient` yourself or have overwritten `\Swis\JsonApi\Client\Providers\ServiceProvider::registerClients`. The `ItemDocument` can now be serialized using `json_encode`.
 * Removed obsolete `DocumentNotFoundException` and `DocumentTypeException`. [#41](https://github.com/swisnl/json-api-client/pull/41)
-N.B. This is a breaking change if you catch these exceptions. [#42](https://github.com/swisnl/json-api-client/pull/42)
+N.B. This is a breaking change if you catch these exceptions.
 
 ### Fixed
 
 * Do not fail on, but skip relationships without data [#38](https://github.com/swisnl/json-api-client/pull/38)
-* Dissociating a related item now produces valid JSON
+* Dissociating a related item now produces valid JSON [#42](https://github.com/swisnl/json-api-client/pull/42)
 
 ## [0.11.0] - 2018-12-21
 
