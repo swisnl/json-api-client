@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Add `isSuccess` method to Document [#40](https://github.com/swisnl/json-api-client/pull/40)
+
 ### Changed
 
 * Add headers to request methods in `DocumentClientInterface`.
