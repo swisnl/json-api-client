@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [0.12.1] - 2019-01-11
+
+### Fixed
+
+* Fix hydrating of HasOne relations by id using ItemHydrator [#44](https://github.com/swisnl/json-api-client/pull/44)
+
 ## [0.12.0] - 2019-01-11
 
 ### Added
