@@ -2,9 +2,6 @@
 
 namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Client\Exceptions\DocumentNotFoundException;
-use Swis\JsonApi\Client\Exceptions\DocumentTypeException;
-use Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
 use Swis\JsonApi\Client\Interfaces\RepositoryInterface;
@@ -30,26 +27,6 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param array $parameters
-     *
-     * @throws \Swis\JsonApi\Client\Exceptions\DocumentTypeException
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface
-     */
-    public function all(array $parameters = [])
-    {
-        $document = $this->getClient()->get($this->getEndpoint().'?'.http_build_query($parameters));
-
-        if (!$document instanceof CollectionDocumentInterface) {
-            throw new DocumentTypeException(
-                sprintf('Expected %s got %s', CollectionDocumentInterface::class, get_class($document))
-            );
-        }
-
-        return $document;
-    }
-
-    /**
      * @return \Swis\JsonApi\Client\Interfaces\DocumentClientInterface
      */
     public function getClient()
@@ -66,28 +43,24 @@ class Repository implements RepositoryInterface
     }
 
     /**
+     * @param array $parameters
+     *
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     */
+    public function all(array $parameters = [])
+    {
+        return $this->getClient()->get($this->getEndpoint().'?'.http_build_query($parameters));
+    }
+
+    /**
      * @param       $id
      * @param array $parameters
      *
-     * @throws \Swis\JsonApi\Client\Exceptions\DocumentNotFoundException
-     * @throws \Swis\JsonApi\Client\Exceptions\DocumentTypeException
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function find($id, array $parameters = [])
     {
-        $document = $this->getClient()->get($this->getEndpoint().'/'.urlencode($id).'?'.http_build_query($parameters));
-
-        if (null === $document->getData()) {
-            throw new DocumentNotFoundException();
-        }
-        if (!$document instanceof ItemDocumentInterface) {
-            throw new DocumentTypeException(
-                sprintf('Expected %s got %s', ItemDocumentInterface::class, get_class($document))
-            );
-        }
-
-        return $document;
+        return $this->getClient()->get($this->getEndpoint().'/'.urlencode($id).'?'.http_build_query($parameters));
     }
 
     /**
@@ -100,9 +73,9 @@ class Repository implements RepositoryInterface
     {
         if ($document->getData()->isNew()) {
             return $this->saveNew($document, $parameters);
-        } else {
-            return $this->saveExisting($document, $parameters);
         }
+
+        return $this->saveExisting($document, $parameters);
     }
 
     /**
