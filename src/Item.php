@@ -316,7 +316,7 @@ class Item extends Model implements ItemInterface
         $itemType = (new $class())->getType();
 
         if (!array_key_exists($relationName, $this->relationships)) {
-            $this->relationships[$relationName] = new HasOneRelation($itemType, $this);
+            $this->relationships[$relationName] = new HasOneRelation($itemType);
         }
 
         return $this->relationships[$relationName];
@@ -354,7 +354,7 @@ class Item extends Model implements ItemInterface
         $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($relationName, $this->relationships)) {
-            $this->relationships[$relationName] = new MorphToRelation($this);
+            $this->relationships[$relationName] = new MorphToRelation();
         }
 
         return $this->relationships[$relationName];
