@@ -2,9 +2,12 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Item;
+use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithGetMutatorItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 
 class ItemTest extends AbstractTest
 {
@@ -165,6 +168,206 @@ class ItemTest extends AbstractTest
             [
                 'type' => 'testType',
                 'id'   => 1234,
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_hasone_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->hasoneRelation()->associate((new RelatedItem())->setId(5678));
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'hasone_relation' => [
+                        'data' => [
+                            'type' => 'related-item',
+                            'id'   => 5678,
+                        ],
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_empty_hasone_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->hasoneRelation()->dissociate();
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'hasone_relation' => [
+                        'data' => null,
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_morphto_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->morphtoRelation()->associate((new RelatedItem())->setId(5678));
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'morphto_relation' => [
+                        'data' => [
+                            'type' => 'related-item',
+                            'id'   => 5678,
+                        ],
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_empty_morphto_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->morphtoRelation()->dissociate();
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'morphto_relation' => [
+                        'data' => null,
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_hasmany_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->hasmanyRelation()->associate(new Collection([(new RelatedItem())->setId(5678)]));
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'hasmany_relation' => [
+                        'data' => [
+                            [
+                                'type' => 'related-item',
+                                'id'   => 5678,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_empty_hasmany_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->hasmanyRelation()->dissociate();
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'hasmany_relation' => [
+                        'data' => [],
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_morphtomany_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->morphtomanyRelation()->associate(new Collection([(new RelatedItem())->setId(5678)]));
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'morphtomany_relation' => [
+                        'data' => [
+                            [
+                                'type' => 'related-item',
+                                'id'   => 5678,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_empty_morphtomany_relation_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId(1234);
+        $item->morphtomanyRelation()->dissociate();
+
+        $this->assertEquals(
+            [
+                'type'          => 'item-with-relationship',
+                'id'            => 1234,
+                'relationships' => [
+                    'morphtomany_relation' => [
+                        'data' => [],
+                    ],
+                ],
             ],
             $item->toJsonApiArray()
         );

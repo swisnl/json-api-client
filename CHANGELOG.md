@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 N.B. This is a breaking change if you implement the interface yourself or extend the `DocumentClient`. [#34](https://github.com/swisnl/json-api-client/pull/34)
 * `Repository` doesn't throw exceptions anymore. [#41](https://github.com/swisnl/json-api-client/pull/41)
 N.B. This is a breaking change if you catch `DocumentNotFoundException` or `DocumentTypeException`. If you would like the old behaviour, you can simply extend the `Repository` and implement it yourself.
+* A HasOne or MorphTo relation do not set a `[relationship]_id` field on the parent when associating a related item.
 
 ### Removed
 
@@ -27,6 +28,7 @@ N.B. This is a breaking change if you catch these exceptions.
 ### Fixed
 
 * Do not fail on, but skip relationships without data [#38](https://github.com/swisnl/json-api-client/pull/38)
+* Dissociating a related item now produces valid JSON
 
 ## [0.11.0] - 2018-12-21
 

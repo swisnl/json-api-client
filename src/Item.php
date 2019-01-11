@@ -138,12 +138,16 @@ class Item extends Model implements ItemInterface
         /** @var \Swis\JsonApi\Client\Interfaces\RelationInterface $relationship */
         foreach ($this->relationships as $name => $relationship) {
             if ($relationship instanceof HasOneRelation) {
-                $relationships[$name] = [
-                    'data' => [
-                        'type' => $relationship->getType(),
-                        'id'   => $relationship->getId(),
-                    ],
-                ];
+                $relationships[$name] = ['data' => null];
+
+                if ($relationship->getIncluded() !== null) {
+                    $relationships[$name] = [
+                        'data' => [
+                            'type' => $relationship->getType(),
+                            'id'   => $relationship->getId(),
+                        ],
+                    ];
+                }
             } elseif ($relationship instanceof HasManyRelation) {
                 $relationships[$name]['data'] = [];
 
@@ -155,12 +159,16 @@ class Item extends Model implements ItemInterface
                         ];
                 }
             } elseif ($relationship instanceof MorphToRelation) {
-                $relationships[$name] = [
-                    'data' => [
-                        'type' => $relationship->getIncluded()->getType(),
-                        'id'   => $relationship->getIncluded()->getId(),
-                    ],
-                ];
+                $relationships[$name] = ['data' => null];
+
+                if ($relationship->getIncluded() !== null) {
+                    $relationships[$name] = [
+                        'data' => [
+                            'type' => $relationship->getIncluded()->getType(),
+                            'id'   => $relationship->getIncluded()->getId(),
+                        ],
+                    ];
+                }
             } elseif ($relationship instanceof MorphToManyRelation) {
                 $relationships[$name]['data'] = [];
 
@@ -300,6 +308,18 @@ class Item extends Model implements ItemInterface
     public function hasRelationship(string $name): bool
     {
         return array_key_exists($name, $this->relationships);
+    }
+
+    /**
+     * @param $name
+     *
+     * @return static
+     */
+    public function removeRelationship(string $name)
+    {
+        unset($this->relationships[$name]);
+
+        return $this;
     }
 
     /**
