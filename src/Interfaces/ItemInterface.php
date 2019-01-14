@@ -93,4 +93,9 @@ interface ItemInterface extends DataInterface
      * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded();
+
+    /**
+     * @return bool
+     */
+    public function canBeIncluded(): bool;
 }

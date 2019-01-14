@@ -203,14 +203,14 @@ class Item extends Model implements ItemInterface
 
             $includedFromRelationship = $relationship->getIncluded();
             if ($includedFromRelationship instanceof ItemInterface) {
-                if (!empty($includedFromRelationship->getType()) && null !== $includedFromRelationship->getId()) {
+                if ($includedFromRelationship->canBeIncluded()) {
                     $included->push($includedFromRelationship->toJsonApiArray());
                 }
                 $included = $included->merge($includedFromRelationship->getIncluded());
             } elseif ($includedFromRelationship instanceof Collection) {
                 $includedFromRelationship->each(
                     function (ItemInterface $item) use (&$included) {
-                        if (!empty($item->getType()) && null !== $item->getId()) {
+                        if ($item->canBeIncluded()) {
                             $included->push($item->toJsonApiArray());
                         }
                         $included = $included->merge($item->getIncluded());
@@ -226,6 +226,26 @@ class Item extends Model implements ItemInterface
                 return $item['type'].':'.$item['id'];
             }
         );
+    }
+
+    /**
+     * @return bool
+     */
+    public function canBeIncluded(): bool
+    {
+        if (empty($this->getType())) {
+            return false;
+        }
+
+        if (null === $this->getId()) {
+            return false;
+        }
+
+        if (empty($this->relationships) && empty($this->toArray())) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
