@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [0.13.0] - 2019-01-14
+
 ### Fixed
 
 * Omit item from included when it has no attributes or relationships (only type and id)
