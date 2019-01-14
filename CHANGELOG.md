@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Omit item from included when it has no attributes or relationships (only type and id)
 N.B. This is a breaking change if you implement the `ItemInterface` yourself instead of using the supplied `Item`.
+* Make sure included is always a plain array so it is serialized as array
 
 ## [0.12.1] - 2019-01-11
 

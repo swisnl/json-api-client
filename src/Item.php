@@ -221,11 +221,13 @@ class Item extends Model implements ItemInterface
             }
         }
 
-        return $included->unique(
-            function (array $item) {
-                return $item['type'].':'.$item['id'];
-            }
-        );
+        return $included
+            ->unique(
+                function (array $item) {
+                    return $item['type'].':'.$item['id'];
+                }
+            )
+            ->values();
     }
 
     /**
