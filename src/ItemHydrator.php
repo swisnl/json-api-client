@@ -3,7 +3,7 @@
 namespace Swis\JsonApi\Client;
 
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
-use Swis\JsonApi\Client\Interfaces\RelationInterface;
+use Swis\JsonApi\Client\Interfaces\TypedRelationInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
@@ -29,7 +29,7 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $attributes
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
@@ -56,7 +56,7 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $attributes
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     protected function fillRelations(ItemInterface $item, array $attributes)
     {
@@ -86,15 +86,15 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param string                                        $availableRelation
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      *
-     * @return \Swis\JsonApi\Client\Interfaces\RelationInterface
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface
      */
-    protected function getRelationFromItem(ItemInterface $item, string $availableRelation): RelationInterface
+    protected function getRelationFromItem(ItemInterface $item, string $availableRelation)
     {
         $method = camel_case($availableRelation);
         if (!method_exists($item, $method)) {
-            throw new \Exception(sprintf('Method %s not found on %s', $method, get_class($item)));
+            throw new \RuntimeException(sprintf('Method %s not found on %s', $method, get_class($item)));
         }
 
         return $item->$method();
@@ -176,18 +176,22 @@ class ItemHydrator
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\RelationInterface $relation
-     * @param array                                             $relationData
-     * @param string|null                                       $type
+     * @param \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relation
+     * @param array                                                                                                      $relationData
+     * @param string|null                                                                                                $type
      *
-     * @throws \Exception
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
-    protected function buildRelationItem(RelationInterface $relation, array $relationData, string $type = null): ItemInterface
+    protected function buildRelationItem($relation, array $relationData, string $type = null): ItemInterface
     {
-        // Sometimes the relatedType is provided from the relationship, but not always (i.e. Polymorphic Relationships)
         if (null === $type) {
+            if (!$relation instanceof TypedRelationInterface) {
+                throw new \InvalidArgumentException('Param $type is required when the relation is not typed');
+            }
+
             $type = $relation->getType();
         }
 

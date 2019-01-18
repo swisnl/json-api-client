@@ -78,17 +78,15 @@ interface ItemInterface extends DataInterface
     /**
      * Set the specific relationship in the model.
      *
-     * @param string $relation
-     * @param mixed  $value
+     * @param string        $relation
+     * @param DataInterface $value
      *
      * @return static
      */
-    public function setRelation($relation, $value);
+    public function setRelation(string $relation, DataInterface $value);
 
     /**
      * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc
-     *
-     * @throws \Exception
      *
      * @return \Swis\JsonApi\Client\Collection
      */

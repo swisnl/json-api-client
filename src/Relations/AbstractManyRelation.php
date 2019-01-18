@@ -3,41 +3,21 @@
 namespace Swis\JsonApi\Client\Relations;
 
 use Swis\JsonApi\Client\Collection;
-use Swis\JsonApi\Client\Interfaces\DataInterface;
+use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 
-abstract class AbstractManyRelation extends AbstractRelation
+/**
+ * @property \Swis\JsonApi\Client\Collection|null $included
+ */
+abstract class AbstractManyRelation extends AbstractRelation implements ManyRelationInterface
 {
     /**
-     * @var \Swis\JsonApi\Client\Collection|null
-     */
-    protected $included;
-
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $included
-     *
-     * @throws \InvalidArgumentException
+     * @param \Swis\JsonApi\Client\Collection $included
      *
      * @return $this
      */
-    public function associate(DataInterface $included)
+    public function associate(Collection $included)
     {
-        if (!$included instanceof Collection) {
-            throw new \InvalidArgumentException(
-                sprintf('%s expects relation to be an instance of %s', static::class, Collection::class)
-            );
-        }
-
         $this->included = $included;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function dissociate()
-    {
-        $this->included = null;
 
         return $this;
     }

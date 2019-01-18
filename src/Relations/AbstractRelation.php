@@ -2,14 +2,12 @@
 
 namespace Swis\JsonApi\Client\Relations;
 
-use Swis\JsonApi\Client\Interfaces\RelationInterface;
-
-abstract class AbstractRelation implements RelationInterface
+abstract class AbstractRelation
 {
     /**
-     * @var string
+     * @var \Swis\JsonApi\Client\Interfaces\DataInterface|null
      */
-    protected $type;
+    protected $included;
 
     /**
      * @var bool
@@ -17,23 +15,13 @@ abstract class AbstractRelation implements RelationInterface
     protected $omitIncluded = false;
 
     /**
-     * @param string $type
-     *
      * @return $this
      */
-    public function setType(string $type)
+    public function dissociate()
     {
-        $this->type = $type;
+        $this->included = null;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**

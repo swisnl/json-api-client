@@ -3,8 +3,10 @@
 namespace Swis\JsonApi\Client;
 
 use Jenssegers\Model\Model;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
-use Swis\JsonApi\Client\Interfaces\RelationInterface;
+use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
+use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
@@ -23,14 +25,14 @@ class Item extends Model implements ItemInterface
     protected $id;
 
     /**
-     * Contains the initial values (Which fields are pre-filled on CREATE-form).
+     * Contains the initial values.
      *
      * @var array
      */
     protected $initial = [];
 
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\RelationInterface[]
+     * @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
      */
     protected $relationships = [];
 
@@ -135,30 +137,8 @@ class Item extends Model implements ItemInterface
     {
         $relationships = [];
 
-        /** @var \Swis\JsonApi\Client\Interfaces\RelationInterface $relationship */
         foreach ($this->relationships as $name => $relationship) {
-            if ($relationship instanceof HasOneRelation) {
-                $relationships[$name] = ['data' => null];
-
-                if ($relationship->getIncluded() !== null) {
-                    $relationships[$name] = [
-                        'data' => [
-                            'type' => $relationship->getType(),
-                            'id'   => $relationship->getId(),
-                        ],
-                    ];
-                }
-            } elseif ($relationship instanceof HasManyRelation) {
-                $relationships[$name]['data'] = [];
-
-                foreach ($relationship->getIncluded() as $item) {
-                    $relationships[$name]['data'][] =
-                        [
-                            'type' => $relationship->getType(),
-                            'id'   => $item->getId(),
-                        ];
-                }
-            } elseif ($relationship instanceof MorphToRelation) {
+            if ($relationship instanceof OneRelationInterface) {
                 $relationships[$name] = ['data' => null];
 
                 if ($relationship->getIncluded() !== null) {
@@ -169,7 +149,7 @@ class Item extends Model implements ItemInterface
                         ],
                     ];
                 }
-            } elseif ($relationship instanceof MorphToManyRelation) {
+            } elseif ($relationship instanceof ManyRelationInterface) {
                 $relationships[$name]['data'] = [];
 
                 foreach ($relationship->getIncluded() as $item) {
@@ -188,8 +168,6 @@ class Item extends Model implements ItemInterface
     /**
      * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc
      *
-     * @throws \Exception
-     *
      * @return \Swis\JsonApi\Client\Collection
      */
     public function getIncluded(): Collection
@@ -201,14 +179,15 @@ class Item extends Model implements ItemInterface
                 continue;
             }
 
-            $includedFromRelationship = $relationship->getIncluded();
-            if ($includedFromRelationship instanceof ItemInterface) {
-                if ($includedFromRelationship->canBeIncluded()) {
-                    $included->push($includedFromRelationship->toJsonApiArray());
+            if ($relationship instanceof OneRelationInterface) {
+                /** @var \Swis\JsonApi\Client\Interfaces\ItemInterface $item */
+                $item = $relationship->getIncluded();
+                if ($item->canBeIncluded()) {
+                    $included->push($item->toJsonApiArray());
                 }
-                $included = $included->merge($includedFromRelationship->getIncluded());
-            } elseif ($includedFromRelationship instanceof Collection) {
-                $includedFromRelationship->each(
+                $included = $included->merge($item->getIncluded());
+            } elseif ($relationship instanceof ManyRelationInterface) {
+                $relationship->getIncluded()->each(
                     function (ItemInterface $item) use (&$included) {
                         if ($item->canBeIncluded()) {
                             $included->push($item->toJsonApiArray());
@@ -216,8 +195,6 @@ class Item extends Model implements ItemInterface
                         $included = $included->merge($item->getIncluded());
                     }
                 );
-            } else {
-                throw new \Exception('Not yet implemented');
             }
         }
 
@@ -269,7 +246,7 @@ class Item extends Model implements ItemInterface
      *
      * @return bool
      */
-    public function hasAttribute($key)
+    public function hasAttribute($key): bool
     {
         return array_key_exists($key, $this->attributes);
     }
@@ -279,7 +256,7 @@ class Item extends Model implements ItemInterface
      *
      * @param string $key
      *
-     * @return \Swis\JsonApi\Client\Interfaces\DataInterface
+     * @return \Swis\JsonApi\Client\Interfaces\DataInterface|null
      */
     public function getRelationValue($key)
     {
@@ -295,6 +272,8 @@ class Item extends Model implements ItemInterface
         if ($this->hasRelationship($key)) {
             return $this->getRelationship($key)->getIncluded();
         }
+
+        return null;
     }
 
     /**
@@ -306,18 +285,15 @@ class Item extends Model implements ItemInterface
      */
     public function __isset($key)
     {
-        $result = (isset($this->attributes[$key]) || isset($this->relationships[snake_case($key)])) ||
-            ($this->hasGetMutator($key) && !is_null($this->getAttributeValue($key)));
-
-        return $result;
+        return parent::__isset($key) || $this->hasRelationship($key) || $this->hasRelationship(snake_case($key));
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
-     * @return \Swis\JsonApi\Client\Interfaces\RelationInterface
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface
      */
-    public function getRelationship(string $name): RelationInterface
+    public function getRelationship(string $name)
     {
         return $this->relationships[$name];
     }
@@ -355,10 +331,9 @@ class Item extends Model implements ItemInterface
     public function hasOne(string $class, string $relationName = null)
     {
         $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
-        $itemType = (new $class())->getType();
 
         if (!array_key_exists($relationName, $this->relationships)) {
-            $this->relationships[$relationName] = new HasOneRelation($itemType);
+            $this->relationships[$relationName] = new HasOneRelation((new $class())->getType());
         }
 
         return $this->relationships[$relationName];
@@ -375,10 +350,9 @@ class Item extends Model implements ItemInterface
     public function hasMany(string $class, string $relationName = null)
     {
         $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
-        $itemType = (new $class())->getType();
 
         if (!array_key_exists($relationName, $this->relationships)) {
-            $this->relationships[$relationName] = new HasManyRelation($itemType);
+            $this->relationships[$relationName] = new HasManyRelation((new $class())->getType());
         }
 
         return $this->relationships[$relationName];
@@ -481,24 +455,22 @@ class Item extends Model implements ItemInterface
     }
 
     /**
-     * Set the specific relationship in the model.
+     * Set the specific relationship on the model.
      *
-     * @param string $relation
-     * @param mixed  $value
+     * @param string                                        $relation
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $value
      *
      * @return static
      */
-    public function setRelation($relation, $value)
+    public function setRelation(string $relation, DataInterface $value)
     {
         if (method_exists($this, $relation)) {
-            /** @var \Swis\JsonApi\Client\Interfaces\RelationInterface $relationObject */
+            /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
             $relationObject = $this->$relation();
+        } elseif ($value instanceof Collection) {
+            $relationObject = $this->morphToMany(snake_case($relation));
         } else {
-            if ($value instanceof Collection) {
-                $relationObject = $this->morphToMany(snake_case($relation));
-            } else {
-                $relationObject = $this->morphTo(snake_case($relation));
-            }
+            $relationObject = $this->morphTo(snake_case($relation));
         }
 
         $relationObject->associate($value);
