@@ -6,7 +6,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+This release includes changes to some interfaces. This is a breaking change if you use these interfaces in your own code.
+
+### Added
+
+* Added `OneRelationInterface` and `ManyRelationInterface` to differentiate between singular and plural relations.
+
+### Changed
+
+* Moved `setType` and `getType` from `RelationInterface` to a separate interface; `TypedRelationInterface`.
+* Added type hints to `ItemInterface::setRelation`.
+* Added return type hint to `Item::hasAttribute`.
+
+### Removed
+
+* Removed `RelationInterface` in favor of `OneRelationInterface` and `ManyRelationInterface`.
+* Removed `setId` and `getId` from `HasOneRelation` and `MorphToRelation`. These operations should be performed on the included item.
+* Removed `setType` and `getType` from morph relations. Use regular relations if you want to set the type.
 
 ## [0.13.0] - 2019-01-14
 

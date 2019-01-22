@@ -2,13 +2,18 @@
 
 namespace Swis\JsonApi\Client\Relations;
 
-class HasOneRelation extends AbstractOneRelation
+use Swis\JsonApi\Client\Interfaces\TypedRelationInterface;
+use Swis\JsonApi\Client\Relations\Traits\HasType;
+
+class HasOneRelation extends AbstractOneRelation implements TypedRelationInterface
 {
+    use HasType;
+
     /**
      * @param string $type
      */
     public function __construct(string $type)
     {
-        $this->type = $type;
+        $this->setType($type);
     }
 }

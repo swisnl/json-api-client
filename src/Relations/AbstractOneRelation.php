@@ -2,71 +2,22 @@
 
 namespace Swis\JsonApi\Client\Relations;
 
-use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 
-abstract class AbstractOneRelation extends AbstractRelation
+/**
+ * @property \Swis\JsonApi\Client\Interfaces\ItemInterface|null $included
+ */
+abstract class AbstractOneRelation extends AbstractRelation implements OneRelationInterface
 {
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\ItemInterface|null
-     */
-    protected $included;
-
-    /**
-     * @var int
-     */
-    protected $id;
-
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $included
-     *
-     * @throws \InvalidArgumentException
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $included
      *
      * @return $this
      */
-    public function associate(DataInterface $included)
+    public function associate(ItemInterface $included)
     {
-        if (!$included instanceof ItemInterface) {
-            throw new \InvalidArgumentException(
-                sprintf('%s expects relation to be an instance of %s', static::class, ItemInterface::class)
-            );
-        }
-
-        $this->setId($included->getId());
-
         $this->included = $included;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function dissociate()
-    {
-        $this->setId(null);
-
-        $this->included = null;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
 
         return $this;
     }
