@@ -23,13 +23,15 @@ N.B. Make sure you have installed a HTTP Client before you install this package 
 
 ### HTTP Client
 
-We are decoupled from any HTTP messaging client with the help of [PHP-HTTP](http://php-http.org/).
+We are decoupled from any HTTP messaging client with the help of [PHP-HTTP](http://docs.php-http.org/en/latest/httplug/users.html).
 This requires another package providing [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
 To use Guzzle 6, for example, simply require `php-http/guzzle6-adapter`:
 
 ``` bash
 composer require php-http/guzzle6-adapter
 ```
+
+See [Bind clients](#bind-clients) if you want to use your own HTTP client or use specific configuration options.
 
 ### Laravel Service Provider
 
