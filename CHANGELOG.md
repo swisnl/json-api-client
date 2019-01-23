@@ -11,6 +11,7 @@ This release includes changes to some interfaces. This is a breaking change if y
 ### Added
 
 * Added `OneRelationInterface` and `ManyRelationInterface` to differentiate between singular and plural relations.
+* Added documentation about `ItemDocumentBuilder`, `ItemHydrator` and `Repository` classes.
 
 ### Changed
 

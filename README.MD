@@ -65,6 +65,7 @@ if ($document->hasErrors()) {
 }
 ```
 
+
 ## Configuration
 
 The following is the default configuration provided by this package:
@@ -94,32 +95,6 @@ php artisan vendor:publish --provider="Swis\JsonApi\Client\Providers\ServiceProv
 ```
 
 
-## Clients
-
-This package offers two clients; `DocumentClient` and `Client`.
-   
-### DocumentClient
-
-This is the client that you would generally use.
-Per the [JSON API spec](http://jsonapi.org/format/#document-structure), all requests and responses are documents.
-Therefore, this client always expects a `\Swis\JsonApi\Client\Interfaces\DocumentInterface` as input when posting data and always returns this same interface.
-This can be a plain `Document` when there is no data, an `ItemDocument` for an item, a `CollectionDocument` for a collection or an `InvalidResponseDocument` when the server responds with a non 2xx response.
-
-The `DocumentClient` follows the following steps internally:
- 1. Send the request using your HTTP client;
- 2. Use [art4/json-api-client](https://github.com/art4/json-api-client) to parse and validate the response;
- 3. Create the correct document instance;
- 4. Hydrate every item by using the item model registered with the `TypeMapper` or a `\Swis\JsonApi\Client\Item` as fallback;
- 5. Hydrate all relationships;
- 6. Add meta data to the document such as [errors](http://jsonapi.org/format/#errors), [links](http://jsonapi.org/format/#document-links) and [meta](http://jsonapi.org/format/#document-meta).
-
-### Client
-
-This client is a more low level client and can be used, for example, for posting binary data such as images.
-It can take everything your request factory takes as input data and returns the 'raw' `\Psr\Http\Message\ResponseInterface` wrapped in a `\Swis\JsonApi\Client\Response`.
-It does not parse or validate the response or hydrate items!
-
-
 ## Items
 
 By default, all items are an instance of `\Swis\JsonApi\Client\Item`.
@@ -128,7 +103,6 @@ Please see it's documentation about the features it provides.
 You can define your own models by extending `\Swis\JsonApi\Client\Item` or by implementing the `\Swis\JsonApi\Client\Interfaces\ItemInterface` yourself.
 This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
 If you use custom models, you must register them with the [TypeMapper](#typemapper).
-
 
 ### Relations
 
@@ -199,6 +173,145 @@ class TypeMapperServiceProvider extends BaseTypeMapperServiceProvider
     ];
 }
 ```
+
+
+## Repository
+
+For convenience, this package includes a basic repository with several methods to work with [resources](https://jsonapi.org/format/#document-resource-objects).
+You can create a repository for each of the endpoints you use based on `\Swis\JsonApi\Client\Repository`.
+This repository then uses standard CRUD endpoints for all its actions.
+
+``` php
+class BlogRepository extends \Swis\JsonApi\Client\Repository
+{
+    protected $endpoint = 'blogs';
+}
+```
+
+If this repository (pattern) doesn't fit your needs, you can create your own implementation using the [clients](#clients) provided by this package.
+
+## ItemDocumentBuilder
+
+The `Repository` and `DocumentClient` require `ItemDocumentInterface` instances when creating or updating resources.
+Such documents can easily be created using the `ItemDocumentBuilder`.
+This builder takes an `ItemInterface` instance, usually created by the [TypeMapper](#typemapper), an array of attributes and optionally an id.
+Internally, it uses the [ItemHydrator](#itemhydrator) to hydrate the `ItemInterface` with the provided attributes before it creates the `ItemDocument`.
+
+
+## ItemHydrator
+
+The `ItemHydrator` can be used to fill/hydrate an item and its relations using an associative array with attributes.
+This is useful if you would like to hydrate an item with POST data from your request:
+
+``` php
+$typeMapper = app(Swis\JsonApi\Client\TypeMapper::class);
+$itemDocumentBuilder = app(Swis\JsonApi\Client\ItemDocumentBuilder::class);
+$blogRepository = app(App\Repositiories\BlogRepository::class);
+
+$itemDocument = $itemDocumentBuilder->build(
+    $typeMapper->getMapping('blog'),
+    request()->all(['title', 'author', 'date', 'content', 'tags']),
+    request()->id
+);
+$blogRepository->save($itemDocument);
+```
+
+### Relations
+
+The `ItemHydrator` also hydrates (nested) relations.
+A relation must explicitly be listed on the item in the `$availableRelations` array in order to be hydrated.
+If we take the above example, we can use the following attributes array to hydrate a new blog item:
+
+``` php
+$attributes = [
+    'title'   => 'Introduction to the JSON API',
+    'author'  => [
+        'id'       => 'f1a775ef-9407-40ba-93ff-7bd737888dc6',
+        'name'     => 'Björn Brala',
+        'homepage' => 'https://github.com/bbrala',
+    ],
+    'date'    => '2018-12-02 15:26:32',
+    'content' => 'JSON API was originally drafted in May 2013 by Yehuda Katz...',
+    'tags'    => [
+        1,
+        15,
+        56,
+    ],
+];
+$itemDocument = $itemDocumentBuilder->build($typeMapper->getMapping('blog'), $attributes);
+
+echo json_encode($itemDocument, JSON_PRETTY_PRINT);
+
+{
+    "data": {
+        "type": "blog",
+        "attributes": {
+            "title": "Introduction to the JSON API",
+            "date": "2018-12-02 15:26:32",
+            "content": "JSON API was originally drafted in May 2013 by Yehuda Katz..."
+        },
+        "relationships": {
+            "author": {
+                "data": {
+                    "type": "author",
+                    "id": "f1a775ef-9407-40ba-93ff-7bd737888dc6"
+                }
+            },
+            "tags": {
+                "data": [{
+                    "type": "tag",
+                    "id": "1"
+                }, {
+                    "type": "tag",
+                    "id": "15"
+                }, {
+                    "type": "tag",
+                    "id": "56"
+                }]
+            }
+        }
+    },
+    "included": [{
+        "type": "author",
+        "id": "f1a775ef-9407-40ba-93ff-7bd737888dc6",
+        "attributes": {
+            "name": "Björn Brala",
+            "homepage": "https://github.com/bbrala"
+        }
+    }]
+}
+```
+
+As you can see in this example, relations can be hydrated by id, or by an associative array with an id and more attributes.
+If the item is hydrated using an associative array, it will be included in the resulting json unless `setOmitIncluded(true)` is called on the relation.
+
+N.B. Morph relations require a 'type' attribute to be present in the data in order to know which type of item should be created.
+
+
+## Clients
+
+This package offers two clients; `DocumentClient` and `Client`.
+   
+### DocumentClient
+
+This is the client that you would generally use e.g. the repository uses this client internally.
+Per the [JSON API spec](http://jsonapi.org/format/#document-structure), all requests and responses are documents.
+Therefore, this client always expects a `\Swis\JsonApi\Client\Interfaces\DocumentInterface` as input when posting data and always returns this same interface.
+This can be a plain `Document` when there is no data, an `ItemDocument` for an item, a `CollectionDocument` for a collection or an `InvalidResponseDocument` when the server responds with a non 2xx response.
+
+The `DocumentClient` follows the following steps internally:
+ 1. Send the request using your HTTP client;
+ 2. Use [art4/json-api-client](https://github.com/art4/json-api-client) to parse and validate the response;
+ 3. Create the correct document instance;
+ 4. Hydrate every item by using the item model registered with the `TypeMapper` or a `\Swis\JsonApi\Client\Item` as fallback;
+ 5. Hydrate all relationships;
+ 6. Add meta data to the document such as [errors](http://jsonapi.org/format/#errors), [links](http://jsonapi.org/format/#document-links) and [meta](http://jsonapi.org/format/#document-meta).
+
+### Client
+
+This client is a more low level client and can be used, for example, for posting binary data such as images.
+It can take everything your request factory takes as input data and returns the 'raw' `\Psr\Http\Message\ResponseInterface` wrapped in a `\Swis\JsonApi\Client\Response`.
+It does not parse or validate the response or hydrate items!
 
 
 ## Service Provider
@@ -277,6 +390,7 @@ If you discover any security related issues, please email security@swis.nl inste
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
+
 
 ## SWIS
 
