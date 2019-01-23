@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-This release includes changes to some interfaces. This is a breaking change if you use these interfaces in your own code.
+* Nothing
+
+## [0.14.0] - 2019-01-23
+
+This release includes changes to some interfaces [#45](https://github.com/swisnl/json-api-client/pull/45). This is a breaking change if you use these interfaces in your own code.
 
 ### Added
 
