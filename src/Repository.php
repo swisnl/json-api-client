@@ -53,6 +53,16 @@ class Repository implements RepositoryInterface
     }
 
     /**
+     * @param array $parameters
+     *
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     */
+    public function take(array $parameters = [])
+    {
+        return $this->getClient()->get($this->getEndpoint().'?'.http_build_query($parameters));
+    }
+
+    /**
      * @param       $id
      * @param array $parameters
      *

@@ -58,6 +58,26 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
+    public function it_can_take_one()
+    {
+        $document = new Document();
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        $client = $this->getMockBuilder(DocumentClientInterface::class)->getMock();
+
+        $client->expects($this->once())
+            ->method('get')
+            ->with('mocks?foo=bar')
+            ->willReturn($document);
+
+        $repository = new MockRepository($client);
+
+        $this->assertSame($document, $repository->take(['foo' => 'bar']));
+    }
+
+    /**
+     * @test
+     */
     public function it_can_find_one()
     {
         $document = new Document();

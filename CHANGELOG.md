@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Added
+
+* Added `take` method to `Repository` to allow fetching resources without id.
 
 ## [0.14.0] - 2019-01-23
 
