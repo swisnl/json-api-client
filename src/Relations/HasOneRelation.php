@@ -3,7 +3,7 @@
 namespace Swis\JsonApi\Client\Relations;
 
 use Swis\JsonApi\Client\Interfaces\TypedRelationInterface;
-use Swis\JsonApi\Client\Relations\Traits\HasType;
+use Swis\JsonApi\Client\Traits\HasType;
 
 class HasOneRelation extends AbstractOneRelation implements TypedRelationInterface
 {
