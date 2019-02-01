@@ -13,6 +13,7 @@ use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\ItemDocument;
+use Swis\JsonApi\Client\Meta;
 
 class Parser implements ParserInterface
 {
@@ -205,15 +206,15 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
-     * @return array
+     * @return \Swis\JsonApi\Client\Meta|null
      */
-    private function parseMeta(Art4JsonApiDocumentInterface $document): array
+    private function parseMeta(Art4JsonApiDocumentInterface $document)
     {
         if (!$document->has('meta')) {
-            return [];
+            return null;
         }
 
-        return $document->get('meta')->asArray(true);
+        return new Meta($document->get('meta')->asArray(true));
     }
 
     /**

@@ -32,11 +32,11 @@ class InvalidResponseDocument implements DocumentInterface
     }
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta(): array
+    public function getMeta()
     {
-        return [];
+        return null;
     }
 
     /**

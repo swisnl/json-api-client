@@ -23,9 +23,9 @@ interface DocumentInterface extends \JsonSerializable
     public function hasErrors(): bool;
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta(): array;
+    public function getMeta();
 
     /**
      * @return mixed

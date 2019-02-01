@@ -7,6 +7,7 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Item;
+use Swis\JsonApi\Client\Meta;
 
 class DocumentTest extends TestCase
 {
@@ -60,7 +61,13 @@ class DocumentTest extends TestCase
                 ]
             )
         );
-        $document->setMeta(['copyright' => 'Copyright 2015 Example Corp.']);
+        $document->setMeta(
+            new Meta(
+                [
+                    'copyright' => 'Copyright 2015 Example Corp.',
+                ]
+            )
+        );
         $document->setErrors(
             new ErrorCollection(
                 [

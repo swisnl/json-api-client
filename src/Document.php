@@ -5,18 +5,16 @@ namespace Swis\JsonApi\Client;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
+use Swis\JsonApi\Client\Traits\HasMeta;
 
 class Document implements DocumentInterface
 {
+    use HasMeta;
+
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface
      */
     protected $data;
-
-    /**
-     * @var array
-     */
-    protected $meta = [];
 
     /**
      * @var array
@@ -42,22 +40,6 @@ class Document implements DocumentInterface
     {
         $this->errors = new ErrorCollection();
         $this->included = new Collection();
-    }
-
-    /**
-     * @return array
-     */
-    public function getMeta(): array
-    {
-        return $this->meta;
-    }
-
-    /**
-     * @param array $meta
-     */
-    public function setMeta(array $meta)
-    {
-        $this->meta = $meta;
     }
 
     /**
@@ -198,8 +180,8 @@ class Document implements DocumentInterface
             $document['included'] = $this->getIncluded()->toJsonApiArray();
         }
 
-        if (!empty($this->getMeta())) {
-            $document['meta'] = $this->meta;
+        if ($this->getMeta() !== null) {
+            $document['meta'] = $this->getMeta()->toArray();
         }
 
         if ($this->hasErrors()) {
