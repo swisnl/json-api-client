@@ -11,13 +11,11 @@ use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Traits\HasType;
 
 class Item extends Model implements ItemInterface
 {
-    /**
-     * @var string
-     */
-    protected $type;
+    use HasType;
 
     /**
      * @var
@@ -72,26 +70,6 @@ class Item extends Model implements ItemInterface
         }
 
         return $data;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return static
-     */
-    public function setType(string $type)
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     /**
