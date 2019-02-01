@@ -8,8 +8,8 @@ use Art4\JsonApiClient\ErrorSource as JsonApiErrorSource;
 use Art4\JsonApiClient\Meta as JsonApiMeta;
 use Swis\JsonApi\Client\Errors\Error;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
-use Swis\JsonApi\Client\Errors\ErrorMeta;
 use Swis\JsonApi\Client\Errors\ErrorSource;
+use Swis\JsonApi\Client\Meta;
 
 class ErrorsParser
 {
@@ -49,7 +49,7 @@ class ErrorsParser
             $error->has('title') ? $error->get('title') : null,
             $error->has('detail') ? $error->get('detail') : null,
             $error->has('source') ? $this->buildErrorSource($error->get('source')) : null,
-            $error->has('meta') ? $this->buildErrorMeta($error->get('meta')) : null
+            $error->has('meta') ? $this->buildMeta($error->get('meta')) : null
         );
     }
 
@@ -69,10 +69,10 @@ class ErrorsParser
     /**
      * @param \Art4\JsonApiClient\Meta $meta
      *
-     * @return \Swis\JsonApi\Client\Errors\ErrorMeta
+     * @return \Swis\JsonApi\Client\Meta
      */
-    private function buildErrorMeta(JsonApiMeta $meta): ErrorMeta
+    private function buildMeta(JsonApiMeta $meta): Meta
     {
-        return new ErrorMeta($meta->asArray(false));
+        return new Meta($meta->asArray(false));
     }
 }

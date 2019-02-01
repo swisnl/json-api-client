@@ -2,8 +2,13 @@
 
 namespace Swis\JsonApi\Client\Errors;
 
+use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Traits\HasMeta;
+
 class Error
 {
+    use HasMeta;
+
     /**
      * @var string|null
      */
@@ -35,18 +40,13 @@ class Error
     protected $source;
 
     /**
-     * @var \Swis\JsonApi\Client\Errors\ErrorMeta|null
-     */
-    protected $meta;
-
-    /**
      * @param string|null                                  $id
      * @param string|null                                  $status
      * @param string|null                                  $code
      * @param string|null                                  $title
      * @param string|null                                  $detail
      * @param \Swis\JsonApi\Client\Errors\ErrorSource|null $source
-     * @param \Swis\JsonApi\Client\Errors\ErrorMeta|null   $meta
+     * @param \Swis\JsonApi\Client\Meta|null               $meta
      */
     public function __construct(
         string $id = null,
@@ -55,7 +55,7 @@ class Error
         string $title = null,
         string $detail = null,
         ErrorSource $source = null,
-        ErrorMeta $meta = null
+        Meta $meta = null
     ) {
         $this->id = $id;
         $this->status = $status;
@@ -112,13 +112,5 @@ class Error
     public function getSource()
     {
         return $this->source;
-    }
-
-    /**
-     * @return \Swis\JsonApi\Client\Errors\ErrorMeta|null
-     */
-    public function getMeta()
-    {
-        return $this->meta;
     }
 }

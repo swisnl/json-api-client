@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Added `take` method to `Repository` to allow fetching resources without id.
 
+### Changed
+
+* `Error::getMeta()` now returns a `Meta` instance instead of an `ErrorMeta` instance. The `Meta` class does not have the `has` and `get` methods, but uses magic overloading methods (e.g. `__get` and `__set`) just like `Item`.
+N.B. This is a breaking change if you use meta on errors.
+
+### Removed
+
+* Removed `ErrorMeta` class in favor of generic `Meta` class.
+
 ## [0.14.0] - 2019-01-23
 
 This release includes changes to some interfaces [#45](https://github.com/swisnl/json-api-client/pull/45). This is a breaking change if you use these interfaces in your own code.
