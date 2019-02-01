@@ -7,6 +7,7 @@ use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\JsonApi\Hydrator;
+use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
@@ -109,6 +110,9 @@ class HydratorTest extends AbstractTest
                             ],
                         ],
                     ],
+                ],
+                'meta' => [
+                    'foo' => 'bar',
                 ],
             ],
             'included' => [
@@ -455,5 +459,20 @@ class HydratorTest extends AbstractTest
         static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());
 
         static::assertEquals(4, $masterItem->morphmany[0]->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_meta()
+    {
+        $hydrator = $this->getHydrator();
+
+        $jsonApiItem = $this->getJsonApiItemMock('master', 1);
+        $item = $hydrator->hydrateItem($jsonApiItem);
+
+        static::assertInstanceOf(Meta::class, $item->getMeta());
+
+        static::assertEquals(new Meta(['foo' => 'bar']), $item->getMeta());
     }
 }

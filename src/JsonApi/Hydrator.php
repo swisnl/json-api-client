@@ -11,6 +11,7 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Item;
+use Swis\JsonApi\Client\Meta;
 
 class Hydrator
 {
@@ -40,6 +41,10 @@ class Hydrator
 
         if ($jsonApiItem->has('attributes')) {
             $item->fill($jsonApiItem->get('attributes')->asArray(true));
+        }
+
+        if ($jsonApiItem->has('meta')) {
+            $item->setMeta(new Meta($jsonApiItem->get('meta')->asArray(true)));
         }
 
         return $item;
