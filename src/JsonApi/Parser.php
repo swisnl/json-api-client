@@ -13,6 +13,7 @@ use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\ItemDocument;
+use Swis\JsonApi\Client\Jsonapi;
 use Swis\JsonApi\Client\Meta;
 
 class Parser implements ParserInterface
@@ -72,6 +73,7 @@ class Parser implements ParserInterface
         $document->setLinks($this->parseLinks($jsonApiDocument));
         $document->setErrors($this->parseErrors($jsonApiDocument));
         $document->setMeta($this->parseMeta($jsonApiDocument));
+        $document->setJsonapi($this->parseJsonapi($jsonApiDocument));
 
         return $document;
     }
@@ -215,6 +217,25 @@ class Parser implements ParserInterface
         }
 
         return new Meta($document->get('meta')->asArray(true));
+    }
+
+    /**
+     * @param \Art4\JsonApiClient\DocumentInterface $document
+     *
+     * @return \Swis\JsonApi\Client\Jsonapi|null
+     */
+    private function parseJsonapi(Art4JsonApiDocumentInterface $document)
+    {
+        if (!$document->has('jsonapi')) {
+            return null;
+        }
+
+        $jsonApi = $document->get('jsonapi');
+
+        return new Jsonapi(
+            $jsonApi->has('version') ? $jsonApi->get('version') : null,
+            $jsonApi->has('meta') ? new Meta($jsonApi->get('meta')->asArray(true)) : null
+        );
     }
 
     /**

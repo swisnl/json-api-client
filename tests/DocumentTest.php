@@ -7,6 +7,7 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Item;
+use Swis\JsonApi\Client\Jsonapi;
 use Swis\JsonApi\Client\Meta;
 
 class DocumentTest extends TestCase
@@ -75,7 +76,16 @@ class DocumentTest extends TestCase
                 ]
             )
         );
-        $document->setJsonapi(['version' => '1.0']);
+        $document->setJsonapi(
+            new Jsonapi(
+                '1.0',
+                new Meta(
+                    [
+                        'copyright' => 'Copyright 2015 Example Corp.',
+                    ]
+                )
+            )
+        );
 
         $this->assertEquals(
             [
@@ -112,6 +122,9 @@ class DocumentTest extends TestCase
                 ],
                 'jsonapi' => [
                     'version' => '1.0',
+                    'meta'    => [
+                        'copyright' => 'Copyright 2015 Example Corp.',
+                    ],
                 ],
             ],
             $document->toArray()

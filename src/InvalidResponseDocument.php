@@ -56,7 +56,7 @@ class InvalidResponseDocument implements DocumentInterface
     }
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Jsonapi|null
      */
     public function getJsonapi()
     {

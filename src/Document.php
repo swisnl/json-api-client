@@ -32,9 +32,9 @@ class Document implements DocumentInterface
     protected $included;
 
     /**
-     * @var array
+     * @var \Swis\JsonApi\Client\Jsonapi|null
      */
-    protected $jsonapi = [];
+    protected $jsonapi;
 
     public function __construct()
     {
@@ -111,17 +111,17 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return array
+     * @return \Swis\JsonApi\Client\Jsonapi|null
      */
-    public function getJsonapi(): array
+    public function getJsonapi()
     {
         return $this->jsonapi;
     }
 
     /**
-     * @param array $jsonapi
+     * @param \Swis\JsonApi\Client\Jsonapi|null $jsonapi
      */
-    public function setJsonapi(array $jsonapi)
+    public function setJsonapi(Jsonapi $jsonapi = null)
     {
         $this->jsonapi = $jsonapi;
     }
@@ -188,8 +188,8 @@ class Document implements DocumentInterface
             $document['errors'] = $this->errors->toArray();
         }
 
-        if (!empty($this->getJsonapi())) {
-            $document['jsonapi'] = $this->jsonapi;
+        if ($this->getJsonapi() !== null) {
+            $document['jsonapi'] = $this->getJsonapi()->toArray();
         }
 
         return $document;

@@ -38,7 +38,7 @@ interface DocumentInterface extends \JsonSerializable
     public function getIncluded(): Collection;
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Jsonapi|null
      */
     public function getJsonapi();
 
