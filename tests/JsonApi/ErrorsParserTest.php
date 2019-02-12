@@ -9,22 +9,18 @@ use Swis\JsonApi\Client\Errors\ErrorSource;
 use Swis\JsonApi\Client\JsonApi\ErrorsParser;
 use Swis\JsonApi\Client\JsonApi\LinksParser;
 use Swis\JsonApi\Client\Links;
+use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class ErrorsParserTest extends AbstractTest
 {
-    /** @var \Swis\JsonApi\Client\JsonApi\ErrorsParser */
-    public static $parser;
-
-    public static function setUpBeforeClass()
+    /**
+     * @test
+     */
+    public function it_converts_jsonapilinks_to_links()
     {
-        self::$parser = new ErrorsParser(new LinksParser());
-    }
-
-    /** @test */
-    public function it_converts_jsonapierrorcollection_to_errorcollection()
-    {
-        $errorCollection = self::$parser->parse($this->getJsonApiErrorCollection());
+        $parser = new ErrorsParser(new LinksParser());
+        $errorCollection = $parser->parse($this->getJsonApiErrorCollection());
 
         $this->assertInstanceOf(ErrorCollection::class, $errorCollection);
         $this->assertEquals(2, $errorCollection->count());
@@ -33,6 +29,7 @@ class ErrorsParserTest extends AbstractTest
             function (Error $error) {
                 $this->assertInstanceOf(Error::class, $error);
                 $this->assertInstanceOf(Links::class, $error->getLinks());
+                $this->assertInstanceOf(Meta::class, $error->getMeta());
                 $this->assertInstanceOf(ErrorSource::class, $error->getSource());
 
                 $this->assertEquals('http://example.com/docs/error/json_client_content_id_in_object_not_equal_to_id_parameter', $error->getLinks()['about']->getHref());
@@ -42,6 +39,7 @@ class ErrorsParserTest extends AbstractTest
                 $this->assertEquals("id is '666', id is '666'", $error->getDetail());
                 $this->assertEquals('', $error->getSource()->getPointer());
                 $this->assertEquals('666', $error->getSource()->getParameter());
+                $this->assertEquals('Copyright 2015 Example Corp.', $error->getMeta()->copyright);
             }
         );
 
@@ -69,6 +67,9 @@ class ErrorsParserTest extends AbstractTest
                         'pointer'   => '',
                         'parameter' => '666',
                     ],
+                    'meta' => [
+                        'copyright' => 'Copyright 2015 Example Corp.',
+                    ],
                 ],
                 [
                     'id'     => '2',
@@ -87,6 +88,9 @@ class ErrorsParserTest extends AbstractTest
                     'source' => [
                         'pointer'   => '',
                         'parameter' => '666',
+                    ],
+                    'meta' => [
+                        'copyright' => 'Copyright 2015 Example Corp.',
                     ],
                 ],
             ],
