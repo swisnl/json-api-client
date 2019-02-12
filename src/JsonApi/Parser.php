@@ -34,15 +34,26 @@ class Parser implements ParserInterface
     private $errorsParser;
 
     /**
+     * @var \Swis\JsonApi\Client\JsonApi\LinksParser
+     */
+    private $linksParser;
+
+    /**
      * @param \Art4\JsonApiClient\Utils\Manager         $manager
      * @param \Swis\JsonApi\Client\JsonApi\Hydrator     $hydrator
      * @param \Swis\JsonApi\Client\JsonApi\ErrorsParser $errorsParser
+     * @param \Swis\JsonApi\Client\JsonApi\LinksParser  $linksParser
      */
-    public function __construct(Art4JsonApiClientManager $manager, Hydrator $hydrator, ErrorsParser $errorsParser)
-    {
+    public function __construct(
+        Art4JsonApiClientManager $manager,
+        Hydrator $hydrator,
+        ErrorsParser $errorsParser,
+        LinksParser $linksParser
+    ) {
         $this->manager = $manager;
         $this->hydrator = $hydrator;
         $this->errorsParser = $errorsParser;
+        $this->linksParser = $linksParser;
     }
 
     /**
@@ -180,15 +191,15 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
-     * @return array
+     * @return \Swis\JsonApi\Client\Links|null
      */
-    private function parseLinks(Art4JsonApiDocumentInterface $document): array
+    private function parseLinks(Art4JsonApiDocumentInterface $document)
     {
         if (!$document->has('links')) {
-            return [];
+            return null;
         }
 
-        return $document->get('links')->asArray(true);
+        return $this->linksParser->parse($document->get('links')->asArray(false));
     }
 
     /**

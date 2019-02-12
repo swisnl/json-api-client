@@ -8,6 +8,8 @@ use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Jsonapi;
+use Swis\JsonApi\Client\Link;
+use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
 class DocumentTest extends TestCase
@@ -42,11 +44,20 @@ class DocumentTest extends TestCase
         $this->assertEquals([], $document->toArray());
 
         $document->setLinks(
-            [
-                'self' => 'http://example.com/articles',
-                'next' => 'http://example.com/articles?page[offset]=2',
-                'last' => 'http://example.com/articles?page[offset]=10',
-            ]
+            new Links(
+                [
+                    'self' => new Link(
+                        'http://example.com/articles',
+                        new Meta(
+                            [
+                                'copyright' => 'Copyright 2015 Example Corp.',
+                            ]
+                        )
+                    ),
+                    'next' => new Link('http://example.com/articles?page[offset]=2'),
+                    'last' => new Link('http://example.com/articles?page[offset]=10'),
+                ]
+            )
         );
         $document->setData(
             (new Item(['title' => 'JSON:API paints my bikeshed!']))
@@ -89,10 +100,19 @@ class DocumentTest extends TestCase
 
         $this->assertEquals(
             [
-                'links'    => [
-                    'self' => 'http://example.com/articles',
-                    'next' => 'http://example.com/articles?page[offset]=2',
-                    'last' => 'http://example.com/articles?page[offset]=10',
+                'links' => [
+                    'self' => [
+                        'href'    => 'http://example.com/articles',
+                        'meta'    => [
+                            'copyright' => 'Copyright 2015 Example Corp.',
+                        ],
+                    ],
+                    'next' => [
+                        'href' => 'http://example.com/articles?page[offset]=2',
+                    ],
+                    'last' => [
+                        'href' => 'http://example.com/articles?page[offset]=10',
+                    ],
                 ],
                 'data'     => [
                     'type'       => 'articles',

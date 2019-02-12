@@ -73,6 +73,6 @@ class ErrorsParser
      */
     private function buildMeta(JsonApiMeta $meta): Meta
     {
-        return new Meta($meta->asArray(false));
+        return new Meta($meta->asArray(true));
     }
 }

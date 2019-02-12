@@ -28,9 +28,9 @@ interface DocumentInterface extends \JsonSerializable
     public function getMeta();
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks(): array;
+    public function getLinks();
 
     /**
      * @return mixed

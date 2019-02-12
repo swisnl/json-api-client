@@ -20,6 +20,8 @@ N.B. This is a breaking change if you implement (one of) these interfaces yourse
 
 * `Error::getMeta()` now returns a `Meta` instance instead of an `ErrorMeta` instance. The `Meta` class does not have the `has` and `get` methods, but uses magic overloading methods (e.g. `__get` and `__set`) just like `Item`.
 N.B. This is a breaking change if you use meta on errors.
+* `DocumentInterface::getLinks()` now returns a `Links` instance instead of a plain array. If no links are present, it returns `null`. All implementations have been updated to reflect these changes.
+N.B. This is a minor breaking change if you use links on documents.
 * `DocumentInterface::getMeta()` now returns a `Meta` instance instead of a plain array. If no meta is present, it returns `null`. All implementations have been updated to reflect these changes.
 N.B. This is a minor breaking change if you use meta on documents.
 * `DocumentInterface::getJsonapi()` now returns a `Jsonapi` instance instead of a plain array. If no jsonapi is present, it returns `null`. All implementations have been updated to reflect these changes.

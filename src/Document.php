@@ -5,21 +5,17 @@ namespace Swis\JsonApi\Client;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
+use Swis\JsonApi\Client\Traits\HasLinks;
 use Swis\JsonApi\Client\Traits\HasMeta;
 
 class Document implements DocumentInterface
 {
-    use HasMeta;
+    use HasLinks, HasMeta;
 
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface
      */
     protected $data;
-
-    /**
-     * @var array
-     */
-    protected $links = [];
 
     /**
      * @var \Swis\JsonApi\Client\Errors\ErrorCollection
@@ -40,22 +36,6 @@ class Document implements DocumentInterface
     {
         $this->errors = new ErrorCollection();
         $this->included = new Collection();
-    }
-
-    /**
-     * @return array
-     */
-    public function getLinks(): array
-    {
-        return $this->links;
-    }
-
-    /**
-     * @param array $links
-     */
-    public function setLinks(array $links)
-    {
-        $this->links = $links;
     }
 
     /**
@@ -168,8 +148,8 @@ class Document implements DocumentInterface
     {
         $document = [];
 
-        if (!empty($this->getLinks())) {
-            $document['links'] = $this->links;
+        if ($this->getLinks() !== null) {
+            $document['links'] = $this->getLinks()->toArray();
         }
 
         if (!empty($this->getData())) {
