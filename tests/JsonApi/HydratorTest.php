@@ -90,11 +90,20 @@ class HydratorTest extends AbstractTest
                             'type' => 'child',
                             'id'   => '2',
                         ],
+                        'links' => [
+                            'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/child',
+                        ],
+                        'meta' => [
+                            'foo' => 'bar',
+                        ],
                     ],
                     'morph'     => [
                         'data' => [
                             'type' => 'child',
                             'id'   => '3',
+                        ],
+                        'meta' => [
+                            'foo' => 'bar',
                         ],
                     ],
                     'morphmany' => [
@@ -111,6 +120,9 @@ class HydratorTest extends AbstractTest
                                 'type' => 'child',
                                 'id'   => '6',
                             ],
+                        ],
+                        'links' => [
+                            'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/morphmany',
                         ],
                     ],
                 ],
@@ -236,11 +248,15 @@ class HydratorTest extends AbstractTest
 
         static::assertInstanceOf(MasterItem::class, $masterItem);
         static::assertInstanceOf(HasOneRelation::class, $masterItem->getRelationship('child'));
+        static::assertInstanceOf(Links::class, $masterItem->getRelationship('child')->getLinks());
+        static::assertInstanceOf(Meta::class, $masterItem->getRelationship('child')->getMeta());
 
         static::assertSame($childItem, $masterItem->getRelationship('child')->getIncluded());
         static::assertEquals('child', $masterItem->getRelationship('child')->getIncluded()->getType());
         static::assertEquals(2, $masterItem->getRelationship('child')->getIncluded()->getId());
         static::assertSame($masterItem, $masterItem->getRelationship('child')->getIncluded()->getRelationship('parent')->getIncluded());
+        static::assertSame('http://example.com/master/1/relationships/child', $masterItem->getRelationship('child')->getLinks()->self->getHref());
+        static::assertSame('bar', $masterItem->getRelationship('child')->getMeta()->foo);
     }
 
     /**
