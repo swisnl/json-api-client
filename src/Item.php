@@ -449,11 +449,12 @@ class Item extends Model implements ItemInterface
      *
      * @param string                                        $relation
      * @param \Swis\JsonApi\Client\Interfaces\DataInterface $value
+     * @param \Swis\JsonApi\Client\Links|null               $links
      * @param \Swis\JsonApi\Client\Meta|null                $meta
      *
      * @return static
      */
-    public function setRelation(string $relation, DataInterface $value, Meta $meta = null)
+    public function setRelation(string $relation, DataInterface $value, Links $links = null, Meta $meta = null)
     {
         if (method_exists($this, $relation)) {
             /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
@@ -465,6 +466,7 @@ class Item extends Model implements ItemInterface
         }
 
         $relationObject->associate($value);
+        $relationObject->setLinks($links);
         $relationObject->setMeta($meta);
 
         return $this;

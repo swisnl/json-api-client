@@ -107,11 +107,12 @@ interface ItemInterface extends DataInterface
      *
      * @param string                                        $relation
      * @param \Swis\JsonApi\Client\Interfaces\DataInterface $value
+     * @param \Swis\JsonApi\Client\Links|null               $links
      * @param \Swis\JsonApi\Client\Meta|null                $meta
      *
      * @return static
      */
-    public function setRelation(string $relation, DataInterface $value, Meta $meta = null);
+    public function setRelation(string $relation, DataInterface $value, Links $links = null, Meta $meta = null);
 
     /**
      * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc

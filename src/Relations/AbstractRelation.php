@@ -2,11 +2,12 @@
 
 namespace Swis\JsonApi\Client\Relations;
 
+use Swis\JsonApi\Client\Traits\HasLinks;
 use Swis\JsonApi\Client\Traits\HasMeta;
 
 abstract class AbstractRelation
 {
-    use HasMeta;
+    use HasLinks, HasMeta;
 
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface|null

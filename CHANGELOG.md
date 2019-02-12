@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Added links and meta to `ItemInterface`.
 N.B. This is a breaking change if you implement the `ItemInterface` yourself instead of using the supplied `Item`.
 * Added `Jsonapi` class.
-* Added meta to `OneRelationInterface` and `ManyRelationInterface`.
+* Added links and meta to `OneRelationInterface` and `ManyRelationInterface`.
 N.B. This is a breaking change if you implement (one of) these interfaces yourself instead of using the supplied relations.
 * Added `Link` and `Links` classes.
 
@@ -25,7 +25,7 @@ N.B. This is a minor breaking change if you use links on documents.
 * `DocumentInterface::getMeta()` now returns a `Meta` instance instead of a plain array. If no meta is present, it returns `null`. All implementations have been updated to reflect these changes.
 N.B. This is a minor breaking change if you use meta on documents.
 * `DocumentInterface::getJsonapi()` now returns a `Jsonapi` instance instead of a plain array. If no jsonapi is present, it returns `null`. All implementations have been updated to reflect these changes.
-* Parameters for `ItemInterface::setRelation()` have changed to include an optional `Meta` object.
+* Parameters for `ItemInterface::setRelation()` have changed to include optional `Links` and `Meta` objects.
 
 ### Removed
 
