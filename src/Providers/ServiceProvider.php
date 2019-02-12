@@ -60,7 +60,7 @@ class ServiceProvider extends BaseServiceProvider
                 return new Parser(
                     new JsonApiClientManger(),
                     new Hydrator($app->make(TypeMapperInterface::class), new LinksParser()),
-                    new ErrorsParser(),
+                    new ErrorsParser(new LinksParser()),
                     new LinksParser()
                 );
             }

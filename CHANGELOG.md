@@ -15,6 +15,7 @@ N.B. This is a breaking change if you implement the `ItemInterface` yourself ins
 * Added links and meta to `OneRelationInterface` and `ManyRelationInterface`.
 N.B. This is a breaking change if you implement (one of) these interfaces yourself instead of using the supplied relations.
 * Added `Link` and `Links` classes.
+* Added links to `Error`.
 
 ### Changed
 

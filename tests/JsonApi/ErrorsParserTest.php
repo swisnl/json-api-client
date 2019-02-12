@@ -7,6 +7,8 @@ use Swis\JsonApi\Client\Errors\Error;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Errors\ErrorSource;
 use Swis\JsonApi\Client\JsonApi\ErrorsParser;
+use Swis\JsonApi\Client\JsonApi\LinksParser;
+use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class ErrorsParserTest extends AbstractTest
@@ -16,13 +18,13 @@ class ErrorsParserTest extends AbstractTest
 
     public static function setUpBeforeClass()
     {
-        self::$parser = new ErrorsParser();
+        self::$parser = new ErrorsParser(new LinksParser());
     }
 
     /** @test */
     public function it_converts_jsonapierrorcollection_to_errorcollection()
     {
-        $errorCollection = self::$parser->parse($this->getValidJsonApiErrorCollection());
+        $errorCollection = self::$parser->parse($this->getJsonApiErrorCollection());
 
         $this->assertInstanceOf(ErrorCollection::class, $errorCollection);
         $this->assertEquals(2, $errorCollection->count());
@@ -30,8 +32,10 @@ class ErrorsParserTest extends AbstractTest
         $errorCollection->each(
             function (Error $error) {
                 $this->assertInstanceOf(Error::class, $error);
+                $this->assertInstanceOf(Links::class, $error->getLinks());
                 $this->assertInstanceOf(ErrorSource::class, $error->getSource());
 
+                $this->assertEquals('http://example.com/docs/error/json_client_content_id_in_object_not_equal_to_id_parameter', $error->getLinks()['about']->getHref());
                 $this->assertEquals('400', $error->getStatus());
                 $this->assertEquals('json_client_content_id_in_object_not_equal_to_id_parameter', $error->getCode());
                 $this->assertEquals('I refuse to save a sport with this id. ✟', $error->getTitle());
@@ -48,60 +52,44 @@ class ErrorsParserTest extends AbstractTest
     /**
      * @return \Art4\JsonApiClient\ErrorCollection
      */
-    protected function getValidJsonApiErrorCollection()
+    protected function getJsonApiErrorCollection()
     {
         $errors = [
             'errors' => [
-                    [
-                        'id'     => '1',
-                        'status' => '400',
-                        'code'   => 'json_client_content_id_in_object_not_equal_to_id_parameter',
-                        'title'  => 'I refuse to save a sport with this id. ✟',
-                        'detail' => "id is '666', id is '666'",
-                        'source' => [
-                                'pointer'   => '',
-                                'parameter' => '666',
-                            ],
+                [
+                    'id'     => '1',
+                    'links'  => [
+                        'about' => 'http://example.com/docs/error/json_client_content_id_in_object_not_equal_to_id_parameter',
                     ],
-                    [
-                        'id'     => '2',
-                        'status' => '400',
-                        'code'   => 'json_client_content_id_in_object_not_equal_to_id_parameter',
-                        'title'  => 'I refuse to save a sport with this id. ✟',
-                        'detail' => "id is '666', id is '666'",
-                        'source' => [
-                                'pointer'   => '',
-                                'parameter' => '666',
-                            ],
+                    'status' => '400',
+                    'code'   => 'json_client_content_id_in_object_not_equal_to_id_parameter',
+                    'title'  => 'I refuse to save a sport with this id. ✟',
+                    'detail' => "id is '666', id is '666'",
+                    'source' => [
+                        'pointer'   => '',
+                        'parameter' => '666',
                     ],
                 ],
-        ];
-
-        $manager = new Manager();
-        $jsonApiItem = $manager->parse(json_encode($errors));
-
-        return $jsonApiItem->get('errors');
-    }
-
-    /**
-     * @return \Art4\JsonApiClient\ErrorCollection
-     */
-    protected function getInValidJsonApiErrorCollection()
-    {
-        $errors = [
-            'errors' => [
-                    [
-                        'id'     => '1',
-                        'status' => '400',
-                        'code'   => 'json_client_content_id_in_object_not_equal_to_id_parameter',
-                        'title'  => 'I refuse to save a sport with this id. ✟',
-                        'detail' => "id is '666', id is '666'",
-                        'source' => [
-                                'pointer'   => '',
-                                'parameter' => '666',
+                [
+                    'id'     => '2',
+                    'links'  => [
+                        'about' => [
+                            'href' => 'http://example.com/docs/error/json_client_content_id_in_object_not_equal_to_id_parameter',
+                            'meta' => [
+                                'foo' => 'bar',
                             ],
+                        ],
+                    ],
+                    'status' => '400',
+                    'code'   => 'json_client_content_id_in_object_not_equal_to_id_parameter',
+                    'title'  => 'I refuse to save a sport with this id. ✟',
+                    'detail' => "id is '666', id is '666'",
+                    'source' => [
+                        'pointer'   => '',
+                        'parameter' => '666',
                     ],
                 ],
+            ],
         ];
 
         $manager = new Manager();
