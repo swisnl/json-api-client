@@ -11,12 +11,13 @@ use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Traits\HasLinks;
 use Swis\JsonApi\Client\Traits\HasMeta;
 use Swis\JsonApi\Client\Traits\HasType;
 
 class Item extends Model implements ItemInterface
 {
-    use HasMeta, HasType;
+    use HasLinks, HasMeta, HasType;
 
     /**
      * @var
@@ -68,6 +69,11 @@ class Item extends Model implements ItemInterface
         $relationships = $this->getRelationships();
         if (!empty($relationships)) {
             $data['relationships'] = $relationships;
+        }
+
+        $links = $this->getLinks();
+        if ($links !== null) {
+            $data['links'] = $links->toArray();
         }
 
         $meta = $this->getMeta();

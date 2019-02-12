@@ -7,6 +7,9 @@ use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\JsonApi\Hydrator;
+use Swis\JsonApi\Client\JsonApi\LinksParser;
+use Swis\JsonApi\Client\Link;
+use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
@@ -44,7 +47,7 @@ class HydratorTest extends AbstractTest
      */
     protected function getHydrator(): Hydrator
     {
-        return new Hydrator($this->getTypeMapperMock());
+        return new Hydrator($this->getTypeMapperMock(), new LinksParser());
     }
 
     /**
@@ -110,6 +113,9 @@ class HydratorTest extends AbstractTest
                             ],
                         ],
                     ],
+                ],
+                'links' => [
+                    'self' => 'http://example.com/master/1',
                 ],
                 'meta' => [
                     'foo' => 'bar',
@@ -213,7 +219,7 @@ class HydratorTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('master', MasterItem::class);
-        $hydrator = new Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper, new LinksParser());
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(2, 'master', 1);
         $childItem = $hydrator->hydrateItem($childJsonApiItem);
@@ -246,7 +252,7 @@ class HydratorTest extends AbstractTest
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
-        $hydrator = new Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper, new LinksParser());
 
         $data = [
             'data' => [
@@ -349,7 +355,7 @@ class HydratorTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('master', MasterItem::class);
-        $hydrator = new Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper, new LinksParser());
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(3);
         $childItem = $hydrator->hydrateItem($childJsonApiItem);
@@ -380,7 +386,7 @@ class HydratorTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('master', MasterItem::class);
-        $hydrator = new Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper, new LinksParser());
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(4);
         $childItem = $hydrator->hydrateItem($childJsonApiItem);
@@ -410,7 +416,7 @@ class HydratorTest extends AbstractTest
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
-        $hydrator = new Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper, new LinksParser());
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(3);
         $childItem = $hydrator->hydrateItem($childJsonApiItem);
@@ -440,7 +446,7 @@ class HydratorTest extends AbstractTest
         /** @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper */
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
-        $hydrator = new Hydrator($typeMapper);
+        $hydrator = new Hydrator($typeMapper, new LinksParser());
 
         $childJsonApiItem = $this->getJsonApiChildItemMock(4);
         $childItem = $hydrator->hydrateItem($childJsonApiItem);
@@ -459,6 +465,21 @@ class HydratorTest extends AbstractTest
         static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());
 
         static::assertEquals(4, $masterItem->morphmany[0]->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_hydrates_links()
+    {
+        $hydrator = $this->getHydrator();
+
+        $jsonApiItem = $this->getJsonApiItemMock('master', 1);
+        $item = $hydrator->hydrateItem($jsonApiItem);
+
+        static::assertInstanceOf(Links::class, $item->getLinks());
+
+        static::assertEquals(new Links(['self' => new Link('http://example.com/master/1')]), $item->getLinks());
     }
 
     /**

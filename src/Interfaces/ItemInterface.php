@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Interfaces;
 
+use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
 interface ItemInterface extends DataInterface
@@ -39,6 +40,18 @@ interface ItemInterface extends DataInterface
      * @return static
      */
     public function setType(string $type);
+
+    /**
+     * @param \Swis\JsonApi\Client\Links|null $links
+     *
+     * @return $this
+     */
+    public function setLinks(Links $links = null);
+
+    /**
+     * @return \Swis\JsonApi\Client\Links|null
+     */
+    public function getLinks();
 
     /**
      * @param \Swis\JsonApi\Client\Meta|null $meta

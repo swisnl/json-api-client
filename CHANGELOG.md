@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * Added `take` method to `Repository` to allow fetching resources without id.
-* Added meta to `ItemInterface`.
+* Added links and meta to `ItemInterface`.
 N.B. This is a breaking change if you implement the `ItemInterface` yourself instead of using the supplied `Item`.
 * Added `Jsonapi` class.
 * Added meta to `OneRelationInterface` and `ManyRelationInterface`.
