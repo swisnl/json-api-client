@@ -149,6 +149,56 @@ class BlogItem extends Item
 This package uses [Laravel Collections](https://laravel.com/docs/collections) as a wrapper for item arrays.
 
 
+## Links
+
+All objects that can have links use an instance of `Links` to store their links.
+These are in turn an instance of `Link`.
+
+### Example
+
+Given the following JSON:
+``` json
+{
+    "data": [],
+    "links": {
+        "self": "http://example.com/test"
+    }
+}
+```
+
+You can get the links this way:
+``` php
+/** @var $document \Swis\JsonApi\Client\Document */
+$links = $document->getLinks();
+echo $links->self->getHref(); // http://example.com/test
+```
+
+
+## Meta
+
+All objects that can have meta information use an instance of `Meta` to store their metadata.
+This is a simple array-like object with key-value pairs.
+
+### Example
+
+Given the following JSON:
+``` json
+{
+    "data": [],
+    "meta": {
+        "foo": "bar"
+    }
+}
+```
+
+You can get the meta this way:
+``` php
+/** @var $document \Swis\JsonApi\Client\Document */
+$meta = $document->getMeta();
+echo $meta->foo; // bar
+```
+
+
 ## TypeMapper
 
 All custom models must be registered with the `TypeMapper`.
