@@ -4,6 +4,9 @@ namespace Swis\JsonApi\Client\Tests;
 
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Item;
+use Swis\JsonApi\Client\Link;
+use Swis\JsonApi\Client\Links;
+use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithGetMutatorItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
@@ -367,6 +370,68 @@ class ItemTest extends AbstractTest
                     'morphtomany_relation' => [
                         'data' => [],
                     ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_links_in_to_json_api_array()
+    {
+        $item = new Item();
+        $item->setType('testType');
+        $item->setId(1);
+        $item->setLinks(
+            new Links(
+                [
+                    'self' => new Link(
+                        'http://example.com/testType/1',
+                        new Meta(['foo' => 'bar'])
+                    ),
+                    'other' => new Link('http://example.com/testType/1/other'),
+                ]
+            )
+        );
+
+        $this->assertEquals(
+            [
+                'type'  => 'testType',
+                'id'    => 1,
+                'links' => [
+                    'self' => [
+                        'href' => 'http://example.com/testType/1',
+                        'meta' => [
+                            'foo' => 'bar',
+                        ],
+                    ],
+                    'other' => [
+                        'href' => 'http://example.com/testType/1/other',
+                    ],
+                ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_adds_meta_in_to_json_api_array()
+    {
+        $item = new Item();
+        $item->setType('testType');
+        $item->setId(1);
+        $item->setMeta(new Meta(['foo' => 'bar']));
+
+        $this->assertEquals(
+            [
+                'type' => 'testType',
+                'id'   => 1,
+                'meta' => [
+                    'foo' => 'bar',
                 ],
             ],
             $item->toJsonApiArray()
