@@ -36,14 +36,8 @@ class ErrorsParser
     public function parse(JsonApiErrorCollection $errorCollection)
     {
         $errors = new ErrorCollection();
-        $errorCollectionArray = $errorCollection->asArray(false);
 
-        // Empty errors
-        if (empty($errorCollectionArray)) {
-            throw new \InvalidArgumentException('Error collection does not contain any errors.');
-        }
-
-        foreach ($errorCollectionArray as $error) {
+        foreach ($errorCollection->asArray(false) as $error) {
             $errors->push($this->buildError($error));
         }
 
