@@ -98,6 +98,11 @@ class Hydrator
                     $data = $relationship->get('data');
                     $method = camel_case($name);
 
+                    $meta = null;
+                    if ($relationship->has('meta')) {
+                        $meta = new Meta($relationship->get('meta')->asArray(true));
+                    }
+
                     if ($data instanceof ResourceIdentifierInterface) {
                         $includedItem = $this->getItem($keyedItems, $data);
 
@@ -105,11 +110,11 @@ class Hydrator
                             continue;
                         }
 
-                        $item->setRelation($method, $includedItem);
+                        $item->setRelation($method, $includedItem, $meta);
                     } elseif ($data instanceof ResourceIdentifierCollectionInterface) {
                         $collection = $this->getCollection($keyedItems, $data);
 
-                        $item->setRelation($method, $collection);
+                        $item->setRelation($method, $collection, $meta);
                     }
                 }
             }
