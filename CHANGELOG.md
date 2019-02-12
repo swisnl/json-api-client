@@ -27,6 +27,8 @@ N.B. This is a minor breaking change if you use links on documents.
 N.B. This is a minor breaking change if you use meta on documents.
 * `DocumentInterface::getJsonapi()` now returns a `Jsonapi` instance instead of a plain array. If no jsonapi is present, it returns `null`. All implementations have been updated to reflect these changes.
 * Parameters for `ItemInterface::setRelation()` have changed to include optional `Links` and `Meta` objects.
+* `JsonApi\ErrorsParser`, `JsonApi\Hydrator` and `JsonApi\Parser` have an extra dependency in their constructor.
+N.B. Make sure to add this dependency if you've overwritten `ServiceProvider::registerParser` or construct the `JsonApi\Parser` yourself.
 
 ### Removed
 
