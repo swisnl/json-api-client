@@ -9,6 +9,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * Added `take` method to `Repository` to allow fetching resources without id.
+* Added links and meta to `ItemInterface`.
+N.B. This is a breaking change if you implement the `ItemInterface` yourself instead of using the supplied `Item`.
+* Added `Jsonapi` class.
+* Added links and meta to `OneRelationInterface` and `ManyRelationInterface`.
+N.B. This is a breaking change if you implement (one of) these interfaces yourself instead of using the supplied relations.
+* Added `Link` and `Links` classes.
+* Added links to `Error`.
+
+### Changed
+
+* `Error::getMeta()` now returns a `Meta` instance instead of an `ErrorMeta` instance. The `Meta` class does not have the `has` and `get` methods, but uses magic overloading methods (e.g. `__get` and `__set`) just like `Item`.
+N.B. This is a breaking change if you use meta on errors.
+* `DocumentInterface::getLinks()` now returns a `Links` instance instead of a plain array. If no links are present, it returns `null`. All implementations have been updated to reflect these changes.
+N.B. This is a minor breaking change if you use links on documents.
+* `DocumentInterface::getMeta()` now returns a `Meta` instance instead of a plain array. If no meta is present, it returns `null`. All implementations have been updated to reflect these changes.
+N.B. This is a minor breaking change if you use meta on documents.
+* `DocumentInterface::getJsonapi()` now returns a `Jsonapi` instance instead of a plain array. If no jsonapi is present, it returns `null`. All implementations have been updated to reflect these changes.
+* Parameters for `ItemInterface::setRelation()` have changed to include optional `Links` and `Meta` objects.
+* `JsonApi\ErrorsParser`, `JsonApi\Hydrator` and `JsonApi\Parser` have an extra dependency in their constructor.
+N.B. Make sure to add this dependency if you've overwritten `ServiceProvider::registerParser` or construct the `JsonApi\Parser` yourself.
+
+### Removed
+
+* Removed `ErrorMeta` class in favor of generic `Meta` class.
+
+### Fixed
+
+* Fixed parsing of [JSON:API object](https://jsonapi.org/format/#document-jsonapi-object) in document.
 
 ## [0.14.0] - 2019-01-23
 

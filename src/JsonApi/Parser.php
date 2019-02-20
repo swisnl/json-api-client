@@ -13,6 +13,8 @@ use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\ItemDocument;
+use Swis\JsonApi\Client\Jsonapi;
+use Swis\JsonApi\Client\Meta;
 
 class Parser implements ParserInterface
 {
@@ -32,15 +34,26 @@ class Parser implements ParserInterface
     private $errorsParser;
 
     /**
+     * @var \Swis\JsonApi\Client\JsonApi\LinksParser
+     */
+    private $linksParser;
+
+    /**
      * @param \Art4\JsonApiClient\Utils\Manager         $manager
      * @param \Swis\JsonApi\Client\JsonApi\Hydrator     $hydrator
      * @param \Swis\JsonApi\Client\JsonApi\ErrorsParser $errorsParser
+     * @param \Swis\JsonApi\Client\JsonApi\LinksParser  $linksParser
      */
-    public function __construct(Art4JsonApiClientManager $manager, Hydrator $hydrator, ErrorsParser $errorsParser)
-    {
+    public function __construct(
+        Art4JsonApiClientManager $manager,
+        Hydrator $hydrator,
+        ErrorsParser $errorsParser,
+        LinksParser $linksParser
+    ) {
         $this->manager = $manager;
         $this->hydrator = $hydrator;
         $this->errorsParser = $errorsParser;
+        $this->linksParser = $linksParser;
     }
 
     /**
@@ -71,6 +84,7 @@ class Parser implements ParserInterface
         $document->setLinks($this->parseLinks($jsonApiDocument));
         $document->setErrors($this->parseErrors($jsonApiDocument));
         $document->setMeta($this->parseMeta($jsonApiDocument));
+        $document->setJsonapi($this->parseJsonapi($jsonApiDocument));
 
         return $document;
     }
@@ -177,15 +191,15 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
-     * @return array
+     * @return \Swis\JsonApi\Client\Links|null
      */
-    private function parseLinks(Art4JsonApiDocumentInterface $document): array
+    private function parseLinks(Art4JsonApiDocumentInterface $document)
     {
         if (!$document->has('links')) {
-            return [];
+            return null;
         }
 
-        return $document->get('links')->asArray(true);
+        return $this->linksParser->parse($document->get('links')->asArray(false));
     }
 
     /**
@@ -205,15 +219,34 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
-     * @return array
+     * @return \Swis\JsonApi\Client\Meta|null
      */
-    private function parseMeta(Art4JsonApiDocumentInterface $document): array
+    private function parseMeta(Art4JsonApiDocumentInterface $document)
     {
         if (!$document->has('meta')) {
-            return [];
+            return null;
         }
 
-        return $document->get('meta')->asArray(true);
+        return new Meta($document->get('meta')->asArray(true));
+    }
+
+    /**
+     * @param \Art4\JsonApiClient\DocumentInterface $document
+     *
+     * @return \Swis\JsonApi\Client\Jsonapi|null
+     */
+    private function parseJsonapi(Art4JsonApiDocumentInterface $document)
+    {
+        if (!$document->has('jsonapi')) {
+            return null;
+        }
+
+        $jsonApi = $document->get('jsonapi');
+
+        return new Jsonapi(
+            $jsonApi->has('version') ? $jsonApi->get('version') : null,
+            $jsonApi->has('meta') ? new Meta($jsonApi->get('meta')->asArray(true)) : null
+        );
     }
 
     /**

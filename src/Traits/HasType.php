@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\Relations\Traits;
+namespace Swis\JsonApi\Client\Traits;
 
 trait HasType
 {

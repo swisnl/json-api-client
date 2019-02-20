@@ -5,23 +5,17 @@ namespace Swis\JsonApi\Client;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
+use Swis\JsonApi\Client\Traits\HasLinks;
+use Swis\JsonApi\Client\Traits\HasMeta;
 
 class Document implements DocumentInterface
 {
+    use HasLinks, HasMeta;
+
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface
      */
     protected $data;
-
-    /**
-     * @var array
-     */
-    protected $meta = [];
-
-    /**
-     * @var array
-     */
-    protected $links = [];
 
     /**
      * @var \Swis\JsonApi\Client\Errors\ErrorCollection
@@ -34,46 +28,14 @@ class Document implements DocumentInterface
     protected $included;
 
     /**
-     * @var array
+     * @var \Swis\JsonApi\Client\Jsonapi|null
      */
-    protected $jsonapi = [];
+    protected $jsonapi;
 
     public function __construct()
     {
         $this->errors = new ErrorCollection();
         $this->included = new Collection();
-    }
-
-    /**
-     * @return array
-     */
-    public function getMeta(): array
-    {
-        return $this->meta;
-    }
-
-    /**
-     * @param array $meta
-     */
-    public function setMeta(array $meta)
-    {
-        $this->meta = $meta;
-    }
-
-    /**
-     * @return array
-     */
-    public function getLinks(): array
-    {
-        return $this->links;
-    }
-
-    /**
-     * @param array $links
-     */
-    public function setLinks(array $links)
-    {
-        $this->links = $links;
     }
 
     /**
@@ -129,17 +91,17 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return array
+     * @return \Swis\JsonApi\Client\Jsonapi|null
      */
-    public function getJsonapi(): array
+    public function getJsonapi()
     {
         return $this->jsonapi;
     }
 
     /**
-     * @param array $jsonapi
+     * @param \Swis\JsonApi\Client\Jsonapi|null $jsonapi
      */
-    public function setJsonapi(array $jsonapi)
+    public function setJsonapi(Jsonapi $jsonapi = null)
     {
         $this->jsonapi = $jsonapi;
     }
@@ -186,8 +148,8 @@ class Document implements DocumentInterface
     {
         $document = [];
 
-        if (!empty($this->getLinks())) {
-            $document['links'] = $this->links;
+        if ($this->getLinks() !== null) {
+            $document['links'] = $this->getLinks()->toArray();
         }
 
         if (!empty($this->getData())) {
@@ -198,16 +160,16 @@ class Document implements DocumentInterface
             $document['included'] = $this->getIncluded()->toJsonApiArray();
         }
 
-        if (!empty($this->getMeta())) {
-            $document['meta'] = $this->meta;
+        if ($this->getMeta() !== null) {
+            $document['meta'] = $this->getMeta()->toArray();
         }
 
         if ($this->hasErrors()) {
             $document['errors'] = $this->errors->toArray();
         }
 
-        if (!empty($this->getJsonapi())) {
-            $document['jsonapi'] = $this->jsonapi;
+        if ($this->getJsonapi() !== null) {
+            $document['jsonapi'] = $this->getJsonapi()->toArray();
         }
 
         return $document;

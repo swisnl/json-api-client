@@ -11,6 +11,7 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Item;
+use Swis\JsonApi\Client\Meta;
 
 class Hydrator
 {
@@ -20,11 +21,18 @@ class Hydrator
     protected $typeMapper;
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
+     * @var \Swis\JsonApi\Client\JsonApi\LinksParser
      */
-    public function __construct(TypeMapperInterface $typeMapper)
+    protected $linksParser;
+
+    /**
+     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
+     * @param \Swis\JsonApi\Client\JsonApi\LinksParser            $linksParser
+     */
+    public function __construct(TypeMapperInterface $typeMapper, LinksParser $linksParser)
     {
         $this->typeMapper = $typeMapper;
+        $this->linksParser = $linksParser;
     }
 
     /**
@@ -40,6 +48,14 @@ class Hydrator
 
         if ($jsonApiItem->has('attributes')) {
             $item->fill($jsonApiItem->get('attributes')->asArray(true));
+        }
+
+        if ($jsonApiItem->has('links')) {
+            $item->setLinks($this->linksParser->parse($jsonApiItem->get('links')->asArray(false)));
+        }
+
+        if ($jsonApiItem->has('meta')) {
+            $item->setMeta(new Meta($jsonApiItem->get('meta')->asArray(true)));
         }
 
         return $item;
@@ -93,6 +109,16 @@ class Hydrator
                     $data = $relationship->get('data');
                     $method = camel_case($name);
 
+                    $links = null;
+                    if ($relationship->has('links')) {
+                        $links = $this->linksParser->parse($relationship->get('links')->asArray(false));
+                    }
+
+                    $meta = null;
+                    if ($relationship->has('meta')) {
+                        $meta = new Meta($relationship->get('meta')->asArray(true));
+                    }
+
                     if ($data instanceof ResourceIdentifierInterface) {
                         $includedItem = $this->getItem($keyedItems, $data);
 
@@ -100,11 +126,11 @@ class Hydrator
                             continue;
                         }
 
-                        $item->setRelation($method, $includedItem);
+                        $item->setRelation($method, $includedItem, $links, $meta);
                     } elseif ($data instanceof ResourceIdentifierCollectionInterface) {
                         $collection = $this->getCollection($keyedItems, $data);
 
-                        $item->setRelation($method, $collection);
+                        $item->setRelation($method, $collection, $links, $meta);
                     }
                 }
             }

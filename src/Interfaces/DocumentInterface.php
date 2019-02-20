@@ -23,14 +23,14 @@ interface DocumentInterface extends \JsonSerializable
     public function hasErrors(): bool;
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta(): array;
+    public function getMeta();
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks(): array;
+    public function getLinks();
 
     /**
      * @return mixed
@@ -38,7 +38,7 @@ interface DocumentInterface extends \JsonSerializable
     public function getIncluded(): Collection;
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Jsonapi|null
      */
     public function getJsonapi();
 

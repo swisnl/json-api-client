@@ -2,6 +2,9 @@
 
 namespace Swis\JsonApi\Client\Interfaces;
 
+use Swis\JsonApi\Client\Links;
+use Swis\JsonApi\Client\Meta;
+
 interface ItemInterface extends DataInterface
 {
     /**
@@ -37,6 +40,30 @@ interface ItemInterface extends DataInterface
      * @return static
      */
     public function setType(string $type);
+
+    /**
+     * @param \Swis\JsonApi\Client\Links|null $links
+     *
+     * @return $this
+     */
+    public function setLinks(Links $links = null);
+
+    /**
+     * @return \Swis\JsonApi\Client\Links|null
+     */
+    public function getLinks();
+
+    /**
+     * @param \Swis\JsonApi\Client\Meta|null $meta
+     *
+     * @return $this
+     */
+    public function setMeta(Meta $meta = null);
+
+    /**
+     * @return \Swis\JsonApi\Client\Meta|null
+     */
+    public function getMeta();
 
     /**
      * @param array $attributes
@@ -78,12 +105,14 @@ interface ItemInterface extends DataInterface
     /**
      * Set the specific relationship in the model.
      *
-     * @param string        $relation
-     * @param DataInterface $value
+     * @param string                                        $relation
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $value
+     * @param \Swis\JsonApi\Client\Links|null               $links
+     * @param \Swis\JsonApi\Client\Meta|null                $meta
      *
      * @return static
      */
-    public function setRelation(string $relation, DataInterface $value);
+    public function setRelation(string $relation, DataInterface $value, Links $links = null, Meta $meta = null);
 
     /**
      * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc

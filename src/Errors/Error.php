@@ -2,8 +2,15 @@
 
 namespace Swis\JsonApi\Client\Errors;
 
+use Swis\JsonApi\Client\Links;
+use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Traits\HasLinks;
+use Swis\JsonApi\Client\Traits\HasMeta;
+
 class Error
 {
+    use HasLinks, HasMeta;
+
     /**
      * @var string|null
      */
@@ -35,29 +42,27 @@ class Error
     protected $source;
 
     /**
-     * @var \Swis\JsonApi\Client\Errors\ErrorMeta|null
-     */
-    protected $meta;
-
-    /**
      * @param string|null                                  $id
+     * @param \Swis\JsonApi\Client\Links|null              $links
      * @param string|null                                  $status
      * @param string|null                                  $code
      * @param string|null                                  $title
      * @param string|null                                  $detail
      * @param \Swis\JsonApi\Client\Errors\ErrorSource|null $source
-     * @param \Swis\JsonApi\Client\Errors\ErrorMeta|null   $meta
+     * @param \Swis\JsonApi\Client\Meta|null               $meta
      */
     public function __construct(
         string $id = null,
+        Links $links = null,
         string $status = null,
         string $code = null,
         string $title = null,
         string $detail = null,
         ErrorSource $source = null,
-        ErrorMeta $meta = null
+        Meta $meta = null
     ) {
         $this->id = $id;
+        $this->links = $links;
         $this->status = $status;
         $this->code = $code;
         $this->title = $title;
@@ -112,13 +117,5 @@ class Error
     public function getSource()
     {
         return $this->source;
-    }
-
-    /**
-     * @return \Swis\JsonApi\Client\Errors\ErrorMeta|null
-     */
-    public function getMeta()
-    {
-        return $this->meta;
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Swis\JsonApi\Client\Interfaces;
 
+use Swis\JsonApi\Client\Links;
+use Swis\JsonApi\Client\Meta;
+
 interface OneRelationInterface
 {
     /**
@@ -37,4 +40,24 @@ interface OneRelationInterface
      * @return bool
      */
     public function shouldOmitIncluded(): bool;
+
+    /**
+     * @param \Swis\JsonApi\Client\Links|null $links
+     */
+    public function setLinks(Links $links = null);
+
+    /**
+     * @return \Swis\JsonApi\Client\Links|null
+     */
+    public function getLinks();
+
+    /**
+     * @param \Swis\JsonApi\Client\Meta|null $meta
+     */
+    public function setMeta(Meta $meta = null);
+
+    /**
+     * @return \Swis\JsonApi\Client\Meta|null
+     */
+    public function getMeta();
 }

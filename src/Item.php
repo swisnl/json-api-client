@@ -11,13 +11,13 @@ use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Traits\HasLinks;
+use Swis\JsonApi\Client\Traits\HasMeta;
+use Swis\JsonApi\Client\Traits\HasType;
 
 class Item extends Model implements ItemInterface
 {
-    /**
-     * @var string
-     */
-    protected $type;
+    use HasLinks, HasMeta, HasType;
 
     /**
      * @var
@@ -71,27 +71,17 @@ class Item extends Model implements ItemInterface
             $data['relationships'] = $relationships;
         }
 
+        $links = $this->getLinks();
+        if ($links !== null) {
+            $data['links'] = $links->toArray();
+        }
+
+        $meta = $this->getMeta();
+        if ($meta !== null) {
+            $data['meta'] = $meta->toArray();
+        }
+
         return $data;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return static
-     */
-    public function setType(string $type)
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     /**
@@ -459,10 +449,12 @@ class Item extends Model implements ItemInterface
      *
      * @param string                                        $relation
      * @param \Swis\JsonApi\Client\Interfaces\DataInterface $value
+     * @param \Swis\JsonApi\Client\Links|null               $links
+     * @param \Swis\JsonApi\Client\Meta|null                $meta
      *
      * @return static
      */
-    public function setRelation(string $relation, DataInterface $value)
+    public function setRelation(string $relation, DataInterface $value, Links $links = null, Meta $meta = null)
     {
         if (method_exists($this, $relation)) {
             /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
@@ -474,6 +466,8 @@ class Item extends Model implements ItemInterface
         }
 
         $relationObject->associate($value);
+        $relationObject->setLinks($links);
+        $relationObject->setMeta($meta);
 
         return $this;
     }
