@@ -242,6 +242,17 @@ class BlogRepository extends \Swis\JsonApi\Client\Repository
 
 If this repository (pattern) doesn't fit your needs, you can create your own implementation using the [clients](#clients) provided by this package.
 
+### Request parameters
+
+All methods provided by the repository take extra parameters that will be appended to the url.
+This can be used, among other things, to add [include](https://jsonapi.org/format/#fetching-includes) and/or [pagination](https://jsonapi.org/format/#fetching-pagination) parameters:
+
+``` php
+$repository = new BlogRepository();
+$repository->all(['include' => 'author', 'page' => ['limit' => 15, 'offset' => 0]]);
+```
+
+
 ## ItemDocumentBuilder
 
 The `Repository` and `DocumentClient` require `ItemDocumentInterface` instances when creating or updating resources.
