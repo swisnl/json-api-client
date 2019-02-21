@@ -6,14 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [0.15.0] - 2019-02-21
+
+This release includes changes to some interfaces [#47](https://github.com/swisnl/json-api-client/pull/47). This is a breaking change if you use these interfaces in your own code.
+
 ### Added
 
 * Added `take` method to `Repository` to allow fetching resources without id.
 * Added links and meta to `ItemInterface`.
-N.B. This is a breaking change if you implement the `ItemInterface` yourself instead of using the supplied `Item`.
 * Added `Jsonapi` class.
 * Added links and meta to `OneRelationInterface` and `ManyRelationInterface`.
-N.B. This is a breaking change if you implement (one of) these interfaces yourself instead of using the supplied relations.
 * Added `Link` and `Links` classes.
 * Added links to `Error`.
 
