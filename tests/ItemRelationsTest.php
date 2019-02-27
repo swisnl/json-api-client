@@ -33,7 +33,7 @@ class ItemRelationsTest extends AbstractTest
 
         $relations = $masterItem->getRelationships();
 
-        $this->assertArraySubset([
+        $this->assertSame([
             'child' => [
                 'data' => [
                     'type' => 'child',
