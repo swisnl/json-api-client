@@ -3,7 +3,7 @@
 namespace Swis\JsonApi\Client\Interfaces;
 
 use Swis\JsonApi\Client\Collection;
-use Swis\JsonApi\Client\Errors\ErrorCollection;
+use Swis\JsonApi\Client\ErrorCollection;
 
 interface DocumentInterface extends \JsonSerializable
 {
@@ -18,7 +18,7 @@ interface DocumentInterface extends \JsonSerializable
     public function getData();
 
     /**
-     * @return \Swis\JsonApi\Client\Errors\ErrorCollection
+     * @return \Swis\JsonApi\Client\ErrorCollection
      */
     public function getErrors(): ErrorCollection;
 

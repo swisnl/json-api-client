@@ -7,9 +7,9 @@ use Art4\JsonApiClient\ErrorCollection as JsonApiErrorCollection;
 use Art4\JsonApiClient\ErrorLink as JsonApiErrorLink;
 use Art4\JsonApiClient\ErrorSource as JsonApiErrorSource;
 use Art4\JsonApiClient\Meta as JsonApiMeta;
-use Swis\JsonApi\Client\Errors\Error;
-use Swis\JsonApi\Client\Errors\ErrorCollection;
-use Swis\JsonApi\Client\Errors\ErrorSource;
+use Swis\JsonApi\Client\Error;
+use Swis\JsonApi\Client\ErrorCollection;
+use Swis\JsonApi\Client\ErrorSource;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
@@ -31,7 +31,7 @@ class ErrorsParser
     /**
      * @param \Art4\JsonApiClient\ErrorCollection $errorCollection
      *
-     * @return \Swis\JsonApi\Client\Errors\ErrorCollection
+     * @return \Swis\JsonApi\Client\ErrorCollection
      */
     public function parse(JsonApiErrorCollection $errorCollection)
     {
@@ -47,7 +47,7 @@ class ErrorsParser
     /**
      * @param \Art4\JsonApiClient\Error $error
      *
-     * @return \Swis\JsonApi\Client\Errors\Error
+     * @return \Swis\JsonApi\Client\Error
      */
     private function buildError(JsonApiError $error): Error
     {
@@ -76,7 +76,7 @@ class ErrorsParser
     /**
      * @param \Art4\JsonApiClient\ErrorSource $errorSource
      *
-     * @return \Swis\JsonApi\Client\Errors\ErrorSource
+     * @return \Swis\JsonApi\Client\ErrorSource
      */
     private function buildErrorSource(JsonApiErrorSource $errorSource): ErrorSource
     {

@@ -3,7 +3,6 @@
 namespace Swis\JsonApi\Client;
 
 use Psr\Http\Message\ResponseInterface;
-use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Traits\HasLinks;
@@ -24,7 +23,7 @@ class Document implements DocumentInterface
     protected $data;
 
     /**
-     * @var \Swis\JsonApi\Client\Errors\ErrorCollection
+     * @var \Swis\JsonApi\Client\ErrorCollection
      */
     protected $errors;
 
@@ -61,7 +60,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Errors\ErrorCollection
+     * @return \Swis\JsonApi\Client\ErrorCollection
      */
     public function getErrors(): ErrorCollection
     {
@@ -69,7 +68,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Errors\ErrorCollection $errors
+     * @param \Swis\JsonApi\Client\ErrorCollection $errors
      */
     public function setErrors(ErrorCollection $errors)
     {

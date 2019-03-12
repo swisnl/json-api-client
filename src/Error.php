@@ -1,9 +1,7 @@
 <?php
 
-namespace Swis\JsonApi\Client\Errors;
+namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Client\Links;
-use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Traits\HasLinks;
 use Swis\JsonApi\Client\Traits\HasMeta;
 
@@ -37,19 +35,19 @@ class Error
     protected $detail;
 
     /**
-     * @var \Swis\JsonApi\Client\Errors\ErrorSource|null
+     * @var \Swis\JsonApi\Client\ErrorSource|null
      */
     protected $source;
 
     /**
-     * @param string|null                                  $id
-     * @param \Swis\JsonApi\Client\Links|null              $links
-     * @param string|null                                  $status
-     * @param string|null                                  $code
-     * @param string|null                                  $title
-     * @param string|null                                  $detail
-     * @param \Swis\JsonApi\Client\Errors\ErrorSource|null $source
-     * @param \Swis\JsonApi\Client\Meta|null               $meta
+     * @param string|null                           $id
+     * @param \Swis\JsonApi\Client\Links|null       $links
+     * @param string|null                           $status
+     * @param string|null                           $code
+     * @param string|null                           $title
+     * @param string|null                           $detail
+     * @param \Swis\JsonApi\Client\ErrorSource|null $source
+     * @param \Swis\JsonApi\Client\Meta|null        $meta
      */
     public function __construct(
         string $id = null,
@@ -112,7 +110,7 @@ class Error
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Errors\ErrorSource|null
+     * @return \Swis\JsonApi\Client\ErrorSource|null
      */
     public function getSource()
     {

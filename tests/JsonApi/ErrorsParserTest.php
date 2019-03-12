@@ -3,9 +3,9 @@
 namespace Swis\JsonApi\Client\Tests\JsonApi;
 
 use Art4\JsonApiClient\Utils\Manager;
-use Swis\JsonApi\Client\Errors\Error;
-use Swis\JsonApi\Client\Errors\ErrorCollection;
-use Swis\JsonApi\Client\Errors\ErrorSource;
+use Swis\JsonApi\Client\Error;
+use Swis\JsonApi\Client\ErrorCollection;
+use Swis\JsonApi\Client\ErrorSource;
 use Swis\JsonApi\Client\JsonApi\ErrorsParser;
 use Swis\JsonApi\Client\JsonApi\LinksParser;
 use Swis\JsonApi\Client\Links;

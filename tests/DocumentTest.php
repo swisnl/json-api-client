@@ -5,7 +5,7 @@ namespace Swis\JsonApi\Client\Tests;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Document;
-use Swis\JsonApi\Client\Errors\ErrorCollection;
+use Swis\JsonApi\Client\ErrorCollection;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Jsonapi;
 use Swis\JsonApi\Client\Link;

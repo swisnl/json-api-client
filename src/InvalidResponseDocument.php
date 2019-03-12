@@ -3,7 +3,6 @@
 namespace Swis\JsonApi\Client;
 
 use Psr\Http\Message\ResponseInterface;
-use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 
 class InvalidResponseDocument implements DocumentInterface
@@ -38,7 +37,7 @@ class InvalidResponseDocument implements DocumentInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Errors\ErrorCollection
+     * @return \Swis\JsonApi\Client\ErrorCollection
      */
     public function getErrors(): ErrorCollection
     {

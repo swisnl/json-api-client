@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
-use Swis\JsonApi\Client\Errors\ErrorCollection;
+use Swis\JsonApi\Client\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\InvalidResponseDocument;
@@ -247,7 +247,7 @@ class Parser implements ParserInterface
     /**
      * @param \Art4\JsonApiClient\DocumentInterface $document
      *
-     * @return \Swis\JsonApi\Client\Errors\ErrorCollection
+     * @return \Swis\JsonApi\Client\ErrorCollection
      */
     private function parseErrors(Art4JsonApiDocumentInterface $document): ErrorCollection
     {

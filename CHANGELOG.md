@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * `ClientInterface` must now return a `\Psr\Http\Message\ResponseInterface` for requests instead of our own (removed) `ResponseInterface`.
 N.B. This is a breaking change if you use the `Client` directly, the `DocumentClient` isn't affected.
+* Changed namespace of error classes:
+```
+\Swis\JsonApi\Client\Errors\Error -> \Swis\JsonApi\Client\Error
+\Swis\JsonApi\Client\Errors\ErrorCollection -> \Swis\JsonApi\Client\ErrorCollection
+\Swis\JsonApi\Client\Errors\ErrorSource -> \Swis\JsonApi\Client\ErrorSource
+```
 
 ### Removed
 
