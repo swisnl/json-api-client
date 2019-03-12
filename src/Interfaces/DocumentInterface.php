@@ -8,6 +8,11 @@ use Swis\JsonApi\Client\Errors\ErrorCollection;
 interface DocumentInterface extends \JsonSerializable
 {
     /**
+     * @return \Psr\Http\Message\ResponseInterface|null
+     */
+    public function getResponse();
+
+    /**
      * @return \Swis\JsonApi\Client\Interfaces\DataInterface
      */
     public function getData();

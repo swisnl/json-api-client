@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client;
 
+use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
@@ -11,6 +12,11 @@ use Swis\JsonApi\Client\Traits\HasMeta;
 class Document implements DocumentInterface
 {
     use HasLinks, HasMeta;
+
+    /**
+     * @var \Psr\Http\Message\ResponseInterface|null
+     */
+    protected $response;
 
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface
@@ -36,6 +42,22 @@ class Document implements DocumentInterface
     {
         $this->errors = new ErrorCollection();
         $this->included = new Collection();
+    }
+
+    /**
+     * @return \Psr\Http\Message\ResponseInterface|null
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface|null $response
+     */
+    public function setResponse(ResponseInterface $response = null)
+    {
+        $this->response = $response;
     }
 
     /**

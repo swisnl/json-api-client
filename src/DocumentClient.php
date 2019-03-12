@@ -2,12 +2,12 @@
 
 namespace Swis\JsonApi\Client;
 
+use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Interfaces\ClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
-use Swis\JsonApi\Client\Interfaces\ResponseInterface;
 
 class DocumentClient implements DocumentClientInterface
 {
@@ -114,20 +114,12 @@ class DocumentClient implements DocumentClientInterface
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     protected function parseResponse(ResponseInterface $response): DocumentInterface
     {
-        if ($response->hasBody()) {
-            return $this->parser->deserialize($response->getBody());
-        }
-
-        if ($response->hasSuccessfulStatusCode()) {
-            return new Document();
-        }
-
-        return new InvalidResponseDocument();
+        return $this->parser->deserializeResponse($response);
     }
 }

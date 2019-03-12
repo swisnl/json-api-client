@@ -6,12 +6,14 @@ use Art4\JsonApiClient\DocumentInterface as Art4JsonApiDocumentInterface;
 use Art4\JsonApiClient\ResourceCollectionInterface;
 use Art4\JsonApiClient\ResourceItemInterface;
 use Art4\JsonApiClient\Utils\Manager as Art4JsonApiClientManager;
+use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ParserInterface;
+use Swis\JsonApi\Client\InvalidResponseDocument;
 use Swis\JsonApi\Client\ItemDocument;
 use Swis\JsonApi\Client\Jsonapi;
 use Swis\JsonApi\Client\Meta;
@@ -62,6 +64,46 @@ class Parser implements ParserInterface
     public function getHydrator(): Hydrator
     {
         return $this->hydrator;
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     */
+    public function deserializeResponse(ResponseInterface $response): DocumentInterface
+    {
+        $document = new InvalidResponseDocument();
+
+        if ($this->responseHasBody($response)) {
+            $document = $this->deserialize((string)$response->getBody());
+        } elseif ($this->responseHasSuccessfulStatusCode($response)) {
+            $document = new Document();
+        }
+
+        $document->setResponse($response);
+
+        return $document;
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return bool
+     */
+    private function responseHasBody(ResponseInterface $response): bool
+    {
+        return (bool)$response->getBody()->getSize();
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return bool
+     */
+    private function responseHasSuccessfulStatusCode(ResponseInterface $response): bool
+    {
+        return $response->getStatusCode() >= 200 && $response->getStatusCode() < 300;
     }
 
     /**

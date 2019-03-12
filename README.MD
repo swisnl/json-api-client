@@ -373,7 +373,7 @@ The `DocumentClient` follows the following steps internally:
 ### Client
 
 This client is a more low level client and can be used, for example, for posting binary data such as images.
-It can take everything your request factory takes as input data and returns the 'raw' `\Psr\Http\Message\ResponseInterface` wrapped in a `\Swis\JsonApi\Client\Response`.
+It can take everything your request factory takes as input data and returns the 'raw' `\Psr\Http\Message\ResponseInterface`.
 It does not parse or validate the response or hydrate items!
 
 

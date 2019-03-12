@@ -111,7 +111,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_passes_http_exeptions()
+    public function it_passes_http_exceptions()
     {
         $baseUri = 'http://www.test.com';
         $endpoint = '/test/1';
@@ -130,9 +130,8 @@ class ClientTest extends AbstractTest
             MessageFactoryDiscovery::find()
         );
 
-        $response = $client->get($endpoint);
+        $httpResponse = $client->get($endpoint);
 
-        $this->assertEquals(false, $response->hasServerErrorStatusCode());
-        $this->assertEquals(false, $response->hasSuccessfulStatusCode());
+        $this->assertSame($response, $httpResponse);
     }
 }
