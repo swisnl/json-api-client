@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Added
+
+* Added `DocumentInterface::getResponse()` so every document instance can have its corresponding response. This allows access to the underlying response to check headers or status codes etc.
+* Added `ParserInterface::deserializeResponse($reponse)` to deserialize a `\Psr\Http\Message\ResponseInterface`.
+
+### Changed
+
+* `ClientInterface` must now return a `\Psr\Http\Message\ResponseInterface` for requests instead of our own (removed) `ResponseInterface`.
+N.B. This is a breaking change if you use the `Client` directly, the `DocumentClient` isn't affected.
+
+### Removed
+
+* Removed `ResponseInterface` and `Response` classes.
 
 ## [0.15.0] - 2019-02-21
 

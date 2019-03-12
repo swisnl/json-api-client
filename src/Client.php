@@ -85,7 +85,9 @@ class Client implements ClientInterface
      * @param string $endpoint
      * @param array  $headers
      *
-     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
+     * @throws \Http\Client\Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function get(string $endpoint, array $headers = [])
     {
@@ -97,7 +99,9 @@ class Client implements ClientInterface
      * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
-     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
+     * @throws \Http\Client\Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function post(string $endpoint, $body, array $headers = [])
     {
@@ -109,7 +113,9 @@ class Client implements ClientInterface
      * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
-     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
+     * @throws \Http\Client\Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function patch(string $endpoint, $body, array $headers = [])
     {
@@ -120,7 +126,9 @@ class Client implements ClientInterface
      * @param string $endpoint
      * @param array  $headers
      *
-     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
+     * @throws \Http\Client\Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function delete(string $endpoint, array $headers = [])
     {
@@ -133,19 +141,19 @@ class Client implements ClientInterface
      * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
      * @param array                                                                          $headers
      *
-     * @return \Swis\JsonApi\Client\Interfaces\ResponseInterface
+     * @throws \Http\Client\Exception
+     *
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function request(string $method, string $endpoint, $body = null, array $headers = [])
     {
         $request = $this->buildRequest($method, $endpoint, $body, $headers);
 
         try {
-            $response = $this->client->sendRequest($request);
+            return $this->client->sendRequest($request);
         } catch (HttpException $e) {
-            $response = $e->getResponse();
+            return $e->getResponse();
         }
-
-        return new Response($response);
     }
 
     /**

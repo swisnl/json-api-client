@@ -2,11 +2,33 @@
 
 namespace Swis\JsonApi\Client;
 
+use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Errors\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 
 class InvalidResponseDocument implements DocumentInterface
 {
+    /**
+     * @var \Psr\Http\Message\ResponseInterface|null
+     */
+    protected $response;
+
+    /**
+     * @return \Psr\Http\Message\ResponseInterface|null
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface|null $response
+     */
+    public function setResponse(ResponseInterface $response = null)
+    {
+        $this->response = $response;
+    }
+
     /**
      * @return \Swis\JsonApi\Client\Interfaces\DataInterface
      */
