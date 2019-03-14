@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [0.16.0] - 2019-03-14
+
 ### Added
 
 * Added `DocumentInterface::getResponse()` so every document instance can have its corresponding response. This allows access to the underlying response to check headers or status codes etc.
