@@ -2,8 +2,6 @@
 
 namespace Swis\JsonApi\Client;
 
-use Illuminate\Support\Collection;
-
-class ErrorCollection extends Collection
+class ErrorCollection extends \Illuminate\Support\Collection
 {
 }
