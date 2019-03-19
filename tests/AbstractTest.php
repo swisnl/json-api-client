@@ -12,7 +12,7 @@ abstract class AbstractTest extends TestCase
      */
     protected $faker;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->faker = Factory::create();
     }
