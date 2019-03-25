@@ -6,6 +6,7 @@ use Http\Client\Exception\HttpException;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Interfaces\ClientInterface;
 
 class Client implements ClientInterface
@@ -89,7 +90,7 @@ class Client implements ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function get(string $endpoint, array $headers = [])
+    public function get(string $endpoint, array $headers = []): ResponseInterface
     {
         return $this->request(static::METHOD_GET, $endpoint, null, $headers);
     }
@@ -103,7 +104,7 @@ class Client implements ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function post(string $endpoint, $body, array $headers = [])
+    public function post(string $endpoint, $body, array $headers = []): ResponseInterface
     {
         return $this->request(static::METHOD_POST, $endpoint, $body, $headers);
     }
@@ -117,7 +118,7 @@ class Client implements ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function patch(string $endpoint, $body, array $headers = [])
+    public function patch(string $endpoint, $body, array $headers = []): ResponseInterface
     {
         return $this->request(static::METHOD_PATCH, $endpoint, $body, $headers);
     }
@@ -130,7 +131,7 @@ class Client implements ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function delete(string $endpoint, array $headers = [])
+    public function delete(string $endpoint, array $headers = []): ResponseInterface
     {
         return $this->request(static::METHOD_DELETE, $endpoint, null, $headers);
     }
@@ -145,7 +146,7 @@ class Client implements ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function request(string $method, string $endpoint, $body = null, array $headers = [])
+    public function request(string $method, string $endpoint, $body = null, array $headers = []): ResponseInterface
     {
         $request = $this->buildRequest($method, $endpoint, $body, $headers);
 
@@ -179,7 +180,7 @@ class Client implements ClientInterface
         return $this->baseUri.$endpoint;
     }
 
-    protected function mergeHeaders(array $headers = [])
+    protected function mergeHeaders(array $headers = []): array
     {
         return array_merge($this->defaultHeaders, $headers);
     }

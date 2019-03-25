@@ -27,7 +27,7 @@ interface OneRelationInterface
     /**
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
      */
-    public function getIncluded();
+    public function getIncluded(): ? ItemInterface;
 
     /**
      * @param bool $omitIncluded
@@ -49,7 +49,7 @@ interface OneRelationInterface
     /**
      * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks();
+    public function getLinks(): ? Links;
 
     /**
      * @param \Swis\JsonApi\Client\Meta|null $meta
@@ -59,5 +59,5 @@ interface OneRelationInterface
     /**
      * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta();
+    public function getMeta(): ? Meta;
 }

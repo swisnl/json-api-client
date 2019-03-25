@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client;
 
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 
 class TypeMapper implements TypeMapperInterface
@@ -15,7 +16,7 @@ class TypeMapper implements TypeMapperInterface
      * @param string $type
      * @param string $class
      */
-    public function setMapping(string $type, string $class)
+    public function setMapping(string $type, string $class): void
     {
         $this->typeMappings[$type] = $class;
     }
@@ -25,7 +26,7 @@ class TypeMapper implements TypeMapperInterface
      *
      * @return bool
      */
-    public function hasMapping(string $type)
+    public function hasMapping(string $type): bool
     {
         return array_key_exists($type, $this->typeMappings);
     }
@@ -33,7 +34,7 @@ class TypeMapper implements TypeMapperInterface
     /**
      * @param string $type
      */
-    public function removeMapping(string $type)
+    public function removeMapping(string $type): void
     {
         unset($this->typeMappings[$type]);
     }
@@ -45,7 +46,7 @@ class TypeMapper implements TypeMapperInterface
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
-    public function getMapping(string $type)
+    public function getMapping(string $type): ItemInterface
     {
         if (!array_key_exists($type, $this->typeMappings)) {
             throw new \InvalidArgumentException(sprintf('No mapping for type %s', $type));

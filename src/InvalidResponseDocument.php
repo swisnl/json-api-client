@@ -15,7 +15,7 @@ class InvalidResponseDocument implements DocumentInterface
     /**
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function getResponse()
+    public function getResponse(): ? ResponseInterface
     {
         return $this->response;
     }
@@ -55,17 +55,17 @@ class InvalidResponseDocument implements DocumentInterface
     /**
      * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta()
+    public function getMeta(): ? Meta
     {
         return null;
     }
 
     /**
-     * @return mixed
+     * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks(): array
+    public function getLinks(): ? Links
     {
-        return [];
+        return null;
     }
 
     /**
@@ -79,7 +79,7 @@ class InvalidResponseDocument implements DocumentInterface
     /**
      * @return \Swis\JsonApi\Client\Jsonapi|null
      */
-    public function getJsonapi()
+    public function getJsonapi(): ? Jsonapi
     {
         return null;
     }

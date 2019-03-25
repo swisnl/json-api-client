@@ -26,7 +26,7 @@ trait HasLinks
     /**
      * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks()
+    public function getLinks(): ? Links
     {
         return $this->links;
     }

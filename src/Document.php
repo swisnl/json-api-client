@@ -46,7 +46,7 @@ class Document implements DocumentInterface
     /**
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function getResponse()
+    public function getResponse(): ? ResponseInterface
     {
         return $this->response;
     }
@@ -114,7 +114,7 @@ class Document implements DocumentInterface
     /**
      * @return \Swis\JsonApi\Client\Jsonapi|null
      */
-    public function getJsonapi()
+    public function getJsonapi(): ? Jsonapi
     {
         return $this->jsonapi;
     }

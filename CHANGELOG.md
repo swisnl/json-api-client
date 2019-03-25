@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Changed
+
+* Added (optional) return types to several interfaces.
 
 ## [0.17.0] - 2019-03-19
 

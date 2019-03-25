@@ -2,6 +2,8 @@
 
 namespace Swis\JsonApi\Client\Interfaces;
 
+use Psr\Http\Message\ResponseInterface;
+
 interface ClientInterface
 {
     /**
@@ -10,7 +12,7 @@ interface ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function get(string $endpoint, array $headers = []);
+    public function get(string $endpoint, array $headers = []): ResponseInterface;
 
     /**
      * @param string                                                                         $endpoint
@@ -19,7 +21,7 @@ interface ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function patch(string $endpoint, $body, array $headers = []);
+    public function patch(string $endpoint, $body, array $headers = []): ResponseInterface;
 
     /**
      * @param string                                                                         $endpoint
@@ -28,7 +30,7 @@ interface ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function post(string $endpoint, $body, array $headers = []);
+    public function post(string $endpoint, $body, array $headers = []): ResponseInterface;
 
     /**
      * @param string $endpoint
@@ -36,7 +38,7 @@ interface ClientInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function delete(string $endpoint, array $headers = []);
+    public function delete(string $endpoint, array $headers = []): ResponseInterface;
 
     /**
      * @return string
