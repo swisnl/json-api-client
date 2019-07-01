@@ -7,7 +7,8 @@ use Swis\JsonApi\Client\Traits\HasMeta;
 
 class Error
 {
-    use HasLinks, HasMeta;
+    use HasLinks;
+    use HasMeta;
 
     /**
      * @var string|null

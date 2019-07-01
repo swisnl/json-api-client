@@ -17,7 +17,9 @@ use Swis\JsonApi\Client\Traits\HasType;
 
 class Item extends Model implements ItemInterface
 {
-    use HasLinks, HasMeta, HasType;
+    use HasLinks;
+    use HasMeta;
+    use HasType;
 
     /**
      * @var

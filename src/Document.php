@@ -10,7 +10,8 @@ use Swis\JsonApi\Client\Traits\HasMeta;
 
 class Document implements DocumentInterface
 {
-    use HasLinks, HasMeta;
+    use HasLinks;
+    use HasMeta;
 
     /**
      * @var \Psr\Http\Message\ResponseInterface|null

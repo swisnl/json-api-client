@@ -7,7 +7,8 @@ use Swis\JsonApi\Client\Traits\HasMeta;
 
 abstract class AbstractRelation
 {
-    use HasLinks, HasMeta;
+    use HasLinks;
+    use HasMeta;
 
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface|null
