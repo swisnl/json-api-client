@@ -142,17 +142,18 @@ class Parser implements ParserInterface
             if ($includedInDocument) {
                 $newRelationships = new Collection();
                 foreach ($relationships as $relationship) {
+                    if (!empty($relationship)) {
+                        $id = $relationship->getId();
+                        $type = $relationship->getType();
+                        $desiredObject = null;
 
-                    $id = $relationship->getId();
-                    $type = $relationship->getType();
-                    $desiredObject = null;
-
-                    //check duplicate
-                    $desiredObject = $included->first(function ($item) use ($id, $type) {
-                        return ($item->getId() == $id) && ($item->getType() == $type);
-                    });
-                    if (is_null($desiredObject)) {
-                        $newRelationships->push($relationship);
+                        //check duplicate
+                        $desiredObject = $included->first(function ($item) use ($id, $type) {
+                            return ($item->getId() == $id) && ($item->getType() == $type);
+                        });
+                        if (is_null($desiredObject)) {
+                            $newRelationships->push($relationship);
+                        }
                     }
                 }
             } else {

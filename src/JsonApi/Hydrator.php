@@ -112,6 +112,10 @@ class Hydrator
      */
     public function hydrateRelationships(Collection $jsonApiItems, Collection $items)
     {
+        $items = $items->filter(function($value, $key) {
+            return  $value != null;
+        });
+
         $keyedItems = $items->reverse()->keyBy(
             function (ItemInterface $item) {
                 return $this->getItemKey($item);
