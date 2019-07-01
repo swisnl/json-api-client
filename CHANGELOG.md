@@ -8,9 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-* Added (optional) return types to several interfaces.
-* Added (optional) string type hints to `setId` and `getId` methods of `ItemInterface`.
-N.B. This is a breaking change if you implement the `ItemInterface` yourself instead of using the supplied `Item`.
+* Added (optional) type hints to several interfaces.
+N.B. This is a breaking change if you implement some of the interfaces yourself.
 
 ## [0.17.0] - 2019-03-19
 
