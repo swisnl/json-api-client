@@ -45,7 +45,7 @@ interface ManyRelationInterface
     /**
      * @param \Swis\JsonApi\Client\Links|null $links
      */
-    public function setLinks(Links $links = null);
+    public function setLinks(? Links $links);
 
     /**
      * @return \Swis\JsonApi\Client\Links|null
@@ -55,7 +55,7 @@ interface ManyRelationInterface
     /**
      * @param \Swis\JsonApi\Client\Meta|null $meta
      */
-    public function setMeta(Meta $meta = null);
+    public function setMeta(? Meta $meta);
 
     /**
      * @return \Swis\JsonApi\Client\Meta|null

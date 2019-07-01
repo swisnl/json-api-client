@@ -46,7 +46,7 @@ interface ItemInterface extends DataInterface
      *
      * @return $this
      */
-    public function setLinks(Links $links = null);
+    public function setLinks(? Links $links);
 
     /**
      * @return \Swis\JsonApi\Client\Links|null
@@ -58,7 +58,7 @@ interface ItemInterface extends DataInterface
      *
      * @return $this
      */
-    public function setMeta(Meta $meta = null);
+    public function setMeta(? Meta $meta);
 
     /**
      * @return \Swis\JsonApi\Client\Meta|null

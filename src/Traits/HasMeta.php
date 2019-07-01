@@ -16,7 +16,7 @@ trait HasMeta
      *
      * @return $this
      */
-    public function setMeta(Meta $meta = null)
+    public function setMeta(? Meta $meta)
     {
         $this->meta = $meta;
 

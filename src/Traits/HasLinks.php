@@ -16,7 +16,7 @@ trait HasLinks
      *
      * @return $this
      */
-    public function setLinks(Links $links = null)
+    public function setLinks(? Links $links)
     {
         $this->links = $links;
 
