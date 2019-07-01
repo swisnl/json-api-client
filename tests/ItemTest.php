@@ -14,17 +14,7 @@ use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 
 class ItemTest extends AbstractTest
 {
-    protected $attributes;
-
-    /**
-     * ItemTest constructor.
-     */
-    public function __construct()
-    {
-        $this->attributes = ['testKey' => 'testValue'];
-
-        parent::__construct();
-    }
+    protected $attributes = ['testKey' => 'testValue'];
 
     /**
      * @test
