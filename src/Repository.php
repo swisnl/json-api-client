@@ -114,23 +114,12 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
-     * @param array                                                 $parameters
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
-     */
-    public function delete(ItemDocumentInterface $document, array $parameters = [])
-    {
-        return $this->deleteById($document->getData()->getId(), $parameters);
-    }
-
-    /**
      * @param string $id
      * @param array  $parameters
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function deleteById(string $id, array $parameters = [])
+    public function delete(string $id, array $parameters = [])
     {
         return $this->getClient()->delete($this->getEndpoint().'/'.urlencode($id).'?'.http_build_query($parameters));
     }

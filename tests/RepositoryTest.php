@@ -142,27 +142,6 @@ class RepositoryTest extends TestCase
      */
     public function it_can_delete()
     {
-        $document = new ItemDocument();
-        $document->setData((new Item())->setId(1));
-
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
-        $client = $this->getMockBuilder(DocumentClientInterface::class)->getMock();
-
-        $client->expects($this->once())
-            ->method('delete')
-            ->with('mocks/1?foo=bar')
-            ->willReturn($document);
-
-        $repository = new MockRepository($client);
-
-        $this->assertSame($document, $repository->delete($document, ['foo' => 'bar']));
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_delete_by_id()
-    {
         $document = new Document();
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
@@ -175,6 +154,6 @@ class RepositoryTest extends TestCase
 
         $repository = new MockRepository($client);
 
-        $this->assertSame($document, $repository->deleteById(1, ['foo' => 'bar']));
+        $this->assertSame($document, $repository->delete(1, ['foo' => 'bar']));
     }
 }

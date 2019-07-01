@@ -24,16 +24,9 @@ interface RepositoryInterface
     public function save(ItemDocumentInterface $document);
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
-     */
-    public function delete(ItemDocumentInterface $document);
-
-    /**
      * @param string $id
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function deleteById(string $id);
+    public function delete(string $id);
 }

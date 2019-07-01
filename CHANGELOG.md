@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Added (optional) type hints to several interfaces.
 N.B. This is a breaking change if you implement some of the interfaces yourself.
+* Renamed `deleteById` method to simply `delete` and removed the 'old' implementation in `RepositoryInterface`.
+N.B. This is a breaking change and all calls to `deleteById` should simply be changed to `delete` as the signature is unchanged.
 
 ## [0.17.0] - 2019-03-19
 
