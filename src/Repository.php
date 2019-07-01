@@ -63,12 +63,12 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param       $id
-     * @param array $parameters
+     * @param string $id
+     * @param array  $parameters
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function find($id, array $parameters = [])
+    public function find(string $id, array $parameters = [])
     {
         return $this->getClient()->get($this->getEndpoint().'/'.urlencode($id).'?'.http_build_query($parameters));
     }
@@ -125,12 +125,12 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param       $id
-     * @param array $parameters
+     * @param string $id
+     * @param array  $parameters
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function deleteById($id, array $parameters = [])
+    public function deleteById(string $id, array $parameters = [])
     {
         return $this->getClient()->delete($this->getEndpoint().'/'.urlencode($id).'?'.http_build_query($parameters));
     }

@@ -10,11 +10,11 @@ interface RepositoryInterface
     public function all();
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface
      */
-    public function find($id);
+    public function find(string $id);
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
@@ -31,9 +31,9 @@ interface RepositoryInterface
     public function delete(ItemDocumentInterface $document);
 
     /**
-     * @param $id
+     * @param string $id
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function deleteById($id);
+    public function deleteById(string $id);
 }
