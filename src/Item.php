@@ -22,7 +22,7 @@ class Item extends Model implements ItemInterface
     use HasType;
 
     /**
-     * @var
+     * @var string|null
      */
     protected $id;
 
@@ -103,19 +103,19 @@ class Item extends Model implements ItemInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getId()
+    public function getId(): ? string
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param string|null $id
      *
      * @return static
      */
-    public function setId($id)
+    public function setId(? string $id)
     {
         $this->id = $id;
 
