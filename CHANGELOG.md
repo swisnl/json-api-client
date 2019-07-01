@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.18.0] - 2019-07-01
 
+### Added
+
+* The id of an item can be set/get using magic accessors just like the attributes.
+
 ### Changed
 
 * Added (optional) type hints to several interfaces.
