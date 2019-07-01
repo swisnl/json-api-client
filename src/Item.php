@@ -15,6 +15,9 @@ use Swis\JsonApi\Client\Traits\HasLinks;
 use Swis\JsonApi\Client\Traits\HasMeta;
 use Swis\JsonApi\Client\Traits\HasType;
 
+/**
+ * @property string|null id
+ */
 class Item extends Model implements ItemInterface
 {
     use HasLinks;
@@ -22,7 +25,7 @@ class Item extends Model implements ItemInterface
     use HasType;
 
     /**
-     * @var
+     * @var string|null
      */
     protected $id;
 
@@ -103,19 +106,19 @@ class Item extends Model implements ItemInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getId()
+    public function getId(): ? string
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param string|null $id
      *
      * @return static
      */
-    public function setId($id)
+    public function setId(? string $id)
     {
         $this->id = $id;
 
@@ -222,6 +225,20 @@ class Item extends Model implements ItemInterface
     /**
      * @param string $key
      *
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if ($key === 'id') {
+            return $this->getId();
+        }
+
+        return parent::__get($key);
+    }
+
+    /**
+     * @param string $key
+     *
      * @return \Swis\JsonApi\Client\Interfaces\DataInterface|mixed
      */
     public function getAttribute($key)
@@ -241,6 +258,21 @@ class Item extends Model implements ItemInterface
     public function hasAttribute($key): bool
     {
         return array_key_exists($key, $this->attributes);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed  $value
+     */
+    public function __set($key, $value)
+    {
+        if ($key === 'id') {
+            $this->setId($value);
+
+            return;
+        }
+
+        parent::__set($key, $value);
     }
 
     /**
@@ -277,6 +309,10 @@ class Item extends Model implements ItemInterface
      */
     public function __isset($key)
     {
+        if ($key === 'id') {
+            return $this->hasId();
+        }
+
         return parent::__isset($key) || $this->hasRelationship($key) || $this->hasRelationship(snake_case($key));
     }
 

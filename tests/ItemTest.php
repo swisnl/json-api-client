@@ -14,17 +14,7 @@ use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 
 class ItemTest extends AbstractTest
 {
-    protected $attributes;
-
-    /**
-     * ItemTest constructor.
-     */
-    public function __construct()
-    {
-        $this->attributes = ['testKey' => 'testValue'];
-
-        parent::__construct();
-    }
+    protected $attributes = ['testKey' => 'testValue'];
 
     /**
      * @test
@@ -101,6 +91,40 @@ class ItemTest extends AbstractTest
 
         $item->setId(1234);
         $this->assertEquals(1234, $item->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_set_the_id_using_the_magic_method()
+    {
+        $item = new Item();
+
+        $item->id = 1234;
+        $this->assertEquals(1234, $item->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_the_id_using_the_magic_method()
+    {
+        $item = new Item();
+        $item->setId(1234);
+
+        $this->assertEquals(1234, $item->id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_check_if_the_id_is_set_using_the_magic_method()
+    {
+        $item = new Item();
+
+        $this->assertFalse(isset($item->id));
+        $item->setId(1234);
+        $this->assertTrue(isset($item->id));
     }
 
     /**

@@ -8,9 +8,9 @@ use Swis\JsonApi\Client\Meta;
 interface ItemInterface extends DataInterface
 {
     /**
-     * @return string
+     * @return string|null
      */
-    public function getId();
+    public function getId(): ? string;
 
     /**
      * @return bool
@@ -23,11 +23,11 @@ interface ItemInterface extends DataInterface
     public function isNew(): bool;
 
     /**
-     * @param string $id
+     * @param string|null $id
      *
      * @return static
      */
-    public function setId($id);
+    public function setId(? string $id);
 
     /**
      * @return string

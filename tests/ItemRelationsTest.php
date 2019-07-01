@@ -37,7 +37,7 @@ class ItemRelationsTest extends AbstractTest
             'child' => [
                 'data' => [
                     'type' => 'child',
-                    'id'   => 1,
+                    'id'   => '1',
                 ],
             ],
         ], $relations);
