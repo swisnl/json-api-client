@@ -15,9 +15,15 @@ class TypeMapper implements TypeMapperInterface
     /**
      * @param string $type
      * @param string $class
+     *
+     * @throws \InvalidArgumentException
      */
     public function setMapping(string $type, string $class): void
     {
+        if (!class_exists($class)) {
+            throw new \InvalidArgumentException(sprintf('Class %s not found.', $class));
+        }
+
         $this->typeMappings[$type] = $class;
     }
 
@@ -52,12 +58,6 @@ class TypeMapper implements TypeMapperInterface
             throw new \InvalidArgumentException(sprintf('No mapping for type %s', $type));
         }
 
-        $class = $this->typeMappings[$type];
-
-        if (!class_exists($class)) {
-            throw new \InvalidArgumentException(sprintf('Class %s not found.', $class));
-        }
-
-        return new $class();
+        return new $this->typeMappings[$type]();
     }
 }

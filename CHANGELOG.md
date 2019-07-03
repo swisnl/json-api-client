@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Changed
+
+* The `TypeMapper` now checks if the class exists in the setter instead of the getter.
 
 ## [0.18.0] - 2019-07-01
 

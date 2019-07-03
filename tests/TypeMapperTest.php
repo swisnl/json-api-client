@@ -52,6 +52,5 @@ class TypeMapperTest extends AbstractTest
 
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', '\Non\Existing\Class');
-        $typeMapper->getMapping('item');
     }
 }

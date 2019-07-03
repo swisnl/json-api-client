@@ -10,6 +10,8 @@ interface TypeMapperInterface
     /**
      * @param string $type
      * @param string $class
+     *
+     * @throws \InvalidArgumentException
      */
     public function setMapping(string $type, string $class): void;
 
