@@ -57,7 +57,13 @@
         "laravel": {
             "providers": [
                 "Swis\\JsonApi\\Client\\Providers\\ServiceProvider"
-            ]
+            ],
+            "aliases":{
+                "CollectionDocumentBuilder": "Swis\\JsonApi\\Client\\Facades\\CollectionDocumentBuilderFacade",
+                "ItemDocumentBuilder": "Swis\\JsonApi\\Client\\Facades\\ItemDocumentBuilderFacade",
+                "ItemHydrator": "Swis\\JsonApi\\Client\\Facades\\ItemHydratorFacade",
+                "TypeMapper": "Swis\\JsonApi\\Client\\Facades\\TypeMapperFacade"
+            }
         }
     }
 }

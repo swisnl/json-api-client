@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Added facades for `CollectionDocumentBuilder`, `ItemDocumentBuilder`, `ItemHydrator` and `TypeMapper`.
+
 ### Changed
 
 * The `TypeMapper` now checks if the class exists in the setter instead of the getter.
