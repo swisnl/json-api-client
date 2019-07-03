@@ -24,6 +24,10 @@ class TypeMapper implements TypeMapperInterface
             throw new \InvalidArgumentException(sprintf('Class %s not found.', $class));
         }
 
+        if (!is_subclass_of($class, ItemInterface::class)) {
+            throw new \InvalidArgumentException(sprintf('Class %s must implement %s.', $class, ItemInterface::class));
+        }
+
         $this->typeMappings[$type] = $class;
     }
 

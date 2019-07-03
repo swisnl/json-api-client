@@ -3,6 +3,7 @@
 namespace Swis\JsonApi\Client\Tests;
 
 use InvalidArgumentException;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\TypeMapper;
 
@@ -49,8 +50,21 @@ class TypeMapperTest extends AbstractTest
     public function it_throws_an_invalidargumentexception_when_class_doesnt_exist()
     {
         static::expectException(InvalidArgumentException::class);
+        static::expectExceptionMessage(sprintf('Class %s not found.', '\Non\Existing\Class'));
 
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', '\Non\Existing\Class');
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_an_invalidargumentexception_when_class_doesnt_implement_iteminterface()
+    {
+        static::expectException(InvalidArgumentException::class);
+        static::expectExceptionMessage(sprintf('Class %s must implement %s.', TypeMapper::class, ItemInterface::class));
+
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('item', TypeMapper::class);
     }
 }
