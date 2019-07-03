@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client;
 
+use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypedRelationInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
@@ -92,7 +93,7 @@ class ItemHydrator
      */
     protected function getRelationFromItem(ItemInterface $item, string $availableRelation)
     {
-        $method = camel_case($availableRelation);
+        $method = Str::camel($availableRelation);
         if (!method_exists($item, $method)) {
             throw new \RuntimeException(sprintf('Method %s not found on %s', $method, get_class($item)));
         }
