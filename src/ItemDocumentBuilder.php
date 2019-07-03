@@ -26,7 +26,7 @@ class ItemDocumentBuilder
      *
      * @return \Swis\JsonApi\Client\ItemDocument
      */
-    public function build(ItemInterface $item, array $attributes, $id = null)
+    public function build(ItemInterface $item, array $attributes, string $id = null)
     {
         $this->itemHydrator->hydrate($item, $attributes);
 
