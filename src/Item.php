@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client;
 
+use Illuminate\Support\Str;
 use Jenssegers\Model\Model;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
@@ -286,7 +287,7 @@ class Item extends Model implements ItemInterface
     {
         // If the "attribute" exists as a method on the model, we will just assume
         // it is a relationship and will load and return the included items in the relationship
-        $method = camel_case($key);
+        $method = Str::camel($key);
         if (method_exists($this, $method)) {
             return $this->$method()->getIncluded();
         }
@@ -313,7 +314,7 @@ class Item extends Model implements ItemInterface
             return $this->hasId();
         }
 
-        return parent::__isset($key) || $this->hasRelationship($key) || $this->hasRelationship(snake_case($key));
+        return parent::__isset($key) || $this->hasRelationship($key) || $this->hasRelationship(Str::snake($key));
     }
 
     /**
@@ -358,7 +359,7 @@ class Item extends Model implements ItemInterface
      */
     public function hasOne(string $class, string $relationName = null)
     {
-        $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
+        $relationName = $relationName ?: Str::snake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($relationName, $this->relationships)) {
             $this->relationships[$relationName] = new HasOneRelation((new $class())->getType());
@@ -377,7 +378,7 @@ class Item extends Model implements ItemInterface
      */
     public function hasMany(string $class, string $relationName = null)
     {
-        $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
+        $relationName = $relationName ?: Str::snake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($relationName, $this->relationships)) {
             $this->relationships[$relationName] = new HasManyRelation((new $class())->getType());
@@ -395,7 +396,7 @@ class Item extends Model implements ItemInterface
      */
     public function morphTo(string $relationName = null)
     {
-        $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
+        $relationName = $relationName ?: Str::snake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($relationName, $this->relationships)) {
             $this->relationships[$relationName] = new MorphToRelation();
@@ -413,7 +414,7 @@ class Item extends Model implements ItemInterface
      */
     public function morphToMany(string $relationName = null)
     {
-        $relationName = $relationName ?: snake_case(debug_backtrace()[1]['function']);
+        $relationName = $relationName ?: Str::snake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($relationName, $this->relationships)) {
             $this->relationships[$relationName] = new MorphToManyRelation();
@@ -498,9 +499,9 @@ class Item extends Model implements ItemInterface
             /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
             $relationObject = $this->$relation();
         } elseif ($value instanceof Collection) {
-            $relationObject = $this->morphToMany(snake_case($relation));
+            $relationObject = $this->morphToMany(Str::snake($relation));
         } else {
-            $relationObject = $this->morphTo(snake_case($relation));
+            $relationObject = $this->morphTo(Str::snake($relation));
         }
 
         $relationObject->associate($value);

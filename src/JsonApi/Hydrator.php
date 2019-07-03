@@ -7,6 +7,7 @@ use Art4\JsonApiClient\ResourceCollectionInterface;
 use Art4\JsonApiClient\ResourceIdentifierCollectionInterface;
 use Art4\JsonApiClient\ResourceIdentifierInterface;
 use Art4\JsonApiClient\ResourceItemInterface;
+use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
@@ -107,7 +108,7 @@ class Hydrator
 
                     /** @var \Art4\JsonApiClient\ElementInterface $data */
                     $data = $relationship->get('data');
-                    $method = camel_case($name);
+                    $method = Str::camel($name);
 
                     $links = null;
                     if ($relationship->has('links')) {
