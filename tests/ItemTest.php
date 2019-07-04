@@ -7,6 +7,8 @@ use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithGetMutatorItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
@@ -169,6 +171,42 @@ class ItemTest extends AbstractTest
         $itemBuilder->useInitial();
 
         $this->assertEquals(['testKey' => 9999, 'anotherTestKey' => 'someValue'], $itemBuilder->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function it_has_relationships_when_added()
+    {
+        $masterItem = new MasterItem();
+        $this->assertFalse($masterItem->hasRelationship('child'));
+
+        $childItem = new ChildItem();
+        $childItem->setId(1);
+        $masterItem->child()->associate($childItem);
+        $this->assertTrue($masterItem->hasRelationship('child'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_all_relations()
+    {
+        $masterItem = new MasterItem();
+        $childItem = new ChildItem();
+        $childItem->setId(1);
+        $masterItem->child()->associate($childItem);
+
+        $relations = $masterItem->getRelationships();
+
+        $this->assertSame([
+            'child' => [
+                'data' => [
+                    'type' => 'child',
+                    'id'   => '1',
+                ],
+            ],
+        ], $relations);
     }
 
     /**
