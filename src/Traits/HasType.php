@@ -28,4 +28,12 @@ trait HasType
     {
         return $this->type;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasType(): bool
+    {
+        return (bool)$this->type;
+    }
 }

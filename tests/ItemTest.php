@@ -141,6 +141,19 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
+    public function it_returns_a_boolean_indicating_if_it_has_attributes()
+    {
+        $item = new Item();
+        $this->assertFalse($item->hasAttributes());
+
+        $item->fill($this->attributes);
+
+        $this->assertTrue($item->hasAttributes());
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_attribute_from_get_mutator()
     {
         $item = new WithGetMutatorItem();
@@ -207,6 +220,20 @@ class ItemTest extends AbstractTest
                 ],
             ],
         ], $relations);
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_boolean_indicating_if_it_has_relationships()
+    {
+        $masterItem = new MasterItem();
+        $this->assertFalse($masterItem->hasRelationships());
+
+        $childItem = (new ChildItem())->setId(1);
+        $masterItem->child()->associate($childItem);
+
+        $this->assertTrue($masterItem->hasRelationships());
     }
 
     /**

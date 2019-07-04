@@ -35,6 +35,11 @@ interface ItemInterface extends DataInterface
     public function getType(): string;
 
     /**
+     * @return bool
+     */
+    public function hasType(): bool;
+
+    /**
      * @param string $type
      *
      * @return static
@@ -96,6 +101,16 @@ interface ItemInterface extends DataInterface
      * @param $value
      */
     public function setAttribute($key, $value);
+
+    /**
+     * @return bool
+     */
+    public function hasAttributes(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasRelationships(): bool;
 
     /**
      * @return array

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * Added facades for `CollectionDocumentBuilder`, `ItemDocumentBuilder`, `ItemHydrator` and `TypeMapper`.
+* Added `hasType`, `hasAttributes` and `hasRelationships` to `ItemInterface`.
 
 ### Changed
 

@@ -224,6 +224,14 @@ class Item extends Model implements ItemInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasRelationships(): bool
+    {
+        return !empty($this->getRelationships());
+    }
+
+    /**
      * @param string $key
      *
      * @return mixed
@@ -259,6 +267,14 @@ class Item extends Model implements ItemInterface
     public function hasAttribute($key): bool
     {
         return array_key_exists($key, $this->attributes);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAttributes(): bool
+    {
+        return !empty($this->toArray());
     }
 
     /**
