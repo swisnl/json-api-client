@@ -162,68 +162,6 @@ class Item extends Model implements ItemInterface
     }
 
     /**
-     * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc
-     *
-     * @return \Swis\JsonApi\Client\Collection
-     */
-    public function getIncluded(): Collection
-    {
-        $included = new Collection();
-
-        foreach ($this->relationships as $name => $relationship) {
-            if ($relationship->shouldOmitIncluded() || !$relationship->hasIncluded()) {
-                continue;
-            }
-
-            if ($relationship instanceof OneRelationInterface) {
-                /** @var \Swis\JsonApi\Client\Interfaces\ItemInterface $item */
-                $item = $relationship->getIncluded();
-                if ($item->canBeIncluded()) {
-                    $included->push($item->toJsonApiArray());
-                }
-                $included = $included->merge($item->getIncluded());
-            } elseif ($relationship instanceof ManyRelationInterface) {
-                $relationship->getIncluded()->each(
-                    function (ItemInterface $item) use (&$included) {
-                        if ($item->canBeIncluded()) {
-                            $included->push($item->toJsonApiArray());
-                        }
-                        $included = $included->merge($item->getIncluded());
-                    }
-                );
-            }
-        }
-
-        return $included
-            ->unique(
-                function (array $item) {
-                    return $item['type'].':'.$item['id'];
-                }
-            )
-            ->values();
-    }
-
-    /**
-     * @return bool
-     */
-    public function canBeIncluded(): bool
-    {
-        if (empty($this->getType())) {
-            return false;
-        }
-
-        if (null === $this->getId()) {
-            return false;
-        }
-
-        if (empty($this->relationships) && empty($this->toArray())) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @return bool
      */
     public function hasRelationships(): bool
@@ -525,5 +463,13 @@ class Item extends Model implements ItemInterface
         $relationObject->setMeta($meta);
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRelations(): array
+    {
+        return $this->relationships;
     }
 }

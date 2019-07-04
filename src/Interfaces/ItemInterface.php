@@ -130,14 +130,7 @@ interface ItemInterface extends DataInterface
     public function setRelation(string $relation, DataInterface $value, Links $links = null, Meta $meta = null);
 
     /**
-     * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc
-     *
-     * @return \Swis\JsonApi\Client\Collection
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
      */
-    public function getIncluded();
-
-    /**
-     * @return bool
-     */
-    public function canBeIncluded(): bool;
+    public function getRelations(): array;
 }
