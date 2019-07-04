@@ -429,4 +429,30 @@ class ItemHydratorTest extends AbstractTest
         $this->assertEquals($data['hasone_relation']['parent_relation'], $hasOneParent->getIncluded()->getId());
         $this->assertEquals('item-with-relationship', $hasOneParent->getIncluded()->getType());
     }
+
+    /**
+     * @test
+     * @dataProvider provideIdArguments
+     *
+     * @param $givenId
+     * @param $expectedId
+     */
+    public function it_hydrates_the_id_when_not_null_or_empty_string($givenId, $expectedId)
+    {
+        $item = new Item();
+        $item = $this->getItemHydrator()->hydrate($item, [], $givenId);
+
+        static::assertSame($expectedId, $item->getId());
+    }
+
+    public function provideIdArguments(): array
+    {
+        return [
+            ['0', '0'],
+            ['12', '12'],
+            ['foo-bar', 'foo-bar'],
+            [null, null],
+            ['', null],
+        ];
+    }
 }

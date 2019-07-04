@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 * The `TypeMapper` now checks if the class exists in the setter instead of the getter.
+* The `ItemHydrator` now also hydrates the id if provided.
 
 ## [0.18.0] - 2019-07-01
 

@@ -29,15 +29,18 @@ class ItemHydrator
     /**
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $attributes
-     *
-     * @throws \RuntimeException
+     * @param string|null                                   $id
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
-    public function hydrate(ItemInterface $item, array $attributes): ItemInterface
+    public function hydrate(ItemInterface $item, array $attributes, string $id = null): ItemInterface
     {
         $this->fill($item, $attributes);
         $this->fillRelations($item, $attributes);
+
+        if ($id !== null && $id !== '') {
+            $item->setId($id);
+        }
 
         return $item;
     }

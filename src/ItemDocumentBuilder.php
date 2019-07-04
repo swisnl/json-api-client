@@ -28,11 +28,7 @@ class ItemDocumentBuilder
      */
     public function build(ItemInterface $item, array $attributes, string $id = null)
     {
-        $this->itemHydrator->hydrate($item, $attributes);
-
-        if ($id !== null && $id !== '') {
-            $item->setId($id);
-        }
+        $this->itemHydrator->hydrate($item, $attributes, $id);
 
         return (new ItemDocument())->setData($item)->setIncluded($item->getIncluded());
     }
