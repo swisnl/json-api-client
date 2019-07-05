@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\Traits;
+namespace Swis\JsonApi\Client\Concerns;
 
 use Swis\JsonApi\Client\Links;
 

@@ -4,15 +4,15 @@ namespace Swis\JsonApi\Client;
 
 use Illuminate\Support\Str;
 use Jenssegers\Model\Model;
+use Swis\JsonApi\Client\Concerns\HasId;
+use Swis\JsonApi\Client\Concerns\HasInitial;
+use Swis\JsonApi\Client\Concerns\HasLinks;
+use Swis\JsonApi\Client\Concerns\HasMeta;
+use Swis\JsonApi\Client\Concerns\HasRelations;
+use Swis\JsonApi\Client\Concerns\HasType;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
-use Swis\JsonApi\Client\Traits\HasId;
-use Swis\JsonApi\Client\Traits\HasInitial;
-use Swis\JsonApi\Client\Traits\HasLinks;
-use Swis\JsonApi\Client\Traits\HasMeta;
-use Swis\JsonApi\Client\Traits\HasRelations;
-use Swis\JsonApi\Client\Traits\HasType;
 
 /**
  * @property string|null id

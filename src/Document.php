@@ -3,10 +3,10 @@
 namespace Swis\JsonApi\Client;
 
 use Psr\Http\Message\ResponseInterface;
+use Swis\JsonApi\Client\Concerns\HasLinks;
+use Swis\JsonApi\Client\Concerns\HasMeta;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
-use Swis\JsonApi\Client\Traits\HasLinks;
-use Swis\JsonApi\Client\Traits\HasMeta;
 
 class Document implements DocumentInterface
 {

@@ -2,8 +2,8 @@
 
 namespace Swis\JsonApi\Client\Relations;
 
-use Swis\JsonApi\Client\Traits\HasLinks;
-use Swis\JsonApi\Client\Traits\HasMeta;
+use Swis\JsonApi\Client\Concerns\HasLinks;
+use Swis\JsonApi\Client\Concerns\HasMeta;
 
 abstract class AbstractRelation
 {

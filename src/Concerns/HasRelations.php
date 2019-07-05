@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\Traits;
+namespace Swis\JsonApi\Client\Concerns;
 
 use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Collection;
