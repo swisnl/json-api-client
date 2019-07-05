@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * The `ItemHydrator` now also hydrates the id if provided.
 * Added `hasType`, `hasAttributes`, `hasRelationships` and `getRelations` to `ItemInterface`.
 * Removed `canBeIncluded` and `getIncluded` from `ItemInterface` as the `DocumentFactory` is now responsible for gathering the included items.
+* Renamed `getRelationship` to `getRelation`, `hasRelationship` to `hasRelation` and `removeRelationship` to `unsetRelation` in `Item`.
+* Renamed/aligned some parameters in several relation methods in `Item`.
 
 ### Removed
 

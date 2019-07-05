@@ -192,12 +192,12 @@ class ItemTest extends AbstractTest
     public function it_has_relationships_when_added()
     {
         $masterItem = new MasterItem();
-        $this->assertFalse($masterItem->hasRelationship('child'));
+        $this->assertFalse($masterItem->hasRelation('child'));
 
         $childItem = new ChildItem();
         $childItem->setId(1);
         $masterItem->child()->associate($childItem);
-        $this->assertTrue($masterItem->hasRelationship('child'));
+        $this->assertTrue($masterItem->hasRelation('child'));
     }
 
     /**
@@ -242,9 +242,9 @@ class ItemTest extends AbstractTest
     public function it_adds_unknown_relationships_in_snake_case()
     {
         $item = new Item();
-        $item->setRelation('someRelation', (new Item())->setType('type')->setId(1));
+        $item->setRelation('some_relation', (new Item())->setType('type')->setId(1));
 
-        $this->assertTrue($item->hasRelationship('some_relation'));
+        $this->assertTrue($item->hasRelation('some_relation'));
     }
 
     /**

@@ -12,6 +12,14 @@ trait HasMeta
     protected $meta;
 
     /**
+     * @return \Swis\JsonApi\Client\Meta|null
+     */
+    public function getMeta(): ? Meta
+    {
+        return $this->meta;
+    }
+
+    /**
      * @param \Swis\JsonApi\Client\Meta|null $meta
      *
      * @return $this
@@ -21,13 +29,5 @@ trait HasMeta
         $this->meta = $meta;
 
         return $this;
-    }
-
-    /**
-     * @return \Swis\JsonApi\Client\Meta|null
-     */
-    public function getMeta(): ? Meta
-    {
-        return $this->meta;
     }
 }

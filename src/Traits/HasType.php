@@ -10,6 +10,14 @@ trait HasType
     protected $type;
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
      * @param string $type
      *
      * @return $this
@@ -19,14 +27,6 @@ trait HasType
         $this->type = $type;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**

@@ -12,6 +12,14 @@ trait HasLinks
     protected $links;
 
     /**
+     * @return \Swis\JsonApi\Client\Links|null
+     */
+    public function getLinks(): ? Links
+    {
+        return $this->links;
+    }
+
+    /**
      * @param \Swis\JsonApi\Client\Links|null $links
      *
      * @return $this
@@ -21,13 +29,5 @@ trait HasLinks
         $this->links = $links;
 
         return $this;
-    }
-
-    /**
-     * @return \Swis\JsonApi\Client\Links|null
-     */
-    public function getLinks(): ? Links
-    {
-        return $this->links;
     }
 }

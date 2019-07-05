@@ -247,16 +247,16 @@ class HydratorTest extends AbstractTest
         static::assertEquals(1, $masterItem->getId());
 
         static::assertInstanceOf(MasterItem::class, $masterItem);
-        static::assertInstanceOf(HasOneRelation::class, $masterItem->getRelationship('child'));
-        static::assertInstanceOf(Links::class, $masterItem->getRelationship('child')->getLinks());
-        static::assertInstanceOf(Meta::class, $masterItem->getRelationship('child')->getMeta());
+        static::assertInstanceOf(HasOneRelation::class, $masterItem->getRelation('child'));
+        static::assertInstanceOf(Links::class, $masterItem->getRelation('child')->getLinks());
+        static::assertInstanceOf(Meta::class, $masterItem->getRelation('child')->getMeta());
 
-        static::assertSame($childItem, $masterItem->getRelationship('child')->getIncluded());
-        static::assertEquals('child', $masterItem->getRelationship('child')->getIncluded()->getType());
-        static::assertEquals(2, $masterItem->getRelationship('child')->getIncluded()->getId());
-        static::assertSame($masterItem, $masterItem->getRelationship('child')->getIncluded()->getRelationship('parent')->getIncluded());
-        static::assertSame('http://example.com/master/1/relationships/child', $masterItem->getRelationship('child')->getLinks()->self->getHref());
-        static::assertSame('bar', $masterItem->getRelationship('child')->getMeta()->foo);
+        static::assertSame($childItem, $masterItem->getRelation('child')->getIncluded());
+        static::assertEquals('child', $masterItem->getRelation('child')->getIncluded()->getType());
+        static::assertEquals(2, $masterItem->getRelation('child')->getIncluded()->getId());
+        static::assertSame($masterItem, $masterItem->getRelation('child')->getIncluded()->getRelation('parent')->getIncluded());
+        static::assertSame('http://example.com/master/1/relationships/child', $masterItem->getRelation('child')->getLinks()->self->getHref());
+        static::assertSame('bar', $masterItem->getRelation('child')->getMeta()->foo);
     }
 
     /**
@@ -304,7 +304,7 @@ class HydratorTest extends AbstractTest
         static::assertEquals(1, $masterItem->getId());
 
         static::assertInstanceOf(MasterItem::class, $masterItem);
-        static::assertFalse($masterItem->hasRelationship('child'));
+        static::assertFalse($masterItem->hasRelation('child'));
     }
 
     /**
@@ -383,11 +383,11 @@ class HydratorTest extends AbstractTest
             new Collection([$childItem, $masterItem])
         );
 
-        static::assertInstanceOf(MorphToRelation::class, $masterItem->getRelationship('morph'));
+        static::assertInstanceOf(MorphToRelation::class, $masterItem->getRelation('morph'));
 
-        static::assertSame($childItem, $masterItem->getRelationship('morph')->getIncluded());
-        static::assertEquals('child', $masterItem->getRelationship('morph')->getIncluded()->getType());
-        static::assertEquals(3, $masterItem->getRelationship('morph')->getIncluded()->getId());
+        static::assertSame($childItem, $masterItem->getRelation('morph')->getIncluded());
+        static::assertEquals('child', $masterItem->getRelation('morph')->getIncluded()->getType());
+        static::assertEquals(3, $masterItem->getRelation('morph')->getIncluded()->getId());
 
         static::assertEquals(3, $masterItem->morph->getId());
     }
@@ -414,11 +414,11 @@ class HydratorTest extends AbstractTest
             new Collection([$childItem, $masterItem])
         );
 
-        static::assertInstanceOf(MorphToManyRelation::class, $masterItem->getRelationship('morphmany'));
+        static::assertInstanceOf(MorphToManyRelation::class, $masterItem->getRelation('morphmany'));
 
-        static::assertSame($childItem, $masterItem->getRelationship('morphmany')->getIncluded()[0]);
-        static::assertEquals('child', $masterItem->getRelationship('morphmany')->getIncluded()[0]->getType());
-        static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());
+        static::assertSame($childItem, $masterItem->getRelation('morphmany')->getIncluded()[0]);
+        static::assertEquals('child', $masterItem->getRelation('morphmany')->getIncluded()[0]->getType());
+        static::assertEquals(4, $masterItem->getRelation('morphmany')->getIncluded()[0]->getId());
 
         static::assertEquals(4, $masterItem->morphmany[0]->getId());
     }
@@ -444,11 +444,11 @@ class HydratorTest extends AbstractTest
             new Collection([$childItem, $masterItem])
         );
 
-        static::assertInstanceOf(MorphToRelation::class, $masterItem->getRelationship('morph'));
+        static::assertInstanceOf(MorphToRelation::class, $masterItem->getRelation('morph'));
 
-        static::assertSame($childItem, $masterItem->getRelationship('morph')->getIncluded());
-        static::assertEquals('child', $masterItem->getRelationship('morph')->getIncluded()->getType());
-        static::assertEquals(3, $masterItem->getRelationship('morph')->getIncluded()->getId());
+        static::assertSame($childItem, $masterItem->getRelation('morph')->getIncluded());
+        static::assertEquals('child', $masterItem->getRelation('morph')->getIncluded()->getType());
+        static::assertEquals(3, $masterItem->getRelation('morph')->getIncluded()->getId());
 
         static::assertEquals(3, $masterItem->morph->getId());
     }
@@ -474,11 +474,11 @@ class HydratorTest extends AbstractTest
             new Collection([$childItem, $masterItem])
         );
 
-        static::assertInstanceOf(MorphToManyRelation::class, $masterItem->getRelationship('morphmany'));
+        static::assertInstanceOf(MorphToManyRelation::class, $masterItem->getRelation('morphmany'));
 
-        static::assertSame($childItem, $masterItem->getRelationship('morphmany')->getIncluded()[0]);
-        static::assertEquals('child', $masterItem->getRelationship('morphmany')->getIncluded()[0]->getType());
-        static::assertEquals(4, $masterItem->getRelationship('morphmany')->getIncluded()[0]->getId());
+        static::assertSame($childItem, $masterItem->getRelation('morphmany')->getIncluded()[0]);
+        static::assertEquals('child', $masterItem->getRelation('morphmany')->getIncluded()[0]->getType());
+        static::assertEquals(4, $masterItem->getRelation('morphmany')->getIncluded()[0]->getId());
 
         static::assertEquals(4, $masterItem->morphmany[0]->getId());
     }
