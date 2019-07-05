@@ -8,12 +8,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-* Added facades for `CollectionDocumentBuilder`, `ItemDocumentBuilder`, `ItemHydrator` and `TypeMapper`.
+* Added `DocumentFactory`.
+* Added facades for `DocumentFactory`, `ItemHydrator` and `TypeMapper`.
 
 ### Changed
 
 * The `TypeMapper` now checks if the class exists in the setter instead of the getter.
 * The `ItemHydrator` now also hydrates the id if provided.
+* Added `hasType`, `hasAttributes`, `hasRelationships` and `getRelations` to `ItemInterface`.
+* Removed `canBeIncluded` and `getIncluded` from `ItemInterface` as the `DocumentFactory` is now responsible for gathering the included items.
+
+### Removed
+
+* Removed `CollectionDocumentBuilder` and `ItemDocumentBuilder` in favor of `DocumentFactory`.
 
 ## [0.18.0] - 2019-07-01
 

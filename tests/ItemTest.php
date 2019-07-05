@@ -7,6 +7,8 @@ use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithGetMutatorItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
@@ -139,6 +141,19 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
+    public function it_returns_a_boolean_indicating_if_it_has_attributes()
+    {
+        $item = new Item();
+        $this->assertFalse($item->hasAttributes());
+
+        $item->fill($this->attributes);
+
+        $this->assertTrue($item->hasAttributes());
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_attribute_from_get_mutator()
     {
         $item = new WithGetMutatorItem();
@@ -169,6 +184,56 @@ class ItemTest extends AbstractTest
         $itemBuilder->useInitial();
 
         $this->assertEquals(['testKey' => 9999, 'anotherTestKey' => 'someValue'], $itemBuilder->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function it_has_relationships_when_added()
+    {
+        $masterItem = new MasterItem();
+        $this->assertFalse($masterItem->hasRelationship('child'));
+
+        $childItem = new ChildItem();
+        $childItem->setId(1);
+        $masterItem->child()->associate($childItem);
+        $this->assertTrue($masterItem->hasRelationship('child'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_all_relations()
+    {
+        $masterItem = new MasterItem();
+        $childItem = new ChildItem();
+        $childItem->setId(1);
+        $masterItem->child()->associate($childItem);
+
+        $relations = $masterItem->getRelationships();
+
+        $this->assertSame([
+            'child' => [
+                'data' => [
+                    'type' => 'child',
+                    'id'   => '1',
+                ],
+            ],
+        ], $relations);
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_boolean_indicating_if_it_has_relationships()
+    {
+        $masterItem = new MasterItem();
+        $this->assertFalse($masterItem->hasRelationships());
+
+        $childItem = (new ChildItem())->setId(1);
+        $masterItem->child()->associate($childItem);
+
+        $this->assertTrue($masterItem->hasRelationships());
     }
 
     /**

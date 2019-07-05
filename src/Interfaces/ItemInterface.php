@@ -35,6 +35,11 @@ interface ItemInterface extends DataInterface
     public function getType(): string;
 
     /**
+     * @return bool
+     */
+    public function hasType(): bool;
+
+    /**
      * @param string $type
      *
      * @return static
@@ -98,6 +103,16 @@ interface ItemInterface extends DataInterface
     public function setAttribute($key, $value);
 
     /**
+     * @return bool
+     */
+    public function hasAttributes(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasRelationships(): bool;
+
+    /**
      * @return array
      */
     public function getAvailableRelations(): array;
@@ -115,14 +130,7 @@ interface ItemInterface extends DataInterface
     public function setRelation(string $relation, DataInterface $value, Links $links = null, Meta $meta = null);
 
     /**
-     * @TODO: MEGA TODO. Set up a serializer for the Item so that we can remove this, getRelationships etc
-     *
-     * @return \Swis\JsonApi\Client\Collection
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
      */
-    public function getIncluded();
-
-    /**
-     * @return bool
-     */
-    public function canBeIncluded(): bool;
+    public function getRelations(): array;
 }
