@@ -70,10 +70,14 @@ class Document implements DocumentInterface
 
     /**
      * @param \Swis\JsonApi\Client\ErrorCollection $errors
+     *
+     * @return $this
      */
     public function setErrors(ErrorCollection $errors)
     {
         $this->errors = $errors;
+
+        return $this;
     }
 
     /**
@@ -122,10 +126,14 @@ class Document implements DocumentInterface
 
     /**
      * @param \Swis\JsonApi\Client\Jsonapi|null $jsonapi
+     *
+     * @return $this
      */
     public function setJsonapi(Jsonapi $jsonapi = null)
     {
         $this->jsonapi = $jsonapi;
+
+        return $this;
     }
 
     /**
