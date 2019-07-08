@@ -11,7 +11,6 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Item;
-use Swis\JsonApi\Client\Meta;
 
 class Hydrator
 {
@@ -26,13 +25,20 @@ class Hydrator
     protected $linksParser;
 
     /**
+     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
+     */
+    protected $metaParser;
+
+    /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
      * @param \Swis\JsonApi\Client\JsonApi\LinksParser            $linksParser
+     * @param \Swis\JsonApi\Client\JsonApi\MetaParser             $metaParser
      */
-    public function __construct(TypeMapperInterface $typeMapper, LinksParser $linksParser)
+    public function __construct(TypeMapperInterface $typeMapper, LinksParser $linksParser, MetaParser $metaParser)
     {
         $this->typeMapper = $typeMapper;
         $this->linksParser = $linksParser;
+        $this->metaParser = $metaParser;
     }
 
     /**
@@ -55,7 +61,7 @@ class Hydrator
         }
 
         if ($jsonApiItem->has('meta')) {
-            $item->setMeta(new Meta($jsonApiItem->get('meta')->asArray(true)));
+            $item->setMeta($this->metaParser->parse($jsonApiItem->get('meta')));
         }
 
         return $item;
@@ -115,7 +121,7 @@ class Hydrator
 
                     $meta = null;
                     if ($relationship->has('meta')) {
-                        $meta = new Meta($relationship->get('meta')->asArray(true));
+                        $meta = $this->metaParser->parse($relationship->get('meta'));
                     }
 
                     if ($data instanceof ResourceIdentifierInterface) {

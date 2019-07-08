@@ -21,11 +21,18 @@ class ErrorsParser
     private $linksParser;
 
     /**
-     * @param \Swis\JsonApi\Client\JsonApi\LinksParser $linksParser
+     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
      */
-    public function __construct(LinksParser $linksParser)
+    private $metaParser;
+
+    /**
+     * @param \Swis\JsonApi\Client\JsonApi\LinksParser $linksParser
+     * @param \Swis\JsonApi\Client\JsonApi\MetaParser  $metaParser
+     */
+    public function __construct(LinksParser $linksParser, MetaParser $metaParser)
     {
         $this->linksParser = $linksParser;
+        $this->metaParser = $metaParser;
     }
 
     /**
@@ -33,7 +40,7 @@ class ErrorsParser
      *
      * @return \Swis\JsonApi\Client\ErrorCollection
      */
-    public function parse(JsonApiErrorCollection $errorCollection)
+    public function parse(JsonApiErrorCollection $errorCollection): ErrorCollection
     {
         $errors = new ErrorCollection();
 
@@ -93,6 +100,6 @@ class ErrorsParser
      */
     private function buildMeta(JsonApiMeta $meta): Meta
     {
-        return new Meta($meta->asArray(true));
+        return $this->metaParser->parse($meta);
     }
 }

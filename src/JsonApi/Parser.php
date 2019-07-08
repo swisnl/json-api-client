@@ -3,6 +3,7 @@
 namespace Swis\JsonApi\Client\JsonApi;
 
 use Art4\JsonApiClient\DocumentInterface as Art4JsonApiDocumentInterface;
+use Art4\JsonApiClient\ResourceCollection;
 use Art4\JsonApiClient\ResourceCollectionInterface;
 use Art4\JsonApiClient\ResourceItemInterface;
 use Art4\JsonApiClient\Utils\Manager as Art4JsonApiClientManager;
@@ -16,6 +17,7 @@ use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\InvalidResponseDocument;
 use Swis\JsonApi\Client\ItemDocument;
 use Swis\JsonApi\Client\Jsonapi;
+use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
 class Parser implements ParserInterface
@@ -41,29 +43,37 @@ class Parser implements ParserInterface
     private $linksParser;
 
     /**
-     * @param \Art4\JsonApiClient\Utils\Manager         $manager
-     * @param \Swis\JsonApi\Client\JsonApi\Hydrator     $hydrator
-     * @param \Swis\JsonApi\Client\JsonApi\ErrorsParser $errorsParser
-     * @param \Swis\JsonApi\Client\JsonApi\LinksParser  $linksParser
+     * @var \Swis\JsonApi\Client\JsonApi\JsonapiParser
+     */
+    private $jsonapiParser;
+
+    /**
+     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
+     */
+    private $metaParser;
+
+    /**
+     * @param \Art4\JsonApiClient\Utils\Manager          $manager
+     * @param \Swis\JsonApi\Client\JsonApi\Hydrator      $hydrator
+     * @param \Swis\JsonApi\Client\JsonApi\ErrorsParser  $errorsParser
+     * @param \Swis\JsonApi\Client\JsonApi\LinksParser   $linksParser
+     * @param \Swis\JsonApi\Client\JsonApi\JsonapiParser $jsonapiParser
+     * @param \Swis\JsonApi\Client\JsonApi\MetaParser    $metaParser
      */
     public function __construct(
         Art4JsonApiClientManager $manager,
         Hydrator $hydrator,
         ErrorsParser $errorsParser,
-        LinksParser $linksParser
+        LinksParser $linksParser,
+        JsonapiParser $jsonapiParser,
+        MetaParser $metaParser
     ) {
         $this->manager = $manager;
         $this->hydrator = $hydrator;
         $this->errorsParser = $errorsParser;
         $this->linksParser = $linksParser;
-    }
-
-    /**
-     * @return \Swis\JsonApi\Client\JsonApi\Hydrator
-     */
-    public function getHydrator(): Hydrator
-    {
-        return $this->hydrator;
+        $this->jsonapiParser = $jsonapiParser;
+        $this->metaParser = $metaParser;
     }
 
     /**
@@ -221,7 +231,7 @@ class Parser implements ParserInterface
      *
      * @return \Art4\JsonApiClient\ResourceCollection|null
      */
-    private function getJsonApiDocumentIncluded(Art4JsonApiDocumentInterface $document)
+    private function getJsonApiDocumentIncluded(Art4JsonApiDocumentInterface $document): ? ResourceCollection
     {
         if ($document->has('included')) {
             return $document->get('included');
@@ -235,7 +245,7 @@ class Parser implements ParserInterface
      *
      * @return \Swis\JsonApi\Client\Links|null
      */
-    private function parseLinks(Art4JsonApiDocumentInterface $document)
+    private function parseLinks(Art4JsonApiDocumentInterface $document): ? Links
     {
         if (!$document->has('links')) {
             return null;
@@ -263,13 +273,13 @@ class Parser implements ParserInterface
      *
      * @return \Swis\JsonApi\Client\Meta|null
      */
-    private function parseMeta(Art4JsonApiDocumentInterface $document)
+    private function parseMeta(Art4JsonApiDocumentInterface $document): ? Meta
     {
         if (!$document->has('meta')) {
             return null;
         }
 
-        return new Meta($document->get('meta')->asArray(true));
+        return $this->metaParser->parse($document->get('meta'));
     }
 
     /**
@@ -277,18 +287,13 @@ class Parser implements ParserInterface
      *
      * @return \Swis\JsonApi\Client\Jsonapi|null
      */
-    private function parseJsonapi(Art4JsonApiDocumentInterface $document)
+    private function parseJsonapi(Art4JsonApiDocumentInterface $document): ? Jsonapi
     {
         if (!$document->has('jsonapi')) {
             return null;
         }
 
-        $jsonApi = $document->get('jsonapi');
-
-        return new Jsonapi(
-            $jsonApi->has('version') ? $jsonApi->get('version') : null,
-            $jsonApi->has('meta') ? new Meta($jsonApi->get('meta')->asArray(true)) : null
-        );
+        return $this->jsonapiParser->parse($document->get('jsonapi'));
     }
 
     /**

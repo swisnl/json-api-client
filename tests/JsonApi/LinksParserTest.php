@@ -4,6 +4,7 @@ namespace Swis\JsonApi\Client\Tests\JsonApi;
 
 use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\JsonApi\LinksParser;
+use Swis\JsonApi\Client\JsonApi\MetaParser;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
@@ -14,10 +15,10 @@ class LinksParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_jsonapilinks_to_links()
+    public function it_converts_art4links_to_links()
     {
-        $parser = new LinksParser();
-        $links = $parser->parse($this->getJsonApiLinks()->asArray(false));
+        $parser = new LinksParser(new MetaParser());
+        $links = $parser->parse($this->getArt4Links()->asArray());
 
         $this->assertInstanceOf(Links::class, $links);
         $this->assertCount(3, $links->toArray());
@@ -45,7 +46,7 @@ class LinksParserTest extends AbstractTest
     /**
      * @return \Art4\JsonApiClient\ErrorCollection
      */
-    protected function getJsonApiLinks()
+    protected function getArt4Links()
     {
         $links = [
             'links' => [
@@ -58,9 +59,7 @@ class LinksParserTest extends AbstractTest
                 'next' => [
                     'href' => 'http://example.com/articles?page[offset]=2',
                 ],
-                'last' => [
-                    'href' => 'http://example.com/articles?page[offset]=10',
-                ],
+                'last' => 'http://example.com/articles?page[offset]=10',
             ],
             'data'  => [],
         ];

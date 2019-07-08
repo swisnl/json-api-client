@@ -17,8 +17,10 @@ use Swis\JsonApi\Client\Interfaces\ParserInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\JsonApi\ErrorsParser;
 use Swis\JsonApi\Client\JsonApi\Hydrator;
+use Swis\JsonApi\Client\JsonApi\JsonapiParser;
 use Swis\JsonApi\Client\JsonApi\LinksParser;
 use Swis\JsonApi\Client\JsonApi\Parser;
+use Swis\JsonApi\Client\JsonApi\MetaParser;
 use Swis\JsonApi\Client\TypeMapper;
 
 class ServiceProvider extends BaseServiceProvider
@@ -59,9 +61,11 @@ class ServiceProvider extends BaseServiceProvider
             function (Application $app) {
                 return new Parser(
                     new JsonApiClientManger(),
-                    new Hydrator($app->make(TypeMapperInterface::class), new LinksParser()),
-                    new ErrorsParser(new LinksParser()),
-                    new LinksParser()
+                    $app->make(Hydrator::class),
+                    $app->make(ErrorsParser::class),
+                    $app->make(LinksParser::class),
+                    $app->make(JsonapiParser::class),
+                    $app->make(MetaParser::class)
                 );
             }
         );

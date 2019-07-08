@@ -10,11 +10,24 @@ use Swis\JsonApi\Client\Meta;
 class LinksParser
 {
     /**
+     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
+     */
+    private $metaParser;
+
+    /**
+     * @param \Swis\JsonApi\Client\JsonApi\MetaParser $metaParser
+     */
+    public function __construct(MetaParser $metaParser)
+    {
+        $this->metaParser = $metaParser;
+    }
+
+    /**
      * @param array $links
      *
      * @return \Swis\JsonApi\Client\Links
      */
-    public function parse(array $links)
+    public function parse(array $links): Links
     {
         return new Links(
             array_map(
@@ -27,7 +40,7 @@ class LinksParser
     }
 
     /**
-     * @param \Art4\JsonApiClient\Link|string $link
+     * @param \Art4\JsonApiClient\DocumentLink|\Art4\JsonApiClient\ErrorLink|\Art4\JsonApiClient\Link|\Art4\JsonApiClient\RelationshipLink|\Art4\JsonApiClient\ResourceItemLink|string $link
      *
      * @return \Swis\JsonApi\Client\Link
      */
@@ -47,6 +60,6 @@ class LinksParser
      */
     private function buildMeta(JsonApiMeta $meta): Meta
     {
-        return new Meta($meta->asArray(true));
+        return $this->metaParser->parse($meta);
     }
 }
