@@ -1,10 +1,10 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\Parsers;
 
 use Art4\JsonApiClient\Utils\Manager;
-use Swis\JsonApi\Client\JsonApi\MetaParser;
 use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Parsers\MetaParser;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class MetaParserTest extends AbstractTest

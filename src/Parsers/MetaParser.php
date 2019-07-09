@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Art4\JsonApiClient\Meta as JsonApiMeta;
 use Swis\JsonApi\Client\Meta;

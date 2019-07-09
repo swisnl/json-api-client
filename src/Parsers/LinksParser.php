@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Art4\JsonApiClient\Meta as JsonApiMeta;
 use Swis\JsonApi\Client\Link;
@@ -13,12 +13,12 @@ use Swis\JsonApi\Client\Meta;
 class LinksParser
 {
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
+     * @var \Swis\JsonApi\Client\Parsers\MetaParser
      */
     private $metaParser;
 
     /**
-     * @param \Swis\JsonApi\Client\JsonApi\MetaParser $metaParser
+     * @param \Swis\JsonApi\Client\Parsers\MetaParser $metaParser
      */
     public function __construct(MetaParser $metaParser)
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\Parsers;
 
 use GuzzleHttp\Psr7\Response;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\InvalidResponseDocument;
-use Swis\JsonApi\Client\JsonApi\DocumentParser;
-use Swis\JsonApi\Client\JsonApi\ResponseParser;
+use Swis\JsonApi\Client\Parsers\DocumentParser;
+use Swis\JsonApi\Client\Parsers\ResponseParser;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class ResponseParserTest extends AbstractTest

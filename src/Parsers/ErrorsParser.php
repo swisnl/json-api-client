@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Art4\JsonApiClient\Error as JsonApiError;
 use Art4\JsonApiClient\ErrorCollection as JsonApiErrorCollection;
@@ -19,18 +19,18 @@ use Swis\JsonApi\Client\Meta;
 class ErrorsParser
 {
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\LinksParser
+     * @var \Swis\JsonApi\Client\Parsers\LinksParser
      */
     private $linksParser;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
+     * @var \Swis\JsonApi\Client\Parsers\MetaParser
      */
     private $metaParser;
 
     /**
-     * @param \Swis\JsonApi\Client\JsonApi\LinksParser $linksParser
-     * @param \Swis\JsonApi\Client\JsonApi\MetaParser  $metaParser
+     * @param \Swis\JsonApi\Client\Parsers\LinksParser $linksParser
+     * @param \Swis\JsonApi\Client\Parsers\MetaParser  $metaParser
      */
     public function __construct(LinksParser $linksParser, MetaParser $metaParser)
     {

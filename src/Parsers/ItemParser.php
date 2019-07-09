@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Art4\JsonApiClient\RelationshipCollectionInterface;
 use Art4\JsonApiClient\ResourceIdentifierCollectionInterface;
@@ -23,19 +23,19 @@ class ItemParser
     private $typeMapper;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\LinksParser
+     * @var \Swis\JsonApi\Client\Parsers\LinksParser
      */
     private $linksParser;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
+     * @var \Swis\JsonApi\Client\Parsers\MetaParser
      */
     private $metaParser;
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
-     * @param \Swis\JsonApi\Client\JsonApi\LinksParser            $linksParser
-     * @param \Swis\JsonApi\Client\JsonApi\MetaParser             $metaParser
+     * @param \Swis\JsonApi\Client\Parsers\LinksParser            $linksParser
+     * @param \Swis\JsonApi\Client\Parsers\MetaParser             $metaParser
      */
     public function __construct(TypeMapperInterface $typeMapper, LinksParser $linksParser, MetaParser $metaParser)
     {

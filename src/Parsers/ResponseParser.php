@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Document;

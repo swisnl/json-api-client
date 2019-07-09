@@ -1,11 +1,11 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\Parsers;
 
 use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
-use Swis\JsonApi\Client\JsonApi\CollectionParser;
-use Swis\JsonApi\Client\JsonApi\ItemParser;
+use Swis\JsonApi\Client\Parsers\CollectionParser;
+use Swis\JsonApi\Client\Parsers\ItemParser;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\PlainItem;
 

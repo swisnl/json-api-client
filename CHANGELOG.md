@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Renamed `getRelationship` to `getRelation`, `hasRelationship` to `hasRelation` and `removeRelationship` to `unsetRelation` in `Item`.
 * Renamed/aligned some parameters in several relation methods in `Item`.
 * Renamed namespace `Swis\JsonApi\Client\Traits` to `Swis\JsonApi\Client\Concerns`.
+* Renamed namespace `Swis\JsonApi\Client\JsonApi` to `Swis\JsonApi\Client\Parsers`.
 * Renamed `ServiceProvider::registerParser` (singular) to `ServiceProvider::registerParsers` (plural).
 
 ### Removed

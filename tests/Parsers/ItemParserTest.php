@@ -1,17 +1,17 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\Parsers;
 
 use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Client\JsonApi\ItemParser;
-use Swis\JsonApi\Client\JsonApi\LinksParser;
-use Swis\JsonApi\Client\JsonApi\MetaParser;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Parsers\ItemParser;
+use Swis\JsonApi\Client\Parsers\LinksParser;
+use Swis\JsonApi\Client\Parsers\MetaParser;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
@@ -221,7 +221,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
      *
-     * @return \Swis\JsonApi\Client\JsonApi\ItemParser
+     * @return \Swis\JsonApi\Client\Parsers\ItemParser
      */
     private function getItemParser(TypeMapperInterface $typeMapper = null): ItemParser
     {

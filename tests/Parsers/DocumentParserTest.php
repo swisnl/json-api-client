@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\Parsers;
 
 use Art4\JsonApiClient\Exception\ValidationException;
 use Art4\JsonApiClient\Utils\Manager;
@@ -12,16 +12,16 @@ use Swis\JsonApi\Client\ErrorCollection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\ItemDocument;
 use Swis\JsonApi\Client\Jsonapi;
-use Swis\JsonApi\Client\JsonApi\CollectionParser;
-use Swis\JsonApi\Client\JsonApi\DocumentParser;
-use Swis\JsonApi\Client\JsonApi\ErrorsParser;
-use Swis\JsonApi\Client\JsonApi\ItemParser;
-use Swis\JsonApi\Client\JsonApi\JsonapiParser;
-use Swis\JsonApi\Client\JsonApi\LinksParser;
-use Swis\JsonApi\Client\JsonApi\MetaParser;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Parsers\CollectionParser;
+use Swis\JsonApi\Client\Parsers\DocumentParser;
+use Swis\JsonApi\Client\Parsers\ErrorsParser;
+use Swis\JsonApi\Client\Parsers\ItemParser;
+use Swis\JsonApi\Client\Parsers\JsonapiParser;
+use Swis\JsonApi\Client\Parsers\LinksParser;
+use Swis\JsonApi\Client\Parsers\MetaParser;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\Parsers;
 
 use Art4\JsonApiClient\Utils\Manager;
-use Swis\JsonApi\Client\JsonApi\LinksParser;
-use Swis\JsonApi\Client\JsonApi\MetaParser;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Parsers\LinksParser;
+use Swis\JsonApi\Client\Parsers\MetaParser;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class LinksParserTest extends AbstractTest

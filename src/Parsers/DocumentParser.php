@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Art4\JsonApiClient\DocumentInterface as Art4JsonApiDocumentInterface;
 use Art4\JsonApiClient\ResourceCollectionInterface;
@@ -28,43 +28,43 @@ class DocumentParser implements DocumentParserInterface
     private $manager;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\ItemParser
+     * @var \Swis\JsonApi\Client\Parsers\ItemParser
      */
     private $itemParser;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\CollectionParser
+     * @var \Swis\JsonApi\Client\Parsers\CollectionParser
      */
     private $collectionParser;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\ErrorsParser
+     * @var \Swis\JsonApi\Client\Parsers\ErrorsParser
      */
     private $errorsParser;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\LinksParser
+     * @var \Swis\JsonApi\Client\Parsers\LinksParser
      */
     private $linksParser;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\JsonapiParser
+     * @var \Swis\JsonApi\Client\Parsers\JsonapiParser
      */
     private $jsonapiParser;
 
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\MetaParser
+     * @var \Swis\JsonApi\Client\Parsers\MetaParser
      */
     private $metaParser;
 
     /**
      * @param \Art4\JsonApiClient\Utils\Manager             $manager
-     * @param \Swis\JsonApi\Client\JsonApi\ItemParser       $itemParser
-     * @param \Swis\JsonApi\Client\JsonApi\CollectionParser $collectionParser
-     * @param \Swis\JsonApi\Client\JsonApi\ErrorsParser     $errorsParser
-     * @param \Swis\JsonApi\Client\JsonApi\LinksParser      $linksParser
-     * @param \Swis\JsonApi\Client\JsonApi\JsonapiParser    $jsonapiParser
-     * @param \Swis\JsonApi\Client\JsonApi\MetaParser       $metaParser
+     * @param \Swis\JsonApi\Client\Parsers\ItemParser       $itemParser
+     * @param \Swis\JsonApi\Client\Parsers\CollectionParser $collectionParser
+     * @param \Swis\JsonApi\Client\Parsers\ErrorsParser     $errorsParser
+     * @param \Swis\JsonApi\Client\Parsers\LinksParser      $linksParser
+     * @param \Swis\JsonApi\Client\Parsers\JsonapiParser    $jsonapiParser
+     * @param \Swis\JsonApi\Client\Parsers\MetaParser       $metaParser
      */
     public function __construct(
         Art4JsonApiClientManager $manager,

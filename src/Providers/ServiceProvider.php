@@ -14,8 +14,8 @@ use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentParserInterface;
 use Swis\JsonApi\Client\Interfaces\ResponseParserInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Client\JsonApi\DocumentParser;
-use Swis\JsonApi\Client\JsonApi\ResponseParser;
+use Swis\JsonApi\Client\Parsers\DocumentParser;
+use Swis\JsonApi\Client\Parsers\ResponseParser;
 use Swis\JsonApi\Client\TypeMapper;
 
 class ServiceProvider extends BaseServiceProvider

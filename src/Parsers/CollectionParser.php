@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Art4\JsonApiClient\ResourceCollectionInterface;
 use Art4\JsonApiClient\ResourceItemInterface;
@@ -12,12 +12,12 @@ use Swis\JsonApi\Client\Collection;
 class CollectionParser
 {
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\ItemParser
+     * @var \Swis\JsonApi\Client\Parsers\ItemParser
      */
     private $itemParser;
 
     /**
-     * @param \Swis\JsonApi\Client\JsonApi\ItemParser $itemParser
+     * @param \Swis\JsonApi\Client\Parsers\ItemParser $itemParser
      */
     public function __construct(ItemParser $itemParser)
     {
