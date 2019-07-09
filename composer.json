@@ -60,7 +60,9 @@
             ],
             "aliases":{
                 "DocumentFactory": "Swis\\JsonApi\\Client\\Facades\\DocumentFactoryFacade",
+                "DocumentParser": "Swis\\JsonApi\\Client\\Facades\\DocumentParserFacade",
                 "ItemHydrator": "Swis\\JsonApi\\Client\\Facades\\ItemHydratorFacade",
+                "ResponseParser": "Swis\\JsonApi\\Client\\Facades\\ResponseParserFacade",
                 "TypeMapper": "Swis\\JsonApi\\Client\\Facades\\TypeMapperFacade"
             }
         }

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * Added `DocumentFactory`.
-* Added facades for `DocumentFactory`, `ItemHydrator` and `TypeMapper`.
+* Added facades for `DocumentFactory`, `DocumentParser`, `ItemHydrator`, `ResponseParser` and `TypeMapper`.
 * Added `DocumentParserInterface` and `ResponseParserInterface` interfaces and implementations.
 
 ### Changed
