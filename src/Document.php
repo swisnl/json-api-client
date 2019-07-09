@@ -54,10 +54,14 @@ class Document implements DocumentInterface
 
     /**
      * @param \Psr\Http\Message\ResponseInterface|null $response
+     *
+     * @return $this
      */
-    public function setResponse(ResponseInterface $response = null)
+    public function setResponse(? ResponseInterface $response)
     {
         $this->response = $response;
+
+        return $this;
     }
 
     /**
@@ -107,7 +111,7 @@ class Document implements DocumentInterface
     /**
      * @param \Swis\JsonApi\Client\Collection $included
      *
-     * @return static
+     * @return $this
      */
     public function setIncluded(Collection $included)
     {
@@ -129,7 +133,7 @@ class Document implements DocumentInterface
      *
      * @return $this
      */
-    public function setJsonapi(Jsonapi $jsonapi = null)
+    public function setJsonapi(? Jsonapi $jsonapi)
     {
         $this->jsonapi = $jsonapi;
 
@@ -147,7 +151,7 @@ class Document implements DocumentInterface
     /**
      * @param \Swis\JsonApi\Client\Interfaces\DataInterface $data
      *
-     * @return static
+     * @return $this
      */
     public function setData(DataInterface $data)
     {
