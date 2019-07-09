@@ -5,6 +5,9 @@ namespace Swis\JsonApi\Client\JsonApi;
 use Art4\JsonApiClient\Meta as JsonApiMeta;
 use Swis\JsonApi\Client\Meta;
 
+/**
+ * @internal
+ */
 class MetaParser
 {
     /**

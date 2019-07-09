@@ -7,6 +7,9 @@ use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
+/**
+ * @internal
+ */
 class LinksParser
 {
     /**

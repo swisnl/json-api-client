@@ -1,0 +1,396 @@
+<?php
+
+namespace Swis\JsonApi\Client\Tests\JsonApi;
+
+use Art4\JsonApiClient\Exception\ValidationException;
+use Art4\JsonApiClient\Utils\Manager;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\CollectionDocument;
+use Swis\JsonApi\Client\Document;
+use Swis\JsonApi\Client\Error;
+use Swis\JsonApi\Client\ErrorCollection;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\ItemDocument;
+use Swis\JsonApi\Client\Jsonapi;
+use Swis\JsonApi\Client\JsonApi\CollectionParser;
+use Swis\JsonApi\Client\JsonApi\DocumentParser;
+use Swis\JsonApi\Client\JsonApi\ErrorsParser;
+use Swis\JsonApi\Client\JsonApi\ItemParser;
+use Swis\JsonApi\Client\JsonApi\JsonapiParser;
+use Swis\JsonApi\Client\JsonApi\LinksParser;
+use Swis\JsonApi\Client\JsonApi\MetaParser;
+use Swis\JsonApi\Client\Link;
+use Swis\JsonApi\Client\Links;
+use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Tests\AbstractTest;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
+use Swis\JsonApi\Client\TypeMapper;
+
+class DocumentParserTest extends AbstractTest
+{
+    /**
+     * @test
+     */
+    public function it_converts_jsondocument_to_document()
+    {
+        $parser = $this->getDocumentParser();
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data' => [],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(Document::class, $document);
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidJson
+     *
+     * @param string $invalidJson
+     */
+    public function it_throws_when_json_is_not_a_jsonapi_document(string $invalidJson)
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidJson);
+    }
+
+    public function provideInvalidJson(): array
+    {
+        return [
+            [''],
+            ['Foo bar'],
+            [json_encode('Foo bar')],
+            [json_encode(['Foo bar'])],
+            [json_encode(['foo' => 'bar'])],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_a_resource_document()
+    {
+        $parser = $this->getDocumentParser();
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data' => [
+                        'type'       => 'master',
+                        'id'         => '1',
+                        'attributes' => [
+                            'foo' => 'bar',
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(ItemDocument::class, $document);
+        $this->assertInstanceOf(ItemInterface::class, $document->getData());
+        $this->assertEquals('master', $document->getData()->getType());
+        $this->assertEquals('1', $document->getData()->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_a_resource_collection_document()
+    {
+        $parser = $this->getDocumentParser();
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data' => [
+                        [
+                            'type'       => 'master',
+                            'id'         => '1',
+                            'attributes' => [
+                                'foo' => 'bar',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(CollectionDocument::class, $document);
+        $this->assertInstanceOf(Collection::class, $document->getData());
+        $this->assertCount(1, $document->getData());
+        $this->assertEquals('master', $document->getData()->get(0)->getType());
+        $this->assertEquals('1', $document->getData()->get(0)->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_a_document_without_data()
+    {
+        $parser = $this->getDocumentParser();
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'meta' => [
+                        'foo' => 'bar',
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(Document::class, $document);
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_included()
+    {
+        $parser = $this->getDocumentParser();
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data'     => [],
+                    'included' => [
+                        [
+                            'type'       => 'master',
+                            'id'         => '1',
+                            'attributes' => [
+                                'foo' => 'bar',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(CollectionDocument::class, $document);
+        $this->assertInstanceOf(Collection::class, $document->getIncluded());
+        $this->assertCount(1, $document->getIncluded());
+        $this->assertEquals('master', $document->getIncluded()->get(0)->getType());
+        $this->assertEquals('1', $document->getIncluded()->get(0)->getId());
+    }
+
+    /**
+     * @test
+     */
+    public function it_links_singular_relations_to_items_from_included()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $parser = $this->getDocumentParser($typeMapper);
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data'     => [
+                        'type'          => 'master',
+                        'id'            => '1',
+                        'attributes'    => [
+                            'foo' => 'bar',
+                        ],
+                        'relationships' => [
+                            'child' => [
+                                'data' => [
+                                    'type' => 'child',
+                                    'id'   => '1',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'included' => [
+                        [
+                            'type'       => 'child',
+                            'id'         => '1',
+                            'attributes' => [
+                                'foo' => 'baz',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertInstanceOf(ChildItem::class, $document->getData()->child()->getIncluded());
+        $this->assertSame($document->getIncluded()->get(0), $document->getData()->child()->getIncluded());
+    }
+
+    /**
+     * @test
+     */
+    public function it_links_plural_relations_to_items_from_included()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $parser = $this->getDocumentParser($typeMapper);
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data'     => [
+                        'type'          => 'master',
+                        'id'            => '1',
+                        'attributes'    => [
+                            'foo' => 'bar',
+                        ],
+                        'relationships' => [
+                            'children' => [
+                                'data' => [
+                                    [
+                                        'type' => 'child',
+                                        'id'   => '1',
+                                    ],
+                                    [
+                                        'type' => 'child',
+                                        'id'   => '2',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'included' => [
+                        [
+                            'type'       => 'child',
+                            'id'         => '1',
+                            'attributes' => [
+                                'foo' => 'baz',
+                            ],
+                        ],
+                        [
+                            'type'       => 'child',
+                            'id'         => '2',
+                            'attributes' => [
+                                'foo' => 'baz',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertInstanceOf(Collection::class, $document->getData()->children()->getIncluded());
+        $this->assertInstanceOf(ChildItem::class, $document->getData()->children()->getIncluded()->get(0));
+        $this->assertSame($document->getIncluded()->get(0), $document->getData()->children()->getIncluded()->get(0));
+        $this->assertSame($document->getIncluded()->get(1), $document->getData()->children()->getIncluded()->get(1));
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_links()
+    {
+        $parser = $this->getDocumentParser();
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data'  => [],
+                    'links' => [
+                        'self' => 'http://example.com/blogs',
+                    ],
+                ]
+            )
+        );
+
+        static::assertInstanceOf(Links::class, $document->getLinks());
+
+        static::assertEquals(new Links(['self' => new Link('http://example.com/blogs')]), $document->getLinks());
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_errors()
+    {
+        $parser = $this->getDocumentParser();
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'errors' => [
+                        [
+                            'id'   => '1',
+                            'code' => 'foo_bar',
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        static::assertInstanceOf(ErrorCollection::class, $document->getErrors());
+
+        static::assertEquals(new ErrorCollection([new Error('1', null, null, 'foo_bar')]), $document->getErrors());
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_meta()
+    {
+        $parser = $this->getDocumentParser();
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data' => [],
+                    'meta' => [
+                        'foo' => 'bar',
+                    ],
+                ]
+            )
+        );
+
+        static::assertInstanceOf(Meta::class, $document->getMeta());
+
+        static::assertEquals(new Meta(['foo' => 'bar']), $document->getMeta());
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_jsonapi()
+    {
+        $parser = $this->getDocumentParser();
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data'    => [],
+                    'jsonapi' => [
+                        'version' => '1.0',
+                    ],
+                ]
+            )
+        );
+
+        static::assertInstanceOf(Jsonapi::class, $document->getJsonapi());
+
+        static::assertEquals(new Jsonapi('1.0'), $document->getJsonapi());
+    }
+
+    private function getDocumentParser(TypeMapper $typeMapper = null): DocumentParser
+    {
+        $metaParser = new MetaParser();
+        $linksParser = new LinksParser($metaParser);
+        $itemParser = new ItemParser($typeMapper ?? new TypeMapper(), $linksParser, $metaParser);
+
+        return new DocumentParser(
+            new Manager(),
+            $itemParser,
+            new CollectionParser($itemParser),
+            new ErrorsParser($linksParser, $metaParser),
+            $linksParser,
+            new JsonapiParser($metaParser),
+            $metaParser
+        );
+    }
+}

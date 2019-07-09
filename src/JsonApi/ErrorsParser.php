@@ -13,6 +13,9 @@ use Swis\JsonApi\Client\ErrorSource;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
+/**
+ * @internal
+ */
 class ErrorsParser
 {
     /**
@@ -44,7 +47,7 @@ class ErrorsParser
     {
         $errors = new ErrorCollection();
 
-        foreach ($errorCollection->asArray(false) as $error) {
+        foreach ($errorCollection->asArray() as $error) {
             $errors->push($this->buildError($error));
         }
 
@@ -77,7 +80,7 @@ class ErrorsParser
      */
     private function buildLinks(JsonApiErrorLink $errorLink): Links
     {
-        return $this->linksParser->parse($errorLink->asArray(false));
+        return $this->linksParser->parse($errorLink->asArray());
     }
 
     /**

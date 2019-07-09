@@ -7,6 +7,9 @@ use Art4\JsonApiClient\Meta as JsonApiMeta;
 use Swis\JsonApi\Client\Jsonapi;
 use Swis\JsonApi\Client\Meta;
 
+/**
+ * @internal
+ */
 class JsonapiParser
 {
     /**

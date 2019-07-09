@@ -39,6 +39,7 @@ class MasterItem extends Item
      */
     protected $availableRelations = [
         'child',
+        'children',
         'morph',
         'morphmany',
     ];
@@ -46,6 +47,11 @@ class MasterItem extends Item
     public function child()
     {
         return $this->hasOne(ChildItem::class);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(ChildItem::class);
     }
 
     public function morph()
