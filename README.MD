@@ -253,12 +253,11 @@ $repository->all(['include' => 'author', 'page' => ['limit' => 15, 'offset' => 0
 ```
 
 
-## ItemDocumentBuilder
+## DocumentFactory
 
-The `Repository` and `DocumentClient` require `ItemDocumentInterface` instances when creating or updating resources.
-Such documents can easily be created using the `ItemDocumentBuilder`.
-This builder takes an `ItemInterface` instance, usually created by the [TypeMapper](#typemapper), an array of attributes and optionally an id.
-Internally, it uses the [ItemHydrator](#itemhydrator) to hydrate the `ItemInterface` with the provided attributes before it creates the `ItemDocument`.
+The `Repository` and `DocumentClient` both require `ItemDocumentInterface` instances when creating or updating resources.
+Such documents can easily be created using the `DocumentFactory` by giving it a `DataInterface` instance.
+This can be an `ItemInterface`, usually created by the [ItemHydrator](#itemhydrator), or a `Collection`.
 
 
 ## ItemHydrator
