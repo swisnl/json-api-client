@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Client;
 
-use Swis\JsonApi\Client\Traits\HasMeta;
+use Swis\JsonApi\Client\Concerns\HasMeta;
 
 class Jsonapi
 {

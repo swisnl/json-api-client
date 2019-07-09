@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\Traits;
+namespace Swis\JsonApi\Client\Concerns;
 
 trait HasType
 {
@@ -8,6 +8,14 @@ trait HasType
      * @var string
      */
     protected $type;
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
 
     /**
      * @param string $type
@@ -19,14 +27,6 @@ trait HasType
         $this->type = $type;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**

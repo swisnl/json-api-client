@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Document;
@@ -17,21 +18,99 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_knows_if_hasErrors()
+    public function it_can_get_and_set_a_response()
+    {
+        $document = new Document();
+        $response = new Response();
+
+        $document->setResponse($response);
+
+        $this->assertSame($response, $document->getResponse());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_and_set_errors()
+    {
+        $document = new Document();
+        $errors = new ErrorCollection();
+
+        $document->setErrors($errors);
+
+        $this->assertSame($errors, $document->getErrors());
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_boolean_indicating_if_it_has_errors()
     {
         $document = new Document();
         $this->assertEquals($document->isSuccess(), true);
         $this->assertEquals($document->hasErrors(), false);
 
         $document->setErrors(
-          new ErrorCollection(
-              [
-                  ['id' => 'error-1'],
-              ]
-          )
-      );
+            new ErrorCollection(
+                [
+                    ['id' => 'error-1'],
+                ]
+            )
+        );
         $this->assertEquals($document->hasErrors(), true);
         $this->assertEquals($document->isSuccess(), false);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_and_set_included()
+    {
+        $document = new Document();
+        $included = new Collection();
+
+        $document->setIncluded($included);
+
+        $this->assertSame($included, $document->getIncluded());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_and_set_jsonapi()
+    {
+        $document = new Document();
+        $jsonApi = new Jsonapi();
+
+        $document->setJsonapi($jsonApi);
+
+        $this->assertSame($jsonApi, $document->getJsonapi());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_and_set_an_item_as_data()
+    {
+        $document = new Document();
+        $data = new Item();
+
+        $document->setData($data);
+
+        $this->assertSame($data, $document->getData());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_and_set_a_collection_as_data()
+    {
+        $document = new Document();
+        $data = new Collection([new Item()]);
+
+        $document->setData($data);
+
+        $this->assertSame($data, $document->getData());
     }
 
     /**

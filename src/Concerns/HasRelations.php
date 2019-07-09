@@ -1,0 +1,191 @@
+<?php
+
+namespace Swis\JsonApi\Client\Concerns;
+
+use Illuminate\Support\Str;
+use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
+use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
+use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
+use Swis\JsonApi\Client\Links;
+use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Relations\HasManyRelation;
+use Swis\JsonApi\Client\Relations\HasOneRelation;
+use Swis\JsonApi\Client\Relations\MorphToManyRelation;
+use Swis\JsonApi\Client\Relations\MorphToRelation;
+
+trait HasRelations
+{
+    /**
+     * @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
+     */
+    protected $relations = [];
+
+    /**
+     * Create a singular relation to another item.
+     *
+     * @param string      $itemClass
+     * @param string|null $name
+     *
+     * @return \Swis\JsonApi\Client\Relations\HasOneRelation
+     */
+    public function hasOne(string $itemClass, string $name = null): OneRelationInterface
+    {
+        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+
+        if (!array_key_exists($name, $this->relations)) {
+            $this->relations[$name] = new HasOneRelation((new $itemClass())->getType());
+        }
+
+        return $this->relations[$name];
+    }
+
+    /**
+     * Create a plural relation to another item.
+     *
+     * @param string      $itemClass
+     * @param string|null $name
+     *
+     * @return \Swis\JsonApi\Client\Relations\HasManyRelation
+     */
+    public function hasMany(string $itemClass, string $name = null): ManyRelationInterface
+    {
+        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+
+        if (!array_key_exists($name, $this->relations)) {
+            $this->relations[$name] = new HasManyRelation((new $itemClass())->getType());
+        }
+
+        return $this->relations[$name];
+    }
+
+    /**
+     * Create a singular relation.
+     *
+     * @param string|null $name
+     *
+     * @return \Swis\JsonApi\Client\Relations\MorphToRelation
+     */
+    public function morphTo(string $name = null): OneRelationInterface
+    {
+        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+
+        if (!array_key_exists($name, $this->relations)) {
+            $this->relations[$name] = new MorphToRelation();
+        }
+
+        return $this->relations[$name];
+    }
+
+    /**
+     * Create a plural relation.
+     *
+     * @param string|null $name
+     *
+     * @return \Swis\JsonApi\Client\Relations\MorphToManyRelation
+     */
+    public function morphToMany(string $name = null): ManyRelationInterface
+    {
+        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+
+        if (!array_key_exists($name, $this->relations)) {
+            $this->relations[$name] = new MorphToManyRelation();
+        }
+
+        return $this->relations[$name];
+    }
+
+    /**
+     * @return array
+     */
+    public function getRelations(): array
+    {
+        return $this->relations;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface|null
+     */
+    public function getRelation(string $name)
+    {
+        return $this->relations[$name] ?? null;
+    }
+
+    /**
+     * Get the relationship data (included).
+     *
+     * @param string $name
+     *
+     * @return \Swis\JsonApi\Client\Interfaces\DataInterface|null
+     */
+    public function getRelationValue(string $name): ?DataInterface
+    {
+        // If the "attribute" exists as a method on the model, we will just assume
+        // it is a relationship and will load and return the included items in the relationship
+        $method = Str::camel($name);
+        if (method_exists($this, $method)) {
+            return $this->$method()->getIncluded();
+        }
+
+        // If the "attribute" exists as a relationship on the model, we will return
+        // the included items in the relationship
+        if ($this->hasRelation($name)) {
+            return $this->getRelation($name)->getIncluded();
+        }
+
+        return null;
+    }
+
+    /**
+     * Set the specific relationship on the model.
+     *
+     * @param string                                        $name
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $data
+     * @param \Swis\JsonApi\Client\Links|null               $links
+     * @param \Swis\JsonApi\Client\Meta|null                $meta
+     *
+     * @return static
+     */
+    public function setRelation(string $name, DataInterface $data, Links $links = null, Meta $meta = null)
+    {
+        $method = Str::camel($name);
+        if (method_exists($this, $method)) {
+            /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
+            $relationObject = $this->$method();
+        } elseif ($data instanceof Collection) {
+            $relationObject = $this->morphToMany($name);
+        } else {
+            $relationObject = $this->morphTo($name);
+        }
+
+        $relationObject->associate($data);
+        $relationObject->setLinks($links);
+        $relationObject->setMeta($meta);
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasRelation(string $name): bool
+    {
+        return array_key_exists($name, $this->relations);
+    }
+
+    /**
+     * @param $name
+     *
+     * @return static
+     */
+    public function unsetRelation(string $name)
+    {
+        unset($this->relations[$name]);
+
+        return $this;
+    }
+}
