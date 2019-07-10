@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Swis\JsonApi\Client\DocumentFactory;
 
 /**
- * @method static \Swis\JsonApi\Client\Interfaces\DocumentInterface make(\Swis\JsonApi\Client\Interfaces\DataInterface $data)
+ * @method static \Swis\JsonApi\Client\ItemDocument|\Swis\JsonApi\Client\CollectionDocument make(\Swis\JsonApi\Client\Interfaces\DataInterface $data)
  *
  * @see \Swis\JsonApi\Client\DocumentFactory
  */

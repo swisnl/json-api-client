@@ -11,7 +11,7 @@ class DocumentFactory
     /**
      * @param \Swis\JsonApi\Client\Interfaces\DataInterface $data
      *
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\ItemDocument|\Swis\JsonApi\Client\CollectionDocument
      */
     public function make(DataInterface $data): DocumentInterface
     {
