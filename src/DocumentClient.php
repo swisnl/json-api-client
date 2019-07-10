@@ -7,7 +7,7 @@ use Swis\JsonApi\Client\Interfaces\ClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
-use Swis\JsonApi\Client\Interfaces\ParserInterface;
+use Swis\JsonApi\Client\Interfaces\ResponseParserInterface;
 
 class DocumentClient implements DocumentClientInterface
 {
@@ -17,15 +17,15 @@ class DocumentClient implements DocumentClientInterface
     private $client;
 
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\ParserInterface
+     * @var \Swis\JsonApi\Client\Interfaces\ResponseParserInterface
      */
     private $parser;
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ClientInterface $client
-     * @param \Swis\JsonApi\Client\Interfaces\ParserInterface $parser
+     * @param \Swis\JsonApi\Client\Interfaces\ClientInterface         $client
+     * @param \Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser
      */
-    public function __construct(ClientInterface $client, ParserInterface $parser)
+    public function __construct(ClientInterface $client, ResponseParserInterface $parser)
     {
         $this->client = $client;
         $this->parser = $parser;
@@ -120,6 +120,6 @@ class DocumentClient implements DocumentClientInterface
      */
     protected function parseResponse(ResponseInterface $response): DocumentInterface
     {
-        return $this->parser->deserializeResponse($response);
+        return $this->parser->parse($response);
     }
 }

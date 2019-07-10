@@ -1,15 +1,16 @@
 <?php
 
-namespace Swis\JsonApi\Client\Tests\JsonApi;
+namespace Swis\JsonApi\Client\Tests\Parsers;
 
 use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Error;
 use Swis\JsonApi\Client\ErrorCollection;
 use Swis\JsonApi\Client\ErrorSource;
-use Swis\JsonApi\Client\JsonApi\ErrorsParser;
-use Swis\JsonApi\Client\JsonApi\LinksParser;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
+use Swis\JsonApi\Client\Parsers\ErrorsParser;
+use Swis\JsonApi\Client\Parsers\LinksParser;
+use Swis\JsonApi\Client\Parsers\MetaParser;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 
 class ErrorsParserTest extends AbstractTest
@@ -17,10 +18,10 @@ class ErrorsParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_jsonapilinks_to_links()
+    public function it_converts_art4errors_to_errors()
     {
-        $parser = new ErrorsParser(new LinksParser());
-        $errorCollection = $parser->parse($this->getJsonApiErrorCollection());
+        $parser = new ErrorsParser(new LinksParser(new MetaParser()), new MetaParser());
+        $errorCollection = $parser->parse($this->getArt4ErrorCollection());
 
         $this->assertInstanceOf(ErrorCollection::class, $errorCollection);
         $this->assertEquals(2, $errorCollection->count());
@@ -50,7 +51,7 @@ class ErrorsParserTest extends AbstractTest
     /**
      * @return \Art4\JsonApiClient\ErrorCollection
      */
-    protected function getJsonApiErrorCollection()
+    protected function getArt4ErrorCollection()
     {
         $errors = [
             'errors' => [

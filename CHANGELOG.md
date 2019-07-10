@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 * Added `DocumentFactory`.
-* Added facades for `DocumentFactory`, `ItemHydrator` and `TypeMapper`.
+* Added facades for `DocumentFactory`, `DocumentParser`, `ItemHydrator`, `ResponseParser` and `TypeMapper`.
+* Added `DocumentParserInterface` and `ResponseParserInterface` interfaces and implementations.
 
 ### Changed
 
@@ -20,10 +21,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Renamed `getRelationship` to `getRelation`, `hasRelationship` to `hasRelation` and `removeRelationship` to `unsetRelation` in `Item`.
 * Renamed/aligned some parameters in several relation methods in `Item`.
 * Renamed namespace `Swis\JsonApi\Client\Traits` to `Swis\JsonApi\Client\Concerns`.
+* Renamed namespace `Swis\JsonApi\Client\JsonApi` to `Swis\JsonApi\Client\Parsers`.
+* Renamed `ServiceProvider::registerParser` (singular) to `ServiceProvider::registerParsers` (plural).
 
 ### Removed
 
 * Removed `CollectionDocumentBuilder` and `ItemDocumentBuilder` in favor of `DocumentFactory`.
+* Removed `JsonApi\Parser` in favor of `JsonApi\DocumentParser` and `JsonApi\ResponseParser`.
 
 ## [0.18.0] - 2019-07-01
 

@@ -2,23 +2,20 @@
 
 namespace Swis\JsonApi\Client\Providers;
 
-use Art4\JsonApiClient\Utils\Manager as JsonApiClientManger;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Swis\JsonApi\Client\Client as ApiClient;
-use Swis\JsonApi\Client\DocumentClient as ApiDocumentClient;
-use Swis\JsonApi\Client\Interfaces\ClientInterface as ApiClientInterface;
-use Swis\JsonApi\Client\Interfaces\DocumentClientInterface as ApiDocumentClientInterface;
-use Swis\JsonApi\Client\Interfaces\ParserInterface;
+use Swis\JsonApi\Client\Client;
+use Swis\JsonApi\Client\DocumentClient;
+use Swis\JsonApi\Client\Interfaces\ClientInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
+use Swis\JsonApi\Client\Interfaces\DocumentParserInterface;
+use Swis\JsonApi\Client\Interfaces\ResponseParserInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
-use Swis\JsonApi\Client\JsonApi\ErrorsParser;
-use Swis\JsonApi\Client\JsonApi\Hydrator;
-use Swis\JsonApi\Client\JsonApi\LinksParser;
-use Swis\JsonApi\Client\JsonApi\Parser;
+use Swis\JsonApi\Client\Parsers\DocumentParser;
+use Swis\JsonApi\Client\Parsers\ResponseParser;
 use Swis\JsonApi\Client\TypeMapper;
 
 class ServiceProvider extends BaseServiceProvider
@@ -38,41 +35,27 @@ class ServiceProvider extends BaseServiceProvider
         );
 
         $this->registerSharedTypeMapper();
-        $this->registerParser();
+        $this->registerParsers();
         $this->registerClients();
     }
 
     protected function registerSharedTypeMapper()
     {
-        $this->app->singleton(
-            TypeMapperInterface::class,
-            function () {
-                return new TypeMapper();
-            }
-        );
+        $this->app->singleton(TypeMapperInterface::class, TypeMapper::class);
     }
 
-    protected function registerParser()
+    protected function registerParsers()
     {
-        $this->app->bind(
-            ParserInterface::class,
-            function (Application $app) {
-                return new Parser(
-                    new JsonApiClientManger(),
-                    new Hydrator($app->make(TypeMapperInterface::class), new LinksParser()),
-                    new ErrorsParser(new LinksParser()),
-                    new LinksParser()
-                );
-            }
-        );
+        $this->app->bind(DocumentParserInterface::class, DocumentParser::class);
+        $this->app->bind(ResponseParserInterface::class, ResponseParser::class);
     }
 
     protected function registerClients()
     {
         $this->app->bind(
-            ApiClientInterface::class,
+            ClientInterface::class,
             function () {
-                return new ApiClient(
+                return new Client(
                     $this->getHttpClient(),
                     config('jsonapi.base_uri'),
                     $this->getMessageFactory()
@@ -80,15 +63,7 @@ class ServiceProvider extends BaseServiceProvider
             }
         );
 
-        $this->app->bind(
-            ApiDocumentClientInterface::class,
-            function (Application $app) {
-                return new ApiDocumentClient(
-                    $app->make(ApiClientInterface::class),
-                    $app->make(ParserInterface::class)
-                );
-            }
-        );
+        $this->app->bind(DocumentClientInterface::class, DocumentClient::class);
     }
 
     protected function getHttpClient(): HttpClient

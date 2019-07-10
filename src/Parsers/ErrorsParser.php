@@ -1,6 +1,6 @@
 <?php
 
-namespace Swis\JsonApi\Client\JsonApi;
+namespace Swis\JsonApi\Client\Parsers;
 
 use Art4\JsonApiClient\Error as JsonApiError;
 use Art4\JsonApiClient\ErrorCollection as JsonApiErrorCollection;
@@ -13,19 +13,29 @@ use Swis\JsonApi\Client\ErrorSource;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
+/**
+ * @internal
+ */
 class ErrorsParser
 {
     /**
-     * @var \Swis\JsonApi\Client\JsonApi\LinksParser
+     * @var \Swis\JsonApi\Client\Parsers\LinksParser
      */
     private $linksParser;
 
     /**
-     * @param \Swis\JsonApi\Client\JsonApi\LinksParser $linksParser
+     * @var \Swis\JsonApi\Client\Parsers\MetaParser
      */
-    public function __construct(LinksParser $linksParser)
+    private $metaParser;
+
+    /**
+     * @param \Swis\JsonApi\Client\Parsers\LinksParser $linksParser
+     * @param \Swis\JsonApi\Client\Parsers\MetaParser  $metaParser
+     */
+    public function __construct(LinksParser $linksParser, MetaParser $metaParser)
     {
         $this->linksParser = $linksParser;
+        $this->metaParser = $metaParser;
     }
 
     /**
@@ -33,11 +43,11 @@ class ErrorsParser
      *
      * @return \Swis\JsonApi\Client\ErrorCollection
      */
-    public function parse(JsonApiErrorCollection $errorCollection)
+    public function parse(JsonApiErrorCollection $errorCollection): ErrorCollection
     {
         $errors = new ErrorCollection();
 
-        foreach ($errorCollection->asArray(false) as $error) {
+        foreach ($errorCollection->asArray() as $error) {
             $errors->push($this->buildError($error));
         }
 
@@ -70,7 +80,7 @@ class ErrorsParser
      */
     private function buildLinks(JsonApiErrorLink $errorLink): Links
     {
-        return $this->linksParser->parse($errorLink->asArray(false));
+        return $this->linksParser->parse($errorLink->asArray());
     }
 
     /**
@@ -93,6 +103,6 @@ class ErrorsParser
      */
     private function buildMeta(JsonApiMeta $meta): Meta
     {
-        return new Meta($meta->asArray(true));
+        return $this->metaParser->parse($meta);
     }
 }

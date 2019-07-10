@@ -427,6 +427,11 @@ If you register your own service provider and use package auto discover, don't f
 ```
 
 
+## Advanced usage
+
+If you don't like to use the supplied repository or clients, you can also parse a 'raw' `\Psr\Http\Message\ResponseInterface` or a simple json string using the `Parsers\ResponseParser` or `Parser\DocumentParser` respectively.
+
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

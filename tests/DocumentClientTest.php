@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\DocumentClient;
 use Swis\JsonApi\Client\Interfaces\ClientInterface;
-use Swis\JsonApi\Client\Interfaces\ParserInterface;
+use Swis\JsonApi\Client\Interfaces\ResponseParserInterface;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\ItemDocument;
 
@@ -28,8 +28,8 @@ class DocumentClientTest extends AbstractTest
             ->method('setBaseUri')
             ->with('http://www.test-changed.com');
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ParserInterface $parser */
-        $parser = $this->getMockBuilder(ParserInterface::class)->getMock();
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
+        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
 
         $documentClient = new DocumentClient($client, $parser);
 
@@ -53,11 +53,11 @@ class DocumentClientTest extends AbstractTest
             ->with('/test/1', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ParserInterface $parser */
-        $parser = $this->getMockBuilder(ParserInterface::class)->getMock();
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
+        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
 
         $parser->expects($this->once())
-            ->method('deserializeResponse')
+            ->method('parse')
             ->with($response)
             ->willReturn($document);
 
@@ -84,11 +84,11 @@ class DocumentClientTest extends AbstractTest
             ->with('/test/1', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ParserInterface $parser */
-        $parser = $this->getMockBuilder(ParserInterface::class)->getMock();
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
+        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
 
         $parser->expects($this->once())
-            ->method('deserializeResponse')
+            ->method('parse')
             ->with($response)
             ->willReturn($document);
 
@@ -117,11 +117,11 @@ class DocumentClientTest extends AbstractTest
             ->with('/test/1', '{"data":{"type":"test","id":"1"}}', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ParserInterface $parser */
-        $parser = $this->getMockBuilder(ParserInterface::class)->getMock();
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
+        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
 
         $parser->expects($this->once())
-            ->method('deserializeResponse')
+            ->method('parse')
             ->with($response)
             ->willReturn($document);
 
@@ -150,11 +150,11 @@ class DocumentClientTest extends AbstractTest
             ->with('/test/1', '{"data":{"type":"test"}}', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ParserInterface $parser */
-        $parser = $this->getMockBuilder(ParserInterface::class)->getMock();
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
+        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
 
         $parser->expects($this->once())
-            ->method('deserializeResponse')
+            ->method('parse')
             ->with($response)
             ->willReturn($document);
 
