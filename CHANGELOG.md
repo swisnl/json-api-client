@@ -8,32 +8,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-* Added `DocumentFactory`.
+* Added `DocumentFactory` [#52](https://github.com/swisnl/json-api-client/pull/52).
 * Added facades for `DocumentFactory`, `DocumentParser`, `ItemHydrator`, `ResponseParser` and `TypeMapper`.
-* Added `DocumentParserInterface` and `ResponseParserInterface` interfaces and implementations.
+* Added `DocumentParserInterface` and `ResponseParserInterface` interfaces and implementations [#54](https://github.com/swisnl/json-api-client/pull/54).
 
 ### Changed
 
 * The `TypeMapper` now checks if the class exists in the setter instead of the getter.
-* The `ItemHydrator` now also hydrates the id if provided.
-* Added `hasType`, `hasAttributes`, `hasRelationships` and `getRelations` to `ItemInterface`.
-* Removed `canBeIncluded` and `getIncluded` from `ItemInterface` as the `DocumentFactory` is now responsible for gathering the included items.
-* Renamed `getRelationship` to `getRelation`, `hasRelationship` to `hasRelation` and `removeRelationship` to `unsetRelation` in `Item`.
-* Renamed/aligned some parameters in several relation methods in `Item`.
-* Renamed namespace `Swis\JsonApi\Client\Traits` to `Swis\JsonApi\Client\Concerns`.
-* Renamed namespace `Swis\JsonApi\Client\JsonApi` to `Swis\JsonApi\Client\Parsers`.
-* Renamed `ServiceProvider::registerParser` (singular) to `ServiceProvider::registerParsers` (plural).
+* The `ItemHydrator` now also hydrates the id if provided [#53](https://github.com/swisnl/json-api-client/pull/53).
+* Added `hasType`, `hasAttributes`, `hasRelationships` and `getRelations` to `ItemInterface` [#53](https://github.com/swisnl/json-api-client/pull/53).
+* Removed `canBeIncluded` and `getIncluded` from `ItemInterface` as the `DocumentFactory` is now responsible for gathering the included items [#53](https://github.com/swisnl/json-api-client/pull/53).
+* Renamed `getRelationship` to `getRelation`, `hasRelationship` to `hasRelation` and `removeRelationship` to `unsetRelation` in `Item` [#53](https://github.com/swisnl/json-api-client/pull/53).
+* Renamed/aligned some parameters in several relation methods in `Item` [#53](https://github.com/swisnl/json-api-client/pull/53).
+* Renamed namespace `Swis\JsonApi\Client\Traits` to `Swis\JsonApi\Client\Concerns` [#53](https://github.com/swisnl/json-api-client/pull/53).
+* Renamed namespace `Swis\JsonApi\Client\JsonApi` to `Swis\JsonApi\Client\Parsers` [#54](https://github.com/swisnl/json-api-client/pull/54).
+* Renamed `ServiceProvider::registerParser` (singular) to `ServiceProvider::registerParsers` (plural) [#54](https://github.com/swisnl/json-api-client/pull/54).
 
 ### Removed
 
-* Removed `CollectionDocumentBuilder` and `ItemDocumentBuilder` in favor of `DocumentFactory`.
-* Removed `JsonApi\Parser` in favor of `JsonApi\DocumentParser` and `JsonApi\ResponseParser`.
+* Removed `CollectionDocumentBuilder` and `ItemDocumentBuilder` in favor of `DocumentFactory` [#52](https://github.com/swisnl/json-api-client/pull/52).
+* Removed `ParserInterface` in favor of `DocumentParserInterface` and `ResponseParserInterface` [#54](https://github.com/swisnl/json-api-client/pull/54).
 
 ## [0.18.0] - 2019-07-01
 
 ### Added
 
-* The id of an item can be set/get using magic accessors just like the attributes.
+* The id of an item can be set/get using magic accessors just like the attributes [#51](https://github.com/swisnl/json-api-client/pull/51).
 
 ### Changed
 
@@ -46,23 +46,23 @@ N.B. This is a breaking change and all calls to `deleteById` should simply be ch
 
 ### Added
 
-* Added support for Laravel 5.8.
+* Added support for Laravel 5.8 [#50](https://github.com/swisnl/json-api-client/pull/50).
 
 ### Changed
 
-* Dropped Laravel <5.5 support.
-* Dropped PHP <7.1 support.
+* Dropped Laravel <5.5 support [#50](https://github.com/swisnl/json-api-client/pull/50).
+* Dropped PHP <7.1 support [#50](https://github.com/swisnl/json-api-client/pull/50).
 
 ## [0.16.0] - 2019-03-14
 
 ### Added
 
-* Added `DocumentInterface::getResponse()` so every document instance can have its corresponding response. This allows access to the underlying response to check headers or status codes etc.
+* Added `DocumentInterface::getResponse()` so every document instance can have its corresponding response. This allows access to the underlying response to check headers or status codes etc [#48](https://github.com/swisnl/json-api-client/pull/48).
 * Added `ParserInterface::deserializeResponse($reponse)` to deserialize a `\Psr\Http\Message\ResponseInterface`.
 
 ### Changed
 
-* `ClientInterface` must now return a `\Psr\Http\Message\ResponseInterface` for requests instead of our own (removed) `ResponseInterface`.
+* `ClientInterface` must now return a `\Psr\Http\Message\ResponseInterface` for requests instead of our own (removed) `ResponseInterface` [#48](https://github.com/swisnl/json-api-client/pull/48).
 N.B. This is a breaking change if you use the `Client` directly, the `DocumentClient` isn't affected.
 * Changed namespace of error classes:
 ```
@@ -73,7 +73,7 @@ N.B. This is a breaking change if you use the `Client` directly, the `DocumentCl
 
 ### Removed
 
-* Removed `ResponseInterface` and `Response` classes.
+* Removed `ResponseInterface` and `Response` classes [#48](https://github.com/swisnl/json-api-client/pull/48).
 
 ## [0.15.0] - 2019-02-21
 
