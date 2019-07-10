@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [0.19.0] - 2019-07-10
+
 ### Added
 
 * Added `DocumentFactory` [#52](https://github.com/swisnl/json-api-client/pull/52).
