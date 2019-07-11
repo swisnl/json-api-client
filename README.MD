@@ -253,13 +253,6 @@ $repository->all(['include' => 'author', 'page' => ['limit' => 15, 'offset' => 0
 ```
 
 
-## DocumentFactory
-
-The `Repository` and `DocumentClient` both require `ItemDocumentInterface` instances when creating or updating resources.
-Such documents can easily be created using the `DocumentFactory` by giving it a `DataInterface` instance.
-This can be an `ItemInterface`, usually created by the [ItemHydrator](#itemhydrator), or a `Collection`.
-
-
 ## ItemHydrator
 
 The `ItemHydrator` can be used to fill/hydrate an item and its relations using an associative array with attributes.
@@ -267,15 +260,15 @@ This is useful if you would like to hydrate an item with POST data from your req
 
 ``` php
 $typeMapper = app(Swis\JsonApi\Client\TypeMapper::class);
-$itemDocumentBuilder = app(Swis\JsonApi\Client\ItemDocumentBuilder::class);
+$itemHydrator = app(Swis\JsonApi\Client\ItemHydrator::class);
 $blogRepository = app(App\Repositiories\BlogRepository::class);
 
-$itemDocument = $itemDocumentBuilder->build(
+$item = $itemHydrator->hydrate(
     $typeMapper->getMapping('blog'),
     request()->all(['title', 'author', 'date', 'content', 'tags']),
     request()->id
 );
-$blogRepository->save($itemDocument);
+$blogRepository->save($item);
 ```
 
 ### Relations
@@ -300,7 +293,7 @@ $attributes = [
         56,
     ],
 ];
-$itemDocument = $itemDocumentBuilder->build($typeMapper->getMapping('blog'), $attributes);
+$itemDocument = $itemHydrator->hydrate($typeMapper->getMapping('blog'), $attributes);
 
 echo json_encode($itemDocument, JSON_PRETTY_PRINT);
 
@@ -374,6 +367,13 @@ The `DocumentClient` follows the following steps internally:
 This client is a more low level client and can be used, for example, for posting binary data such as images.
 It can take everything your request factory takes as input data and returns the 'raw' `\Psr\Http\Message\ResponseInterface`.
 It does not parse or validate the response or hydrate items!
+
+
+## DocumentFactory
+
+The `DocumentClient` requires `ItemDocumentInterface` instances when creating or updating resources.
+Such documents can easily be created using the `DocumentFactory` by giving it a `DataInterface` instance.
+This can be an `ItemInterface`, usually created by the [ItemHydrator](#itemhydrator), or a `Collection`.
 
 
 ## Service Provider

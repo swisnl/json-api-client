@@ -4,6 +4,7 @@ namespace Swis\JsonApi\Client\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Document;
+use Swis\JsonApi\Client\DocumentFactory;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\ItemDocument;
@@ -18,7 +19,7 @@ class RepositoryTest extends TestCase
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->getMockBuilder(DocumentClientInterface::class)->getMock();
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
         $this->assertSame($client, $repository->getClient());
     }
@@ -30,7 +31,7 @@ class RepositoryTest extends TestCase
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->getMockBuilder(DocumentClientInterface::class)->getMock();
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
         $this->assertSame('mocks', $repository->getEndpoint());
     }
@@ -50,7 +51,7 @@ class RepositoryTest extends TestCase
             ->with('mocks?foo=bar')
             ->willReturn($document);
 
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
         $this->assertSame($document, $repository->all(['foo' => 'bar']));
     }
@@ -70,7 +71,7 @@ class RepositoryTest extends TestCase
             ->with('mocks?foo=bar')
             ->willReturn($document);
 
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
         $this->assertSame($document, $repository->take(['foo' => 'bar']));
     }
@@ -90,7 +91,7 @@ class RepositoryTest extends TestCase
             ->with('mocks/1?foo=bar')
             ->willReturn($document);
 
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
         $this->assertSame($document, $repository->find(1, ['foo' => 'bar']));
     }
@@ -111,9 +112,9 @@ class RepositoryTest extends TestCase
             ->with('mocks?foo=bar')
             ->willReturn($document);
 
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->save($document, ['foo' => 'bar']));
+        $this->assertSame($document, $repository->save(new Item(), ['foo' => 'bar']));
     }
 
     /**
@@ -132,9 +133,9 @@ class RepositoryTest extends TestCase
             ->with('mocks/1?foo=bar')
             ->willReturn($document);
 
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->save($document, ['foo' => 'bar']));
+        $this->assertSame($document, $repository->save((new Item())->setId(1), ['foo' => 'bar']));
     }
 
     /**
@@ -152,7 +153,7 @@ class RepositoryTest extends TestCase
             ->with('mocks/1?foo=bar')
             ->willReturn($document);
 
-        $repository = new MockRepository($client);
+        $repository = new MockRepository($client, new DocumentFactory());
 
         $this->assertSame($document, $repository->delete(1, ['foo' => 'bar']));
     }
