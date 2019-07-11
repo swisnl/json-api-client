@@ -17,11 +17,11 @@ interface RepositoryInterface
     public function find(string $id);
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface
      */
-    public function save(ItemDocumentInterface $document);
+    public function save(ItemInterface $item);
 
     /**
      * @param string $id

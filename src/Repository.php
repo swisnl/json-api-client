@@ -3,7 +3,7 @@
 namespace Swis\JsonApi\Client;
 
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
-use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\RepositoryInterface;
 
 class Repository implements RepositoryInterface
@@ -14,16 +14,23 @@ class Repository implements RepositoryInterface
     protected $client;
 
     /**
+     * @var \Swis\JsonApi\Client\DocumentFactory
+     */
+    protected $documentFactory;
+
+    /**
      * @var string
      */
     protected $endpoint = '';
 
     /**
      * @param \Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client
+     * @param \Swis\JsonApi\Client\DocumentFactory                    $documentFactory
      */
-    public function __construct(DocumentClientInterface $client)
+    public function __construct(DocumentClientInterface $client, DocumentFactory $documentFactory)
     {
         $this->client = $client;
+        $this->documentFactory = $documentFactory;
     }
 
     /**
@@ -74,42 +81,45 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
-     * @param array                                                 $parameters
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array                                         $parameters
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function save(ItemDocumentInterface $document, array $parameters = [])
+    public function save(ItemInterface $item, array $parameters = [])
     {
-        if ($document->getData()->isNew()) {
-            return $this->saveNew($document, $parameters);
+        if ($item->isNew()) {
+            return $this->saveNew($item, $parameters);
         }
 
-        return $this->saveExisting($document, $parameters);
+        return $this->saveExisting($item, $parameters);
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
-     * @param array                                                 $parameters
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array                                         $parameters
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    protected function saveNew(ItemDocumentInterface $document, array $parameters = [])
+    protected function saveNew(ItemInterface $item, array $parameters = [])
     {
-        return $this->getClient()->post($this->getEndpoint().'?'.http_build_query($parameters), $document);
+        return $this->getClient()->post(
+            $this->getEndpoint().'?'.http_build_query($parameters),
+            $this->documentFactory->make($item)
+        );
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface $document
-     * @param array                                                 $parameters
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param array                                         $parameters
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    protected function saveExisting(ItemDocumentInterface $document, array $parameters = [])
+    protected function saveExisting(ItemInterface $item, array $parameters = [])
     {
         return $this->getClient()->patch(
-            $this->getEndpoint().'/'.urlencode($document->getData()->getId()).'?'.http_build_query($parameters),
-            $document
+            $this->getEndpoint().'/'.urlencode($item->getId()).'?'.http_build_query($parameters),
+            $this->documentFactory->make($item)
         );
     }
 
