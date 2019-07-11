@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [0.20.0] - 2019-07-11
+
 ### Changed
 
 * Change signature of `RepositoryInterface::save()`. It should now receive an `ItemInterface` instead of a `ItemDocumentInterface`.
