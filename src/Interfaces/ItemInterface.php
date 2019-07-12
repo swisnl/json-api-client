@@ -130,7 +130,7 @@ interface ItemInterface extends DataInterface
     public function setRelation(string $relation, DataInterface $value, Links $links = null, Meta $meta = null);
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
      */
     public function getRelations(): array;
 }

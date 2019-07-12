@@ -96,7 +96,7 @@ trait HasRelations
     }
 
     /**
-     * @return array
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
      */
     public function getRelations(): array
     {
