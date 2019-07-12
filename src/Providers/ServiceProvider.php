@@ -53,7 +53,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerClients()
     {
         $this->app->bind(
-            ClientInterface::class,
+            Client::class,
             function () {
                 return new Client(
                     $this->getHttpClient(),
@@ -63,6 +63,7 @@ class ServiceProvider extends BaseServiceProvider
             }
         );
 
+        $this->app->bind(ClientInterface::class, Client::class);
         $this->app->bind(DocumentClientInterface::class, DocumentClient::class);
     }
 
