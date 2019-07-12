@@ -202,7 +202,7 @@ echo $meta->foo; // bar
 ## TypeMapper
 
 All custom models must be registered with the `TypeMapper`.
-This `TypeMapper` maps, as the name suggests, JSON API types to custom [item models](#item-models).
+This `TypeMapper` maps, as the name suggests, JSON:API types to custom [item models](#item-models).
 
 ### Mapping types
 
@@ -279,14 +279,14 @@ If we take the above example, we can use the following attributes array to hydra
 
 ``` php
 $attributes = [
-    'title'   => 'Introduction to the JSON API',
+    'title'   => 'Introduction to JSON:API',
     'author'  => [
         'id'       => 'f1a775ef-9407-40ba-93ff-7bd737888dc6',
         'name'     => 'Björn Brala',
         'homepage' => 'https://github.com/bbrala',
     ],
     'date'    => '2018-12-02 15:26:32',
-    'content' => 'JSON API was originally drafted in May 2013 by Yehuda Katz...',
+    'content' => 'JSON:API was originally drafted in May 2013 by Yehuda Katz...',
     'tags'    => [
         1,
         15,
@@ -301,9 +301,9 @@ echo json_encode($itemDocument, JSON_PRETTY_PRINT);
     "data": {
         "type": "blog",
         "attributes": {
-            "title": "Introduction to the JSON API",
+            "title": "Introduction to JSON:API",
             "date": "2018-12-02 15:26:32",
-            "content": "JSON API was originally drafted in May 2013 by Yehuda Katz..."
+            "content": "JSON:API was originally drafted in May 2013 by Yehuda Katz..."
         },
         "relationships": {
             "author": {
@@ -343,6 +343,39 @@ If the item is hydrated using an associative array, it will be included in the r
 N.B. Morph relations require a 'type' attribute to be present in the data in order to know which type of item should be created.
 
 
+## Handling errors
+
+A request can fail due to several reasons and how this is handled depends on what happened.
+If the `DocumentClient` encounters an error there are basically three options.
+
+#### Non 2xx request without body
+
+If a response does not have a successful status code (2xx) and does not have a body, the `DocumentClient` (and therefore also the `Repository`)  will return an instance of `InvalidResponseDocument`.
+
+#### Non 2xx request with invalid JSON:API body
+
+If a response does not have a successful status code (2xx) and does have a body, it is parsed as if it's a JSON:API document.
+If the response can not be parsed as such document, a `\Art4\JsonApiClient\Exception\ValidationException` will be thrown.
+
+#### Non 2xx request with valid JSON:API body
+
+If a response does not have a successful status code (2xx) and does have a body, it is parsed as if it's a JSON:API document.
+In this case the `DocumentClient` (and therefore also the `Repository`)  will return an instance of `Document`.
+This document contains the errors from the response, assuming the server responded with errors.
+
+### Checking for errors
+
+Based on the above rules you can check for errors like this:
+
+``` php
+$document = $repository->all();
+
+if ($document instanceof InvalidResponseDocument || $document->hasErrors()) {
+    // do something with errors
+}
+```
+
+
 ## Clients
 
 This package offers two clients; `DocumentClient` and `Client`.
@@ -350,7 +383,7 @@ This package offers two clients; `DocumentClient` and `Client`.
 ### DocumentClient
 
 This is the client that you would generally use e.g. the repository uses this client internally.
-Per the [JSON API spec](http://jsonapi.org/format/#document-structure), all requests and responses are documents.
+Per the [JSON:API spec](http://jsonapi.org/format/#document-structure), all requests and responses are documents.
 Therefore, this client always expects a `\Swis\JsonApi\Client\Interfaces\DocumentInterface` as input when posting data and always returns this same interface.
 This can be a plain `Document` when there is no data, an `ItemDocument` for an item, a `CollectionDocument` for a collection or an `InvalidResponseDocument` when the server responds with a non 2xx response.
 
