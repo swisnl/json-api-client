@@ -8,9 +8,9 @@
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/swisnl/json-api-client.svg)](https://scrutinizer-ci.com/g/swisnl/json-api-client/?branch=master)
 [![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%23D9021B.svg)](https://www.swis.nl)
 
-A PHP package for mapping remote [{json:api}](http://jsonapi.org/) resources to Eloquent like models and collections.
+A PHP package for mapping remote [JSON:API](http://jsonapi.org/) resources to Eloquent like models and collections.
 
-:bulb: Before we start, please note that this library can only be used for [{json:api}](http://jsonapi.org/) resources and requires some basic knowledge of the specification. If you are not familiar with {json:api}, please read [the excellent blog](https://laravel-news.com/json-api-introduction) by [Björn Brala](https://github.com/bbrala) for a quick introduction.
+:bulb: Before we start, please note that this library can only be used for [JSON:API](http://jsonapi.org/) resources and requires some basic knowledge of the specification. If you are not familiar with {json:api}, please read [the excellent blog](https://laravel-news.com/json-api-introduction) by [Björn Brala](https://github.com/bbrala) for a quick introduction.
 
 
 ## Installation
