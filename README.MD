@@ -143,6 +143,11 @@ class BlogItem extends Item
 }
 ```
 
+#### Naming support
+
+Relations should be defined using camelCase methods.
+Related items can then be accessed via magic attributes in camelCase or snake_case or by using the explicit name you used when defining the relation.
+
 
 ## Collections
 
