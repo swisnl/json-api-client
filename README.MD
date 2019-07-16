@@ -156,32 +156,62 @@ This package uses [Laravel Collections](https://laravel.com/docs/collections) as
 
 ## Links
 
-All objects that can have links use an instance of `Links` to store their links.
-These are in turn an instance of `Link`.
+All objects that can have links (i.e. document, error, item and relationship) use `Concerns/HasLinks` and thus have a `getLinks` method that returns an instance of `Links`.
+This is a simple array-like object with key-value pairs which are in turn an instance of `Link`.
 
 ### Example
 
 Given the following JSON:
 ``` json
 {
-    "data": [],
-    "links": {
-        "self": "http://example.com/test"
-    }
+	"links": {
+		"self": "http://example.com/articles"
+	},
+	"data": [{
+		"type": "articles",
+		"id": "1",
+		"attributes": {
+			"title": "JSON:API paints my bikeshed!"
+		},
+		"relationships": {
+			"author": {
+				"data": {
+					"type": "people",
+					"id": "9"
+				},
+				"links": {
+					"self": "http://example.com/articles/1/author"
+				}
+			}
+		},
+		"links": {
+			"self": "http://example.com/articles/1"
+		}
+	}]
 }
 ```
 
 You can get the links this way:
 ``` php
 /** @var $document \Swis\JsonApi\Client\Document */
+
+// Document links
 $links = $document->getLinks();
-echo $links->self->getHref(); // http://example.com/test
+echo $links->self->getHref(); // http://example.com/articles
+
+// Item links
+$links = $document->getData()->getLinks();
+echo $links->self->getHref(); // http://example.com/articles/1
+
+// Relationship links
+$links = $document->getData()->author()->getLinks();
+echo $links->self->getHref(); // http://example.com/articles/1/author
 ```
 
 
 ## Meta
 
-All objects that can have meta information use an instance of `Meta` to store their metadata.
+All objects that can have meta information (i.e. document, error, item, jsonapi, link and relationship) use `Concerns/HasMeta` and thus have a `getMeta` method that returns an instance of `Meta`.
 This is a simple array-like object with key-value pairs.
 
 ### Example
@@ -189,18 +219,60 @@ This is a simple array-like object with key-value pairs.
 Given the following JSON:
 ``` json
 {
-    "data": [],
-    "meta": {
-        "foo": "bar"
-    }
+	"links": {
+		"self": {
+			"href": "http://example.com/articles/1",
+			"meta": {
+				"foo": "bar"
+			}
+		}
+	},
+	"data": {
+		"type": "articles",
+		"id": "1",
+		"attributes": {
+			"title": "JSON:API paints my bikeshed!"
+		},
+		"relationships": {
+			"author": {
+				"data": {
+					"type": "people",
+					"id": "9"
+				},
+				"meta": {
+					"written_at": "2019-07-16T13:47:26"
+				}
+			}
+		},
+		"meta": {
+			"copyright": "Copyright 2015 Example Corp."
+		}
+	},
+	"meta": {
+		"request_id": "a77ab2b4-7132-4782-8b5e-d94ebaff6e13"
+	}
 }
 ```
 
 You can get the meta this way:
 ``` php
 /** @var $document \Swis\JsonApi\Client\Document */
+
+// Document meta
 $meta = $document->getMeta();
+echo $meta->request_id; // a77ab2b4-7132-4782-8b5e-d94ebaff6e13
+
+// Link meta
+$meta = $document->getLinks()->self->getMeta();
 echo $meta->foo; // bar
+
+// Item meta
+$meta = $document->getData()->getMeta();
+echo $meta->copyright; // Copyright 2015 Example Corp.
+
+// Relationship meta
+$meta = $document->getData()->author()->getMeta();
+echo $meta->written_at; // 2019-07-16T13:47:26
 ```
 
 
