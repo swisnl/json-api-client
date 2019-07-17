@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Changed
+
+* Drop art4/json-api-client dependency and validate the JSON ourselves.
 
 ## [0.20.0] - 2019-07-11
 

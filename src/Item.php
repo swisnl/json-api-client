@@ -97,7 +97,7 @@ class Item extends Model implements ItemInterface
     }
 
     /**
-     * @param string $key
+     * @param $key
      *
      * @return bool
      */

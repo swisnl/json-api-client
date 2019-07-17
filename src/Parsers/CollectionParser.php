@@ -2,9 +2,8 @@
 
 namespace Swis\JsonApi\Client\Parsers;
 
-use Art4\JsonApiClient\ResourceCollectionInterface;
-use Art4\JsonApiClient\ResourceItemInterface;
 use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 
 /**
  * @internal
@@ -25,15 +24,19 @@ class CollectionParser
     }
 
     /**
-     * @param \Art4\JsonApiClient\ResourceCollectionInterface $jsonApiCollection
+     * @param mixed $data
      *
      * @return \Swis\JsonApi\Client\Collection
      */
-    public function parse(ResourceCollectionInterface $jsonApiCollection): Collection
+    public function parse($data): Collection
     {
-        return Collection::make($jsonApiCollection->asArray())
+        if (!is_array($data)) {
+            throw new ValidationException(sprintf('ResourceCollection has to be an array, "%s" given.', gettype($data)));
+        }
+
+        return Collection::make($data)
             ->map(
-                function (ResourceItemInterface $item) {
+                function ($item) {
                     return $this->itemParser->parse($item);
                 }
             );

@@ -2,10 +2,9 @@
 
 namespace Swis\JsonApi\Client\Parsers;
 
-use Art4\JsonApiClient\Meta as JsonApiMeta;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
-use Swis\JsonApi\Client\Meta;
 
 /**
  * @internal
@@ -26,43 +25,44 @@ class LinksParser
     }
 
     /**
-     * @param array $links
+     * @param mixed $data
      *
      * @return \Swis\JsonApi\Client\Links
      */
-    public function parse(array $links): Links
+    public function parse($data): Links
     {
         return new Links(
             array_map(
                 function ($link) {
                     return $this->buildLink($link);
                 },
-                $links
+                (array)$data
             )
         );
     }
 
     /**
-     * @param \Art4\JsonApiClient\DocumentLink|\Art4\JsonApiClient\ErrorLink|\Art4\JsonApiClient\Link|\Art4\JsonApiClient\RelationshipLink|\Art4\JsonApiClient\ResourceItemLink|string $link
+     * @param mixed $data
      *
      * @return \Swis\JsonApi\Client\Link
      */
-    private function buildLink($link): Link
+    private function buildLink($data): ? Link
     {
-        if (is_string($link)) {
-            return new Link($link);
+        if ($data === null) {
+            return null;
         }
 
-        return new Link($link->get('href'), $link->has('meta') ? $this->buildMeta($link->get('meta')) : null);
-    }
+        if (is_string($data)) {
+            return new Link($data);
+        }
 
-    /**
-     * @param \Art4\JsonApiClient\Meta $meta
-     *
-     * @return \Swis\JsonApi\Client\Meta
-     */
-    private function buildMeta(JsonApiMeta $meta): Meta
-    {
-        return $this->metaParser->parse($meta);
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('Link has to be an object, string or null, "%s" given.', gettype($data)));
+        }
+        if (!property_exists($data, 'href')) {
+            throw new ValidationException('Link must have a "href" attribute.');
+        }
+
+        return new Link($data->href, property_exists($data, 'meta') ? $this->metaParser->parse($data->meta) : null);
     }
 }

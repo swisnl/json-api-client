@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
-use Art4\JsonApiClient\Utils\Manager;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Jsonapi;
 use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Parsers\JsonapiParser;
@@ -14,10 +14,10 @@ class JsonapiParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_art4jsonapi_to_jsonapi()
+    public function it_converts_data_to_jsonapi()
     {
         $parser = new JsonapiParser(new MetaParser());
-        $jsonapi = $parser->parse($this->getArt4Jsonapi());
+        $jsonapi = $parser->parse($this->getJsonapi());
 
         $this->assertInstanceOf(Jsonapi::class, $jsonapi);
         $this->assertEquals('1.0', $jsonapi->getVersion());
@@ -27,23 +27,71 @@ class JsonapiParserTest extends AbstractTest
     }
 
     /**
-     * @return \Art4\JsonApiClient\Jsonapi
+     * @test
+     * @dataProvider provideInvalidData
+     *
+     * @param mixed $invalidData
      */
-    protected function getArt4Jsonapi()
+    public function it_throws_when_data_is_not_an_object($invalidData)
     {
-        $jsonapi = [
-            'jsonapi' => [
-                'version' => '1.0',
-                'meta'    => [
-                    'copyright' => 'Copyright 2015 Example Corp.',
-                ],
+        $parser = new JsonapiParser($this->createMock(MetaParser::class));
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidData);
+    }
+
+    public function provideInvalidData(): array
+    {
+        return [
+            [1],
+            [1.5],
+            [false],
+            [null],
+            ['foo'],
+            [[]],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidVersionJsonapi
+     *
+     * @param mixed $invalidJsonapi
+     */
+    public function it_throws_when_version_is_not_a_string($invalidJsonapi)
+    {
+        $parser = new JsonapiParser($this->createMock(MetaParser::class));
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidJsonapi);
+    }
+
+    public function provideInvalidVersionJsonapi(): array
+    {
+        return [
+            [json_decode('{"version": 1}', false)],
+            [json_decode('{"version": 1.5}', false)],
+            [json_decode('{"version": false}', false)],
+            [json_decode('{"version": null}', false)],
+            [json_decode('{"version": []}', false)],
+            [json_decode('{"version": {}}', false)],
+        ];
+    }
+
+    /**
+     * @return \stdClass
+     */
+    protected function getJsonapi()
+    {
+        $data = [
+            'version' => '1.0',
+            'meta'    => [
+                'copyright' => 'Copyright 2015 Example Corp.',
             ],
-            'data'    => [],
         ];
 
-        $manager = new Manager();
-        $jsonApiItem = $manager->parse(json_encode($jsonapi));
-
-        return $jsonApiItem->get('jsonapi');
+        return json_decode(json_encode($data), false);
     }
 }
