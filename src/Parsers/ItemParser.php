@@ -135,7 +135,7 @@ class ItemParser
                 throw new ValidationException('Relationship object MUST contain at least one of the following properties: `links`, `data`, `meta`.');
             }
 
-            $value = new Collection();
+            $value = null;
             if (property_exists($relationship, 'data') && $relationship->data !== null) {
                 $value = $this->parseRelationshipData($relationship->data);
             }

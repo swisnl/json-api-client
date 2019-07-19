@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-* Links can be `null`.
+* Empty (`null`) links are correctly parsed.
+* Empty (`null`) singular relationships are correctly parsed.
 
 ## [0.20.0] - 2019-07-11
 

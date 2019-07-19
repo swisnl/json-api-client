@@ -466,6 +466,24 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
+    public function it_parses_an_empty_has_one_relationship()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('child', ChildItem::class);
+        $typeMapper->setMapping('master', MasterItem::class);
+        $parser = $this->getItemParser($typeMapper);
+
+        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+
+        static::assertInstanceOf(HasOneRelation::class, $item->getRelation('empty'));
+        static::assertNull($item->getRelation('empty')->getLinks());
+        static::assertNull($item->getRelation('empty')->getMeta());
+        static::assertNull($item->getRelation('empty')->getIncluded());
+    }
+
+    /**
+     * @test
+     */
     public function it_parses_a_has_many_relationship()
     {
         $typeMapper = new TypeMapper();
@@ -711,6 +729,9 @@ class ItemParserTest extends AbstractTest
                     'meta'  => [
                         'foo' => 'bar',
                     ],
+                ],
+                'empty'     => [
+                    'data' => null,
                 ],
             ],
             'links'         => [

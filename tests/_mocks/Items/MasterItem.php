@@ -63,4 +63,9 @@ class MasterItem extends Item
     {
         return $this->morphToMany();
     }
+
+    public function empty()
+    {
+        return $this->hasOne(ChildItem::class);
+    }
 }
