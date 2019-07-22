@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-* Drop art4/json-api-client dependency and validate the JSON ourselves.
-* `\Swis\JsonApi\Client\Exceptions\ValidationException` is thrown instead of `\Art4\JsonApiClient\Exception\ValidationException`.
+* Drop art4/json-api-client dependency and validate the JSON ourselves [#58](https://github.com/swisnl/json-api-client/pull/58).
+* `\Swis\JsonApi\Client\Exceptions\ValidationException` is thrown instead of `\Art4\JsonApiClient\Exception\ValidationException` [#58](https://github.com/swisnl/json-api-client/pull/58).
 * Added `hasAttribute` to `ItemInterface`.
 * All exceptions thrown by this package now implement `\Swis\JsonApi\Client\Exceptions\Exception`.
 
