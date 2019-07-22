@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [1.0.0-beta] - 2019-07-22
+
 ### Changed
 
 * Drop art4/json-api-client dependency and validate the JSON ourselves [#58](https://github.com/swisnl/json-api-client/pull/58).
