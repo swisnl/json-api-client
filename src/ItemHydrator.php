@@ -4,6 +4,7 @@ namespace Swis\JsonApi\Client;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Swis\JsonApi\Client\Exceptions\HydrationException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
@@ -30,6 +31,8 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $attributes
      * @param string|null                                   $id
+     *
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
@@ -60,7 +63,7 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $attributes
      *
-     * @throws \RuntimeException
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      */
     protected function fillRelations(ItemInterface $item, array $attributes): void
     {
@@ -90,7 +93,7 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param string                                        $availableRelation
      *
-     * @throws \RuntimeException
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      *
      * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface
      */
@@ -98,7 +101,7 @@ class ItemHydrator
     {
         $method = Str::camel($availableRelation);
         if (!method_exists($item, $method)) {
-            throw new \RuntimeException(sprintf('Method %s not found on %s', $method, get_class($item)));
+            throw new HydrationException(sprintf('Method %s not found on %s', $method, get_class($item)));
         }
 
         return $item->$method();
@@ -108,7 +111,7 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Relations\HasOneRelation $relation
      * @param array|string                                  $attributes
      *
-     * @throws \InvalidArgumentException
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      */
     protected function hydrateHasOneRelation(HasOneRelation $relation, $attributes): void
     {
@@ -125,7 +128,7 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Relations\HasManyRelation $relation
      * @param array                                          $attributes
      *
-     * @throws \InvalidArgumentException
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      */
     protected function hydrateHasManyRelation(HasManyRelation $relation, array $attributes): void
     {
@@ -144,12 +147,12 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Relations\MorphToRelation $relation
      * @param array                                          $attributes
      *
-     * @throws \InvalidArgumentException
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      */
     protected function hydrateMorphToRelation(MorphToRelation $relation, array $attributes): void
     {
         if (!array_key_exists('type', $attributes)) {
-            throw new \InvalidArgumentException('Always provide a "type" attribute in a morphTo relationship');
+            throw new HydrationException('Always provide a "type" attribute in a morphTo relationship');
         }
         $relationItem = $this->buildItem($attributes['type'], Arr::except($attributes, 'type'));
 
@@ -160,13 +163,13 @@ class ItemHydrator
      * @param \Swis\JsonApi\Client\Relations\MorphToManyRelation $relation
      * @param array                                              $attributes
      *
-     * @throws \InvalidArgumentException
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      */
     protected function hydrateMorphToManyRelation(MorphToManyRelation $relation, array $attributes): void
     {
         foreach ($attributes as $relationData) {
             if (!array_key_exists('type', $relationData)) {
-                throw new \InvalidArgumentException('Always provide a "type" attribute in a morphToMany relationship entry');
+                throw new HydrationException('Always provide a "type" attribute in a morphToMany relationship entry');
             }
             $relationItem = $this->buildItem($relationData['type'], Arr::except($relationData, 'type'));
 
@@ -178,8 +181,7 @@ class ItemHydrator
      * @param string $type
      * @param array  $attributes
      *
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */

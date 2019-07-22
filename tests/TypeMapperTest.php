@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
-use InvalidArgumentException;
+use Swis\JsonApi\Client\Exceptions\TypeMappingException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\TypeMapper;
@@ -17,8 +17,8 @@ class TypeMapperTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', Item::class);
 
-        static::assertTrue($typeMapper->hasMapping('item'));
-        static::assertInstanceOf(Item::class, $typeMapper->getMapping('item'));
+        $this->assertTrue($typeMapper->hasMapping('item'));
+        $this->assertInstanceOf(Item::class, $typeMapper->getMapping('item'));
     }
 
     /**
@@ -30,7 +30,7 @@ class TypeMapperTest extends AbstractTest
         $typeMapper->setMapping('item', Item::class);
         $typeMapper->removeMapping('item');
 
-        static::assertFalse($typeMapper->hasMapping('item'));
+        $this->assertFalse($typeMapper->hasMapping('item'));
     }
 
     /**
@@ -38,7 +38,7 @@ class TypeMapperTest extends AbstractTest
      */
     public function it_throws_an_invalidargumentexception_when_mapping_doesnt_exist()
     {
-        static::expectException(InvalidArgumentException::class);
+        $this->expectException(TypeMappingException::class);
 
         $typeMapper = new TypeMapper();
         $typeMapper->getMapping('item');
@@ -49,8 +49,8 @@ class TypeMapperTest extends AbstractTest
      */
     public function it_throws_an_invalidargumentexception_when_class_doesnt_exist()
     {
-        static::expectException(InvalidArgumentException::class);
-        static::expectExceptionMessage(sprintf('Class %s not found.', '\Non\Existing\Class'));
+        $this->expectException(TypeMappingException::class);
+        $this->expectExceptionMessage(sprintf('Class %s not found.', '\Non\Existing\Class'));
 
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', '\Non\Existing\Class');
@@ -61,8 +61,8 @@ class TypeMapperTest extends AbstractTest
      */
     public function it_throws_an_invalidargumentexception_when_class_doesnt_implement_iteminterface()
     {
-        static::expectException(InvalidArgumentException::class);
-        static::expectExceptionMessage(sprintf('Class %s must implement %s.', TypeMapper::class, ItemInterface::class));
+        $this->expectException(TypeMappingException::class);
+        $this->expectExceptionMessage(sprintf('Class %s must implement %s.', TypeMapper::class, ItemInterface::class));
 
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', TypeMapper::class);

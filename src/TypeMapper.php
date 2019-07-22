@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client;
 
+use Swis\JsonApi\Client\Exceptions\TypeMappingException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 
@@ -16,16 +17,16 @@ class TypeMapper implements TypeMapperInterface
      * @param string $type
      * @param string $class
      *
-     * @throws \InvalidArgumentException
+     * @throws \Swis\JsonApi\Client\Exceptions\TypeMappingException
      */
     public function setMapping(string $type, string $class): void
     {
         if (!class_exists($class)) {
-            throw new \InvalidArgumentException(sprintf('Class %s not found.', $class));
+            throw new TypeMappingException(sprintf('Class %s not found.', $class));
         }
 
         if (!is_subclass_of($class, ItemInterface::class)) {
-            throw new \InvalidArgumentException(sprintf('Class %s must implement %s.', $class, ItemInterface::class));
+            throw new TypeMappingException(sprintf('Class %s must implement %s.', $class, ItemInterface::class));
         }
 
         $this->typeMappings[$type] = $class;
@@ -52,14 +53,14 @@ class TypeMapper implements TypeMapperInterface
     /**
      * @param string $type
      *
-     * @throws \InvalidArgumentException
+     *@throws \Swis\JsonApi\Client\Exceptions\TypeMappingException
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
     public function getMapping(string $type): ItemInterface
     {
         if (!array_key_exists($type, $this->typeMappings)) {
-            throw new \InvalidArgumentException(sprintf('No mapping for type %s', $type));
+            throw new TypeMappingException(sprintf('No mapping for type %s', $type));
         }
 
         return new $this->typeMappings[$type]();

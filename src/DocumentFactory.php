@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client;
 
+use Swis\JsonApi\Client\Exceptions\UnsupportedDataException;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
@@ -20,7 +21,7 @@ class DocumentFactory
         } elseif ($data instanceof Collection) {
             $document = new CollectionDocument();
         } else {
-            throw new \InvalidArgumentException(sprintf('%s is not supported as input', get_class($data)));
+            throw new UnsupportedDataException(sprintf('%s is not supported as input', get_class($data)));
         }
 
         return $document->setData($data)->setIncluded($this->getIncluded($data));

@@ -2,8 +2,8 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
-use InvalidArgumentException;
 use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Exceptions\HydrationException;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\ItemHydrator;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
@@ -261,7 +261,7 @@ class ItemHydratorTest extends AbstractTest
 
         $item = new WithRelationshipItem();
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(HydrationException::class);
         $this->getItemHydrator()->hydrate($item, $data);
     }
 
@@ -396,7 +396,7 @@ class ItemHydratorTest extends AbstractTest
 
         $item = new WithRelationshipItem();
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(HydrationException::class);
         $this->getItemHydrator()->hydrate($item, $data);
     }
 
