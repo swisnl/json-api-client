@@ -2,21 +2,10 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
-use Faker\Factory;
 use Orchestra\Testbench\TestCase;
 
 abstract class AbstractTest extends TestCase
 {
-    /**
-     * @var \Faker\Generator
-     */
-    protected $faker;
-
-    protected function setUp(): void
-    {
-        $this->faker = Factory::create();
-    }
-
     /**
      * Define environment setup.
      *
