@@ -426,25 +426,6 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_uses_the_correct_item_from_typemapping()
-    {
-        $parser = $this->getItemParser();
-
-        foreach (range(0, 10) as $i) {
-            $type = $this->faker->slug;
-            $id = $this->faker->randomDigit;
-
-            $item = $parser->parse($this->getJsonApiItemMock($type, $id));
-
-            static::assertInstanceOf(PlainItem::class, $item);
-            static::assertEquals($type, $item->getType());
-            static::assertEquals($id, $item->getId());
-        }
-    }
-
-    /**
-     * @test
-     */
     public function it_parses_a_has_one_relationship()
     {
         $typeMapper = new TypeMapper();
