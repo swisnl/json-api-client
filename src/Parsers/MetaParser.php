@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Client\Parsers;
 
-use Art4\JsonApiClient\Meta as JsonApiMeta;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Meta;
 
 /**
@@ -11,12 +11,16 @@ use Swis\JsonApi\Client\Meta;
 class MetaParser
 {
     /**
-     * @param \Art4\JsonApiClient\Meta $meta
+     * @param mixed $data
      *
      * @return \Swis\JsonApi\Client\Meta
      */
-    public function parse(JsonApiMeta $meta): Meta
+    public function parse($data): Meta
     {
-        return new Meta($meta->asArray(true));
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('Meta has to be an object, "%s" given.', gettype($data)));
+        }
+
+        return new Meta((array)$data);
     }
 }

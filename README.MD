@@ -157,7 +157,7 @@ This package uses [Laravel Collections](https://laravel.com/docs/collections) as
 ## Links
 
 All objects that can have links (i.e. document, error, item and relationship) use `Concerns/HasLinks` and thus have a `getLinks` method that returns an instance of `Links`.
-This is a simple array-like object with key-value pairs which are in turn an instance of `Link`.
+This is a simple array-like object with key-value pairs which are in turn an instance of `Link` or `null`.
 
 ### Example
 
@@ -432,7 +432,7 @@ If a response does not have a successful status code (2xx) and does not have a b
 #### Non 2xx request with invalid JSON:API body
 
 If a response does not have a successful status code (2xx) and does have a body, it is parsed as if it's a JSON:API document.
-If the response can not be parsed as such document, a `\Art4\JsonApiClient\Exception\ValidationException` will be thrown.
+If the response can not be parsed as such document, a `ValidationException` will be thrown.
 
 #### Non 2xx request with valid JSON:API body
 
@@ -466,7 +466,7 @@ This can be a plain `Document` when there is no data, an `ItemDocument` for an i
 
 The `DocumentClient` follows the following steps internally:
  1. Send the request using your HTTP client;
- 2. Use [art4/json-api-client](https://github.com/art4/json-api-client) to parse and validate the response;
+ 2. Use `ResponseParser` to parse and validate the response;
  3. Create the correct document instance;
  4. Hydrate every item by using the item model registered with the `TypeMapper` or a `\Swis\JsonApi\Client\Item` as fallback;
  5. Hydrate all relationships;

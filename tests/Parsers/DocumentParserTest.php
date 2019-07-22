@@ -2,13 +2,12 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
-use Art4\JsonApiClient\Exception\ValidationException;
-use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\Error;
 use Swis\JsonApi\Client\ErrorCollection;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\ItemDocument;
 use Swis\JsonApi\Client\Jsonapi;
@@ -17,7 +16,8 @@ use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Parsers\CollectionParser;
 use Swis\JsonApi\Client\Parsers\DocumentParser;
-use Swis\JsonApi\Client\Parsers\ErrorsParser;
+use Swis\JsonApi\Client\Parsers\ErrorCollectionParser;
+use Swis\JsonApi\Client\Parsers\ErrorParser;
 use Swis\JsonApi\Client\Parsers\ItemParser;
 use Swis\JsonApi\Client\Parsers\JsonapiParser;
 use Swis\JsonApi\Client\Parsers\LinksParser;
@@ -66,9 +66,73 @@ class DocumentParserTest extends AbstractTest
         return [
             [''],
             ['Foo bar'],
+            [json_encode(null)],
+            [json_encode(1)],
+            [json_encode(1.5)],
+            [json_encode(false)],
             [json_encode('Foo bar')],
             [json_encode(['Foo bar'])],
-            [json_encode(['foo' => 'bar'])],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_data_errors_and_meta_are_missing()
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_encode(new \stdClass()));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_both_data_and_errors_are_present()
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse('{"data": [], "errors": []}');
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_included_is_present_but_data_is_not()
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse('{"included": [], "errors": []}');
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidData
+     *
+     * @param mixed $invalidData
+     */
+    public function it_throws_when_data_is_not_an_array_object_or_null($invalidData)
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidData);
+    }
+
+    public function provideInvalidData(): array
+    {
+        return [
+            ['{"data": 1}'],
+            ['{"data": 1.5}'],
+            ['{"data": false}'],
+            ['{"data": "foo"}'],
         ];
     }
 
@@ -384,10 +448,9 @@ class DocumentParserTest extends AbstractTest
         $itemParser = new ItemParser($typeMapper ?? new TypeMapper(), $linksParser, $metaParser);
 
         return new DocumentParser(
-            new Manager(),
             $itemParser,
             new CollectionParser($itemParser),
-            new ErrorsParser($linksParser, $metaParser),
+            new ErrorCollectionParser(new ErrorParser($linksParser, $metaParser)),
             $linksParser,
             new JsonapiParser($metaParser),
             $metaParser

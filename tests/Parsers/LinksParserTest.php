@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
-use Art4\JsonApiClient\Utils\Manager;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
@@ -15,13 +15,13 @@ class LinksParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_art4links_to_links()
+    public function it_converts_data_to_links()
     {
         $parser = new LinksParser(new MetaParser());
-        $links = $parser->parse($this->getArt4Links()->asArray());
+        $links = $parser->parse($this->getLinks());
 
         $this->assertInstanceOf(Links::class, $links);
-        $this->assertCount(3, $links->toArray());
+        $this->assertCount(4, $links->toArray());
 
         /** @var \Swis\JsonApi\Client\Link $link */
         $link = $links->self;
@@ -41,32 +41,68 @@ class LinksParserTest extends AbstractTest
         $this->assertInstanceOf(Link::class, $link);
         $this->assertEquals('http://example.com/articles?page[offset]=10', $link->getHref());
         $this->assertNull($link->getMeta());
+
+        /** @var null $link */
+        $link = $links->related;
+        $this->assertNull($link);
     }
 
     /**
-     * @return \Art4\JsonApiClient\ErrorCollection
+     * @test
+     * @dataProvider provideInvalidData
+     *
+     * @param mixed $invalidData
      */
-    protected function getArt4Links()
+    public function it_throws_when_link_is_not_a_string_object_or_null($invalidData)
     {
-        $links = [
-            'links' => [
-                'self' => [
-                    'href' => 'http://example.com/articles',
-                    'meta' => [
-                        'copyright' => 'Copyright 2015 Example Corp.',
-                    ],
+        $parser = new LinksParser($this->createMock(MetaParser::class));
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidData);
+    }
+
+    public function provideInvalidData(): array
+    {
+        return [
+            [[1]],
+            [[1.5]],
+            [[false]],
+            [[[]]],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_link_does_not_have_href_property()
+    {
+        $parser = new LinksParser($this->createMock(MetaParser::class));
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('[{}]', false));
+    }
+
+    /**
+     * @return \stdClass
+     */
+    protected function getLinks()
+    {
+        $data = [
+            'self'    => [
+                'href' => 'http://example.com/articles',
+                'meta' => [
+                    'copyright' => 'Copyright 2015 Example Corp.',
                 ],
-                'next' => [
-                    'href' => 'http://example.com/articles?page[offset]=2',
-                ],
-                'last' => 'http://example.com/articles?page[offset]=10',
             ],
-            'data'  => [],
+            'next'    => [
+                'href' => 'http://example.com/articles?page[offset]=2',
+            ],
+            'last'    => 'http://example.com/articles?page[offset]=10',
+            'related' => null,
         ];
 
-        $manager = new Manager();
-        $jsonApiItem = $manager->parse(json_encode($links));
-
-        return $jsonApiItem->get('links');
+        return json_decode(json_encode($data), false);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
-use Art4\JsonApiClient\Utils\Manager;
 use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Link;
@@ -28,7 +28,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_art4resource_to_item()
+    public function it_converts_data_to_item()
     {
         $parser = $this->getItemParser();
         $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
@@ -40,6 +40,387 @@ class ItemParserTest extends AbstractTest
         static::assertEquals(['description' => 'test', 'active' => true], $item->getAttributes());
         static::assertInstanceOf(Links::class, $item->getLinks());
         static::assertInstanceOf(Meta::class, $item->getMeta());
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidData
+     *
+     * @param mixed $invalidData
+     */
+    public function it_throws_when_data_is_not_an_object($invalidData)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidData);
+    }
+
+    public function provideInvalidData(): array
+    {
+        return [
+            [1],
+            [1.5],
+            [false],
+            [null],
+            ['foo'],
+            [[]],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_item_does_not_have_type_property()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo"}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_item_does_not_have_id_property()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"type": "foo"}', false));
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidIdItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_id_is_not_a_string($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidIdItem(): array
+    {
+        return [
+            [json_decode('{"type": "foo", "id": false}', false)],
+            [json_decode('{"type": "foo", "id": null}', false)],
+            [json_decode('{"type": "foo", "id": []}', false)],
+            [json_decode('{"type": "foo", "id": {}}', false)],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidTypeItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_type_is_not_a_string($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidTypeItem(): array
+    {
+        return [
+            [json_decode('{"id": "foo", "type": 1}', false)],
+            [json_decode('{"id": "foo", "type": 1.5}', false)],
+            [json_decode('{"id": "foo", "type": false}', false)],
+            [json_decode('{"id": "foo", "type": null}', false)],
+            [json_decode('{"id": "foo", "type": []}', false)],
+            [json_decode('{"id": "foo", "type": {}}', false)],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidAttributesItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_attributes_is_not_an_object($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidAttributesItem(): array
+    {
+        return [
+            [json_decode('{"id": "foo", "type": "foo", "attributes": 1}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "attributes": 1.5}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "attributes": false}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "attributes": null}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "attributes": []}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "attributes": "foo"}', false)],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_type_is_present_in_attributes()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"type": null}}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_id_is_present_in_attributes()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"id": null}}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_relationships_is_present_in_attributes()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"relationships": null}}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_links_is_present_in_attributes()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"links": null}}', false));
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidRelationshipsItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_relationships_is_not_an_object($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidRelationshipsItem(): array
+    {
+        return [
+            [json_decode('{"id": "foo", "type": "foo", "relationships": 1}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": 1.5}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": false}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": null}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": []}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": "foo"}', false)],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_type_is_present_in_relationships()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"type": null}}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_id_is_present_in_relationships()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"id": null}}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_property_is_present_in_both_attributes_and_relationships()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"foo": "bar"}, "relationships": {"foo": "bar"}}', false));
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidRelationshipsItemItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_relationships_item_is_not_an_object($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidRelationshipsItemItem(): array
+    {
+        return [
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": 1}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": 1.5}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": false}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": null}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": []}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": "foo"}}', false)],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_relationships_item_misses_links_data_and_meta()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {}}}', false));
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidRelationshipsItemIdentifierItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_relationships_item_identifier_is_not_an_object_array_or_null($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidRelationshipsItemIdentifierItem(): array
+    {
+        return [
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": 1}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": 1.5}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": false}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": "foo"}}}', false)],
+        ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_relationships_item_identifier_does_not_have_type_property()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo"}}}}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_relationships_item_identifier_does_not_have_id_property()
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"type": "foo"}}}}', false));
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidRelationshipsItemIdentifierIdItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_relationships_item_identifier_id_is_not_a_string($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidRelationshipsItemIdentifierIdItem(): array
+    {
+        return [
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"type": "foo", "id": false}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"type": "foo", "id": null}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"type": "foo", "id": []}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"type": "foo", "id": {}}}}}', false)],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidRelationshipsItemIdentifierTypeItem
+     *
+     * @param mixed $invalidItem
+     */
+    public function it_throws_when_relationships_item_identifier_type_is_not_a_string($invalidItem)
+    {
+        $parser = $this->getItemParser();
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidItem);
+    }
+
+    public function provideInvalidRelationshipsItemIdentifierTypeItem(): array
+    {
+        return [
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo", "type": 1}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo", "type": 1.5}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo", "type": false}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo", "type": null}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo", "type": []}}}}', false)],
+            [json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo", "type": {}}}}}', false)],
+        ];
     }
 
     /**
@@ -260,149 +641,86 @@ class ItemParserTest extends AbstractTest
     private function getJsonApiItemMock($type, $id)
     {
         $data = [
-            'data'     => [
-                'type'          => $type,
-                'id'            => $id,
-                'attributes'    => [
-                    'description' => 'test',
-                    'active'      => true,
+            'type'          => $type,
+            'id'            => $id,
+            'attributes'    => [
+                'description' => 'test',
+                'active'      => true,
+            ],
+            'relationships' => [
+                'child'     => [
+                    'data'  => [
+                        'type' => 'child',
+                        'id'   => '2',
+                    ],
+                    'links' => [
+                        'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/child',
+                    ],
+                    'meta'  => [
+                        'foo' => 'bar',
+                    ],
                 ],
-                'relationships' => [
-                    'child'     => [
-                        'data'  => [
+                'children'  => [
+                    'data'  => [
+                        [
                             'type' => 'child',
-                            'id'   => '2',
+                            'id'   => '3',
                         ],
-                        'links' => [
-                            'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/child',
-                        ],
-                        'meta'  => [
-                            'foo' => 'bar',
-                        ],
-                    ],
-                    'children'  => [
-                        'data'  => [
-                            [
-                                'type' => 'child',
-                                'id'   => '3',
-                            ],
-                            [
-                                'type' => 'child',
-                                'id'   => '4',
-                            ],
-                        ],
-                        'links' => [
-                            'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/children',
-                        ],
-                        'meta'  => [
-                            'foo' => 'bar',
-                        ],
-                    ],
-                    'morph'     => [
-                        'data'  => [
+                        [
                             'type' => 'child',
-                            'id'   => '5',
-                        ],
-                        'links' => [
-                            'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/morph',
-                        ],
-                        'meta'  => [
-                            'foo' => 'bar',
+                            'id'   => '4',
                         ],
                     ],
-                    'morphmany' => [
-                        'data'  => [
-                            [
-                                'type' => 'child',
-                                'id'   => '6',
-                            ],
-                            [
-                                'type' => 'child',
-                                'id'   => '7',
-                            ],
-                            [
-                                'type' => 'child',
-                                'id'   => '8',
-                            ],
-                        ],
-                        'links' => [
-                            'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/morphmany',
-                        ],
-                        'meta'  => [
-                            'foo' => 'bar',
-                        ],
+                    'links' => [
+                        'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/children',
+                    ],
+                    'meta'  => [
+                        'foo' => 'bar',
                     ],
                 ],
-                'links'         => [
-                    'self' => 'http://example.com/master/1',
+                'morph'     => [
+                    'data'  => [
+                        'type' => 'child',
+                        'id'   => '5',
+                    ],
+                    'links' => [
+                        'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/morph',
+                    ],
+                    'meta'  => [
+                        'foo' => 'bar',
+                    ],
                 ],
-                'meta'          => [
-                    'foo' => 'bar',
+                'morphmany' => [
+                    'data'  => [
+                        [
+                            'type' => 'child',
+                            'id'   => '6',
+                        ],
+                        [
+                            'type' => 'child',
+                            'id'   => '7',
+                        ],
+                        [
+                            'type' => 'child',
+                            'id'   => '8',
+                        ],
+                    ],
+                    'links' => [
+                        'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/morphmany',
+                    ],
+                    'meta'  => [
+                        'foo' => 'bar',
+                    ],
                 ],
             ],
-            'included' => [
-                [
-                    'type'       => 'child',
-                    'id'         => '2',
-                    'attributes' => [
-                        'description' => 'test',
-                        'active'      => true,
-                    ],
-                ],
-                [
-                    'type'       => 'child',
-                    'id'         => '3',
-                    'attributes' => [
-                        'description' => 'test3',
-                        'active'      => true,
-                    ],
-                ],
-                [
-                    'type'       => 'child',
-                    'id'         => '4',
-                    'attributes' => [
-                        'description' => 'test4',
-                        'active'      => true,
-                    ],
-                ],
-                [
-                    'type'       => 'child',
-                    'id'         => '5',
-                    'attributes' => [
-                        'description' => 'test5',
-                        'active'      => true,
-                    ],
-                ],
-                [
-                    'type'       => 'child',
-                    'id'         => '6',
-                    'attributes' => [
-                        'description' => 'test6',
-                        'active'      => true,
-                    ],
-                ],
-                [
-                    'type'       => 'child',
-                    'id'         => '7',
-                    'attributes' => [
-                        'description' => 'test7',
-                        'active'      => true,
-                    ],
-                ],
-                [
-                    'type'       => 'child',
-                    'id'         => '8',
-                    'attributes' => [
-                        'description' => 'test8',
-                        'active'      => true,
-                    ],
-                ],
+            'links'         => [
+                'self' => 'http://example.com/master/1',
+            ],
+            'meta'          => [
+                'foo' => 'bar',
             ],
         ];
 
-        $manager = new Manager();
-        $jsonApiItem = $manager->parse(json_encode($data));
-
-        return $jsonApiItem->get('data');
+        return json_decode(json_encode($data), false);
     }
 }

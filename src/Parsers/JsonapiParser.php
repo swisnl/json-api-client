@@ -2,10 +2,8 @@
 
 namespace Swis\JsonApi\Client\Parsers;
 
-use Art4\JsonApiClient\Jsonapi as JsonApiJsonapi;
-use Art4\JsonApiClient\Meta as JsonApiMeta;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Jsonapi;
-use Swis\JsonApi\Client\Meta;
 
 /**
  * @internal
@@ -26,25 +24,22 @@ class JsonapiParser
     }
 
     /**
-     * @param \Art4\JsonApiClient\Jsonapi $jsonApi
+     * @param mixed $data
      *
      * @return \Swis\JsonApi\Client\Jsonapi
      */
-    public function parse(JsonApiJsonapi $jsonApi): Jsonapi
+    public function parse($data): Jsonapi
     {
-        return new Jsonapi(
-            $jsonApi->has('version') ? $jsonApi->get('version') : null,
-            $jsonApi->has('meta') ? $this->buildMeta($jsonApi->get('meta')) : null
-        );
-    }
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('Jsonapi has to be an object, "%s" given.', gettype($data)));
+        }
+        if (property_exists($data, 'version') && !is_string($data->version)) {
+            throw new ValidationException(sprintf('Jsonapi property "version" has to be a string, "%s" given.', gettype($data->version)));
+        }
 
-    /**
-     * @param \Art4\JsonApiClient\Meta $meta
-     *
-     * @return \Swis\JsonApi\Client\Meta
-     */
-    private function buildMeta(JsonApiMeta $meta): Meta
-    {
-        return $this->metaParser->parse($meta);
+        return new Jsonapi(
+            property_exists($data, 'version') ? $data->version : null,
+            property_exists($data, 'meta') ? $this->metaParser->parse($data->meta) : null
+        );
     }
 }

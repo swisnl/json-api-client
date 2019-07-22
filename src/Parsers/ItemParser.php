@@ -2,11 +2,8 @@
 
 namespace Swis\JsonApi\Client\Parsers;
 
-use Art4\JsonApiClient\RelationshipCollectionInterface;
-use Art4\JsonApiClient\ResourceIdentifierCollectionInterface;
-use Art4\JsonApiClient\ResourceIdentifierInterface;
-use Art4\JsonApiClient\ResourceItemInterface;
 use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
@@ -45,32 +42,56 @@ class ItemParser
     }
 
     /**
-     * @param \Art4\JsonApiClient\ResourceItemInterface $jsonApiItem
+     * @param mixed $data
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
-    public function parse(ResourceItemInterface $jsonApiItem): ItemInterface
+    public function parse($data): ItemInterface
     {
-        $item = $this->getItemInstance($jsonApiItem->get('type'));
-
-        if ($jsonApiItem->has('id')) {
-            $item->setId($jsonApiItem->get('id'));
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('Resource has to be an object, "%s" given.', gettype($data)));
+        }
+        if (!property_exists($data, 'type')) {
+            throw new ValidationException('Resource object MUST contain a type.');
+        }
+        if (!property_exists($data, 'id')) {
+            throw new ValidationException('Resource object MUST contain an id.');
+        }
+        if (!is_string($data->type)) {
+            throw new ValidationException(sprintf('Resource property "type" has to be a string, "%s" given.', gettype($data->type)));
+        }
+        if (!is_string($data->id) && !is_numeric($data->id)) {
+            throw new ValidationException(sprintf('Resource property "id" has to be a string, "%s" given.', gettype($data->id)));
+        }
+        if (property_exists($data, 'attributes')) {
+            if (!is_object($data->attributes)) {
+                throw new ValidationException(sprintf('Resource property "attributes" has to be an object, "%s" given.', gettype($data->attributes)));
+            }
+            if (property_exists($data->attributes, 'type') || property_exists($data->attributes, 'id') || property_exists($data->attributes, 'relationships') || property_exists($data->attributes, 'links')) {
+                throw new ValidationException('These properties are not allowed in attributes: `type`, `id`, `relationships`, `links`');
+            }
         }
 
-        if ($jsonApiItem->has('attributes')) {
-            $item->fill($jsonApiItem->get('attributes')->asArray(true));
+        $item = $this->getItemInstance($data->type);
+
+        if (property_exists($data, 'id')) {
+            $item->setId($data->id);
         }
 
-        if ($jsonApiItem->has('relationships')) {
-            $this->setRelations($item, $jsonApiItem->get('relationships'));
+        if (property_exists($data, 'attributes')) {
+            $item->fill((array)$data->attributes);
         }
 
-        if ($jsonApiItem->has('links')) {
-            $item->setLinks($this->linksParser->parse($jsonApiItem->get('links')->asArray()));
+        if (property_exists($data, 'relationships')) {
+            $this->setRelations($item, $data->relationships);
         }
 
-        if ($jsonApiItem->has('meta')) {
-            $item->setMeta($this->metaParser->parse($jsonApiItem->get('meta')));
+        if (property_exists($data, 'links')) {
+            $item->setLinks($this->linksParser->parse($data->links));
+        }
+
+        if (property_exists($data, 'meta')) {
+            $item->setMeta($this->metaParser->parse($data->meta));
         }
 
         return $item;
@@ -91,34 +112,50 @@ class ItemParser
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface       $item
-     * @param \Art4\JsonApiClient\RelationshipCollectionInterface $relationships
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
+     * @param mixed                                         $data
      */
-    private function setRelations(ItemInterface $item, RelationshipCollectionInterface $relationships): void
+    private function setRelations(ItemInterface $item, $data): void
     {
-        /** @var \Art4\JsonApiClient\RelationshipInterface $relationship */
-        foreach ($relationships->asArray() as $name => $relationship) {
-            $data = new Collection();
-            if ($relationship->has('data')) {
-                $data = $this->parseRelationshipData($relationship->get('data'));
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('Relationships has to be an object, "%s" given.', gettype($data)));
+        }
+        if (property_exists($data, 'type') || property_exists($data, 'id')) {
+            throw new ValidationException('These properties are not allowed in relationships: `type`, `id`.');
+        }
+
+        foreach ($data as $name => $relationship) {
+            if ($item->hasAttribute($name)) {
+                throw new ValidationException(sprintf('Relationship "%s" cannot be set because it already exists in Resource object.', $name));
+            }
+            if (!is_object($relationship)) {
+                throw new ValidationException(sprintf('Relationship has to be an object, "%s" given.', gettype($relationship)));
+            }
+            if (!property_exists($relationship, 'links') && !property_exists($relationship, 'data') && !property_exists($relationship, 'meta')) {
+                throw new ValidationException('Relationship object MUST contain at least one of the following properties: `links`, `data`, `meta`.');
+            }
+
+            $value = new Collection();
+            if (property_exists($relationship, 'data') && $relationship->data !== null) {
+                $value = $this->parseRelationshipData($relationship->data);
             }
 
             $links = null;
-            if ($relationship->has('links')) {
-                $links = $this->linksParser->parse($relationship->get('links')->asArray());
+            if (property_exists($relationship, 'links')) {
+                $links = $this->linksParser->parse($relationship->links);
             }
 
             $meta = null;
-            if ($relationship->has('meta')) {
-                $meta = $this->metaParser->parse($relationship->get('meta'));
+            if (property_exists($relationship, 'meta')) {
+                $meta = $this->metaParser->parse($relationship->meta);
             }
 
-            $item->setRelation($name, $data, $links, $meta);
+            $item->setRelation($name, $value, $links, $meta);
         }
     }
 
     /**
-     * @param \Art4\JsonApiClient\ResourceIdentifierInterface|\Art4\JsonApiClient\ResourceIdentifierCollectionInterface $data
+     * @param mixed $data
      *
      * @throws \InvalidArgumentException
      *
@@ -126,21 +163,31 @@ class ItemParser
      */
     private function parseRelationshipData($data): DataInterface
     {
-        if ($data instanceof ResourceIdentifierInterface) {
-            return $this->getItemInstance($data->get('type'))
-                ->setId($data->get('id'));
-        }
-
-        if ($data instanceof ResourceIdentifierCollectionInterface) {
-            return Collection::make($data->asArray())
+        if (is_array($data)) {
+            return Collection::make($data)
                 ->map(
-                    function (ResourceIdentifierInterface $identifier) {
-                        return $this->getItemInstance($identifier->get('type'))
-                            ->setId($identifier->get('id'));
+                    function ($identifier) {
+                        return $this->parseRelationshipData($identifier);
                     }
                 );
         }
 
-        throw new \InvalidArgumentException(sprintf('Expected either %s or %s', ResourceIdentifierInterface::class, ResourceIdentifierCollectionInterface::class));
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('ResourceIdentifier has to be an object, "%s" given.', gettype($data)));
+        }
+        if (!property_exists($data, 'type')) {
+            throw new ValidationException('ResourceIdentifier object MUST contain a type.');
+        }
+        if (!property_exists($data, 'id')) {
+            throw new ValidationException('ResourceIdentifier object MUST contain an id.');
+        }
+        if (!is_string($data->type)) {
+            throw new ValidationException(sprintf('ResourceIdentifier property "type" has to be a string, "%s" given.', gettype($data->type)));
+        }
+        if (!is_string($data->id) && !is_numeric($data->id)) {
+            throw new ValidationException(sprintf('ResourceIdentifier property "id" has to be a string, "%s" given.', gettype($data->type)));
+        }
+
+        return $this->getItemInstance($data->type)->setId($data->id);
     }
 }

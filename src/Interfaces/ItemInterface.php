@@ -103,6 +103,13 @@ interface ItemInterface extends DataInterface
     public function setAttribute($key, $value);
 
     /**
+     * @param $key
+     *
+     * @return bool
+     */
+    public function hasAttribute($key): bool;
+
+    /**
      * @return bool
      */
     public function hasAttributes(): bool;

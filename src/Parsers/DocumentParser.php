@@ -2,31 +2,19 @@
 
 namespace Swis\JsonApi\Client\Parsers;
 
-use Art4\JsonApiClient\DocumentInterface as Art4JsonApiDocumentInterface;
-use Art4\JsonApiClient\ResourceCollectionInterface;
-use Art4\JsonApiClient\ResourceItemInterface;
-use Art4\JsonApiClient\Utils\Manager as Art4JsonApiClientManager;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
-use Swis\JsonApi\Client\ErrorCollection;
+use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentParserInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 use Swis\JsonApi\Client\ItemDocument;
-use Swis\JsonApi\Client\Jsonapi;
-use Swis\JsonApi\Client\Links;
-use Swis\JsonApi\Client\Meta;
 
 class DocumentParser implements DocumentParserInterface
 {
-    /**
-     * @var \Art4\JsonApiClient\Utils\Manager
-     */
-    private $manager;
-
     /**
      * @var \Swis\JsonApi\Client\Parsers\ItemParser
      */
@@ -38,9 +26,9 @@ class DocumentParser implements DocumentParserInterface
     private $collectionParser;
 
     /**
-     * @var \Swis\JsonApi\Client\Parsers\ErrorsParser
+     * @var \Swis\JsonApi\Client\Parsers\ErrorCollectionParser
      */
-    private $errorsParser;
+    private $errorCollectionParser;
 
     /**
      * @var \Swis\JsonApi\Client\Parsers\LinksParser
@@ -58,27 +46,24 @@ class DocumentParser implements DocumentParserInterface
     private $metaParser;
 
     /**
-     * @param \Art4\JsonApiClient\Utils\Manager             $manager
-     * @param \Swis\JsonApi\Client\Parsers\ItemParser       $itemParser
-     * @param \Swis\JsonApi\Client\Parsers\CollectionParser $collectionParser
-     * @param \Swis\JsonApi\Client\Parsers\ErrorsParser     $errorsParser
-     * @param \Swis\JsonApi\Client\Parsers\LinksParser      $linksParser
-     * @param \Swis\JsonApi\Client\Parsers\JsonapiParser    $jsonapiParser
-     * @param \Swis\JsonApi\Client\Parsers\MetaParser       $metaParser
+     * @param \Swis\JsonApi\Client\Parsers\ItemParser            $itemParser
+     * @param \Swis\JsonApi\Client\Parsers\CollectionParser      $collectionParser
+     * @param \Swis\JsonApi\Client\Parsers\ErrorCollectionParser $errorCollectionParser
+     * @param \Swis\JsonApi\Client\Parsers\LinksParser           $linksParser
+     * @param \Swis\JsonApi\Client\Parsers\JsonapiParser         $jsonapiParser
+     * @param \Swis\JsonApi\Client\Parsers\MetaParser            $metaParser
      */
     public function __construct(
-        Art4JsonApiClientManager $manager,
         ItemParser $itemParser,
         CollectionParser $collectionParser,
-        ErrorsParser $errorsParser,
+        ErrorCollectionParser $errorCollectionParser,
         LinksParser $linksParser,
         JsonapiParser $jsonapiParser,
         MetaParser $metaParser
     ) {
-        $this->manager = $manager;
         $this->itemParser = $itemParser;
         $this->collectionParser = $collectionParser;
-        $this->errorsParser = $errorsParser;
+        $this->errorCollectionParser = $errorCollectionParser;
         $this->linksParser = $linksParser;
         $this->jsonapiParser = $jsonapiParser;
         $this->metaParser = $metaParser;
@@ -91,41 +76,82 @@ class DocumentParser implements DocumentParserInterface
      */
     public function parse(string $json): DocumentInterface
     {
-        /** @var \Art4\JsonApiClient\DocumentInterface $jsonApiDocument */
-        $jsonApiDocument = $this->manager->parse($json);
+        $data = $this->decodeJson($json);
 
-        return $this->getDocument($jsonApiDocument)
-            ->setLinks($this->parseLinks($jsonApiDocument))
-            ->setErrors($this->parseErrors($jsonApiDocument))
-            ->setMeta($this->parseMeta($jsonApiDocument))
-            ->setJsonapi($this->parseJsonapi($jsonApiDocument));
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('Document has to be an object, "%s" given.', gettype($data)));
+        }
+        if (!property_exists($data, 'data') && !property_exists($data, 'errors') && !property_exists($data, 'meta')) {
+            throw new ValidationException('Document MUST contain at least one of the following properties: `data`, `errors`, `meta`.');
+        }
+        if (property_exists($data, 'data') && property_exists($data, 'errors')) {
+            throw new ValidationException('The properties `data` and `errors` MUST NOT coexist in Document.');
+        }
+        if (!property_exists($data, 'data') && property_exists($data, 'included')) {
+            throw new ValidationException('If Document does not contain a `data` property, the `included` property MUST NOT be present either.');
+        }
+        if (property_exists($data, 'data') && !is_object($data->data) && !is_array($data->data) && $data->data !== null) {
+            throw new ValidationException(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype($data)));
+        }
+
+        $document = $this->getDocument($data);
+
+        if (property_exists($data, 'links')) {
+            $document->setLinks($this->linksParser->parse($data->links));
+        }
+
+        if (property_exists($data, 'errors')) {
+            $document->setErrors($this->errorCollectionParser->parse($data->errors));
+        }
+
+        if (property_exists($data, 'meta')) {
+            $document->setMeta($this->metaParser->parse($data->meta));
+        }
+
+        if (property_exists($data, 'jsonapi')) {
+            $document->setJsonapi($this->jsonapiParser->parse($data->jsonapi));
+        }
+
+        return $document;
     }
 
     /**
-     * @param \Art4\JsonApiClient\DocumentInterface $jsonApiDocument
+     * @param string $json
+     *
+     * @return mixed
+     */
+    private function decodeJson(string $json)
+    {
+        $data = json_decode($json, false);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new ValidationException(sprintf('Unable to parse JSON data: %s', json_last_error_msg()), json_last_error());
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param mixed $data
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    private function getDocument(Art4JsonApiDocumentInterface $jsonApiDocument): DocumentInterface
+    private function getDocument($data): DocumentInterface
     {
-        if (!$jsonApiDocument->has('data')) {
+        if (!property_exists($data, 'data') || $data->data === null) {
             return new Document();
         }
 
-        $data = $jsonApiDocument->get('data');
-
-        if ($data instanceof ResourceItemInterface) {
-            $document = (new ItemDocument())
-                ->setData($this->itemParser->parse($data));
-        } elseif ($data instanceof ResourceCollectionInterface) {
+        if (is_array($data->data)) {
             $document = (new CollectionDocument())
-                ->setData($this->collectionParser->parse($data));
+                ->setData($this->collectionParser->parse($data->data));
         } else {
-            throw new \DomainException('Document data is not a Collection or an Item');
+            $document = (new ItemDocument())
+                ->setData($this->itemParser->parse($data->data));
         }
 
-        if ($jsonApiDocument->has('included')) {
-            $document->setIncluded($this->collectionParser->parse($jsonApiDocument->get('included')));
+        if (property_exists($data, 'included')) {
+            $document->setIncluded($this->collectionParser->parse($data->included));
         }
 
         $allItems = Collection::wrap($document->getData())
@@ -195,61 +221,5 @@ class DocumentParser implements DocumentParserInterface
     private function getItemKey(ItemInterface $item): string
     {
         return sprintf('%s:%s', $item->getType(), $item->getId());
-    }
-
-    /**
-     * @param \Art4\JsonApiClient\DocumentInterface $document
-     *
-     * @return \Swis\JsonApi\Client\Links|null
-     */
-    private function parseLinks(Art4JsonApiDocumentInterface $document): ?Links
-    {
-        if (!$document->has('links')) {
-            return null;
-        }
-
-        return $this->linksParser->parse($document->get('links')->asArray());
-    }
-
-    /**
-     * @param \Art4\JsonApiClient\DocumentInterface $document
-     *
-     * @return \Swis\JsonApi\Client\ErrorCollection
-     */
-    private function parseErrors(Art4JsonApiDocumentInterface $document): ErrorCollection
-    {
-        if (!$document->has('errors')) {
-            return new ErrorCollection();
-        }
-
-        return $this->errorsParser->parse($document->get('errors'));
-    }
-
-    /**
-     * @param \Art4\JsonApiClient\DocumentInterface $document
-     *
-     * @return \Swis\JsonApi\Client\Meta|null
-     */
-    private function parseMeta(Art4JsonApiDocumentInterface $document): ?Meta
-    {
-        if (!$document->has('meta')) {
-            return null;
-        }
-
-        return $this->metaParser->parse($document->get('meta'));
-    }
-
-    /**
-     * @param \Art4\JsonApiClient\DocumentInterface $document
-     *
-     * @return \Swis\JsonApi\Client\Jsonapi|null
-     */
-    private function parseJsonapi(Art4JsonApiDocumentInterface $document): ?Jsonapi
-    {
-        if (!$document->has('jsonapi')) {
-            return null;
-        }
-
-        return $this->jsonapiParser->parse($document->get('jsonapi'));
     }
 }
