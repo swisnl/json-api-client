@@ -12,6 +12,14 @@ use Swis\JsonApi\Client\Links;
  */
 class LinksParser
 {
+    public const SOURCE_DOCUMENT = 'document';
+
+    public const SOURCE_ERROR = 'error';
+
+    public const SOURCE_ITEM = 'item';
+
+    public const SOURCE_RELATIONSHIP = 'relationship';
+
     private const LINKS_THAT_MAY_NOT_BE_NULL_WHEN_PRESENT = [
         'self',
         'related',
@@ -31,12 +39,20 @@ class LinksParser
     }
 
     /**
-     * @param mixed $data
+     * @param mixed  $data
+     * @param string $source
      *
      * @return \Swis\JsonApi\Client\Links
      */
-    public function parse($data): Links
+    public function parse($data, string $source): Links
     {
+        if ($source === self::SOURCE_ERROR && !property_exists($data, 'about')) {
+            throw new ValidationException('Error links object MUST contain at least one of the following properties: `about`.');
+        }
+        if ($source === self::SOURCE_RELATIONSHIP && !property_exists($data, 'self') && !property_exists($data, 'related')) {
+            throw new ValidationException('Relationship links object MUST contain at least one of the following properties: `self`, `related`.');
+        }
+
         return new Links(
             Collection::wrap((array)$data)
                 ->map(

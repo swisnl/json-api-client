@@ -59,7 +59,7 @@ class ErrorParser
 
         return new Error(
             property_exists($data, 'id') ? $data->id : null,
-            property_exists($data, 'links') ? $this->linksParser->parse($data->links) : null,
+            property_exists($data, 'links') ? $this->linksParser->parse($data->links, LinksParser::SOURCE_ERROR) : null,
             property_exists($data, 'status') ? $data->status : null,
             property_exists($data, 'code') ? $data->code : null,
             property_exists($data, 'title') ? $data->title : null,

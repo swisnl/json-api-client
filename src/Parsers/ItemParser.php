@@ -87,7 +87,7 @@ class ItemParser
         }
 
         if (property_exists($data, 'links')) {
-            $item->setLinks($this->linksParser->parse($data->links));
+            $item->setLinks($this->linksParser->parse($data->links, LinksParser::SOURCE_ITEM));
         }
 
         if (property_exists($data, 'meta')) {
@@ -142,7 +142,7 @@ class ItemParser
 
             $links = null;
             if (property_exists($relationship, 'links')) {
-                $links = $this->linksParser->parse($relationship->links);
+                $links = $this->linksParser->parse($relationship->links, LinksParser::SOURCE_RELATIONSHIP);
             }
 
             $meta = null;
