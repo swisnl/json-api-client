@@ -30,6 +30,10 @@ class LinksParserTest extends AbstractTest
         $this->assertInstanceOf(Meta::class, $link->getMeta());
         $this->assertEquals(new Meta(['copyright' => 'Copyright 2015 Example Corp.']), $link->getMeta());
 
+        /** @var null $link */
+        $link = $links->prev;
+        $this->assertNull($link);
+
         /** @var \Swis\JsonApi\Client\Link $link */
         $link = $links->next;
         $this->assertInstanceOf(Link::class, $link);
@@ -41,10 +45,6 @@ class LinksParserTest extends AbstractTest
         $this->assertInstanceOf(Link::class, $link);
         $this->assertEquals('http://example.com/articles?page[offset]=10', $link->getHref());
         $this->assertNull($link->getMeta());
-
-        /** @var null $link */
-        $link = $links->related;
-        $this->assertNull($link);
     }
 
     /**
@@ -75,13 +75,37 @@ class LinksParserTest extends AbstractTest
     /**
      * @test
      */
+    public function it_throws_when_self_link_is_null()
+    {
+        $parser = new LinksParser($this->createMock(MetaParser::class));
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"self": null}', false));
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_related_link_is_null()
+    {
+        $parser = new LinksParser($this->createMock(MetaParser::class));
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse(json_decode('{"related": null}', false));
+    }
+
+    /**
+     * @test
+     */
     public function it_throws_when_link_does_not_have_href_property()
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
 
-        $parser->parse(json_decode('[{}]', false));
+        $parser->parse(json_decode('{"self": {}}', false));
     }
 
     /**
@@ -90,17 +114,17 @@ class LinksParserTest extends AbstractTest
     protected function getLinks()
     {
         $data = [
-            'self'    => [
+            'self' => [
                 'href' => 'http://example.com/articles',
                 'meta' => [
                     'copyright' => 'Copyright 2015 Example Corp.',
                 ],
             ],
-            'next'    => [
+            'prev' => null,
+            'next' => [
                 'href' => 'http://example.com/articles?page[offset]=2',
             ],
-            'last'    => 'http://example.com/articles?page[offset]=10',
-            'related' => null,
+            'last' => 'http://example.com/articles?page[offset]=10',
         ];
 
         return json_decode(json_encode($data), false);
