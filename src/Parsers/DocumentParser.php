@@ -97,7 +97,7 @@ class DocumentParser implements DocumentParserInterface
         $document = $this->getDocument($data);
 
         if (property_exists($data, 'links')) {
-            $document->setLinks($this->linksParser->parse($data->links));
+            $document->setLinks($this->linksParser->parse($data->links, LinksParser::SOURCE_DOCUMENT));
         }
 
         if (property_exists($data, 'errors')) {
