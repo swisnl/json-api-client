@@ -48,7 +48,7 @@ If you are using Laravel < 5.5 or have disabled package auto discover, you must 
 ## Getting started
 
 You can simply require the [DocumentClient](#documentclient) as a dependency and use it in your class.
-Alternatively, you can create a repository based on `\Swis\JsonApi\Client\Repository`:
+Alternatively, you can create a repository based on `\Swis\JsonApi\Client\Repository` and use that as a dependency:
 
 ``` php
 use Swis\JsonApi\Client\Repository
@@ -58,7 +58,7 @@ class BlogRepository extends Repository
     protected $endpoint = 'blogs';
 }
 
-$repository = new BlogRepository();
+$repository = app(BlogRepository::class);
 $document = $repository->all();
 if ($document->hasErrors()) {
    // do something with errors
