@@ -37,7 +37,17 @@ class ItemParserTest extends AbstractTest
 
         static::assertEquals('master', $item->getType());
         static::assertEquals('1', $item->getId());
-        static::assertEquals(['description' => 'test', 'active' => true], $item->getAttributes());
+        $object = new \stdClass();
+        $object->foo = 'bar';
+        static::assertEquals(
+            [
+                'description' => 'test',
+                'active'      => true,
+                'object'      => $object,
+                'array'       => [1, 2, 3],
+            ],
+            $item->getAttributes()
+        );
         static::assertInstanceOf(Links::class, $item->getLinks());
         static::assertInstanceOf(Meta::class, $item->getMeta());
     }
@@ -645,6 +655,14 @@ class ItemParserTest extends AbstractTest
             'attributes'    => [
                 'description' => 'test',
                 'active'      => true,
+                'object'      => [
+                    'foo' => 'bar',
+                ],
+                'array'       => [
+                    1,
+                    2,
+                    3,
+                ],
             ],
             'relationships' => [
                 'child'     => [
