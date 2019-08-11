@@ -16,8 +16,6 @@ use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 
 class ItemTest extends AbstractTest
 {
-    protected $attributes = ['testKey' => 'testValue'];
-
     /**
      * @test
      */
@@ -32,7 +30,15 @@ class ItemTest extends AbstractTest
      */
     public function is_shows_type_and_id_and_attributes_in_to_json_api_array()
     {
-        $item = new Item($this->attributes);
+        $attributes = [
+            'testKey' => 'testValue',
+            'boolean' => true,
+            'object'  => [
+                'foo' => 'bar',
+            ],
+            'array'   => [1, 2, 3],
+        ];
+        $item = new Item($attributes);
         $item->setType('testType');
         $item->setId('1234');
 
@@ -40,7 +46,7 @@ class ItemTest extends AbstractTest
             [
                 'type'       => 'testType',
                 'id'         => '1234',
-                'attributes' => $this->attributes,
+                'attributes' => $attributes,
             ],
             $item->toJsonApiArray()
         );
@@ -51,7 +57,7 @@ class ItemTest extends AbstractTest
      */
     public function is_does_not_show_attributes_in_to_json_api_array_when_it_has_no_attributes()
     {
-        $item = new WithHiddenItem($this->attributes);
+        $item = new WithHiddenItem(['testKey' => 'testValue']);
         $item->setType('testType');
         $item->setId('1234');
 
@@ -357,8 +363,11 @@ class ItemTest extends AbstractTest
      */
     public function it_returns_attributes()
     {
-        $item = new Item($this->attributes);
-        $this->assertEquals($this->attributes, $item->getAttributes());
+        $attributes = [
+            'foo' => 'bar',
+        ];
+        $item = new Item($attributes);
+        $this->assertEquals($attributes, $item->getAttributes());
     }
 
     /**
@@ -369,7 +378,7 @@ class ItemTest extends AbstractTest
         $item = new Item();
         $this->assertFalse($item->hasAttributes());
 
-        $item->fill($this->attributes);
+        $item->fill(['foo' => 'bar']);
 
         $this->assertTrue($item->hasAttributes());
     }

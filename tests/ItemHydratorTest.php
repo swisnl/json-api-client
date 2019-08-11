@@ -39,6 +39,10 @@ class ItemHydratorTest extends AbstractTest
         $data = [
             'testattribute1' => 'test',
             'testattribute2' => 'test2',
+            'testobject'     => [
+                'foo' => 'bar',
+            ],
+            'testarray'      => [1, 2, 3],
         ];
 
         $item = new Item();
