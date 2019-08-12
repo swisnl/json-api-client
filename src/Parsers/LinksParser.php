@@ -46,6 +46,9 @@ class LinksParser
      */
     public function parse($data, string $source): Links
     {
+        if (!is_object($data)) {
+            throw new ValidationException(sprintf('Links has to be an object, "%s" given.', gettype($data)));
+        }
         if ($source === self::SOURCE_ERROR && !property_exists($data, 'about')) {
             throw new ValidationException('Error links object MUST contain at least one of the following properties: `about`.');
         }

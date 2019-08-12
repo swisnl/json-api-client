@@ -53,7 +53,7 @@ class LinksParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_link_is_not_a_string_object_or_null($invalidData)
+    public function it_throws_when_links_is_not_an_object($invalidData)
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
@@ -65,10 +65,37 @@ class LinksParserTest extends AbstractTest
     public function provideInvalidData(): array
     {
         return [
-            [[1]],
-            [[1.5]],
-            [[false]],
-            [[[]]],
+            [1],
+            [1.5],
+            [false],
+            [null],
+            ['foo'],
+            [[]],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provideInvalidLinkData
+     *
+     * @param mixed $invalidData
+     */
+    public function it_throws_when_link_is_not_a_string_object_or_null($invalidData)
+    {
+        $parser = new LinksParser($this->createMock(MetaParser::class));
+
+        $this->expectException(ValidationException::class);
+
+        $parser->parse($invalidData, LinksParser::SOURCE_DOCUMENT);
+    }
+
+    public function provideInvalidLinkData(): array
+    {
+        return [
+            [json_decode('{"foo": 1}', false)],
+            [json_decode('{"foo": 1.5}', false)],
+            [json_decode('{"foo": false}', false)],
+            [json_decode('{"foo": []}', false)],
         ];
     }
 

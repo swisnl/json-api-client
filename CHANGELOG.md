@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Self and related links can not be `null` [#59](https://github.com/swisnl/json-api-client/pull/59).
 * Error links MUST have about link. Relationship links MUST have either self or related link [#59](https://github.com/swisnl/json-api-client/pull/59).
+* Links has to be an object.
 
 ## [1.0.0-beta] - 2019-07-22
 
