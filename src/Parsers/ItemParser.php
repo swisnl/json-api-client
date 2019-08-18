@@ -185,7 +185,7 @@ class ItemParser
             throw new ValidationException(sprintf('ResourceIdentifier property "type" has to be a string, "%s" given.', gettype($data->type)));
         }
         if (!is_string($data->id) && !is_numeric($data->id)) {
-            throw new ValidationException(sprintf('ResourceIdentifier property "id" has to be a string, "%s" given.', gettype($data->type)));
+            throw new ValidationException(sprintf('ResourceIdentifier property "id" has to be a string, "%s" given.', gettype($data->id)));
         }
 
         return $this->getItemInstance($data->type)->setId($data->id);
