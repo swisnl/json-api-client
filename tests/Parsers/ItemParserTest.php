@@ -63,6 +63,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Resource has to be an object, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData);
     }
@@ -87,6 +88,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Resource object MUST contain a type.');
 
         $parser->parse(json_decode('{"id": "foo"}', false));
     }
@@ -99,6 +101,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Resource object MUST contain an id.');
 
         $parser->parse(json_decode('{"type": "foo"}', false));
     }
@@ -114,6 +117,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Resource property "id" has to be a string, "%s" given.', gettype($invalidItem->id)));
 
         $parser->parse($invalidItem);
     }
@@ -139,6 +143,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Resource property "type" has to be a string, "%s" given.', gettype($invalidItem->type)));
 
         $parser->parse($invalidItem);
     }
@@ -166,6 +171,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Resource property "attributes" has to be an object, "%s" given.', gettype($invalidItem->attributes)));
 
         $parser->parse($invalidItem);
     }
@@ -190,6 +196,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('These properties are not allowed in attributes: `type`, `id`, `relationships`, `links`.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"type": null}}', false));
     }
@@ -202,6 +209,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('These properties are not allowed in attributes: `type`, `id`, `relationships`, `links`.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"id": null}}', false));
     }
@@ -214,6 +222,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('These properties are not allowed in attributes: `type`, `id`, `relationships`, `links`.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"relationships": null}}', false));
     }
@@ -226,6 +235,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('These properties are not allowed in attributes: `type`, `id`, `relationships`, `links`.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"links": null}}', false));
     }
@@ -241,6 +251,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Relationships has to be an object, "%s" given.', gettype($invalidItem->relationships)));
 
         $parser->parse($invalidItem);
     }
@@ -265,6 +276,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('These properties are not allowed in relationships: `type`, `id`.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"type": null}}', false));
     }
@@ -277,6 +289,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('These properties are not allowed in relationships: `type`, `id`.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"id": null}}', false));
     }
@@ -289,6 +302,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Relationship "foo" cannot be set because it already exists in Resource object.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "attributes": {"foo": "bar"}, "relationships": {"foo": "bar"}}', false));
     }
@@ -304,6 +318,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Relationship has to be an object, "%s" given.', gettype($invalidItem->relationships->foo)));
 
         $parser->parse($invalidItem);
     }
@@ -328,6 +343,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Relationship object MUST contain at least one of the following properties: `links`, `data`, `meta`.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {}}}', false));
     }
@@ -343,6 +359,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('ResourceIdentifier has to be an object, "%s" given.', gettype($invalidItem->relationships->foo->data)));
 
         $parser->parse($invalidItem);
     }
@@ -365,6 +382,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('ResourceIdentifier object MUST contain a type.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"id": "foo"}}}}', false));
     }
@@ -377,6 +395,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('ResourceIdentifier object MUST contain an id.');
 
         $parser->parse(json_decode('{"id": "foo", "type": "foo", "relationships": {"foo": {"data": {"type": "foo"}}}}', false));
     }
@@ -392,6 +411,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('ResourceIdentifier property "id" has to be a string, "%s" given.', gettype($invalidItem->relationships->foo->data->id)));
 
         $parser->parse($invalidItem);
     }
@@ -417,6 +437,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('ResourceIdentifier property "type" has to be a string, "%s" given.', gettype($invalidItem->relationships->foo->data->type)));
 
         $parser->parse($invalidItem);
     }

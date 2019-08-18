@@ -68,7 +68,7 @@ class ItemParser
                 throw new ValidationException(sprintf('Resource property "attributes" has to be an object, "%s" given.', gettype($data->attributes)));
             }
             if (property_exists($data->attributes, 'type') || property_exists($data->attributes, 'id') || property_exists($data->attributes, 'relationships') || property_exists($data->attributes, 'links')) {
-                throw new ValidationException('These properties are not allowed in attributes: `type`, `id`, `relationships`, `links`');
+                throw new ValidationException('These properties are not allowed in attributes: `type`, `id`, `relationships`, `links`.');
             }
         }
 

@@ -33,6 +33,7 @@ class MetaParserTest extends AbstractTest
         $parser = new MetaParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Meta has to be an object, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData);
     }

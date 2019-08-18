@@ -58,6 +58,7 @@ class LinksParserTest extends AbstractTest
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Links has to be an object, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData, LinksParser::SOURCE_DOCUMENT);
     }
@@ -85,6 +86,7 @@ class LinksParserTest extends AbstractTest
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Link "foo" has to be an object, string or null, "%s" given.', gettype($invalidData->foo)));
 
         $parser->parse($invalidData, LinksParser::SOURCE_DOCUMENT);
     }
@@ -107,6 +109,7 @@ class LinksParserTest extends AbstractTest
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Link "self" has to be an object or string, "NULL" given.');
 
         $parser->parse(json_decode('{"self": null}', false), LinksParser::SOURCE_DOCUMENT);
     }
@@ -119,6 +122,7 @@ class LinksParserTest extends AbstractTest
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Link "related" has to be an object or string, "NULL" given.');
 
         $parser->parse(json_decode('{"related": null}', false), LinksParser::SOURCE_DOCUMENT);
     }
@@ -131,6 +135,7 @@ class LinksParserTest extends AbstractTest
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Error links object MUST contain at least one of the following properties: `about`.');
 
         $parser->parse(json_decode('{}', false), LinksParser::SOURCE_ERROR);
     }
@@ -143,6 +148,7 @@ class LinksParserTest extends AbstractTest
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Relationship links object MUST contain at least one of the following properties: `self`, `related`.');
 
         $parser->parse(json_decode('{}', false), LinksParser::SOURCE_RELATIONSHIP);
     }
@@ -155,6 +161,7 @@ class LinksParserTest extends AbstractTest
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Link "self" must have a "href" attribute.');
 
         $parser->parse(json_decode('{"self": {}}', false), LinksParser::SOURCE_DOCUMENT);
     }

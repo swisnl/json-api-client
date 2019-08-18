@@ -48,6 +48,19 @@ class DocumentParserTest extends AbstractTest
 
     /**
      * @test
+     */
+    public function it_throws_when_json_is_not_valid()
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Unable to parse JSON data: Malformed UTF-8 characters, possibly incorrectly encoded');
+
+        $parser->parse("\x80");
+    }
+
+    /**
+     * @test
      * @dataProvider provideInvalidJson
      *
      * @param string $invalidJson
@@ -57,6 +70,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Document has to be an object, "%s" given.', gettype(json_decode($invalidJson, false))));
 
         $parser->parse($invalidJson);
     }
@@ -64,8 +78,6 @@ class DocumentParserTest extends AbstractTest
     public function provideInvalidJson(): array
     {
         return [
-            [''],
-            ['Foo bar'],
             [json_encode(null)],
             [json_encode(1)],
             [json_encode(1.5)],
@@ -83,6 +95,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Document MUST contain at least one of the following properties: `data`, `errors`, `meta`.');
 
         $parser->parse(json_encode(new \stdClass()));
     }
@@ -95,6 +108,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('The properties `data` and `errors` MUST NOT coexist in Document.');
 
         $parser->parse('{"data": [], "errors": []}');
     }
@@ -107,6 +121,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('If Document does not contain a `data` property, the `included` property MUST NOT be present either.');
 
         $parser->parse('{"included": [], "errors": []}');
     }
@@ -122,6 +137,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype(json_decode($invalidData, false))));
 
         $parser->parse($invalidData);
     }
