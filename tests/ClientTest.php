@@ -80,10 +80,19 @@ class ClientTest extends AbstractTest
             $baseUri,
             MessageFactoryDiscovery::find()
         );
-        $response = $client->get($endpoint);
+        $response = $client->get($endpoint, ['X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('GET', $httpClient->getLastRequest()->getMethod());
         $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals(
+            [
+                'Accept'       => ['application/vnd.api+json'],
+                'Content-Type' => ['application/vnd.api+json'],
+                'X-Foo'        => ['bar'],
+                'Host'         => ['www.test.com'],
+            ],
+            $httpClient->getLastRequest()->getHeaders()
+        );
     }
 
     /**
@@ -101,10 +110,19 @@ class ClientTest extends AbstractTest
             $baseUri,
             MessageFactoryDiscovery::find()
         );
-        $response = $client->delete($endpoint);
+        $response = $client->delete($endpoint, ['X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('DELETE', $httpClient->getLastRequest()->getMethod());
         $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals(
+            [
+                'Accept'       => ['application/vnd.api+json'],
+                'Content-Type' => ['application/vnd.api+json'],
+                'X-Foo'        => ['bar'],
+                'Host'         => ['www.test.com'],
+            ],
+            $httpClient->getLastRequest()->getHeaders()
+        );
     }
 
     /**
@@ -122,11 +140,20 @@ class ClientTest extends AbstractTest
             $baseUri,
             MessageFactoryDiscovery::find()
         );
-        $response = $client->patch($endpoint, 'testvar=testvalue');
+        $response = $client->patch($endpoint, 'testvar=testvalue', ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('PATCH', $httpClient->getLastRequest()->getMethod());
         $this->assertEquals('testvar=testvalue', $httpClient->getLastRequest()->getBody()->getContents());
         $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals(
+            [
+                'Accept'       => ['application/vnd.api+json'],
+                'Content-Type' => ['application/pdf'],
+                'X-Foo'        => ['bar'],
+                'Host'         => ['www.test.com'],
+            ],
+            $httpClient->getLastRequest()->getHeaders()
+        );
     }
 
     /**
@@ -144,11 +171,20 @@ class ClientTest extends AbstractTest
             $baseUri,
             MessageFactoryDiscovery::find()
         );
-        $response = $client->post($endpoint, 'testvar=testvalue');
+        $response = $client->post($endpoint, 'testvar=testvalue', ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('POST', $httpClient->getLastRequest()->getMethod());
         $this->assertEquals('testvar=testvalue', $httpClient->getLastRequest()->getBody()->getContents());
         $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals(
+            [
+                'Accept'       => ['application/vnd.api+json'],
+                'Content-Type' => ['application/pdf'],
+                'X-Foo'        => ['bar'],
+                'Host'         => ['www.test.com'],
+            ],
+            $httpClient->getLastRequest()->getHeaders()
+        );
     }
 
     /**
@@ -166,10 +202,19 @@ class ClientTest extends AbstractTest
             $baseUri,
             MessageFactoryDiscovery::find()
         );
-        $response = $client->request('OPTIONS', $endpoint);
+        $response = $client->request('OPTIONS', $endpoint, null, ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('OPTIONS', $httpClient->getLastRequest()->getMethod());
         $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals(
+            [
+                'Accept'       => ['application/vnd.api+json'],
+                'Content-Type' => ['application/pdf'],
+                'X-Foo'        => ['bar'],
+                'Host'         => ['www.test.com'],
+            ],
+            $httpClient->getLastRequest()->getHeaders()
+        );
     }
 
     /**
