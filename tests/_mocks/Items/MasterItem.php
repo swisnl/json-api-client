@@ -42,6 +42,7 @@ class MasterItem extends Item
         'children',
         'morph',
         'morphmany',
+        'does_not_exist',
     ];
 
     public function child()

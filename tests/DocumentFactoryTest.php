@@ -77,6 +77,40 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
+    public function it_adds_included_to_the_document_for_singular_relations()
+    {
+        $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
+        $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
+        $item->setRelation('child', $childItem);
+
+        $documentFactory = new DocumentFactory();
+
+        $document = $documentFactory->make($item);
+
+        static::assertContains($childItem, $document->getIncluded());
+    }
+
+    /**
+     * @test
+     */
+    public function it_adds_included_to_the_document_for_plural_relations()
+    {
+        $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
+        $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
+        $childTwoItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('789');
+        $item->setRelation('child', new Collection([$childItem, $childTwoItem]));
+
+        $documentFactory = new DocumentFactory();
+
+        $document = $documentFactory->make($item);
+
+        static::assertContains($childItem, $document->getIncluded());
+        static::assertContains($childTwoItem, $document->getIncluded());
+    }
+
+    /**
+     * @test
+     */
     public function it_does_not_add_included_to_the_document_if_it_has_no_type()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
@@ -154,5 +188,22 @@ class DocumentFactoryTest extends AbstractTest
         $document = $documentFactory->make($item);
 
         static::assertContains($childItem, $document->getIncluded());
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_add_included_to_the_document_if_the_relationship_should_be_omitted()
+    {
+        $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
+        $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
+        $item->setRelation('child', $childItem);
+        $item->getRelation('child')->setOmitIncluded(true);
+
+        $documentFactory = new DocumentFactory();
+
+        $document = $documentFactory->make($item);
+
+        static::assertNotContains($childItem, $document->getIncluded());
     }
 }

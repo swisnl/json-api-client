@@ -11,6 +11,7 @@ use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
 use Swis\JsonApi\Client\Tests\Mocks\Items\AnotherRelatedItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 use Swis\JsonApi\Client\TypeMapper;
@@ -458,5 +459,22 @@ class ItemHydratorTest extends AbstractTest
             [null, null],
             ['', null],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_when_relationship_is_present_in_available_relationships_but_the_method_does_not_exist()
+    {
+        $data = [
+            'does_not_exist' => 1,
+        ];
+
+        $item = new MasterItem();
+
+        $this->expectException(HydrationException::class);
+        $this->expectExceptionMessage(sprintf('Method doesNotExist not found on %s', MasterItem::class));
+
+        $this->getItemHydrator()->hydrate($item, $data);
     }
 }
