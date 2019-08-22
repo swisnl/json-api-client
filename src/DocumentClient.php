@@ -42,7 +42,7 @@ class DocumentClient implements DocumentClientInterface
     /**
      * @param string $baseUri
      */
-    public function setBaseUri(string $baseUri)
+    public function setBaseUri(string $baseUri): void
     {
         $this->client->setBaseUri($baseUri);
     }

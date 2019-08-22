@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* Switched from [PHP-HTTP](http://php-http.org/) to [PSR-18](https://www.php-fig.org/psr/psr-18/), its successor.
+* The `\Swis\JsonApi\Client\Client` now uses [php-http/discovery](https://github.com/php-http/discovery) itself instead of the service provider. This should make usage without Laravel easier.
+* Removed the `$baseUri` parameter from `\Swis\JsonApi\Client\Client::__construct()`, use `\Swis\JsonApi\Client\Client::setBaseUri()` instead.
+
+### Removed
+
+* Removed `\Swis\JsonApi\Client\Providers\ServiceProvider::getHttpClient()` and `\Swis\JsonApi\Client\Providers\ServiceProvider::getMessageFactory()` as the client now discovers these classes itself. Custom HTTP clients must now be registered within your own service provider using a custom container binding.
+
 ### Fixed
 
 * Self and related links can not be `null` [#59](https://github.com/swisnl/json-api-client/pull/59).

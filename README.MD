@@ -19,12 +19,12 @@ A PHP package for mapping remote [JSON:API](http://jsonapi.org/) resources to El
 composer require swisnl/json-api-client
 ```
 
-N.B. Make sure you have installed a HTTP Client before you install this package or install one at the same time e.g. `composer require swisnl/json-api-client php-http/guzzle6-adapter`.
+N.B. Make sure you have installed a PSR-18 HTTP Client before you install this package or install one at the same time e.g. `composer require swisnl/json-api-client php-http/guzzle6-adapter`.
 
 ### HTTP Client
 
-We are decoupled from any HTTP messaging client with the help of [PHP-HTTP](http://docs.php-http.org/en/latest/httplug/users.html).
-This requires another package providing [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation).
+We are decoupled from any HTTP messaging client with the help of [PSR-18 HTTP Client](https://www.php-fig.org/psr/psr-18/).
+This requires an extra package providing [psr/http-client-implementation](https://packagist.org/providers/psr/http-client-implementation).
 To use Guzzle 6, for example, simply require `php-http/guzzle6-adapter`:
 
 ``` bash
@@ -498,43 +498,37 @@ The service provider registers the `TypeMapper` as a singleton so your entire ap
 ### Bind Clients
 
 The service provider registers the `Client` and `DocumentClient` to your application.
-By default it uses [php-http/discovery](https://github.com/php-http/discovery) to find a HTTP client and message factory.
-You can specify your own message factory by overwriting the `getMessageFactory()` method and your own HTTP client by overwriting the `getHttpClient()` method.
-The first should return a message factory and the latter should return a HTTP client, both implementing HTTPlug.
-These methods are the perfect place to add extra options to your HTTP client or register a mock HTTP client for your tests:
+By default the `Client` uses [php-http/discovery](https://github.com/php-http/discovery) to find an available HTTP client, request factory and stream factory so you don't have to setup those yourself.
+You can specify your own HTTP client, request factory or stream factory by customizing the container binding.
+This is a perfect way to add extra options to your HTTP client or register a mock HTTP client for your tests:
 
 ``` php
-protected function getHttpClient(): HttpClient
+class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    if (app()->environment('testing')) {
-        return new \Swis\Http\Fixture\Client(
-            new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures');
-        );
+    protected function register()
+    {
+        $this->app->bind(\Swis\JsonApi\Client\Client::class, function ($app) {
+            if ($app->environment('testing')) {
+                $httpClient = new \Swis\Http\Fixture\Client(
+                    new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures');
+                );
+            } else {
+                $httpClient = \Http\Adapter\Guzzle6\Client::createWithConfig(
+                    [
+                        'timeout' => 2,
+                    ]
+                );
+            }
+    
+            return new \Swis\JsonApi\Client\Client($httpClient);
+        });
     }
-
-    return \Http\Adapter\Guzzle6\Client::createWithConfig(
-        [
-            'timeout' => 2,
-        ]
-    );
 }
 ```
 
 N.B. This example uses our [swisnl/php-http-fixture-client](https://github.com/swisnl/php-http-fixture-client) when in testing environment.
 This package allows you to easily mock requests with static fixtures.
 Definitely worth a try!
-
-If you register your own service provider and use package auto discover, don't forget to exclude this package in your `package.json`:
-
-``` json
-"extra": {
-  "laravel": {
-    "dont-discover": [
-      "swisnl/json-api-client"
-    ]
-  }
-},
-```
 
 
 ## Advanced usage

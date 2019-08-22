@@ -7,15 +7,20 @@
         "ext-json": "*",
         "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*",
         "jenssegers/model": "^1.1",
-        "php-http/client-implementation": "^1.0",
-        "php-http/discovery": "^1.0"
+        "nyholm/psr7": "^1.2",
+        "php-http/discovery": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-client-implementation": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-factory-implementation": "^1.0",
+        "psr/http-message": "^1.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
         "graham-campbell/testbench": "^5.1",
         "phpunit/phpunit": "^6.1|^7.0|^8.0",
-        "php-http/guzzle6-adapter": "^1.1",
-        "php-http/mock-client": "^1.1"
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/mock-client": "^1.2"
     },
     "suggest": {
         "swisnl/php-http-fixture-client": "Allows for easily mocking API calls with fixtures in your tests"
