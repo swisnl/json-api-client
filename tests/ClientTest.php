@@ -2,9 +2,8 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
-use Http\Client\Common\Exception\LoopException;
-use Http\Client\Exception\HttpException;
-use Http\Discovery\MessageFactoryDiscovery;
+use function GuzzleHttp\Psr7\stream_for;
+use Http\Mock\Client as HttpMockClient;
 use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Client;
 
@@ -13,17 +12,11 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function the_base_url_can_be_changed_after_instantiation()
+    public function it_can_get_and_set_the_base_url()
     {
-        $httpClient = new \Http\Mock\Client();
+        $client = new Client();
 
-        $client = new Client(
-            $httpClient,
-            'http://www.test.com',
-            MessageFactoryDiscovery::find()
-        );
-
-        $this->assertEquals('http://www.test.com', $client->getBaseUri());
+        $this->assertEquals('', $client->getBaseUri());
         $client->setBaseUri('http://www.test-changed.com');
         $this->assertEquals('http://www.test-changed.com', $client->getBaseUri());
     }
@@ -31,15 +24,9 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function the_default_headers_can_be_changed_after_instantiation()
+    public function it_can_get_and_set_the_default_headers()
     {
-        $httpClient = new \Http\Mock\Client();
-
-        $client = new Client(
-            $httpClient,
-            'http://www.test.com',
-            MessageFactoryDiscovery::find()
-        );
+        $client = new Client();
 
         $this->assertEquals(
             [
@@ -70,26 +57,20 @@ class ClientTest extends AbstractTest
      */
     public function it_builds_a_get_request()
     {
-        $baseUri = 'http://www.test.com';
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+
         $endpoint = '/test/1';
 
-        $httpClient = new \Http\Mock\Client();
-
-        $client = new Client(
-            $httpClient,
-            $baseUri,
-            MessageFactoryDiscovery::find()
-        );
         $response = $client->get($endpoint, ['X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('GET', $httpClient->getLastRequest()->getMethod());
-        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
                 'Accept'       => ['application/vnd.api+json'],
                 'Content-Type' => ['application/vnd.api+json'],
                 'X-Foo'        => ['bar'],
-                'Host'         => ['www.test.com'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -100,26 +81,20 @@ class ClientTest extends AbstractTest
      */
     public function it_builds_a_delete_request()
     {
-        $baseUri = 'http://www.test.com';
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+
         $endpoint = '/test/1';
 
-        $httpClient = new \Http\Mock\Client();
-
-        $client = new Client(
-            $httpClient,
-            $baseUri,
-            MessageFactoryDiscovery::find()
-        );
         $response = $client->delete($endpoint, ['X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('DELETE', $httpClient->getLastRequest()->getMethod());
-        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
                 'Accept'       => ['application/vnd.api+json'],
                 'Content-Type' => ['application/vnd.api+json'],
                 'X-Foo'        => ['bar'],
-                'Host'         => ['www.test.com'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -130,27 +105,21 @@ class ClientTest extends AbstractTest
      */
     public function it_builds_a_patch_request()
     {
-        $baseUri = 'http://www.test.com';
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+
         $endpoint = '/test/1';
 
-        $httpClient = new \Http\Mock\Client();
-
-        $client = new Client(
-            $httpClient,
-            $baseUri,
-            MessageFactoryDiscovery::find()
-        );
         $response = $client->patch($endpoint, 'testvar=testvalue', ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('PATCH', $httpClient->getLastRequest()->getMethod());
-        $this->assertEquals('testvar=testvalue', $httpClient->getLastRequest()->getBody()->getContents());
-        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
                 'Accept'       => ['application/vnd.api+json'],
                 'Content-Type' => ['application/pdf'],
                 'X-Foo'        => ['bar'],
-                'Host'         => ['www.test.com'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -161,27 +130,21 @@ class ClientTest extends AbstractTest
      */
     public function it_builds_a_post_request()
     {
-        $baseUri = 'http://www.test.com';
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+
         $endpoint = '/test/1';
 
-        $httpClient = new \Http\Mock\Client();
-
-        $client = new Client(
-            $httpClient,
-            $baseUri,
-            MessageFactoryDiscovery::find()
-        );
         $response = $client->post($endpoint, 'testvar=testvalue', ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('POST', $httpClient->getLastRequest()->getMethod());
-        $this->assertEquals('testvar=testvalue', $httpClient->getLastRequest()->getBody()->getContents());
-        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
                 'Accept'       => ['application/vnd.api+json'],
                 'Content-Type' => ['application/pdf'],
                 'X-Foo'        => ['bar'],
-                'Host'         => ['www.test.com'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -192,26 +155,20 @@ class ClientTest extends AbstractTest
      */
     public function it_builds_other_requests()
     {
-        $baseUri = 'http://www.test.com';
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+
         $endpoint = '/test/1';
 
-        $httpClient = new \Http\Mock\Client();
-
-        $client = new Client(
-            $httpClient,
-            $baseUri,
-            MessageFactoryDiscovery::find()
-        );
         $response = $client->request('OPTIONS', $endpoint, null, ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('OPTIONS', $httpClient->getLastRequest()->getMethod());
-        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+        $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
                 'Accept'       => ['application/vnd.api+json'],
                 'Content-Type' => ['application/pdf'],
                 'X-Foo'        => ['bar'],
-                'Host'         => ['www.test.com'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -220,53 +177,61 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_passes_http_exceptions()
+    public function it_builds_requests_with_a_string_as_body()
     {
-        $baseUri = 'http://www.test.com';
-        $endpoint = '/test/1';
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
 
-        $httpClient = new \Http\Mock\Client();
+        $body = 'testvar=testvalue';
 
-        $request = $this->createMock(\Psr\Http\Message\RequestInterface::class);
-        $response = $this->createMock(\Psr\Http\Message\ResponseInterface::class);
-
-        $exception = HttpException::create($request, $response);
-        $httpClient->setDefaultException($exception);
-
-        $client = new Client(
-            $httpClient,
-            $baseUri,
-            MessageFactoryDiscovery::find()
-        );
-
-        $httpResponse = $client->get($endpoint);
-
-        $this->assertSame($response, $httpResponse);
+        $response = $client->request('POST', '/test/1', $body);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
     }
 
     /**
      * @test
      */
-    public function it_throws_non_http_exceptions()
+    public function it_builds_requests_with_a_resource_as_body()
     {
-        $baseUri = 'http://www.test.com';
-        $endpoint = '/test/1';
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
 
-        $httpClient = new \Http\Mock\Client();
+        $body = fopen('php://temp', 'r+');
+        fwrite($body, 'testvar=testvalue');
 
-        $request = $this->createMock(\Psr\Http\Message\RequestInterface::class);
+        $response = $client->request('POST', '/test/1', $body);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+    }
 
-        $exception = new LoopException('Whoops, detected a loop!', $request);
-        $httpClient->setDefaultException($exception);
+    /**
+     * @test
+     */
+    public function it_builds_requests_with_a_stream_as_body()
+    {
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
 
-        $client = new Client(
-            $httpClient,
-            $baseUri,
-            MessageFactoryDiscovery::find()
-        );
+        $body = stream_for('testvar=testvalue');
 
-        $this->expectException(LoopException::class);
+        $response = $client->request('POST', '/test/1', $body);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+    }
 
-        $client->get($endpoint);
+    /**
+     * @test
+     */
+    public function it_builds_requests_without_a_body()
+    {
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+
+        $body = null;
+
+        $response = $client->request('POST', '/test/1', $body);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals('', (string)$httpClient->getLastRequest()->getBody());
     }
 }

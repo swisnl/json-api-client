@@ -2,10 +2,6 @@
 
 namespace Swis\JsonApi\Client\Providers;
 
-use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Message\MessageFactory;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Swis\JsonApi\Client\Client;
 use Swis\JsonApi\Client\DocumentClient;
@@ -20,13 +16,6 @@ use Swis\JsonApi\Client\TypeMapper;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    public function boot()
-    {
-        $this->publishes([
-            dirname(__DIR__, 2).'/config/' => config_path(),
-        ], 'config');
-    }
-
     public function register()
     {
         $this->mergeConfigFrom(
@@ -37,6 +26,13 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerSharedTypeMapper();
         $this->registerParsers();
         $this->registerClients();
+    }
+
+    public function boot()
+    {
+        $this->publishes([
+            dirname(__DIR__, 2).'/config/' => config_path(),
+        ], 'config');
     }
 
     protected function registerSharedTypeMapper()
@@ -52,28 +48,16 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerClients()
     {
-        $this->app->bind(
-            Client::class,
-            function () {
-                return new Client(
-                    $this->getHttpClient(),
-                    config('jsonapi.base_uri'),
-                    $this->getMessageFactory()
-                );
+        $this->app->extend(
+            ClientInterface::class,
+            static function (ClientInterface $client) {
+                $client->setBaseUri(config('jsonapi.base_uri'));
+
+                return $client;
             }
         );
 
         $this->app->bind(ClientInterface::class, Client::class);
         $this->app->bind(DocumentClientInterface::class, DocumentClient::class);
-    }
-
-    protected function getHttpClient(): HttpClient
-    {
-        return HttpClientDiscovery::find();
-    }
-
-    protected function getMessageFactory(): MessageFactory
-    {
-        return MessageFactoryDiscovery::find();
     }
 }

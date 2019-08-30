@@ -2,68 +2,59 @@
 
 namespace Swis\JsonApi\Client;
 
-use Http\Client\Exception\HttpException;
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 use Swis\JsonApi\Client\Interfaces\ClientInterface;
 
 class Client implements ClientInterface
 {
     /**
-     * @var string
-     */
-    const METHOD_DELETE = 'DELETE';
-
-    /**
-     * @var string
-     */
-    const METHOD_GET = 'GET';
-
-    /**
-     * @var string
-     */
-    const METHOD_PATCH = 'PATCH';
-
-    /**
-     * @var string
-     */
-    const METHOD_POST = 'POST';
-
-    /**
-     * @var \Http\Client\HttpClient
+     * @var \Psr\Http\Client\ClientInterface
      */
     private $client;
 
     /**
-     * @var string
+     * @var \Psr\Http\Message\RequestFactoryInterface
      */
-    private $baseUri;
+    private $requestFactory;
 
     /**
-     * @var MessageFactory
+     * @var \Psr\Http\Message\StreamFactoryInterface
      */
-    private $messageFactory;
+    private $streamFactory;
 
-    protected $defaultHeaders = [
+    /**
+     * @var string
+     */
+    private $baseUri = '';
+
+    /**
+     * @var array
+     */
+    private $defaultHeaders = [
         'Accept'       => 'application/vnd.api+json',
         'Content-Type' => 'application/vnd.api+json',
     ];
 
     /**
-     * @param \Http\Client\HttpClient $client
-     * @param string                  $baseUri
-     * @param MessageFactory          $messageFactory
+     * @param \Psr\Http\Client\ClientInterface|null          $client
+     * @param \Psr\Http\Message\RequestFactoryInterface|null $requestFactory
+     * @param \Psr\Http\Message\StreamFactoryInterface|null  $streamFactory
      */
     public function __construct(
-        HttpClient $client,
-        string $baseUri,
-        MessageFactory $messageFactory
+        HttpClientInterface $client = null,
+        RequestFactoryInterface $requestFactory = null,
+        StreamFactoryInterface $streamFactory = null
     ) {
-        $this->client = $client;
-        $this->baseUri = $baseUri;
-        $this->messageFactory = $messageFactory;
+        $this->client = $client ?: Psr18ClientDiscovery::find();
+        $this->requestFactory = $requestFactory ?: Psr17FactoryDiscovery::findRequestFactory();
+        $this->streamFactory = $streamFactory ?: Psr17FactoryDiscovery::findStreamFactory();
     }
 
     /**
@@ -77,97 +68,124 @@ class Client implements ClientInterface
     /**
      * @param string $baseUri
      */
-    public function setBaseUri(string $baseUri)
+    public function setBaseUri(string $baseUri): void
     {
         $this->baseUri = $baseUri;
     }
 
     /**
+     * @return array
+     */
+    public function getDefaultHeaders(): array
+    {
+        return $this->defaultHeaders;
+    }
+
+    /**
+     * @param array $defaultHeaders
+     */
+    public function setDefaultHeaders(array $defaultHeaders): void
+    {
+        $this->defaultHeaders = $defaultHeaders;
+    }
+
+    /**
      * @param string $endpoint
      * @param array  $headers
      *
-     * @throws \Http\Client\Exception
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function get(string $endpoint, array $headers = []): ResponseInterface
     {
-        return $this->request(static::METHOD_GET, $endpoint, null, $headers);
+        return $this->request('GET', $endpoint, null, $headers);
     }
 
     /**
-     * @param string                                                                         $endpoint
-     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
-     * @param array                                                                          $headers
+     * @param string                                                 $endpoint
+     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
+     * @param array                                                  $headers
      *
-     * @throws \Http\Client\Exception
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function post(string $endpoint, $body, array $headers = []): ResponseInterface
     {
-        return $this->request(static::METHOD_POST, $endpoint, $body, $headers);
+        return $this->request('POST', $endpoint, $body, $headers);
     }
 
     /**
-     * @param string                                                                         $endpoint
-     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
-     * @param array                                                                          $headers
+     * @param string                                                 $endpoint
+     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
+     * @param array                                                  $headers
      *
-     * @throws \Http\Client\Exception
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function patch(string $endpoint, $body, array $headers = []): ResponseInterface
     {
-        return $this->request(static::METHOD_PATCH, $endpoint, $body, $headers);
+        return $this->request('PATCH', $endpoint, $body, $headers);
     }
 
     /**
      * @param string $endpoint
      * @param array  $headers
      *
-     * @throws \Http\Client\Exception
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function delete(string $endpoint, array $headers = []): ResponseInterface
     {
-        return $this->request(static::METHOD_DELETE, $endpoint, null, $headers);
+        return $this->request('DELETE', $endpoint, null, $headers);
     }
 
     /**
-     * @param string                                                                         $method
-     * @param string                                                                         $endpoint
-     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
-     * @param array                                                                          $headers
+     * @param string                                                 $method
+     * @param string                                                 $endpoint
+     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
+     * @param array                                                  $headers
      *
-     * @throws \Http\Client\Exception
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function request(string $method, string $endpoint, $body = null, array $headers = []): ResponseInterface
     {
-        $request = $this->buildRequest($method, $endpoint, $body, $headers);
-
-        try {
-            return $this->client->sendRequest($request);
-        } catch (HttpException $e) {
-            return $e->getResponse();
-        }
+        return $this->client->sendRequest($this->buildRequest($method, $endpoint, $body, $headers));
     }
 
     /**
-     * @param string                                                                         $method
-     * @param string                                                                         $endpoint
-     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
-     * @param array                                                                          $headers
+     * @param string                                                 $method
+     * @param string                                                 $endpoint
+     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
+     * @param array                                                  $headers
      *
      * @return \Psr\Http\Message\RequestInterface
      */
     protected function buildRequest(string $method, string $endpoint, $body = null, array $headers = []): RequestInterface
     {
-        return $this->messageFactory->createRequest($method, $this->getEndpoint($endpoint), $this->mergeHeaders($headers), $body);
+        $request = $this->requestFactory->createRequest($method, $this->getEndpoint($endpoint));
+
+        if ($body !== null) {
+            if (is_resource($body)) {
+                $body = $this->streamFactory->createStreamFromResource($body);
+            }
+            if (!($body instanceof StreamInterface)) {
+                $body = $this->streamFactory->createStream($body);
+            }
+
+            $request = $request->withBody($body);
+        }
+
+        foreach ($this->mergeHeaders($headers) as $name => $value) {
+            $request = $request->withHeader($name, $value);
+        }
+
+        return $request;
     }
 
     /**
@@ -180,18 +198,13 @@ class Client implements ClientInterface
         return $this->baseUri.$endpoint;
     }
 
-    protected function mergeHeaders(array $headers = []): array
+    /**
+     * @param array $headers
+     *
+     * @return array
+     */
+    protected function mergeHeaders(array $headers): array
     {
         return array_merge($this->defaultHeaders, $headers);
-    }
-
-    public function getDefaultHeaders(): array
-    {
-        return $this->defaultHeaders;
-    }
-
-    public function setDefaultHeaders(array $defaultHeaders)
-    {
-        $this->defaultHeaders = $defaultHeaders;
     }
 }

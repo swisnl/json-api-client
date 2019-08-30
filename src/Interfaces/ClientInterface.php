@@ -15,18 +15,18 @@ interface ClientInterface
     public function get(string $endpoint, array $headers = []): ResponseInterface;
 
     /**
-     * @param string                                                                         $endpoint
-     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
-     * @param array                                                                          $headers
+     * @param string                                                 $endpoint
+     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
+     * @param array                                                  $headers
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function patch(string $endpoint, $body, array $headers = []): ResponseInterface;
 
     /**
-     * @param string                                                                         $endpoint
-     * @param resource|string|int|float|bool|\Psr\Http\Message\StreamInterface|callable|null $body
-     * @param array                                                                          $headers
+     * @param string                                                 $endpoint
+     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
+     * @param array                                                  $headers
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
