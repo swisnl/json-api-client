@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Added support for Laravel 6 [#61](https://github.com/swisnl/json-api-client/pull/61).
+
 ### Changed
 
 * Switched from [PHP-HTTP](http://php-http.org/) to [PSR-18](https://www.php-fig.org/psr/psr-18/), its successor [#60](https://github.com/swisnl/json-api-client/pull/60).
