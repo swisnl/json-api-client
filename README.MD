@@ -33,15 +33,54 @@ composer require php-http/guzzle6-adapter
 
 See [Bind clients](#bind-clients) if you want to use your own HTTP client or use specific configuration options.
 
-### Laravel Service Provider
+### Laravel
 
-If you are using Laravel < 5.5 or have disabled package auto discover, you must add the service provider to your `config/app.php` file:
+This package includes some Laravel specific classes to make it easier to use it with Laravel.
+
+#### Service Provider and Facade Aliases
+
+The required service provider and some facade aliases are automatically discovered by Laravel.
+However, if you've disabled package auto discover, you must add the service provider and optionally the facade aliases to your `config/app.php` file:
 
 ``` php
 'providers' => [
     ...,
     \Swis\JsonApi\Client\Providers\ServiceProvider::class,
 ],
+'aliases' => [
+    ...,
+    'DocumentFactory' => \Swis\JsonApi\Client\Facades\DocumentFactoryFacade::class,
+    'DocumentParser' => \Swis\JsonApi\Client\Facades\DocumentParserFacade::class,
+    'ItemHydrator' => \Swis\JsonApi\Client\Facades\ItemHydratorFacade::class,
+    'ResponseParser' => \Swis\JsonApi\Client\Facades\ResponseParserFacade::class,
+    'TypeMapper' => \Swis\JsonApi\Client\Facades\TypeMapperFacade::class,
+],
+```
+
+#### Configuration
+
+The following is the default configuration provided by this package:
+
+``` php
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Base URI
+    |--------------------------------------------------------------------------
+    |
+    | Specify a base uri which will be prepended to every URI.
+    |
+    | Default: empty string
+    |
+    */
+    'base_uri' => '',
+];
+```
+        
+If you would like to make changes to the default configuration, publish and edit the configuration file:
+
+``` bash
+php artisan vendor:publish --provider="Swis\JsonApi\Client\Providers\ServiceProvider" --tag="config"
 ```
 
 
@@ -65,35 +104,6 @@ if ($document->hasErrors()) {
 } else {
   $blogs = $document->getData();
 }
-```
-
-
-## Configuration
-
-The following is the default configuration provided by this package:
-
-``` php
-return [
-    /*
-    |--------------------------------------------------------------------------
-    | Base URI
-    |--------------------------------------------------------------------------
-    |
-    | Specify a base uri which will be prepended to every URI.
-    |
-    | Default: empty string
-    |
-    */
-    'base_uri' => '',
-];
-```
-        
-### Publish Configuration
-
-If you would like to make changes to the default configuration, publish and edit the configuration file:
-
-``` bash
-php artisan vendor:publish --provider="Swis\JsonApi\Client\Providers\ServiceProvider" --tag="config"
 ```
 
 
