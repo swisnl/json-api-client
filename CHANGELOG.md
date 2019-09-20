@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [1.0.0-beta.2] - 2019-09-20
+
+This release includes a small breaking change because we switched from PHP-HTTP to PSR-18, its successor. Almost all PHP-HTTP clients now implement PSR-18, so this should not be a big problem. This also means for example that PSR exceptions are thrown instead of PHP-HTTP exceptions. If you are relying on some PHP-HTTP classes yourself, make sure to review your code and change those to their PSR equivalent. If you are using this package within a Laravel application, it is important to note that we also changed the way how you can bind your own HTTP client. Please see [the documentation](https://github.com/swisnl/json-api-client#bind-clients) and [compare all code changes](https://github.com/swisnl/json-api-client/compare/1.0.0-beta...1.0.0-beta.2) for more details!
+
 ### Added
 
 * Added support for Laravel 6 [#61](https://github.com/swisnl/json-api-client/pull/61).
