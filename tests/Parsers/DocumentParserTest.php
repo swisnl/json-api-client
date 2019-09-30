@@ -305,6 +305,49 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
+    public function it_does_not_link_empty_singular_relations()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $parser = $this->getDocumentParser($typeMapper);
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data'     => [
+                        'type'          => 'master',
+                        'id'            => '1',
+                        'attributes'    => [
+                            'foo' => 'bar',
+                        ],
+                        'relationships' => [
+                            'child' => [
+                                'data' => null,
+                            ],
+                        ],
+                    ],
+                    'included' => [
+                        [
+                            'type'       => 'child',
+                            'id'         => '1',
+                            'attributes' => [
+                                'foo' => 'baz',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertNull($document->getData()->child()->getIncluded());
+        $this->assertInstanceOf(ChildItem::class, $document->getIncluded()->get(0));
+    }
+
+    /**
+     * @test
+     */
     public function it_links_plural_relations_to_items_from_included()
     {
         $typeMapper = new TypeMapper();
@@ -361,6 +404,58 @@ class DocumentParserTest extends AbstractTest
         $this->assertInstanceOf(ChildItem::class, $document->getData()->children()->getIncluded()->get(0));
         $this->assertSame($document->getIncluded()->get(0), $document->getData()->children()->getIncluded()->get(0));
         $this->assertSame($document->getIncluded()->get(1), $document->getData()->children()->getIncluded()->get(1));
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_link_empty_plural_relations()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $parser = $this->getDocumentParser($typeMapper);
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data'     => [
+                        'type'          => 'master',
+                        'id'            => '1',
+                        'attributes'    => [
+                            'foo' => 'bar',
+                        ],
+                        'relationships' => [
+                            'children' => [
+                                'data' => [],
+                            ],
+                        ],
+                    ],
+                    'included' => [
+                        [
+                            'type'       => 'child',
+                            'id'         => '1',
+                            'attributes' => [
+                                'foo' => 'baz',
+                            ],
+                        ],
+                        [
+                            'type'       => 'child',
+                            'id'         => '2',
+                            'attributes' => [
+                                'foo' => 'baz',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertInstanceOf(Collection::class, $document->getData()->children()->getIncluded());
+        $this->assertEmpty($document->getData()->children()->getIncluded());
+        $this->assertInstanceOf(ChildItem::class, $document->getIncluded()->get(0));
+        $this->assertInstanceOf(ChildItem::class, $document->getIncluded()->get(1));
     }
 
     /**

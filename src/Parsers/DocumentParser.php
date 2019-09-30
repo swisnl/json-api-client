@@ -178,8 +178,12 @@ class DocumentParser implements DocumentParserInterface
             function (ItemInterface $item) use ($keyedItems) {
                 foreach ($item->getRelations() as $name => $relation) {
                     if ($relation instanceof OneRelationInterface) {
-                        /** @var \Swis\JsonApi\Client\Interfaces\ItemInterface $relatedItem */
+                        /** @var \Swis\JsonApi\Client\Interfaces\ItemInterface|null $relatedItem */
                         $relatedItem = $relation->getIncluded();
+
+                        if ($relatedItem === null) {
+                            continue;
+                        }
 
                         $includedItem = $this->getItem($keyedItems, $relatedItem);
                         if ($includedItem !== null) {
