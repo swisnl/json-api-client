@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-### Fixed
+* Nothing
+
+## [1.0.0-beta.3] - 2019-09-30
 
 * Fixed parsing of empty singular relationships.
 
