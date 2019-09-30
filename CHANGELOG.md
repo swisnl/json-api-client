@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-* Fixed parsing of empty singular relationships.
+* Fixed parsing of empty singular relationships [#63](https://github.com/swisnl/json-api-client/pull/63).
 
 ## [1.0.0-beta.2] - 2019-09-20
 
