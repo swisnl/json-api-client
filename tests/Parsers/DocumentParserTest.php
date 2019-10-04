@@ -183,6 +183,42 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
+    public function it_throws_when_it_finds_duplicate_resources()
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Resources MUST be unique based on their `type` and `id`, 1 duplicate(s) found.');
+
+        $parser->parse(
+            json_encode(
+                [
+                    'data' => [
+                        [
+                            'type' => 'master',
+                            'id' => '1',
+                            'attributes' => [
+                                'foo' => 'bar',
+                            ],
+                        ],
+                    ],
+                    'included' => [
+                        [
+                            'type' => 'master',
+                            'id' => '1',
+                            'attributes' => [
+                                'foo' => 'bar',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+    }
+
+    /**
+     * @test
+     */
     public function it_parses_a_resource_document()
     {
         $parser = $this->getDocumentParser();

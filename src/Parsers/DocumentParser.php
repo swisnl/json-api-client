@@ -160,6 +160,12 @@ class DocumentParser implements DocumentParserInterface
         $allItems = Collection::wrap($document->getData())
             ->concat($document->getIncluded());
 
+        $duplicateItems = $this->getDuplicateItems($allItems);
+
+        if ($duplicateItems->isNotEmpty()) {
+            throw new ValidationException(sprintf('Resources MUST be unique based on their `type` and `id`, %d duplicate(s) found.', $duplicateItems->count()));
+        }
+
         $this->linkRelationships($allItems);
 
         return $document;
@@ -170,8 +176,7 @@ class DocumentParser implements DocumentParserInterface
      */
     private function linkRelationships(Collection $items): void
     {
-        // N.B. We reverse the items to make sure the first item in the collection takes precedence
-        $keyedItems = $items->reverse()->keyBy(
+        $keyedItems = $items->keyBy(
             function (ItemInterface $item) {
                 return $this->getItemKey($item);
             }
@@ -228,5 +233,47 @@ class DocumentParser implements DocumentParserInterface
     private function getItemKey(ItemInterface $item): string
     {
         return sprintf('%s:%s', $item->getType(), $item->getId());
+    }
+
+    /**
+     * @param \Swis\JsonApi\Client\Collection $items
+     *
+     * @return \Swis\JsonApi\Client\Collection
+     */
+    private function getDuplicateItems(Collection $items): Collection
+    {
+        $valueRetriever = function (ItemInterface $item) {
+            return $this->getItemKey($item);
+        };
+
+        // Collection->duplicates was introduced in Laravel 5.8
+        if (method_exists($items, 'duplicates')) {
+            return $items->duplicates($valueRetriever);
+        }
+
+        /*
+         * Duplicates code copied, and simplified for our use case, from Laravel 6.
+         *
+         * @see https://github.com/laravel/framework/blob/v6.1.0/src/Illuminate/Support/Collection.php#L275
+         */
+        $values = $items->map($valueRetriever);
+
+        $uniqueValues = $values->unique();
+
+        $compare = static function ($a, $b) {
+            return $a === $b;
+        };
+
+        $duplicates = new Collection();
+
+        foreach ($values as $key => $value) {
+            if ($uniqueValues->isNotEmpty() && $compare($value, $uniqueValues->first())) {
+                $uniqueValues->shift();
+            } else {
+                $duplicates[$key] = $value;
+            }
+        }
+
+        return $duplicates;
     }
 }

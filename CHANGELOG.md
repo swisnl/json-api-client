@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 * Reworded `ValidationException` messages to align them with the wordings used in the specification.
+* `DocumentParser` throws a `ValidationException` when it encounters duplicate resources.
 
 ## [1.0.0-beta.3] - 2019-09-30
 
