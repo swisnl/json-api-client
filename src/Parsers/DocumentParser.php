@@ -91,7 +91,7 @@ class DocumentParser implements DocumentParserInterface
             throw new ValidationException('If Document does not contain a `data` property, the `included` property MUST NOT be present either.');
         }
         if (property_exists($data, 'data') && !is_object($data->data) && !is_array($data->data) && $data->data !== null) {
-            throw new ValidationException(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype($data)));
+            throw new ValidationException(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype($data->data)));
         }
 
         $document = $this->getDocument($data);

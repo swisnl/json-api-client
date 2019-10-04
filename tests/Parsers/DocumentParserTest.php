@@ -137,7 +137,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype(json_decode($invalidData, false))));
+        $this->expectExceptionMessage(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype(json_decode($invalidData, false)->data)));
 
         $parser->parse($invalidData);
     }
