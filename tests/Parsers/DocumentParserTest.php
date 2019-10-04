@@ -154,6 +154,34 @@ class DocumentParserTest extends AbstractTest
 
     /**
      * @test
+     * @dataProvider provideInvalidIncluded
+     *
+     * @param mixed $invalidIncluded
+     */
+    public function it_throws_when_included_is_not_an_array($invalidIncluded)
+    {
+        $parser = $this->getDocumentParser();
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(sprintf('Document property "included" has to be an array, "%s" given.', gettype(json_decode($invalidIncluded, false)->included)));
+
+        $parser->parse($invalidIncluded);
+    }
+
+    public function provideInvalidIncluded(): array
+    {
+        return [
+            ['{"data": [], "included": null}'],
+            ['{"data": [], "included": 1}'],
+            ['{"data": [], "included": 1.5}'],
+            ['{"data": [], "included": false}'],
+            ['{"data": [], "included": "foo"}'],
+            ['{"data": [], "included": {}}'],
+        ];
+    }
+
+    /**
+     * @test
      */
     public function it_parses_a_resource_document()
     {
