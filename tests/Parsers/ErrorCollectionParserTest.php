@@ -42,7 +42,7 @@ class ErrorCollectionParserTest extends AbstractTest
         $parser = new ErrorCollectionParser($this->createMock(ErrorParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ErrorCollection has to be in an array, "%s" given.', gettype($invalidData)));
+        $this->expectExceptionMessage(sprintf('ErrorCollection MUST be an array, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData);
     }

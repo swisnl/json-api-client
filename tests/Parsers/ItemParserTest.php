@@ -63,7 +63,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Resource has to be an object, "%s" given.', gettype($invalidData)));
+        $this->expectExceptionMessage(sprintf('Resource MUST be an object, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData);
     }
@@ -117,7 +117,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Resource property "id" has to be a string, "%s" given.', gettype($invalidItem->id)));
+        $this->expectExceptionMessage(sprintf('Resource property "id" MUST be a string, "%s" given.', gettype($invalidItem->id)));
 
         $parser->parse($invalidItem);
     }
@@ -143,7 +143,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Resource property "type" has to be a string, "%s" given.', gettype($invalidItem->type)));
+        $this->expectExceptionMessage(sprintf('Resource property "type" MUST be a string, "%s" given.', gettype($invalidItem->type)));
 
         $parser->parse($invalidItem);
     }
@@ -171,7 +171,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Resource property "attributes" has to be an object, "%s" given.', gettype($invalidItem->attributes)));
+        $this->expectExceptionMessage(sprintf('Resource property "attributes" MUST be an object, "%s" given.', gettype($invalidItem->attributes)));
 
         $parser->parse($invalidItem);
     }
@@ -251,7 +251,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Relationships has to be an object, "%s" given.', gettype($invalidItem->relationships)));
+        $this->expectExceptionMessage(sprintf('Resource property "relationships" MUST be an object, "%s" given.', gettype($invalidItem->relationships)));
 
         $parser->parse($invalidItem);
     }
@@ -318,7 +318,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Relationship has to be an object, "%s" given.', gettype($invalidItem->relationships->foo)));
+        $this->expectExceptionMessage(sprintf('Relationship MUST be an object, "%s" given.', gettype($invalidItem->relationships->foo)));
 
         $parser->parse($invalidItem);
     }
@@ -359,7 +359,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ResourceIdentifier has to be an object, "%s" given.', gettype($invalidItem->relationships->foo->data)));
+        $this->expectExceptionMessage(sprintf('ResourceIdentifier MUST be an object, "%s" given.', gettype($invalidItem->relationships->foo->data)));
 
         $parser->parse($invalidItem);
     }
@@ -411,7 +411,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ResourceIdentifier property "id" has to be a string, "%s" given.', gettype($invalidItem->relationships->foo->data->id)));
+        $this->expectExceptionMessage(sprintf('ResourceIdentifier property "id" MUST be a string, "%s" given.', gettype($invalidItem->relationships->foo->data->id)));
 
         $parser->parse($invalidItem);
     }
@@ -437,7 +437,7 @@ class ItemParserTest extends AbstractTest
         $parser = $this->getItemParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ResourceIdentifier property "type" has to be a string, "%s" given.', gettype($invalidItem->relationships->foo->data->type)));
+        $this->expectExceptionMessage(sprintf('ResourceIdentifier property "type" MUST be a string, "%s" given.', gettype($invalidItem->relationships->foo->data->type)));
 
         $parser->parse($invalidItem);
     }

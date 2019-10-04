@@ -70,7 +70,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Document has to be an object, "%s" given.', gettype(json_decode($invalidJson, false))));
+        $this->expectExceptionMessage(sprintf('Document MUST be an object, "%s" given.', gettype(json_decode($invalidJson, false))));
 
         $parser->parse($invalidJson);
     }
@@ -137,7 +137,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype(json_decode($invalidData, false)->data)));
+        $this->expectExceptionMessage(sprintf('Document property "data" MUST be null, an array or an object, "%s" given.', gettype(json_decode($invalidData, false)->data)));
 
         $parser->parse($invalidData);
     }
@@ -163,7 +163,7 @@ class DocumentParserTest extends AbstractTest
         $parser = $this->getDocumentParser();
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Document property "included" has to be an array, "%s" given.', gettype(json_decode($invalidIncluded, false)->included)));
+        $this->expectExceptionMessage(sprintf('Document property "included" MUST be an array, "%s" given.', gettype(json_decode($invalidIncluded, false)->included)));
 
         $parser->parse($invalidIncluded);
     }

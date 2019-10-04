@@ -31,7 +31,7 @@ class CollectionParser
     public function parse($data): Collection
     {
         if (!is_array($data)) {
-            throw new ValidationException(sprintf('ResourceCollection has to be an array, "%s" given.', gettype($data)));
+            throw new ValidationException(sprintf('ResourceCollection MUST be an array, "%s" given.', gettype($data)));
         }
 
         return Collection::make($data)

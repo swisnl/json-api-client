@@ -31,7 +31,7 @@ class ErrorCollectionParser
     public function parse($data): ErrorCollection
     {
         if (!is_array($data)) {
-            throw new ValidationException(sprintf('ErrorCollection has to be in an array, "%s" given.', gettype($data)));
+            throw new ValidationException(sprintf('ErrorCollection MUST be an array, "%s" given.', gettype($data)));
         }
         if (count($data) === 0) {
             throw new ValidationException('ErrorCollection cannot be empty and MUST have at least one Error object.');

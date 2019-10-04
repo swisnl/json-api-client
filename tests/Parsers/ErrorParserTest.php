@@ -49,7 +49,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Error has to be an object, "%s" given.', gettype($invalidData)));
+        $this->expectExceptionMessage(sprintf('Error MUST be an object, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData);
     }
@@ -77,7 +77,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Error property "id" has to be a string, "%s" given.', gettype($invalidError->id)));
+        $this->expectExceptionMessage(sprintf('Error property "id" MUST be a string, "%s" given.', gettype($invalidError->id)));
 
         $parser->parse($invalidError);
     }
@@ -105,7 +105,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Error property "status" has to be a string, "%s" given.', gettype($invalidError->status)));
+        $this->expectExceptionMessage(sprintf('Error property "status" MUST be a string, "%s" given.', gettype($invalidError->status)));
 
         $parser->parse($invalidError);
     }
@@ -133,7 +133,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Error property "code" has to be a string, "%s" given.', gettype($invalidError->code)));
+        $this->expectExceptionMessage(sprintf('Error property "code" MUST be a string, "%s" given.', gettype($invalidError->code)));
 
         $parser->parse($invalidError);
     }
@@ -161,7 +161,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Error property "title" has to be a string, "%s" given.', gettype($invalidError->title)));
+        $this->expectExceptionMessage(sprintf('Error property "title" MUST be a string, "%s" given.', gettype($invalidError->title)));
 
         $parser->parse($invalidError);
     }
@@ -189,7 +189,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Error property "detail" has to be a string, "%s" given.', gettype($invalidError->detail)));
+        $this->expectExceptionMessage(sprintf('Error property "detail" MUST be a string, "%s" given.', gettype($invalidError->detail)));
 
         $parser->parse($invalidError);
     }
@@ -217,7 +217,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ErrorSource has to be an object, "%s" given.', gettype($invalidError->source)));
+        $this->expectExceptionMessage(sprintf('ErrorSource MUST be an object, "%s" given.', gettype($invalidError->source)));
 
         $parser->parse($invalidError);
     }
@@ -245,7 +245,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ErrorSource property "pointer" has to be a string, "%s" given.', gettype($invalidError->source->pointer)));
+        $this->expectExceptionMessage(sprintf('ErrorSource property "pointer" MUST be a string, "%s" given.', gettype($invalidError->source->pointer)));
 
         $parser->parse($invalidError);
     }
@@ -273,7 +273,7 @@ class ErrorParserTest extends AbstractTest
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ErrorSource property "parameter" has to be a string, "%s" given.', gettype($invalidError->source->parameter)));
+        $this->expectExceptionMessage(sprintf('ErrorSource property "parameter" MUST be a string, "%s" given.', gettype($invalidError->source->parameter)));
 
         $parser->parse($invalidError);
     }

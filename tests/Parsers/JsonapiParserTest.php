@@ -37,7 +37,7 @@ class JsonapiParserTest extends AbstractTest
         $parser = new JsonapiParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Jsonapi has to be an object, "%s" given.', gettype($invalidData)));
+        $this->expectExceptionMessage(sprintf('Jsonapi MUST be an object, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData);
     }
@@ -65,7 +65,7 @@ class JsonapiParserTest extends AbstractTest
         $parser = new JsonapiParser($this->createMock(MetaParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('Jsonapi property "version" has to be a string, "%s" given.', gettype($invalidJsonapi->version)));
+        $this->expectExceptionMessage(sprintf('Jsonapi property "version" MUST be a string, "%s" given.', gettype($invalidJsonapi->version)));
 
         $parser->parse($invalidJsonapi);
     }

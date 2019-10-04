@@ -79,7 +79,7 @@ class DocumentParser implements DocumentParserInterface
         $data = $this->decodeJson($json);
 
         if (!is_object($data)) {
-            throw new ValidationException(sprintf('Document has to be an object, "%s" given.', gettype($data)));
+            throw new ValidationException(sprintf('Document MUST be an object, "%s" given.', gettype($data)));
         }
         if (!property_exists($data, 'data') && !property_exists($data, 'errors') && !property_exists($data, 'meta')) {
             throw new ValidationException('Document MUST contain at least one of the following properties: `data`, `errors`, `meta`.');
@@ -91,10 +91,10 @@ class DocumentParser implements DocumentParserInterface
             throw new ValidationException('If Document does not contain a `data` property, the `included` property MUST NOT be present either.');
         }
         if (property_exists($data, 'data') && !is_object($data->data) && !is_array($data->data) && $data->data !== null) {
-            throw new ValidationException(sprintf('Document property "data" has to be null, an array or an object, "%s" given.', gettype($data->data)));
+            throw new ValidationException(sprintf('Document property "data" MUST be null, an array or an object, "%s" given.', gettype($data->data)));
         }
         if (property_exists($data, 'included') && !is_array($data->included)) {
-            throw new ValidationException(sprintf('Document property "included" has to be an array, "%s" given.', gettype($data->included)));
+            throw new ValidationException(sprintf('Document property "included" MUST be an array, "%s" given.', gettype($data->included)));
         }
 
         $document = $this->getDocument($data);

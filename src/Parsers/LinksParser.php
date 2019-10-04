@@ -47,7 +47,7 @@ class LinksParser
     public function parse($data, string $source): Links
     {
         if (!is_object($data)) {
-            throw new ValidationException(sprintf('Links has to be an object, "%s" given.', gettype($data)));
+            throw new ValidationException(sprintf('Links MUST be an object, "%s" given.', gettype($data)));
         }
         if ($source === self::SOURCE_ERROR && !property_exists($data, 'about')) {
             throw new ValidationException('Error links object MUST contain at least one of the following properties: `about`.');
@@ -76,7 +76,7 @@ class LinksParser
     private function buildLink($data, string $name): ? Link
     {
         if (in_array($name, self::LINKS_THAT_MAY_NOT_BE_NULL_WHEN_PRESENT, true) && !is_string($data) && !is_object($data)) {
-            throw new ValidationException(sprintf('Link "%s" has to be an object or string, "%s" given.', $name, gettype($data)));
+            throw new ValidationException(sprintf('Link "%s" MUST be an object or string, "%s" given.', $name, gettype($data)));
         }
 
         if ($data === null) {
@@ -88,10 +88,10 @@ class LinksParser
         }
 
         if (!is_object($data)) {
-            throw new ValidationException(sprintf('Link "%s" has to be an object, string or null, "%s" given.', $name, gettype($data)));
+            throw new ValidationException(sprintf('Link "%s" MUST be an object, string or null, "%s" given.', $name, gettype($data)));
         }
         if (!property_exists($data, 'href')) {
-            throw new ValidationException(sprintf('Link "%s" must have a "href" attribute.', $name));
+            throw new ValidationException(sprintf('Link "%s" MUST have a "href" attribute.', $name));
         }
 
         return new Link($data->href, property_exists($data, 'meta') ? $this->metaParser->parse($data->meta) : null);

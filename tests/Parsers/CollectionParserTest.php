@@ -42,7 +42,7 @@ class CollectionParserTest extends AbstractTest
         $parser = new CollectionParser($this->createMock(ItemParser::class));
 
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage(sprintf('ResourceCollection has to be an array, "%s" given.', gettype($invalidData)));
+        $this->expectExceptionMessage(sprintf('ResourceCollection MUST be an array, "%s" given.', gettype($invalidData)));
 
         $parser->parse($invalidData);
     }

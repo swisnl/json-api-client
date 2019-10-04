@@ -18,7 +18,7 @@ class MetaParser
     public function parse($data): Meta
     {
         if (!is_object($data)) {
-            throw new ValidationException(sprintf('Meta has to be an object, "%s" given.', gettype($data)));
+            throw new ValidationException(sprintf('Meta MUST be an object, "%s" given.', gettype($data)));
         }
 
         return new Meta((array) $data);
