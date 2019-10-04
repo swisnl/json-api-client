@@ -21,6 +21,6 @@ class MetaParser
             throw new ValidationException(sprintf('Meta has to be an object, "%s" given.', gettype($data)));
         }
 
-        return new Meta((array)$data);
+        return new Meta((array) $data);
     }
 }

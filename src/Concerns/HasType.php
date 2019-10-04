@@ -34,6 +34,6 @@ trait HasType
      */
     public function hasType(): bool
     {
-        return (bool)$this->type;
+        return (bool) $this->type;
     }
 }

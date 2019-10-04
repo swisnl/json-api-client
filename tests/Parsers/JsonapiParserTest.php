@@ -89,7 +89,7 @@ class JsonapiParserTest extends AbstractTest
     {
         $data = [
             'version' => '1.0',
-            'meta'    => [
+            'meta' => [
                 'copyright' => 'Copyright 2015 Example Corp.',
             ],
         ];

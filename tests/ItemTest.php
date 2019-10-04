@@ -33,10 +33,10 @@ class ItemTest extends AbstractTest
         $attributes = [
             'testKey' => 'testValue',
             'boolean' => true,
-            'object'  => [
+            'object' => [
                 'foo' => 'bar',
             ],
-            'array'   => [1, 2, 3],
+            'array' => [1, 2, 3],
         ];
         $item = new Item($attributes);
         $item->setType('testType');
@@ -44,8 +44,8 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'       => 'testType',
-                'id'         => '1234',
+                'type' => 'testType',
+                'id' => '1234',
                 'attributes' => $attributes,
             ],
             $item->toJsonApiArray()
@@ -64,7 +64,7 @@ class ItemTest extends AbstractTest
         $this->assertSame(
             [
                 'type' => 'testType',
-                'id'   => '1234',
+                'id' => '1234',
             ],
             $item->toJsonApiArray()
         );
@@ -81,13 +81,13 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'hasone_relation' => [
                         'data' => [
                             'type' => 'related-item',
-                            'id'   => '5678',
+                            'id' => '5678',
                         ],
                     ],
                 ],
@@ -107,8 +107,8 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'hasone_relation' => [
                         'data' => null,
@@ -130,14 +130,14 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'hasmany_relation' => [
                         'data' => [
                             [
                                 'type' => 'related-item',
-                                'id'   => '5678',
+                                'id' => '5678',
                             ],
                         ],
                     ],
@@ -158,8 +158,8 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'hasmany_relation' => [
                         'data' => [],
@@ -181,13 +181,13 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'morphto_relation' => [
                         'data' => [
                             'type' => 'related-item',
-                            'id'   => '5678',
+                            'id' => '5678',
                         ],
                     ],
                 ],
@@ -207,8 +207,8 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'morphto_relation' => [
                         'data' => null,
@@ -230,14 +230,14 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'morphtomany_relation' => [
                         'data' => [
                             [
                                 'type' => 'related-item',
-                                'id'   => '5678',
+                                'id' => '5678',
                             ],
                         ],
                     ],
@@ -258,8 +258,8 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'          => 'item-with-relationship',
-                'id'            => '1234',
+                'type' => 'item-with-relationship',
+                'id' => '1234',
                 'relationships' => [
                     'morphtomany_relation' => [
                         'data' => [],
@@ -292,8 +292,8 @@ class ItemTest extends AbstractTest
 
         $this->assertSame(
             [
-                'type'  => 'testType',
-                'id'    => '1',
+                'type' => 'testType',
+                'id' => '1',
                 'links' => [
                     'self' => [
                         'href' => 'http://example.com/testType/1',
@@ -323,7 +323,7 @@ class ItemTest extends AbstractTest
         $this->assertSame(
             [
                 'type' => 'testType',
-                'id'   => '1',
+                'id' => '1',
                 'meta' => [
                     'foo' => 'bar',
                 ],
@@ -399,7 +399,7 @@ class ItemTest extends AbstractTest
             'child' => [
                 'data' => [
                     'type' => 'child',
-                    'id'   => '1',
+                    'id' => '1',
                 ],
             ],
         ], $relations);

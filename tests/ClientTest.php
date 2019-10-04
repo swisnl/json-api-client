@@ -30,23 +30,23 @@ class ClientTest extends AbstractTest
 
         $this->assertEquals(
             [
-                'Accept'       => 'application/vnd.api+json',
+                'Accept' => 'application/vnd.api+json',
                 'Content-Type' => 'application/vnd.api+json',
             ],
             $client->getDefaultHeaders()
         );
         $client->setDefaultHeaders(
             [
-                'Accept'       => 'application/vnd.api+json',
+                'Accept' => 'application/vnd.api+json',
                 'Content-Type' => 'application/vnd.api+json',
-                'X-Foo'        => 'bar',
+                'X-Foo' => 'bar',
             ]
         );
         $this->assertEquals(
             [
-                'Accept'       => 'application/vnd.api+json',
+                'Accept' => 'application/vnd.api+json',
                 'Content-Type' => 'application/vnd.api+json',
-                'X-Foo'        => 'bar',
+                'X-Foo' => 'bar',
             ],
             $client->getDefaultHeaders()
         );
@@ -68,9 +68,9 @@ class ClientTest extends AbstractTest
         $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
-                'Accept'       => ['application/vnd.api+json'],
+                'Accept' => ['application/vnd.api+json'],
                 'Content-Type' => ['application/vnd.api+json'],
-                'X-Foo'        => ['bar'],
+                'X-Foo' => ['bar'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -92,9 +92,9 @@ class ClientTest extends AbstractTest
         $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
-                'Accept'       => ['application/vnd.api+json'],
+                'Accept' => ['application/vnd.api+json'],
                 'Content-Type' => ['application/vnd.api+json'],
-                'X-Foo'        => ['bar'],
+                'X-Foo' => ['bar'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -113,13 +113,13 @@ class ClientTest extends AbstractTest
         $response = $client->patch($endpoint, 'testvar=testvalue', ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('PATCH', $httpClient->getLastRequest()->getMethod());
-        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals('testvar=testvalue', (string) $httpClient->getLastRequest()->getBody());
         $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
-                'Accept'       => ['application/vnd.api+json'],
+                'Accept' => ['application/vnd.api+json'],
                 'Content-Type' => ['application/pdf'],
-                'X-Foo'        => ['bar'],
+                'X-Foo' => ['bar'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -138,13 +138,13 @@ class ClientTest extends AbstractTest
         $response = $client->post($endpoint, 'testvar=testvalue', ['Content-Type' => 'application/pdf', 'X-Foo' => 'bar']);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('POST', $httpClient->getLastRequest()->getMethod());
-        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals('testvar=testvalue', (string) $httpClient->getLastRequest()->getBody());
         $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
-                'Accept'       => ['application/vnd.api+json'],
+                'Accept' => ['application/vnd.api+json'],
                 'Content-Type' => ['application/pdf'],
-                'X-Foo'        => ['bar'],
+                'X-Foo' => ['bar'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -166,9 +166,9 @@ class ClientTest extends AbstractTest
         $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
         $this->assertEquals(
             [
-                'Accept'       => ['application/vnd.api+json'],
+                'Accept' => ['application/vnd.api+json'],
                 'Content-Type' => ['application/pdf'],
-                'X-Foo'        => ['bar'],
+                'X-Foo' => ['bar'],
             ],
             $httpClient->getLastRequest()->getHeaders()
         );
@@ -186,7 +186,7 @@ class ClientTest extends AbstractTest
 
         $response = $client->request('POST', '/test/1', $body);
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals('testvar=testvalue', (string) $httpClient->getLastRequest()->getBody());
     }
 
     /**
@@ -202,7 +202,7 @@ class ClientTest extends AbstractTest
 
         $response = $client->request('POST', '/test/1', $body);
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals('testvar=testvalue', (string) $httpClient->getLastRequest()->getBody());
     }
 
     /**
@@ -217,7 +217,7 @@ class ClientTest extends AbstractTest
 
         $response = $client->request('POST', '/test/1', $body);
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals('testvar=testvalue', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals('testvar=testvalue', (string) $httpClient->getLastRequest()->getBody());
     }
 
     /**
@@ -232,6 +232,6 @@ class ClientTest extends AbstractTest
 
         $response = $client->request('POST', '/test/1', $body);
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertEquals('', (string)$httpClient->getLastRequest()->getBody());
+        $this->assertEquals('', (string) $httpClient->getLastRequest()->getBody());
     }
 }

@@ -34,7 +34,7 @@ class ResponseParser implements ResponseParserInterface
         $document = new InvalidResponseDocument();
 
         if ($this->responseHasBody($response)) {
-            $document = $this->parser->parse((string)$response->getBody());
+            $document = $this->parser->parse((string) $response->getBody());
         } elseif ($this->responseHasSuccessfulStatusCode($response)) {
             $document = new Document();
         }
@@ -51,7 +51,7 @@ class ResponseParser implements ResponseParserInterface
      */
     private function responseHasBody(ResponseInterface $response): bool
     {
-        return (bool)$response->getBody()->getSize();
+        return (bool) $response->getBody()->getSize();
     }
 
     /**

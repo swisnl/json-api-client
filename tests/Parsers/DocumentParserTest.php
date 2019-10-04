@@ -190,8 +190,8 @@ class DocumentParserTest extends AbstractTest
             json_encode(
                 [
                     'data' => [
-                        'type'       => 'master',
-                        'id'         => '1',
+                        'type' => 'master',
+                        'id' => '1',
                         'attributes' => [
                             'foo' => 'bar',
                         ],
@@ -217,8 +217,8 @@ class DocumentParserTest extends AbstractTest
                 [
                     'data' => [
                         [
-                            'type'       => 'master',
-                            'id'         => '1',
+                            'type' => 'master',
+                            'id' => '1',
                             'attributes' => [
                                 'foo' => 'bar',
                             ],
@@ -263,11 +263,11 @@ class DocumentParserTest extends AbstractTest
         $document = $parser->parse(
             json_encode(
                 [
-                    'data'     => [],
+                    'data' => [],
                     'included' => [
                         [
-                            'type'       => 'master',
-                            'id'         => '1',
+                            'type' => 'master',
+                            'id' => '1',
                             'attributes' => [
                                 'foo' => 'bar',
                             ],
@@ -297,25 +297,25 @@ class DocumentParserTest extends AbstractTest
         $document = $parser->parse(
             json_encode(
                 [
-                    'data'     => [
-                        'type'          => 'master',
-                        'id'            => '1',
-                        'attributes'    => [
+                    'data' => [
+                        'type' => 'master',
+                        'id' => '1',
+                        'attributes' => [
                             'foo' => 'bar',
                         ],
                         'relationships' => [
                             'child' => [
                                 'data' => [
                                     'type' => 'child',
-                                    'id'   => '1',
+                                    'id' => '1',
                                 ],
                             ],
                         ],
                     ],
                     'included' => [
                         [
-                            'type'       => 'child',
-                            'id'         => '1',
+                            'type' => 'child',
+                            'id' => '1',
                             'attributes' => [
                                 'foo' => 'baz',
                             ],
@@ -343,10 +343,10 @@ class DocumentParserTest extends AbstractTest
         $document = $parser->parse(
             json_encode(
                 [
-                    'data'     => [
-                        'type'          => 'master',
-                        'id'            => '1',
-                        'attributes'    => [
+                    'data' => [
+                        'type' => 'master',
+                        'id' => '1',
+                        'attributes' => [
                             'foo' => 'bar',
                         ],
                         'relationships' => [
@@ -357,8 +357,8 @@ class DocumentParserTest extends AbstractTest
                     ],
                     'included' => [
                         [
-                            'type'       => 'child',
-                            'id'         => '1',
+                            'type' => 'child',
+                            'id' => '1',
                             'attributes' => [
                                 'foo' => 'baz',
                             ],
@@ -386,10 +386,10 @@ class DocumentParserTest extends AbstractTest
         $document = $parser->parse(
             json_encode(
                 [
-                    'data'     => [
-                        'type'          => 'master',
-                        'id'            => '1',
-                        'attributes'    => [
+                    'data' => [
+                        'type' => 'master',
+                        'id' => '1',
+                        'attributes' => [
                             'foo' => 'bar',
                         ],
                         'relationships' => [
@@ -397,11 +397,11 @@ class DocumentParserTest extends AbstractTest
                                 'data' => [
                                     [
                                         'type' => 'child',
-                                        'id'   => '1',
+                                        'id' => '1',
                                     ],
                                     [
                                         'type' => 'child',
-                                        'id'   => '2',
+                                        'id' => '2',
                                     ],
                                 ],
                             ],
@@ -409,15 +409,15 @@ class DocumentParserTest extends AbstractTest
                     ],
                     'included' => [
                         [
-                            'type'       => 'child',
-                            'id'         => '1',
+                            'type' => 'child',
+                            'id' => '1',
                             'attributes' => [
                                 'foo' => 'baz',
                             ],
                         ],
                         [
-                            'type'       => 'child',
-                            'id'         => '2',
+                            'type' => 'child',
+                            'id' => '2',
                             'attributes' => [
                                 'foo' => 'baz',
                             ],
@@ -447,10 +447,10 @@ class DocumentParserTest extends AbstractTest
         $document = $parser->parse(
             json_encode(
                 [
-                    'data'     => [
-                        'type'          => 'master',
-                        'id'            => '1',
-                        'attributes'    => [
+                    'data' => [
+                        'type' => 'master',
+                        'id' => '1',
+                        'attributes' => [
                             'foo' => 'bar',
                         ],
                         'relationships' => [
@@ -461,15 +461,15 @@ class DocumentParserTest extends AbstractTest
                     ],
                     'included' => [
                         [
-                            'type'       => 'child',
-                            'id'         => '1',
+                            'type' => 'child',
+                            'id' => '1',
                             'attributes' => [
                                 'foo' => 'baz',
                             ],
                         ],
                         [
-                            'type'       => 'child',
-                            'id'         => '2',
+                            'type' => 'child',
+                            'id' => '2',
                             'attributes' => [
                                 'foo' => 'baz',
                             ],
@@ -496,7 +496,7 @@ class DocumentParserTest extends AbstractTest
         $document = $parser->parse(
             json_encode(
                 [
-                    'data'  => [],
+                    'data' => [],
                     'links' => [
                         'self' => 'http://example.com/blogs',
                     ],
@@ -521,7 +521,7 @@ class DocumentParserTest extends AbstractTest
                 [
                     'errors' => [
                         [
-                            'id'   => '1',
+                            'id' => '1',
                             'code' => 'foo_bar',
                         ],
                     ],
@@ -567,7 +567,7 @@ class DocumentParserTest extends AbstractTest
         $document = $parser->parse(
             json_encode(
                 [
-                    'data'    => [],
+                    'data' => [],
                     'jsonapi' => [
                         'version' => '1.0',
                     ],

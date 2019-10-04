@@ -181,8 +181,8 @@ class DocumentTest extends TestCase
             [
                 'links' => [
                     'self' => [
-                        'href'    => 'http://example.com/articles',
-                        'meta'    => [
+                        'href' => 'http://example.com/articles',
+                        'meta' => [
                             'copyright' => 'Copyright 2015 Example Corp.',
                         ],
                     ],
@@ -193,21 +193,21 @@ class DocumentTest extends TestCase
                         'href' => 'http://example.com/articles?page[offset]=10',
                     ],
                 ],
-                'data'     => [
-                    'type'       => 'articles',
-                    'id'         => 1,
+                'data' => [
+                    'type' => 'articles',
+                    'id' => 1,
                     'attributes' => [
                         'title' => 'JSON:API paints my bikeshed!',
                     ],
                 ],
                 'included' => [
                     [
-                        'type'       => 'people',
-                        'id'         => 9,
+                        'type' => 'people',
+                        'id' => 9,
                         'attributes' => [
                             'firstName' => 'Dan',
-                            'lastName'  => 'Gebhardt',
-                            'twitter'   => 'dgeb',
+                            'lastName' => 'Gebhardt',
+                            'twitter' => 'dgeb',
                         ],
                     ],
                 ],
@@ -221,7 +221,7 @@ class DocumentTest extends TestCase
                 ],
                 'jsonapi' => [
                     'version' => '1.0',
-                    'meta'    => [
+                    'meta' => [
                         'copyright' => 'Copyright 2015 Example Corp.',
                     ],
                 ],

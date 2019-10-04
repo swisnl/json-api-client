@@ -40,10 +40,10 @@ class ItemHydratorTest extends AbstractTest
         $data = [
             'testattribute1' => 'test',
             'testattribute2' => 'test2',
-            'testobject'     => [
+            'testobject' => [
                 'foo' => 'bar',
             ],
-            'testarray'      => [1, 2, 3],
+            'testarray' => [1, 2, 3],
         ];
 
         $item = new Item();
@@ -81,7 +81,7 @@ class ItemHydratorTest extends AbstractTest
     {
         $data = [
             'hasone_relation' => [
-                'id'                      => 1,
+                'id' => 1,
                 'test_related_attribute1' => 'test',
                 'test_related_attribute2' => 'test2',
             ],
@@ -140,12 +140,12 @@ class ItemHydratorTest extends AbstractTest
         $data = [
             'hasmany_relation' => [
                 [
-                    'id'                      => 1,
+                    'id' => 1,
                     'test_related_attribute1' => 'test',
                     'test_related_attribute2' => 'test2',
                 ],
                 [
-                    'id'                      => 2,
+                    'id' => 2,
                     'test_related_attribute1' => 'test',
                     'test_related_attribute2' => 'test2',
                 ],
@@ -181,7 +181,7 @@ class ItemHydratorTest extends AbstractTest
     {
         $data = [
             'morphto_relation' => [
-                'id'   => 1,
+                'id' => 1,
                 'type' => 'related-item',
             ],
         ];
@@ -207,8 +207,8 @@ class ItemHydratorTest extends AbstractTest
     {
         $data = [
             'morphto_relation' => [
-                'id'                      => 1,
-                'type'                    => 'related-item',
+                'id' => 1,
+                'type' => 'related-item',
                 'test_related_attribute1' => 'test',
             ],
         ];
@@ -235,7 +235,7 @@ class ItemHydratorTest extends AbstractTest
     {
         $data = [
             'morphto_relation' => [
-                'id'   => 1,
+                'id' => 1,
                 'type' => 'unmapped-item',
             ],
         ];
@@ -259,7 +259,7 @@ class ItemHydratorTest extends AbstractTest
     {
         $data = [
             'morphto_relation' => [
-                'id'                      => 1,
+                'id' => 1,
                 'test_related_attribute1' => 'test',
             ],
         ];
@@ -278,11 +278,11 @@ class ItemHydratorTest extends AbstractTest
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id'   => 1,
+                    'id' => 1,
                     'type' => 'related-item',
                 ],
                 [
-                    'id'   => 2,
+                    'id' => 2,
                     'type' => 'another-related-item',
                 ],
             ],
@@ -316,13 +316,13 @@ class ItemHydratorTest extends AbstractTest
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id'                      => 1,
-                    'type'                    => 'related-item',
+                    'id' => 1,
+                    'type' => 'related-item',
                     'test_related_attribute1' => 'test1',
                 ],
                 [
-                    'id'                      => 2,
-                    'type'                    => 'another-related-item',
+                    'id' => 2,
+                    'type' => 'another-related-item',
                     'test_related_attribute1' => 'test2',
                 ],
             ],
@@ -358,11 +358,11 @@ class ItemHydratorTest extends AbstractTest
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id'   => 1,
+                    'id' => 1,
                     'type' => 'unmapped-item',
                 ],
                 [
-                    'id'   => 2,
+                    'id' => 2,
                     'type' => 'unmapped-item',
                 ],
             ],
@@ -393,7 +393,7 @@ class ItemHydratorTest extends AbstractTest
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id'                      => 1,
+                    'id' => 1,
                     'test_related_attribute1' => 'test',
                 ],
             ],
@@ -412,7 +412,7 @@ class ItemHydratorTest extends AbstractTest
     {
         $data = [
             'hasone_relation' => [
-                'id'              => 1,
+                'id' => 1,
                 'parent_relation' => 5,
             ],
         ];

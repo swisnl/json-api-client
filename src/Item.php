@@ -137,7 +137,7 @@ class Item extends Model implements ItemInterface
                     $relationships[$name] = [
                         'data' => [
                             'type' => $relation->getIncluded()->getType(),
-                            'id'   => $relation->getIncluded()->getId(),
+                            'id' => $relation->getIncluded()->getId(),
                         ],
                     ];
                 }
@@ -148,7 +148,7 @@ class Item extends Model implements ItemInterface
                     $relationships[$name]['data'][] =
                         [
                             'type' => $item->getType(),
-                            'id'   => $item->getId(),
+                            'id' => $item->getId(),
                         ];
                 }
             }

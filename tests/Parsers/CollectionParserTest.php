@@ -69,15 +69,15 @@ class CollectionParserTest extends AbstractTest
     {
         $data = [
             [
-                'id'         => '1',
-                'type'       => 'plain',
+                'id' => '1',
+                'type' => 'plain',
                 'attributes' => [
                     'foo' => 'bar',
                 ],
             ],
             [
-                'id'         => '2',
-                'type'       => 'plain',
+                'id' => '2',
+                'type' => 'plain',
                 'attributes' => [
                     'foo' => 'bar',
                 ],

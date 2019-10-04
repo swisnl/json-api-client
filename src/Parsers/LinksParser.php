@@ -57,7 +57,7 @@ class LinksParser
         }
 
         return new Links(
-            Collection::wrap((array)$data)
+            Collection::wrap((array) $data)
                 ->map(
                     function ($link, $name) {
                         return $this->buildLink($link, $name);

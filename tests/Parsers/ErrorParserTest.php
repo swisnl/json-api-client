@@ -296,8 +296,8 @@ class ErrorParserTest extends AbstractTest
     protected function getError()
     {
         $data = [
-            'id'     => '1',
-            'links'  => [
+            'id' => '1',
+            'links' => [
                 'about' => [
                     'href' => 'http://example.com/docs/error/json_client_content_id_in_object_not_equal_to_id_parameter',
                     'meta' => [
@@ -306,11 +306,11 @@ class ErrorParserTest extends AbstractTest
                 ],
             ],
             'status' => '400',
-            'code'   => 'json_client_content_id_in_object_not_equal_to_id_parameter',
-            'title'  => 'I refuse to save a sport with this id. ✟',
+            'code' => 'json_client_content_id_in_object_not_equal_to_id_parameter',
+            'title' => 'I refuse to save a sport with this id. ✟',
             'detail' => "id is '666', id is '666'",
             'source' => [
-                'pointer'   => '',
+                'pointer' => '',
                 'parameter' => '666',
             ],
             'meta' => [

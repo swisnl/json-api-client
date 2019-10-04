@@ -42,9 +42,9 @@ class ItemParserTest extends AbstractTest
         static::assertEquals(
             [
                 'description' => 'test',
-                'active'      => true,
-                'object'      => $object,
-                'array'       => [1, 2, 3],
+                'active' => true,
+                'object' => $object,
+                'array' => [1, 2, 3],
             ],
             $item->getAttributes()
         );
@@ -671,93 +671,93 @@ class ItemParserTest extends AbstractTest
     private function getJsonApiItemMock($type, $id)
     {
         $data = [
-            'type'          => $type,
-            'id'            => $id,
-            'attributes'    => [
+            'type' => $type,
+            'id' => $id,
+            'attributes' => [
                 'description' => 'test',
-                'active'      => true,
-                'object'      => [
+                'active' => true,
+                'object' => [
                     'foo' => 'bar',
                 ],
-                'array'       => [
+                'array' => [
                     1,
                     2,
                     3,
                 ],
             ],
             'relationships' => [
-                'child'     => [
-                    'data'  => [
+                'child' => [
+                    'data' => [
                         'type' => 'child',
-                        'id'   => '2',
+                        'id' => '2',
                     ],
                     'links' => [
                         'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/child',
                     ],
-                    'meta'  => [
+                    'meta' => [
                         'foo' => 'bar',
                     ],
                 ],
-                'children'  => [
-                    'data'  => [
+                'children' => [
+                    'data' => [
                         [
                             'type' => 'child',
-                            'id'   => '3',
+                            'id' => '3',
                         ],
                         [
                             'type' => 'child',
-                            'id'   => '4',
+                            'id' => '4',
                         ],
                     ],
                     'links' => [
                         'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/children',
                     ],
-                    'meta'  => [
+                    'meta' => [
                         'foo' => 'bar',
                     ],
                 ],
-                'morph'     => [
-                    'data'  => [
+                'morph' => [
+                    'data' => [
                         'type' => 'child',
-                        'id'   => '5',
+                        'id' => '5',
                     ],
                     'links' => [
                         'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/morph',
                     ],
-                    'meta'  => [
+                    'meta' => [
                         'foo' => 'bar',
                     ],
                 ],
                 'morphmany' => [
-                    'data'  => [
+                    'data' => [
                         [
                             'type' => 'child',
-                            'id'   => '6',
+                            'id' => '6',
                         ],
                         [
                             'type' => 'child',
-                            'id'   => '7',
+                            'id' => '7',
                         ],
                         [
                             'type' => 'child',
-                            'id'   => '8',
+                            'id' => '8',
                         ],
                     ],
                     'links' => [
                         'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/morphmany',
                     ],
-                    'meta'  => [
+                    'meta' => [
                         'foo' => 'bar',
                     ],
                 ],
-                'empty'     => [
+                'empty' => [
                     'data' => null,
                 ],
             ],
-            'links'         => [
+            'links' => [
                 'self' => 'http://example.com/master/1',
             ],
-            'meta'          => [
+            'meta' => [
                 'foo' => 'bar',
             ],
         ];

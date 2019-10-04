@@ -79,7 +79,7 @@ class ItemParser
         }
 
         if (property_exists($data, 'attributes')) {
-            $item->fill((array)$data->attributes);
+            $item->fill((array) $data->attributes);
         }
 
         if (property_exists($data, 'relationships')) {
