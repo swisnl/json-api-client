@@ -105,6 +105,28 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
+    public function it_dissociates_hasone_relationships_when_null()
+    {
+        $data = [
+            'hasone_relation' => null,
+        ];
+
+        $item = new WithRelationshipItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
+        $hasOne = $item->getRelation('hasone_relation');
+        $this->assertInstanceOf(HasOneRelation::class, $hasOne);
+
+        $this->assertNull($hasOne->getIncluded());
+
+        $this->assertArrayHasKey('hasone_relation', $item->toJsonApiArray()['relationships']);
+        $this->assertNull($item->toJsonApiArray()['relationships']['hasone_relation']['data']);
+    }
+
+    /**
+     * @test
+     */
     public function it_hydrates_hasmany_relationships_by_id()
     {
         $data = [
@@ -177,6 +199,28 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
+    public function it_dissociates_hasmany_relationships_when_empty_array()
+    {
+        $data = [
+            'hasmany_relation' => [],
+        ];
+
+        $item = new WithRelationshipItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
+        $hasMany = $item->getRelation('hasmany_relation');
+        $this->assertInstanceOf(HasManyRelation::class, $hasMany);
+
+        $this->assertTrue($hasMany->getIncluded()->isEmpty());
+
+        $this->assertArrayHasKey('hasmany_relation', $item->toJsonApiArray()['relationships']);
+        $this->assertSame([], $item->toJsonApiArray()['relationships']['hasmany_relation']['data']);
+    }
+
+    /**
+     * @test
+     */
     public function it_hydrates_morphto_relationships_by_id()
     {
         $data = [
@@ -226,6 +270,28 @@ class ItemHydratorTest extends AbstractTest
         $this->assertEquals($data['morphto_relation']['test_related_attribute1'], $morphTo->getIncluded()->getAttribute('test_related_attribute1'));
 
         $this->assertArrayHasKey('morphto_relation', $item->toJsonApiArray()['relationships']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_dissociates_morphto_relationships_when_null()
+    {
+        $data = [
+            'morphto_relation' => null,
+        ];
+
+        $item = new WithRelationshipItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        $morphTo = $item->getRelation('morphto_relation');
+        $this->assertInstanceOf(MorphToRelation::class, $morphTo);
+
+        $this->assertNull($morphTo->getIncluded());
+
+        $this->assertArrayHasKey('morphto_relation', $item->toJsonApiArray()['relationships']);
+        $this->assertNull($item->toJsonApiArray()['relationships']['morphto_relation']['data']);
     }
 
     /**
@@ -348,6 +414,28 @@ class ItemHydratorTest extends AbstractTest
         $this->assertEquals($data['morphtomany_relation'][1]['test_related_attribute1'], $morphToMany->getIncluded()[1]->getAttribute('test_related_attribute1'));
 
         $this->assertArrayHasKey('morphtomany_relation', $item->toJsonApiArray()['relationships']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_dissociates_morphtomany_relationships_when_empty_array()
+    {
+        $data = [
+            'morphtomany_relation' => [],
+        ];
+
+        $item = new WithRelationshipItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
+        $morphToMany = $item->getRelation('morphtomany_relation');
+        $this->assertInstanceOf(MorphToManyRelation::class, $morphToMany);
+
+        $this->assertTrue($morphToMany->getIncluded()->isEmpty());
+
+        $this->assertArrayHasKey('morphtomany_relation', $item->toJsonApiArray()['relationships']);
+        $this->assertSame([], $item->toJsonApiArray()['relationships']['morphtomany_relation']['data']);
     }
 
     /**

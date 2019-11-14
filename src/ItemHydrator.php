@@ -6,6 +6,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Exceptions\HydrationException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
+use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
+use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
@@ -75,6 +77,16 @@ class ItemHydrator
             }
 
             $relation = $this->getRelationFromItem($item, $availableRelation);
+
+            // The relation should be unset
+            if (
+                ($relation instanceof OneRelationInterface && $attributes[$availableRelation] === null) ||
+                ($relation instanceof ManyRelationInterface && $attributes[$availableRelation] === [])
+            ) {
+                $relation->dissociate();
+
+                return;
+            }
 
             // It is a valid relation
             if ($relation instanceof HasOneRelation) {
