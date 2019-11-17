@@ -17,6 +17,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_add_missing_param_annotation' => true,
         'phpdoc_order' => true,
         'yoda_style' => null,
+        'no_superfluous_phpdoc_tags' => false,
     ])
     ->setFinder($finder)
 ;

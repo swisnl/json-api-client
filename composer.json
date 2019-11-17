@@ -16,7 +16,7 @@
         "psr/http-message": "^1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.0",
+        "friendsofphp/php-cs-fixer": "^2.16",
         "graham-campbell/testbench": "^5.3",
         "phpunit/phpunit": "^6.5|^7.0|^8.0",
         "php-http/guzzle6-adapter": "^2.0",
