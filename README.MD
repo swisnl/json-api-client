@@ -289,7 +289,7 @@ echo $meta->written_at; // 2019-07-16T13:47:26
 ## TypeMapper
 
 All custom models must be registered with the `TypeMapper`.
-This `TypeMapper` maps, as the name suggests, JSON:API types to custom [item models](#item-models).
+This `TypeMapper` maps, as the name suggests, JSON:API types to custom [items](#items).
 
 ### Mapping types
 
