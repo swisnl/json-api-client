@@ -13,12 +13,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 * Reworded `ValidationException` messages to align them with the wordings used in the specification.
-* `DocumentParser` throws a `ValidationException` when it encounters duplicate resources.
-* `TypeMapperInterface` and `TypeMapper` are now registered as the same singleton.
+* `DocumentParser` throws a `ValidationException` when it encounters duplicate resources [#64](https://github.com/swisnl/json-api-client/pull/64).
+* `TypeMapperInterface` and `TypeMapper` are now registered as the same singleton [#65](https://github.com/swisnl/json-api-client/pull/65).
 
 ### Fixed
 
-* `ItemHydrator` unsets a relation when null (singular) or empty array (plural) instead of hydrating a relation with id `null`.
+* `ItemHydrator` unsets a relation when null (singular) or empty array (plural) instead of hydrating a relation with id `null` [#67](https://github.com/swisnl/json-api-client/pull/67).
 
 ## [1.0.0-beta.3] - 2019-09-30
 
