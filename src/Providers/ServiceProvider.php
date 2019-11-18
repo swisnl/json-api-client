@@ -37,7 +37,8 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function registerSharedTypeMapper()
     {
-        $this->app->singleton(TypeMapperInterface::class, TypeMapper::class);
+        $this->app->bind(TypeMapperInterface::class, TypeMapper::class);
+        $this->app->singleton(TypeMapper::class);
     }
 
     protected function registerParsers()

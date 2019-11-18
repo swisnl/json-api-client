@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Reworded `ValidationException` messages to align them with the wordings used in the specification.
 * `DocumentParser` throws a `ValidationException` when it encounters duplicate resources.
+* `TypeMapperInterface` and `TypeMapper` are now registered as the same singleton.
 
 ## [1.0.0-beta.3] - 2019-09-30
 
