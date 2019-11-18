@@ -372,8 +372,10 @@ $attributes = [
         'name'     => 'Björn Brala',
         'homepage' => 'https://github.com/bbrala',
     ],
+    'co-author' => null,
     'date'    => '2018-12-02 15:26:32',
     'content' => 'JSON:API was originally drafted in May 2013 by Yehuda Katz...',
+    'media' => [],
     'tags'    => [
         1,
         15,
@@ -398,6 +400,12 @@ echo json_encode($itemDocument, JSON_PRETTY_PRINT);
                     "type": "author",
                     "id": "f1a775ef-9407-40ba-93ff-7bd737888dc6"
                 }
+            },
+            "co-author": {
+                "data": null
+            },
+            "media": {
+                "data": []
             },
             "tags": {
                 "data": [{
@@ -426,6 +434,7 @@ echo json_encode($itemDocument, JSON_PRETTY_PRINT);
 
 As you can see in this example, relations can be hydrated by id, or by an associative array with an id and more attributes.
 If the item is hydrated using an associative array, it will be included in the resulting json unless `setOmitIncluded(true)` is called on the relation.
+You can unset a relation by passing `null` for singular relations or an empty array for plural relations.
 
 N.B. Morph relations require a 'type' attribute to be present in the data in order to know which type of item should be created.
 
