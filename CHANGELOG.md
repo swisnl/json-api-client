@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [1.0.0] - 2019-11-18
+
 ### Changed
 
 * Reworded `ValidationException` messages to align them with the wordings used in the specification.

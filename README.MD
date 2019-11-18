@@ -1,7 +1,7 @@
 # { json:api } Client
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/swisnl/json-api-client.svg)](https://packagist.org/packages/swisnl/json-api-client)
-[![Latest Version on Packagist](https://img.shields.io/packagist/vpre/swisnl/json-api-client.svg)](https://packagist.org/packages/swisnl/json-api-client)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/json-api-client.svg)](https://packagist.org/packages/swisnl/json-api-client)
 [![Software License](https://img.shields.io/packagist/l/swisnl/json-api-client.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/swisnl/json-api-client.svg?branch=master)](https://travis-ci.org/swisnl/json-api-client)
 [![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/swisnl/json-api-client.svg)](https://scrutinizer-ci.com/g/swisnl/json-api-client/?branch=master)
