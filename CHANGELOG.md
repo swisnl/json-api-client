@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * `DocumentParser` throws a `ValidationException` when it encounters duplicate resources.
 * `TypeMapperInterface` and `TypeMapper` are now registered as the same singleton.
 
+### Fixed
+
+* `ItemHydrator` unsets a relation when null (singular) or empty array (plural) instead of hydrating a relation with id `null`.
+
 ## [1.0.0-beta.3] - 2019-09-30
 
 ### Fixed
