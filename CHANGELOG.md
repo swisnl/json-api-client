@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [1.0.1] - 2019-11-21
+
+### Fixed
+
+* Do not require error links object to contain an about member [#69](https://github.com/swisnl/json-api-client/pull/69).
+
 ## [1.0.0] - 2019-11-18
 
 ### Changed
