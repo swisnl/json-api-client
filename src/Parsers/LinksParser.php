@@ -49,9 +49,6 @@ class LinksParser
         if (!is_object($data)) {
             throw new ValidationException(sprintf('Links MUST be an object, "%s" given.', gettype($data)));
         }
-        if ($source === self::SOURCE_ERROR && !property_exists($data, 'about')) {
-            throw new ValidationException('Error links object MUST contain at least one of the following properties: `about`.');
-        }
         if ($source === self::SOURCE_RELATIONSHIP && !property_exists($data, 'self') && !property_exists($data, 'related')) {
             throw new ValidationException('Relationship links object MUST contain at least one of the following properties: `self`, `related`.');
         }
