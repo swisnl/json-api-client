@@ -130,19 +130,6 @@ class LinksParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_error_links_misses_about_link()
-    {
-        $parser = new LinksParser($this->createMock(MetaParser::class));
-
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Error links object MUST contain at least one of the following properties: `about`.');
-
-        $parser->parse(json_decode('{}', false), LinksParser::SOURCE_ERROR);
-    }
-
-    /**
-     * @test
-     */
     public function it_throws_when_relationship_links_misses_self_and_related_links()
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
