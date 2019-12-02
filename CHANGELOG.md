@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [1.0.2] - 2019-12-02
+
+### Fixed
+
+* Do not break out of loop when hydrating relations [#71](https://github.com/swisnl/json-api-client/pull/71).
+
 ## [1.0.1] - 2019-11-21
 
 ### Fixed
