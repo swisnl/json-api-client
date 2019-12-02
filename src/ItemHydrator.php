@@ -85,7 +85,7 @@ class ItemHydrator
             ) {
                 $relation->dissociate();
 
-                return;
+                continue;
             }
 
             // It is a valid relation

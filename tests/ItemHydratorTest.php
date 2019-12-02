@@ -525,6 +525,33 @@ class ItemHydratorTest extends AbstractTest
 
     /**
      * @test
+     */
+    public function it_dissociates_and_hydrates_relationships_in_one_call()
+    {
+        $data = [
+            'hasone_relation' => null,
+            'morphto_relation' => [
+                'id' => 1,
+                'type' => 'related-item',
+            ],
+        ];
+
+        $item = new WithRelationshipItem();
+        $item = $this->getItemHydrator()->hydrate($item, $data);
+
+        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        $morphTo = $item->getRelation('morphto_relation');
+        $this->assertInstanceOf(MorphToRelation::class, $morphTo);
+
+        $this->assertEquals($data['morphto_relation']['id'], $morphTo->getIncluded()->getId());
+        $this->assertEquals($data['morphto_relation']['type'], $morphTo->getIncluded()->getType());
+        $this->assertArrayNotHasKey('type', $morphTo->getIncluded()->getAttributes());
+
+        $this->assertArrayHasKey('morphto_relation', $item->toJsonApiArray()['relationships']);
+    }
+
+    /**
+     * @test
      * @dataProvider provideIdArguments
      *
      * @param $givenId
