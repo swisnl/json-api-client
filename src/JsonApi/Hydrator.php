@@ -11,6 +11,7 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\Items\JenssegersItem;
+use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Items\NullItem;
 
 class Hydrator
@@ -137,7 +138,7 @@ class Hydrator
                 foreach ($jsonApiItem->get('relationships')->asArray() as $name => $relationship) {
                     /** @var \Art4\JsonApiClient\ElementInterface $data */
                     $data = $relationship->get('data');
-                    $method = camel_case($name);
+                    $method = Str::camel($name);
 
                     if ($data instanceof ResourceIdentifierInterface) {
                         $includedItem = $this->getItem($keyedItems, $data);
