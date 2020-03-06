@@ -16,8 +16,10 @@ matrix:
     env: LARAVEL_VERSION="^6.0" RUN_CS_FIXER=1
   - php: "7.3"
     env: LARAVEL_VERSION="^6.0"
+  - php: "7.3"
+    env: LARAVEL_VERSION="^7.0"
   - php: "7.4"
-    env: LARAVEL_VERSION="^6.0"
+    env: LARAVEL_VERSION="^7.0"
 
 sudo: false
 
