@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Fixed
+
+* `Document`, `Jsonapi`, `Links` and `Meta` classes will be serialized as object when empty.
 
 ## [1.1.0] - 2020-03-06
 

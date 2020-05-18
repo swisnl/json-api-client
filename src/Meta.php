@@ -129,10 +129,10 @@ class Meta implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @return array|mixed
+     * @return object
      */
     public function jsonSerialize()
     {
-        return $this->toArray();
+        return (object) $this->toArray();
     }
 }

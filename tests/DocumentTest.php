@@ -229,4 +229,23 @@ class DocumentTest extends TestCase
             $document->toArray()
         );
     }
+
+    /**
+     * @test
+     */
+    public function it_serializes_empty_members_as_empty_objects()
+    {
+        $document = new Document();
+
+        $this->assertEquals('{}', json_encode($document));
+
+        $document->setData(new Collection());
+        $document->setErrors(new ErrorCollection());
+        $document->setIncluded(new Collection());
+        $document->setJsonapi(new Jsonapi());
+        $document->setLinks(new Links([]));
+        $document->setMeta(new Meta([]));
+
+        $this->assertEquals('{"links":{},"data":[],"meta":{},"jsonapi":{}}', json_encode($document));
+    }
 }

@@ -2,9 +2,12 @@
 
 namespace Swis\JsonApi\Client;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use JsonSerializable;
 use Swis\JsonApi\Client\Concerns\HasMeta;
 
-class Jsonapi
+class Jsonapi implements Arrayable, Jsonable, JsonSerializable
 {
     use HasMeta;
 
@@ -32,6 +35,8 @@ class Jsonapi
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return array
      */
     public function toArray(): array
@@ -47,5 +52,27 @@ class Jsonapi
         }
 
         return $array;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param int $options
+     *
+     * @return false|string
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return object
+     */
+    public function jsonSerialize()
+    {
+        return (object) $this->toArray();
     }
 }

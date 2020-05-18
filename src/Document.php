@@ -161,21 +161,6 @@ class Document implements DocumentInterface
     }
 
     /**
-     * Specify data which should be serialized to JSON.
-     *
-     * @see  http://php.net/manual/en/jsonserializable.jsonserialize.php
-     *
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     *               which is a value of any type other than a resource
-     *
-     * @since 5.4.0
-     */
-    public function jsonSerialize()
-    {
-        return $this->toArray();
-    }
-
-    /**
      * @return array
      */
     public function toArray(): array
@@ -186,7 +171,7 @@ class Document implements DocumentInterface
             $document['links'] = $this->getLinks()->toArray();
         }
 
-        if (!empty($this->getData())) {
+        if ($this->getData() !== null) {
             $document['data'] = $this->data->toJsonApiArray();
         }
 
@@ -199,7 +184,7 @@ class Document implements DocumentInterface
         }
 
         if ($this->hasErrors()) {
-            $document['errors'] = $this->errors->toArray();
+            $document['errors'] = $this->getErrors()->toArray();
         }
 
         if ($this->getJsonapi() !== null) {
@@ -207,5 +192,41 @@ class Document implements DocumentInterface
         }
 
         return $document;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return object
+     */
+    public function jsonSerialize()
+    {
+        $document = [];
+
+        if ($this->getLinks() !== null) {
+            $document['links'] = $this->getLinks();
+        }
+
+        if ($this->getData() !== null) {
+            $document['data'] = $this->data->toJsonApiArray();
+        }
+
+        if ($this->getIncluded()->isNotEmpty()) {
+            $document['included'] = $this->getIncluded()->toJsonApiArray();
+        }
+
+        if ($this->getMeta() !== null) {
+            $document['meta'] = $this->getMeta();
+        }
+
+        if ($this->hasErrors()) {
+            $document['errors'] = $this->getErrors();
+        }
+
+        if ($this->getJsonapi() !== null) {
+            $document['jsonapi'] = $this->getJsonapi();
+        }
+
+        return (object) $document;
     }
 }
