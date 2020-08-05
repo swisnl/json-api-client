@@ -77,9 +77,8 @@ class AbstractManyRelationTest extends TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Collection $collectionMock */
-        $collectionMock = $this->getMockBuilder(Collection::class)
-            ->onlyMethods(['sortBy'])
-            ->getMock();
+        $collectionMock = $this->createMock(Collection::class);
+
         $collectionMock->expects($this->once())
             ->method('sortBy')
             ->with('foo', SORT_NATURAL, true);

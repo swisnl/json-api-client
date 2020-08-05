@@ -18,7 +18,7 @@ class DocumentClientTest extends AbstractTest
     public function the_base_url_can_be_changed_after_instantiation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
-        $client = $this->getMockBuilder(ClientInterface::class)->getMock();
+        $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
             ->method('getBaseUri')
@@ -29,7 +29,7 @@ class DocumentClientTest extends AbstractTest
             ->with('http://www.test-changed.com');
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
-        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
+        $parser = $this->createMock(ResponseParserInterface::class);
 
         $documentClient = new DocumentClient($client, $parser);
 
@@ -46,7 +46,7 @@ class DocumentClientTest extends AbstractTest
         $document = new Document();
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
-        $client = $this->getMockBuilder(ClientInterface::class)->getMock();
+        $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
             ->method('get')
@@ -54,7 +54,7 @@ class DocumentClientTest extends AbstractTest
             ->willReturn($response);
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
-        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
+        $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())
             ->method('parse')
@@ -77,7 +77,7 @@ class DocumentClientTest extends AbstractTest
         $document = new Document();
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
-        $client = $this->getMockBuilder(ClientInterface::class)->getMock();
+        $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
             ->method('delete')
@@ -85,7 +85,7 @@ class DocumentClientTest extends AbstractTest
             ->willReturn($response);
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
-        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
+        $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())
             ->method('parse')
@@ -110,7 +110,7 @@ class DocumentClientTest extends AbstractTest
         $itemDocument->setData((new Item())->setType('test')->setId('1'));
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
-        $client = $this->getMockBuilder(ClientInterface::class)->getMock();
+        $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
             ->method('patch')
@@ -118,7 +118,7 @@ class DocumentClientTest extends AbstractTest
             ->willReturn($response);
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
-        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
+        $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())
             ->method('parse')
@@ -143,7 +143,7 @@ class DocumentClientTest extends AbstractTest
         $itemDocument->setData((new Item())->setType('test'));
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
-        $client = $this->getMockBuilder(ClientInterface::class)->getMock();
+        $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
             ->method('post')
@@ -151,7 +151,7 @@ class DocumentClientTest extends AbstractTest
             ->willReturn($response);
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser */
-        $parser = $this->getMockBuilder(ResponseParserInterface::class)->getMock();
+        $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())
             ->method('parse')
