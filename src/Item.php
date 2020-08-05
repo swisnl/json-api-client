@@ -130,26 +130,27 @@ class Item extends Model implements ItemInterface
         $relationships = [];
 
         foreach ($this->getRelations() as $name => $relation) {
+            if (!$relation->hasIncluded()) {
+                continue;
+            }
+
             if ($relation instanceof OneRelationInterface) {
-                $relationships[$name] = ['data' => null];
+                $relationships[$name]['data'] = null;
 
                 if ($relation->getIncluded() !== null) {
-                    $relationships[$name] = [
-                        'data' => [
-                            'type' => $relation->getIncluded()->getType(),
-                            'id' => $relation->getIncluded()->getId(),
-                        ],
+                    $relationships[$name]['data'] = [
+                        'type' => $relation->getIncluded()->getType(),
+                        'id' => $relation->getIncluded()->getId(),
                     ];
                 }
             } elseif ($relation instanceof ManyRelationInterface) {
                 $relationships[$name]['data'] = [];
 
                 foreach ($relation->getIncluded() as $item) {
-                    $relationships[$name]['data'][] =
-                        [
-                            'type' => $item->getType(),
-                            'id' => $item->getId(),
-                        ];
+                    $relationships[$name]['data'][] = [
+                        'type' => $item->getType(),
+                        'id' => $item->getId(),
+                    ];
                 }
             }
         }

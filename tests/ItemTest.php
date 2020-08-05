@@ -122,6 +122,24 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
+    public function is_does_not_add_hasone_relation_without_data_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->hasoneRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function is_adds_hasmany_relation_in_to_json_api_array()
     {
         $item = new WithRelationshipItem();
@@ -165,6 +183,24 @@ class ItemTest extends AbstractTest
                         'data' => [],
                     ],
                 ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_does_not_add_hasmany_relation_without_data_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->hasmanyRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
             ],
             $item->toJsonApiArray()
         );
@@ -222,6 +258,24 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
+    public function is_does_not_add_morphto_relation_without_data_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->morphtoRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function is_adds_morphtomany_relation_in_to_json_api_array()
     {
         $item = new WithRelationshipItem();
@@ -265,6 +319,24 @@ class ItemTest extends AbstractTest
                         'data' => [],
                     ],
                 ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_does_not_add_morphtomany_relation_without_data_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->morphtomanyRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
             ],
             $item->toJsonApiArray()
         );
