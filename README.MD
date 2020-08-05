@@ -532,8 +532,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                     new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures');
                 );
             } else {
-                $httpClient = \Http\Adapter\Guzzle6\Client::createWithConfig(
+                $httpClient = new \GuzzleHttp\Client(
                     [
+                        'http_errors' => false,
                         'timeout' => 2,
                     ]
                 );
