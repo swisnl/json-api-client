@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 * `Document`, `Jsonapi`, `Links` and `Meta` classes will be serialized as object when empty.
+* Properly handle relations without data [#78](https://github.com/swisnl/json-api-client/pull/78).
 
 ## [1.1.0] - 2020-03-06
 
