@@ -29,6 +29,7 @@ class HasRelationsTest extends TestCase
 
         $relation = $mock->getRelation('foo');
         $this->assertInstanceOf(MorphToRelation::class, $relation);
+        $this->assertTrue($relation->hasIncluded());
         $this->assertSame($data, $relation->getIncluded());
     }
 
@@ -45,7 +46,39 @@ class HasRelationsTest extends TestCase
 
         $relation = $mock->getRelation('foo');
         $this->assertInstanceOf(MorphToManyRelation::class, $relation);
+        $this->assertTrue($relation->hasIncluded());
         $this->assertSame($data, $relation->getIncluded());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_and_set_null_as_relation()
+    {
+        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
+        $mock = $this->getMockForTrait(HasRelations::class);
+
+        $mock->setRelation('foo', null);
+
+        $relation = $mock->getRelation('foo');
+        $this->assertInstanceOf(MorphToRelation::class, $relation);
+        $this->assertTrue($relation->hasIncluded());
+        $this->assertNull($relation->getIncluded());
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_set_false_as_relation()
+    {
+        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
+        $mock = $this->getMockForTrait(HasRelations::class);
+
+        $mock->setRelation('foo', false);
+
+        $relation = $mock->getRelation('foo');
+        $this->assertInstanceOf(MorphToRelation::class, $relation);
+        $this->assertFalse($relation->hasIncluded());
     }
 
     /**

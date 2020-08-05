@@ -6,7 +6,7 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 
 /**
- * @property \Swis\JsonApi\Client\Interfaces\ItemInterface|null $included
+ * @property \Swis\JsonApi\Client\Interfaces\ItemInterface|false|null $included
  */
 abstract class AbstractOneRelation extends AbstractRelation implements OneRelationInterface
 {
@@ -27,14 +27,6 @@ abstract class AbstractOneRelation extends AbstractRelation implements OneRelati
      */
     public function getIncluded(): ? ItemInterface
     {
-        return $this->included;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasIncluded(): bool
-    {
-        return null !== $this->getIncluded();
+        return $this->included ?: null;
     }
 }

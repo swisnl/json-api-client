@@ -11,9 +11,9 @@ abstract class AbstractRelation
     use HasMeta;
 
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\DataInterface|null
+     * @var \Swis\JsonApi\Client\Interfaces\DataInterface|false|null
      */
-    protected $included;
+    protected $included = false;
 
     /**
      * @var bool
@@ -28,6 +28,14 @@ abstract class AbstractRelation
         $this->included = null;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasIncluded(): bool
+    {
+        return $this->included !== false;
     }
 
     /**

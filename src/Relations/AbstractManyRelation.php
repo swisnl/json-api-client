@@ -6,7 +6,7 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 
 /**
- * @property \Swis\JsonApi\Client\Collection|null $included
+ * @property \Swis\JsonApi\Client\Collection|false|null $included
  */
 abstract class AbstractManyRelation extends AbstractRelation implements ManyRelationInterface
 {
@@ -20,14 +20,6 @@ abstract class AbstractManyRelation extends AbstractRelation implements ManyRela
         $this->included = $included;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasIncluded(): bool
-    {
-        return $this->getIncluded()->isNotEmpty();
     }
 
     /**

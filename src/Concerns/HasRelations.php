@@ -141,14 +141,14 @@ trait HasRelations
     /**
      * Set the specific relationship on the model.
      *
-     * @param string                                             $name
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface|null $data
-     * @param \Swis\JsonApi\Client\Links|null                    $links
-     * @param \Swis\JsonApi\Client\Meta|null                     $meta
+     * @param string                                                   $name
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface|false|null $data
+     * @param \Swis\JsonApi\Client\Links|null                          $links
+     * @param \Swis\JsonApi\Client\Meta|null                           $meta
      *
      * @return static
      */
-    public function setRelation(string $name, DataInterface $data = null, Links $links = null, Meta $meta = null)
+    public function setRelation(string $name, $data = false, Links $links = null, Meta $meta = null)
     {
         $method = Str::camel($name);
         if (method_exists($this, $method)) {
@@ -160,8 +160,11 @@ trait HasRelations
             $relationObject = $this->morphTo($name);
         }
 
-        if ($data !== null) {
-            $relationObject->associate($data);
+        if ($data !== false) {
+            $relationObject->dissociate();
+            if ($data !== null) {
+                $relationObject->associate($data);
+            }
         }
         $relationObject->setLinks($links);
         $relationObject->setMeta($meta);
