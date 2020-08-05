@@ -28,7 +28,7 @@ This requires an extra package providing [psr/http-client-implementation](https:
 To use Guzzle 7, for example, simply require `guzzlehttp/guzzle`:
 
 ``` bash
-composer require guzzlehttp/guzzle
+composer require guzzlehttp/guzzle:^7.0
 ```
 
 See [Bind clients](#bind-clients) if you want to use your own HTTP client or use specific configuration options.
