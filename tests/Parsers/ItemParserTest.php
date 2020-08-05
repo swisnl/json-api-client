@@ -490,6 +490,7 @@ class ItemParserTest extends AbstractTest
         static::assertInstanceOf(HasOneRelation::class, $item->getRelation('empty'));
         static::assertNull($item->getRelation('empty')->getLinks());
         static::assertNull($item->getRelation('empty')->getMeta());
+        static::assertTrue($item->getRelation('empty')->hasIncluded());
         static::assertNull($item->getRelation('empty')->getIncluded());
     }
 
@@ -599,6 +600,21 @@ class ItemParserTest extends AbstractTest
 
         static::assertInstanceOf(Collection::class, $item->getRelation('morphmany')->getIncluded());
         static::assertCount(3, $item->getRelation('morphmany')->getIncluded());
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_set_data_when_there_is_no_data_present()
+    {
+        $parser = $this->getItemParser();
+
+        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+
+        static::assertInstanceOf(MorphToRelation::class, $item->getRelation('nodata'));
+        static::assertInstanceOf(Links::class, $item->getRelation('nodata')->getLinks());
+        static::assertInstanceOf(Meta::class, $item->getRelation('nodata')->getMeta());
+        static::assertFalse($item->getRelation('nodata')->hasIncluded());
     }
 
     /**
@@ -752,6 +768,14 @@ class ItemParserTest extends AbstractTest
                 ],
                 'empty' => [
                     'data' => null,
+                ],
+                'nodata' => [
+                    'links' => [
+                        'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/nodata',
+                    ],
+                    'meta' => [
+                        'foo' => 'bar',
+                    ],
                 ],
             ],
             'links' => [

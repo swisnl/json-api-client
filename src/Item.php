@@ -130,27 +130,36 @@ class Item extends Model implements ItemInterface
         $relationships = [];
 
         foreach ($this->getRelations() as $name => $relation) {
-            if ($relation instanceof OneRelationInterface) {
-                $relationships[$name] = ['data' => null];
+            if ($relation->hasIncluded()) {
+                if ($relation instanceof OneRelationInterface) {
+                    $relationships[$name]['data'] = null;
 
-                if ($relation->getIncluded() !== null) {
-                    $relationships[$name] = [
-                        'data' => [
+                    if ($relation->getIncluded() !== null) {
+                        $relationships[$name]['data'] = [
                             'type' => $relation->getIncluded()->getType(),
                             'id' => $relation->getIncluded()->getId(),
-                        ],
-                    ];
-                }
-            } elseif ($relation instanceof ManyRelationInterface) {
-                $relationships[$name]['data'] = [];
+                        ];
+                    }
+                } elseif ($relation instanceof ManyRelationInterface) {
+                    $relationships[$name]['data'] = [];
 
-                foreach ($relation->getIncluded() as $item) {
-                    $relationships[$name]['data'][] =
-                        [
+                    foreach ($relation->getIncluded() as $item) {
+                        $relationships[$name]['data'][] = [
                             'type' => $item->getType(),
                             'id' => $item->getId(),
                         ];
+                    }
                 }
+            }
+
+            $links = $relation->getLinks();
+            if ($links !== null) {
+                $relationships[$name]['links'] = $links->toArray();
+            }
+
+            $meta = $relation->getMeta();
+            if ($meta !== null) {
+                $relationships[$name]['meta'] = $meta->toArray();
             }
         }
 

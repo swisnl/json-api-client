@@ -78,6 +78,8 @@ class ItemTest extends AbstractTest
         $item = new WithRelationshipItem();
         $item->setId('1234');
         $item->hasoneRelation()->associate((new RelatedItem())->setId('5678'));
+        $item->hasoneRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
+        $item->hasoneRelation()->setMeta(new Meta(['foo' => 'bar']));
 
         $this->assertSame(
             [
@@ -88,6 +90,14 @@ class ItemTest extends AbstractTest
                         'data' => [
                             'type' => 'related-item',
                             'id' => '5678',
+                        ],
+                        'links' => [
+                            'self' => [
+                                'href' => 'http://example.com/articles',
+                            ],
+                        ],
+                        'meta' => [
+                            'foo' => 'bar',
                         ],
                     ],
                 ],
@@ -122,11 +132,31 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
+    public function is_does_not_add_hasone_relation_without_data_links_and_meta_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->hasoneRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function is_adds_hasmany_relation_in_to_json_api_array()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
         $item->hasmanyRelation()->associate(new Collection([(new RelatedItem())->setId('5678')]));
+        $item->hasmanyRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
+        $item->hasmanyRelation()->setMeta(new Meta(['foo' => 'bar']));
 
         $this->assertSame(
             [
@@ -139,6 +169,14 @@ class ItemTest extends AbstractTest
                                 'type' => 'related-item',
                                 'id' => '5678',
                             ],
+                        ],
+                        'links' => [
+                            'self' => [
+                                'href' => 'http://example.com/articles',
+                            ],
+                        ],
+                        'meta' => [
+                            'foo' => 'bar',
                         ],
                     ],
                 ],
@@ -173,11 +211,31 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
+    public function is_does_not_add_hasmany_relation_without_data_links_and_meta_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->hasmanyRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function is_adds_morphto_relation_in_to_json_api_array()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
         $item->morphtoRelation()->associate((new RelatedItem())->setId('5678'));
+        $item->morphtoRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
+        $item->morphtoRelation()->setMeta(new Meta(['foo' => 'bar']));
 
         $this->assertSame(
             [
@@ -188,6 +246,14 @@ class ItemTest extends AbstractTest
                         'data' => [
                             'type' => 'related-item',
                             'id' => '5678',
+                        ],
+                        'links' => [
+                            'self' => [
+                                'href' => 'http://example.com/articles',
+                            ],
+                        ],
+                        'meta' => [
+                            'foo' => 'bar',
                         ],
                     ],
                 ],
@@ -222,11 +288,31 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
+    public function is_does_not_add_morphto_relation_without_data_links_and_meta_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->morphtoRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function is_adds_morphtomany_relation_in_to_json_api_array()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
         $item->morphtomanyRelation()->associate(new Collection([(new RelatedItem())->setId('5678')]));
+        $item->morphtomanyRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
+        $item->morphtomanyRelation()->setMeta(new Meta(['foo' => 'bar']));
 
         $this->assertSame(
             [
@@ -239,6 +325,14 @@ class ItemTest extends AbstractTest
                                 'type' => 'related-item',
                                 'id' => '5678',
                             ],
+                        ],
+                        'links' => [
+                            'self' => [
+                                'href' => 'http://example.com/articles',
+                            ],
+                        ],
+                        'meta' => [
+                            'foo' => 'bar',
                         ],
                     ],
                 ],
@@ -265,6 +359,24 @@ class ItemTest extends AbstractTest
                         'data' => [],
                     ],
                 ],
+            ],
+            $item->toJsonApiArray()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function is_does_not_add_morphtomany_relation_without_data_links_and_meta_in_to_json_api_array()
+    {
+        $item = new WithRelationshipItem();
+        $item->setId('1234');
+        $item->morphtomanyRelation();
+
+        $this->assertSame(
+            [
+                'type' => 'item-with-relationship',
+                'id' => '1234',
             ],
             $item->toJsonApiArray()
         );
