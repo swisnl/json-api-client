@@ -7,6 +7,7 @@ use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentParserInterface;
 use Swis\JsonApi\Client\Interfaces\ResponseParserInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\InvalidResponseDocument;
 
 class ResponseParser implements ResponseParserInterface
@@ -22,6 +23,16 @@ class ResponseParser implements ResponseParserInterface
     public function __construct(DocumentParserInterface $parser)
     {
         $this->parser = $parser;
+    }
+
+    /**
+     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
+     *
+     * @return static
+     */
+    public static function create(TypeMapperInterface $typeMapper = null): self
+    {
+        return new static(DocumentParser::create($typeMapper));
     }
 
     /**

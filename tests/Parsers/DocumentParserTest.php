@@ -32,6 +32,14 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
+    public function it_can_create_an_instance_using_a_factory_method()
+    {
+        $this->assertInstanceOf(DocumentParser::class, DocumentParser::create());
+    }
+
+    /**
+     * @test
+     */
     public function it_converts_jsondocument_to_document()
     {
         $parser = $this->getDocumentParser();
