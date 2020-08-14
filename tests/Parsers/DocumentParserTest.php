@@ -14,14 +14,7 @@ use Swis\JsonApi\Client\Jsonapi;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
-use Swis\JsonApi\Client\Parsers\CollectionParser;
 use Swis\JsonApi\Client\Parsers\DocumentParser;
-use Swis\JsonApi\Client\Parsers\ErrorCollectionParser;
-use Swis\JsonApi\Client\Parsers\ErrorParser;
-use Swis\JsonApi\Client\Parsers\ItemParser;
-use Swis\JsonApi\Client\Parsers\JsonapiParser;
-use Swis\JsonApi\Client\Parsers\LinksParser;
-use Swis\JsonApi\Client\Parsers\MetaParser;
 use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
@@ -42,7 +35,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_converts_jsondocument_to_document()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
         $document = $parser->parse(
             json_encode(
                 [
@@ -59,7 +52,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_json_is_not_valid()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Unable to parse JSON data: Malformed UTF-8 characters, possibly incorrectly encoded');
@@ -75,7 +68,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_json_is_not_a_jsonapi_document(string $invalidJson)
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(sprintf('Document MUST be an object, "%s" given.', gettype(json_decode($invalidJson, false))));
@@ -100,7 +93,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_data_errors_and_meta_are_missing()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Document MUST contain at least one of the following properties: `data`, `errors`, `meta`.');
@@ -113,7 +106,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_both_data_and_errors_are_present()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('The properties `data` and `errors` MUST NOT coexist in Document.');
@@ -126,7 +119,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_included_is_present_but_data_is_not()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('If Document does not contain a `data` property, the `included` property MUST NOT be present either.');
@@ -142,7 +135,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_data_is_not_an_array_object_or_null($invalidData)
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(sprintf('Document property "data" MUST be null, an array or an object, "%s" given.', gettype(json_decode($invalidData, false)->data)));
@@ -168,7 +161,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_included_is_not_an_array($invalidIncluded)
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(sprintf('Document property "included" MUST be an array, "%s" given.', gettype(json_decode($invalidIncluded, false)->included)));
@@ -193,7 +186,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_throws_when_it_finds_duplicate_resources()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Resources MUST be unique based on their `type` and `id`, 1 duplicate(s) found.');
@@ -229,7 +222,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_a_resource_document()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
         $document = $parser->parse(
             json_encode(
                 [
@@ -255,7 +248,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_a_resource_collection_document()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
         $document = $parser->parse(
             json_encode(
                 [
@@ -284,7 +277,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_a_document_without_data()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
         $document = $parser->parse(
             json_encode(
                 [
@@ -303,7 +296,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_included()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
         $document = $parser->parse(
             json_encode(
                 [
@@ -336,7 +329,7 @@ class DocumentParserTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
-        $parser = $this->getDocumentParser($typeMapper);
+        $parser = DocumentParser::create($typeMapper);
 
         $document = $parser->parse(
             json_encode(
@@ -382,7 +375,7 @@ class DocumentParserTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
-        $parser = $this->getDocumentParser($typeMapper);
+        $parser = DocumentParser::create($typeMapper);
 
         $document = $parser->parse(
             json_encode(
@@ -425,7 +418,7 @@ class DocumentParserTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
-        $parser = $this->getDocumentParser($typeMapper);
+        $parser = DocumentParser::create($typeMapper);
 
         $document = $parser->parse(
             json_encode(
@@ -486,7 +479,7 @@ class DocumentParserTest extends AbstractTest
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
-        $parser = $this->getDocumentParser($typeMapper);
+        $parser = DocumentParser::create($typeMapper);
 
         $document = $parser->parse(
             json_encode(
@@ -535,7 +528,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_links()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $document = $parser->parse(
             json_encode(
@@ -558,7 +551,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_errors()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $document = $parser->parse(
             json_encode(
@@ -583,7 +576,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_meta()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $document = $parser->parse(
             json_encode(
@@ -606,7 +599,7 @@ class DocumentParserTest extends AbstractTest
      */
     public function it_parses_jsonapi()
     {
-        $parser = $this->getDocumentParser();
+        $parser = DocumentParser::create();
 
         $document = $parser->parse(
             json_encode(
@@ -622,21 +615,5 @@ class DocumentParserTest extends AbstractTest
         static::assertInstanceOf(Jsonapi::class, $document->getJsonapi());
 
         static::assertEquals(new Jsonapi('1.0'), $document->getJsonapi());
-    }
-
-    private function getDocumentParser(TypeMapper $typeMapper = null): DocumentParser
-    {
-        $metaParser = new MetaParser();
-        $linksParser = new LinksParser($metaParser);
-        $itemParser = new ItemParser($typeMapper ?? new TypeMapper(), $linksParser, $metaParser);
-
-        return new DocumentParser(
-            $itemParser,
-            new CollectionParser($itemParser),
-            new ErrorCollectionParser(new ErrorParser($linksParser, $metaParser)),
-            $linksParser,
-            new JsonapiParser($metaParser),
-            $metaParser
-        );
     }
 }
