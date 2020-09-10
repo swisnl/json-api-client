@@ -15,6 +15,14 @@ class DocumentClientTest extends AbstractTest
     /**
      * @test
      */
+    public function it_can_create_an_instance_using_a_factory_method()
+    {
+        $this->assertInstanceOf(DocumentClient::class, DocumentClient::create());
+    }
+
+    /**
+     * @test
+     */
     public function the_base_url_can_be_changed_after_instantiation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */

@@ -2,12 +2,15 @@
 
 namespace Swis\JsonApi\Client;
 
+use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Interfaces\ClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 use Swis\JsonApi\Client\Interfaces\DocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ResponseParserInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
+use Swis\JsonApi\Client\Parsers\ResponseParser;
 
 class DocumentClient implements DocumentClientInterface
 {
@@ -29,6 +32,17 @@ class DocumentClient implements DocumentClientInterface
     {
         $this->client = $client;
         $this->parser = $parser;
+    }
+
+    /**
+     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
+     * @param \Psr\Http\Client\ClientInterface|null                    $client
+     *
+     * @return static
+     */
+    public static function create(TypeMapperInterface $typeMapper = null, HttpClientInterface $client = null): self
+    {
+        return new static(new Client($client), ResponseParser::create($typeMapper));
     }
 
     /**
