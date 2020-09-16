@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [1.2.0] - 2020-09-16
+
+### Added
+
+* Added support for Laravel 8 [#81](https://github.com/swisnl/json-api-client/pull/81).
+
 ## [1.1.1] - 2020-08-05
 
 ### Fixed
