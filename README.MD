@@ -86,23 +86,20 @@ php artisan vendor:publish --provider="Swis\JsonApi\Client\Providers\ServiceProv
 
 ## Getting started
 
-You can simply require the [DocumentClient](#documentclient) as a dependency and use it in your class.
-Alternatively, you can create a repository based on `\Swis\JsonApi\Client\Repository` and use that as a dependency:
+You can simply create an instance of [DocumentClient](#documentclient) and use it in your class.
+Alternatively, you can create a [repository](#repository).
 
 ``` php
-use Swis\JsonApi\Client\Repository
+use Swis\JsonApi\Client\DocumentClient;
 
-class BlogRepository extends Repository
-{
-    protected $endpoint = 'blogs';
-}
+$client = DocumentClient::create();
+$document = $client->get('https://cms.contentacms.io/api/recipes');
 
-$repository = app(BlogRepository::class);
-$document = $repository->all();
-if ($document->hasErrors()) {
-   // do something with errors
-} else {
-  $blogs = $document->getData();
+/** @var \Swis\JsonApi\Client\Collection&\Swis\JsonApi\Client\Item[] $collection */
+$collection = $document->getData();
+
+foreach ($collection as $item) {
+  // Do stuff with the items
 }
 ```
 
