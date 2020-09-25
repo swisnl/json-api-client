@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [1.3.0] - 2020-09-25
+
+### Added
+
+* Added factory methods to `DocumentClient`, `ResponseParser` and `DocumentParser`. This will make it easier to use these without an IOC container. See the (updated) readme for usage instructions. [#79](https://github.com/swisnl/json-api-client/pull/79)
+
 ## [1.2.0] - 2020-09-16
 
 ### Added
