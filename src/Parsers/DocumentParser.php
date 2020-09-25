@@ -11,7 +11,9 @@ use Swis\JsonApi\Client\Interfaces\DocumentParserInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
+use Swis\JsonApi\Client\Interfaces\TypeMapperInterface;
 use Swis\JsonApi\Client\ItemDocument;
+use Swis\JsonApi\Client\TypeMapper;
 
 class DocumentParser implements DocumentParserInterface
 {
@@ -67,6 +69,29 @@ class DocumentParser implements DocumentParserInterface
         $this->linksParser = $linksParser;
         $this->jsonapiParser = $jsonapiParser;
         $this->metaParser = $metaParser;
+    }
+
+    /**
+     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
+     *
+     * @return static
+     */
+    public static function create(TypeMapperInterface $typeMapper = null): self
+    {
+        $metaParser = new MetaParser();
+        $linksParser = new LinksParser($metaParser);
+        $itemParser = new ItemParser($typeMapper ?? new TypeMapper(), $linksParser, $metaParser);
+
+        return new static(
+            $itemParser,
+            new CollectionParser($itemParser),
+            new ErrorCollectionParser(
+                new ErrorParser($linksParser, $metaParser)
+            ),
+            $linksParser,
+            new JsonapiParser($metaParser),
+            $metaParser
+        );
     }
 
     /**

@@ -15,6 +15,14 @@ class ResponseParserTest extends AbstractTest
     /**
      * @test
      */
+    public function it_can_create_an_instance_using_a_factory_method()
+    {
+        $this->assertInstanceOf(ResponseParser::class, ResponseParser::create());
+    }
+
+    /**
+     * @test
+     */
     public function it_converts_psr_reponse_to_document()
     {
         $documentParser = $this->createMock(DocumentParser::class);
