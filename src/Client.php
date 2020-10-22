@@ -195,6 +195,10 @@ class Client implements ClientInterface
      */
     protected function getEndpoint(string $endpoint): string
     {
+        if (strpos($endpoint, 'http://') === 0 || strpos($endpoint, 'https://') === 0) {
+            return $endpoint;
+        }
+
         return $this->baseUri.$endpoint;
     }
 
