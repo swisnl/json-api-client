@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [1.3.1] - 2020-10-22
+
+### Fixed
+
+* Do not prepend the base uri if the endpoint is already absolute [#82](https://github.com/swisnl/json-api-client/pull/82).
+
 ## [1.3.0] - 2020-09-25
 
 ### Added
