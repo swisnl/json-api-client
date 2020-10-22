@@ -234,4 +234,38 @@ class ClientTest extends AbstractTest
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals('', (string) $httpClient->getLastRequest()->getBody());
     }
+
+    /**
+     * @test
+     */
+    public function it_prepends_the_base_uri_if_the_endpoint_is_relative()
+    {
+        $baseUri = 'http://example.com/api';
+        $endpoint = '/test/1';
+
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+        $client->setBaseUri($baseUri);
+
+        $client->get($endpoint);
+
+        $this->assertEquals($baseUri.$endpoint, $httpClient->getLastRequest()->getUri());
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_prepend_the_base_uri_if_the_endpoint_is_already_absolute()
+    {
+        $baseUri = 'http://example.com/api';
+        $endpoint = 'http://foo.bar/test/1';
+
+        $httpClient = new HttpMockClient();
+        $client = new Client($httpClient);
+        $client->setBaseUri($baseUri);
+
+        $client->get($endpoint);
+
+        $this->assertEquals($endpoint, $httpClient->getLastRequest()->getUri());
+    }
 }
