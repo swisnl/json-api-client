@@ -52,7 +52,9 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->extend(
             ClientInterface::class,
             static function (ClientInterface $client) {
-                $client->setBaseUri(config('jsonapi.base_uri'));
+                if ($baseUri = config('jsonapi.base_uri')) {
+                    $client->setBaseUri($baseUri);
+                }
 
                 return $client;
             }
