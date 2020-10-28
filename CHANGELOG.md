@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [1.3.2] - 2020-10-28
+
+### Fixed
+
+* The service provider will not set the base uri if it's empty. This allows you to set it in a custom container binding without using the config file.
+
 ## [1.3.1] - 2020-10-22
 
 ### Fixed
