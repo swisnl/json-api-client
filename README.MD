@@ -521,12 +521,12 @@ This is a perfect way to add extra options to your HTTP client or register a moc
 ``` php
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    protected function register()
+    public function register()
     {
         $this->app->bind(\Swis\JsonApi\Client\Client::class, function ($app) {
             if ($app->environment('testing')) {
                 $httpClient = new \Swis\Http\Fixture\Client(
-                    new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures');
+                    new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures')
                 );
             } else {
                 $httpClient = new \GuzzleHttp\Client(
