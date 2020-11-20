@@ -3,7 +3,7 @@
 namespace Swis\JsonApi\Client;
 
 use Illuminate\Support\Str;
-use Jenssegers\Model\Model;
+use Swis\JsonApi\Model;
 use Swis\JsonApi\Client\Concerns\HasId;
 use Swis\JsonApi\Client\Concerns\HasInitial;
 use Swis\JsonApi\Client\Concerns\HasLinks;
