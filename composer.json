@@ -6,7 +6,6 @@
         "php": ">=7.2.5",
         "ext-json": "*",
         "illuminate/collections": "^8.15",
-        "php-http/discovery": "^1.0",
         "psr/http-client": "^1.0",
         "psr/http-client-implementation": "^1.0",
         "psr/http-factory": "^1.0",
