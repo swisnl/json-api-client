@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Removed
+
+* Removed Laravel <6 and PHP <7.2 support.
 
 ## [1.3.2] - 2020-10-28
 
