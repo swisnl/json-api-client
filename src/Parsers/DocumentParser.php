@@ -271,34 +271,6 @@ class DocumentParser implements DocumentParserInterface
             return $this->getItemKey($item);
         };
 
-        // Collection->duplicates was introduced in Laravel 5.8
-        if (method_exists($items, 'duplicates')) {
-            return $items->duplicates($valueRetriever);
-        }
-
-        /*
-         * Duplicates code copied, and simplified for our use case, from Laravel 6.
-         *
-         * @see https://github.com/laravel/framework/blob/v6.1.0/src/Illuminate/Support/Collection.php#L275
-         */
-        $values = $items->map($valueRetriever);
-
-        $uniqueValues = $values->unique();
-
-        $compare = static function ($a, $b) {
-            return $a === $b;
-        };
-
-        $duplicates = new Collection();
-
-        foreach ($values as $key => $value) {
-            if ($uniqueValues->isNotEmpty() && $compare($value, $uniqueValues->first())) {
-                $uniqueValues->shift();
-            } else {
-                $duplicates[$key] = $value;
-            }
-        }
-
-        return $duplicates;
+        return $items->duplicates($valueRetriever);
     }
 }
