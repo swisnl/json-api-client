@@ -2,7 +2,6 @@
 
 namespace Swis\JsonApi\Client\Concerns;
 
-use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
@@ -13,6 +12,7 @@ use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
+use Swis\JsonApi\Client\Util;
 
 trait HasRelations
 {
@@ -31,7 +31,7 @@ trait HasRelations
      */
     public function hasOne(string $itemClass, string $name = null): OneRelationInterface
     {
-        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = new HasOneRelation((new $itemClass())->getType());
@@ -50,7 +50,7 @@ trait HasRelations
      */
     public function hasMany(string $itemClass, string $name = null): ManyRelationInterface
     {
-        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = new HasManyRelation((new $itemClass())->getType());
@@ -68,7 +68,7 @@ trait HasRelations
      */
     public function morphTo(string $name = null): OneRelationInterface
     {
-        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = new MorphToRelation();
@@ -86,7 +86,7 @@ trait HasRelations
      */
     public function morphToMany(string $name = null): ManyRelationInterface
     {
-        $name = $name ?: Str::snake(debug_backtrace()[1]['function']);
+        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = new MorphToManyRelation();
@@ -124,7 +124,7 @@ trait HasRelations
     {
         // If the "attribute" exists as a method on the model, we will just assume
         // it is a relationship and will load and return the included items in the relationship
-        $method = Str::camel($name);
+        $method = Util::stringCamel($name);
         if (method_exists($this, $method)) {
             return $this->$method()->getIncluded();
         }
@@ -150,7 +150,7 @@ trait HasRelations
      */
     public function setRelation(string $name, $data = false, Links $links = null, Meta $meta = null)
     {
-        $method = Str::camel($name);
+        $method = Util::stringCamel($name);
         if (method_exists($this, $method)) {
             /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
             $relationObject = $this->$method();

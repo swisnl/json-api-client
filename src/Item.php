@@ -2,7 +2,6 @@
 
 namespace Swis\JsonApi\Client;
 
-use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Concerns\HasId;
 use Swis\JsonApi\Client\Concerns\HasInitial;
 use Swis\JsonApi\Client\Concerns\HasLinks;
@@ -229,7 +228,7 @@ class Item extends Model implements ItemInterface
             return $this->hasId();
         }
 
-        return parent::__isset($key) || $this->hasRelation($key) || $this->hasRelation(Str::snake($key));
+        return parent::__isset($key) || $this->hasRelation($key) || $this->hasRelation(Util::stringSnake($key));
     }
 
     /**

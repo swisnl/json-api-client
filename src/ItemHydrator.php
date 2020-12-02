@@ -2,8 +2,6 @@
 
 namespace Swis\JsonApi\Client;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Swis\JsonApi\Client\Exceptions\HydrationException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
@@ -56,7 +54,7 @@ class ItemHydrator
      */
     protected function fill(ItemInterface $item, array $attributes): void
     {
-        $item->fill(Arr::except($attributes, $item->getAvailableRelations()));
+        $item->fill(Util::arrayExcept($attributes, $item->getAvailableRelations()));
     }
 
     /**
@@ -111,7 +109,7 @@ class ItemHydrator
      */
     protected function getRelationFromItem(ItemInterface $item, string $availableRelation)
     {
-        $method = Str::camel($availableRelation);
+        $method = Util::stringCamel($availableRelation);
         if (!method_exists($item, $method)) {
             throw new HydrationException(sprintf('Method %s not found on %s', $method, get_class($item)));
         }
@@ -166,7 +164,7 @@ class ItemHydrator
         if (!array_key_exists('type', $attributes)) {
             throw new HydrationException('Always provide a "type" attribute in a morphTo relationship');
         }
-        $relationItem = $this->buildItem($attributes['type'], Arr::except($attributes, 'type'));
+        $relationItem = $this->buildItem($attributes['type'], Util::arrayExcept($attributes, 'type'));
 
         $relation->associate($relationItem);
     }
@@ -183,7 +181,7 @@ class ItemHydrator
             if (!array_key_exists('type', $relationData)) {
                 throw new HydrationException('Always provide a "type" attribute in a morphToMany relationship entry');
             }
-            $relationItem = $this->buildItem($relationData['type'], Arr::except($relationData, 'type'));
+            $relationItem = $this->buildItem($relationData['type'], Util::arrayExcept($relationData, 'type'));
 
             $relation->associate($relation->getIncluded()->push($relationItem));
         }
