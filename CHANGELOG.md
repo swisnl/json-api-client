@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 
 * Removed Laravel <6 and PHP <7.2 support.
+* Removed `jenssegers/model` dependency and added the classes into the package.
 
 ## [1.3.2] - 2020-10-28
 

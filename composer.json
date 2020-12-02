@@ -6,7 +6,6 @@
         "php": ">=7.2.5",
         "ext-json": "*",
         "illuminate/support": "^6.0|^7.0|^8.0",
-        "jenssegers/model": "^1.1",
         "nyholm/psr7": "^1.2",
         "php-http/discovery": "^1.0",
         "psr/http-client": "^1.0",
