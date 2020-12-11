@@ -107,15 +107,15 @@ foreach ($collection as $item) {
 ## Items
 
 By default, all items are an instance of `\Swis\JsonApi\Client\Item`.
-The `Item` extends [jenssegers/model](https://github.com/jenssegers/model), which provides a Laravel Eloquent-like base class.
-Please see it's documentation about the features it provides.
+The `Item` provides a Laravel Eloquent-like base class. 
+
 You can define your own models by extending `\Swis\JsonApi\Client\Item` or by implementing the `\Swis\JsonApi\Client\Interfaces\ItemInterface` yourself.
 This can be useful if you want to define, for example, hidden attributes, casts or get/set mutators.
 If you use custom models, you must register them with the [TypeMapper](#typemapper).
 
 ### Relations
 
-On top of [jenssegers/model](https://github.com/jenssegers/model), this package has implemented [Laravel Eloquent-like relations](https://laravel.com/docs/eloquent-relationships).
+This package implements [Laravel Eloquent-like relations](https://laravel.com/docs/eloquent-relationships).
 These relations provide a fluent interface to retrieve the related items.
 There are currently four relations available:
 
