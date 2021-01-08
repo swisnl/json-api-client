@@ -10,7 +10,7 @@ class HasIdTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_an_id()
+    public function itCanGetAndSetAnId()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasId $mock */
         $mock = $this->getMockForTrait(HasId::class);
@@ -24,7 +24,7 @@ class HasIdTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_an_id()
+    public function itReturnsABooleanIndicatingIfItHasAnId()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasId $mock */
         $mock = $this->getMockForTrait(HasId::class);

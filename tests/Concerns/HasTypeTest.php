@@ -10,7 +10,7 @@ class HasTypeTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_a_type()
+    public function itCanGetAndSetAType()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasType $mock */
         $mock = $this->getMockForTrait(HasType::class);
@@ -24,7 +24,7 @@ class HasTypeTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_a_type()
+    public function itReturnsABooleanIndicatingIfItHasAType()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasType $mock */
         $mock = $this->getMockForTrait(HasType::class);

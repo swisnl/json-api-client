@@ -8,7 +8,7 @@ use Swis\JsonApi\Client\Links;
 
 class LinksTest extends TestCase
 {
-    public function test__get()
+    public function testGet()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -26,7 +26,7 @@ class LinksTest extends TestCase
         $this->assertNull($links['related']);
     }
 
-    public function test__isset()
+    public function testIsset()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -44,7 +44,7 @@ class LinksTest extends TestCase
         $this->assertFalse(isset($links['related']));
     }
 
-    public function test__set()
+    public function testSet()
     {
         $link = new Link('http://example.com/self');
         $links = new Links([]);
@@ -64,7 +64,7 @@ class LinksTest extends TestCase
         $this->assertEquals($link, $links['self']);
     }
 
-    public function test__unset()
+    public function testUnset()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);

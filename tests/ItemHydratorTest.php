@@ -35,7 +35,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_attributes()
+    public function itHydratesAttributes()
     {
         $data = [
             'testattribute1' => 'test',
@@ -55,7 +55,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_hasone_relationships_by_id()
+    public function itHydratesHasoneRelationshipsById()
     {
         $data = [
             'hasone_relation' => 1,
@@ -77,7 +77,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_hasone_relationships_with_attributes()
+    public function itHydratesHasoneRelationshipsWithAttributes()
     {
         $data = [
             'hasone_relation' => [
@@ -105,7 +105,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_dissociates_hasone_relationships_when_null()
+    public function itDissociatesHasoneRelationshipsWhenNull()
     {
         $data = [
             'hasone_relation' => null,
@@ -127,7 +127,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_hasmany_relationships_by_id()
+    public function itHydratesHasmanyRelationshipsById()
     {
         $data = [
             'hasmany_relation' => [
@@ -157,7 +157,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_hasmany_relationships_with_attributes()
+    public function itHydratesHasmanyRelationshipsWithAttributes()
     {
         $data = [
             'hasmany_relation' => [
@@ -199,7 +199,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_dissociates_hasmany_relationships_when_empty_array()
+    public function itDissociatesHasmanyRelationshipsWhenEmptyArray()
     {
         $data = [
             'hasmany_relation' => [],
@@ -221,7 +221,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_morphto_relationships_by_id()
+    public function itHydratesMorphtoRelationshipsById()
     {
         $data = [
             'morphto_relation' => [
@@ -247,7 +247,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_morphto_relationships_with_attributes()
+    public function itHydratesMorphtoRelationshipsWithAttributes()
     {
         $data = [
             'morphto_relation' => [
@@ -275,7 +275,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_dissociates_morphto_relationships_when_null()
+    public function itDissociatesMorphtoRelationshipsWhenNull()
     {
         $data = [
             'morphto_relation' => null,
@@ -297,7 +297,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_morphto_relationships_with_unmapped_items()
+    public function itHydratesMorphtoRelationshipsWithUnmappedItems()
     {
         $data = [
             'morphto_relation' => [
@@ -321,7 +321,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_for_morphto_relationships_without_type_attribute()
+    public function itThrowsForMorphtoRelationshipsWithoutTypeAttribute()
     {
         $data = [
             'morphto_relation' => [
@@ -339,7 +339,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_morphtomany_relationships_by_id()
+    public function itHydratesMorphtomanyRelationshipsById()
     {
         $data = [
             'morphtomany_relation' => [
@@ -377,7 +377,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_morphtomany_relationships_with_attributes()
+    public function itHydratesMorphtomanyRelationshipsWithAttributes()
     {
         $data = [
             'morphtomany_relation' => [
@@ -419,7 +419,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_dissociates_morphtomany_relationships_when_empty_array()
+    public function itDissociatesMorphtomanyRelationshipsWhenEmptyArray()
     {
         $data = [
             'morphtomany_relation' => [],
@@ -441,7 +441,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_morphtomany_relationships_with_unmapped_items()
+    public function itHydratesMorphtomanyRelationshipsWithUnmappedItems()
     {
         $data = [
             'morphtomany_relation' => [
@@ -476,7 +476,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_for_morphtomany_relationships_without_type_attribute()
+    public function itThrowsForMorphtomanyRelationshipsWithoutTypeAttribute()
     {
         $data = [
             'morphtomany_relation' => [
@@ -496,7 +496,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_hydrates_nested_relationship_items()
+    public function itHydratesNestedRelationshipItems()
     {
         $data = [
             'hasone_relation' => [
@@ -526,7 +526,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_dissociates_and_hydrates_relationships_in_one_call()
+    public function itDissociatesAndHydratesRelationshipsInOneCall()
     {
         $data = [
             'hasone_relation' => null,
@@ -557,7 +557,7 @@ class ItemHydratorTest extends AbstractTest
      * @param $givenId
      * @param $expectedId
      */
-    public function it_hydrates_the_id_when_not_null_or_empty_string($givenId, $expectedId)
+    public function itHydratesTheIdWhenNotNullOrEmptyString($givenId, $expectedId)
     {
         $item = new Item();
         $item = $this->getItemHydrator()->hydrate($item, [], $givenId);
@@ -579,7 +579,7 @@ class ItemHydratorTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_relationship_is_present_in_available_relationships_but_the_method_does_not_exist()
+    public function itThrowsWhenRelationshipIsPresentInAvailableRelationshipsButTheMethodDoesNotExist()
     {
         $data = [
             'does_not_exist' => 1,

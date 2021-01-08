@@ -28,7 +28,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_data_to_item()
+    public function itConvertsDataToItem()
     {
         $parser = $this->getItemParser();
         $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
@@ -58,7 +58,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_data_is_not_an_object($invalidData)
+    public function itThrowsWhenDataIsNotAnObject($invalidData)
     {
         $parser = $this->getItemParser();
 
@@ -83,7 +83,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_item_does_not_have_type_property()
+    public function itThrowsWhenItemDoesNotHaveTypeProperty()
     {
         $parser = $this->getItemParser();
 
@@ -96,7 +96,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_item_does_not_have_id_property()
+    public function itThrowsWhenItemDoesNotHaveIdProperty()
     {
         $parser = $this->getItemParser();
 
@@ -112,7 +112,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_id_is_not_a_string($invalidItem)
+    public function itThrowsWhenIdIsNotAString($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -138,7 +138,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_type_is_not_a_string($invalidItem)
+    public function itThrowsWhenTypeIsNotAString($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -166,7 +166,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_attributes_is_not_an_object($invalidItem)
+    public function itThrowsWhenAttributesIsNotAnObject($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -191,7 +191,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_type_is_present_in_attributes()
+    public function itThrowsWhenTypeIsPresentInAttributes()
     {
         $parser = $this->getItemParser();
 
@@ -204,7 +204,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_id_is_present_in_attributes()
+    public function itThrowsWhenIdIsPresentInAttributes()
     {
         $parser = $this->getItemParser();
 
@@ -217,7 +217,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_relationships_is_present_in_attributes()
+    public function itThrowsWhenRelationshipsIsPresentInAttributes()
     {
         $parser = $this->getItemParser();
 
@@ -230,7 +230,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_links_is_present_in_attributes()
+    public function itThrowsWhenLinksIsPresentInAttributes()
     {
         $parser = $this->getItemParser();
 
@@ -246,7 +246,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_relationships_is_not_an_object($invalidItem)
+    public function itThrowsWhenRelationshipsIsNotAnObject($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -271,7 +271,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_type_is_present_in_relationships()
+    public function itThrowsWhenTypeIsPresentInRelationships()
     {
         $parser = $this->getItemParser();
 
@@ -284,7 +284,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_id_is_present_in_relationships()
+    public function itThrowsWhenIdIsPresentInRelationships()
     {
         $parser = $this->getItemParser();
 
@@ -297,7 +297,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_property_is_present_in_both_attributes_and_relationships()
+    public function itThrowsWhenPropertyIsPresentInBothAttributesAndRelationships()
     {
         $parser = $this->getItemParser();
 
@@ -313,7 +313,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_relationships_item_is_not_an_object($invalidItem)
+    public function itThrowsWhenRelationshipsItemIsNotAnObject($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -338,7 +338,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_relationships_item_misses_links_data_and_meta()
+    public function itThrowsWhenRelationshipsItemMissesLinksDataAndMeta()
     {
         $parser = $this->getItemParser();
 
@@ -354,7 +354,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_relationships_item_identifier_is_not_an_object_array_or_null($invalidItem)
+    public function itThrowsWhenRelationshipsItemIdentifierIsNotAnObjectArrayOrNull($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -377,7 +377,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_relationships_item_identifier_does_not_have_type_property()
+    public function itThrowsWhenRelationshipsItemIdentifierDoesNotHaveTypeProperty()
     {
         $parser = $this->getItemParser();
 
@@ -390,7 +390,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_relationships_item_identifier_does_not_have_id_property()
+    public function itThrowsWhenRelationshipsItemIdentifierDoesNotHaveIdProperty()
     {
         $parser = $this->getItemParser();
 
@@ -406,7 +406,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_relationships_item_identifier_id_is_not_a_string($invalidItem)
+    public function itThrowsWhenRelationshipsItemIdentifierIdIsNotAString($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -432,7 +432,7 @@ class ItemParserTest extends AbstractTest
      *
      * @param mixed $invalidItem
      */
-    public function it_throws_when_relationships_item_identifier_type_is_not_a_string($invalidItem)
+    public function itThrowsWhenRelationshipsItemIdentifierTypeIsNotAString($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -457,7 +457,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_has_one_relationship()
+    public function itParsesAHasOneRelationship()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
@@ -478,7 +478,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_an_empty_has_one_relationship()
+    public function itParsesAnEmptyHasOneRelationship()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
@@ -497,7 +497,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_has_many_relationship()
+    public function itParsesAHasManyRelationship()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
@@ -521,7 +521,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_morph_to_relation()
+    public function itParsesAMorphToRelation()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
@@ -542,7 +542,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_morph_to_many_relation()
+    public function itParsesAMorphToManyRelation()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
@@ -568,7 +568,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_an_unknown_singular_relation_as_morph_to()
+    public function itParsesAnUnknownSingularRelationAsMorphTo()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
@@ -586,7 +586,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_an_unknown_plural_relation_as_morph_to_many()
+    public function itParsesAnUnknownPluralRelationAsMorphToMany()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
@@ -605,7 +605,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_set_data_when_there_is_no_data_present()
+    public function itDoesNotSetDataWhenThereIsNoDataPresent()
     {
         $parser = $this->getItemParser();
 
@@ -620,7 +620,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_links()
+    public function itParsesLinks()
     {
         $parser = $this->getItemParser();
 
@@ -634,7 +634,7 @@ class ItemParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_meta()
+    public function itParsesMeta()
     {
         $parser = $this->getItemParser();
 

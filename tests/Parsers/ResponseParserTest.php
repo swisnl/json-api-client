@@ -15,7 +15,7 @@ class ResponseParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_create_an_instance_using_a_factory_method()
+    public function itCanCreateAnInstanceUsingAFactoryMethod()
     {
         $this->assertInstanceOf(ResponseParser::class, ResponseParser::create());
     }
@@ -23,7 +23,7 @@ class ResponseParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_psr_reponse_to_document()
+    public function itConvertsPsrReponseToDocument()
     {
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser->expects($this->once())
@@ -42,7 +42,7 @@ class ResponseParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_response_with_an_empty_body()
+    public function itParsesAResponseWithAnEmptyBody()
     {
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser->expects($this->never())
@@ -60,7 +60,7 @@ class ResponseParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_an_error_response()
+    public function itParsesAnErrorResponse()
     {
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser->expects($this->never())

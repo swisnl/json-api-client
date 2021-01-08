@@ -25,7 +25,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_create_an_instance_using_a_factory_method()
+    public function itCanCreateAnInstanceUsingAFactoryMethod()
     {
         $this->assertInstanceOf(DocumentParser::class, DocumentParser::create());
     }
@@ -33,7 +33,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_jsondocument_to_document()
+    public function itConvertsJsondocumentToDocument()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -50,7 +50,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_json_is_not_valid()
+    public function itThrowsWhenJsonIsNotValid()
     {
         $parser = DocumentParser::create();
 
@@ -66,7 +66,7 @@ class DocumentParserTest extends AbstractTest
      *
      * @param string $invalidJson
      */
-    public function it_throws_when_json_is_not_a_jsonapi_document(string $invalidJson)
+    public function itThrowsWhenJsonIsNotAJsonapiDocument(string $invalidJson)
     {
         $parser = DocumentParser::create();
 
@@ -91,7 +91,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_data_errors_and_meta_are_missing()
+    public function itThrowsWhenDataErrorsAndMetaAreMissing()
     {
         $parser = DocumentParser::create();
 
@@ -104,7 +104,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_both_data_and_errors_are_present()
+    public function itThrowsWhenBothDataAndErrorsArePresent()
     {
         $parser = DocumentParser::create();
 
@@ -117,7 +117,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_included_is_present_but_data_is_not()
+    public function itThrowsWhenIncludedIsPresentButDataIsNot()
     {
         $parser = DocumentParser::create();
 
@@ -133,7 +133,7 @@ class DocumentParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_data_is_not_an_array_object_or_null($invalidData)
+    public function itThrowsWhenDataIsNotAnArrayObjectOrNull($invalidData)
     {
         $parser = DocumentParser::create();
 
@@ -159,7 +159,7 @@ class DocumentParserTest extends AbstractTest
      *
      * @param mixed $invalidIncluded
      */
-    public function it_throws_when_included_is_not_an_array($invalidIncluded)
+    public function itThrowsWhenIncludedIsNotAnArray($invalidIncluded)
     {
         $parser = DocumentParser::create();
 
@@ -184,7 +184,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_it_finds_duplicate_resources()
+    public function itThrowsWhenItFindsDuplicateResources()
     {
         $parser = DocumentParser::create();
 
@@ -220,7 +220,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_resource_document()
+    public function itParsesAResourceDocument()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -246,7 +246,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_resource_collection_document()
+    public function itParsesAResourceCollectionDocument()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -275,7 +275,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_a_document_without_data()
+    public function itParsesADocumentWithoutData()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -294,7 +294,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_included()
+    public function itParsesIncluded()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -324,7 +324,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_links_singular_relations_to_items_from_included()
+    public function itLinksSingularRelationsToItemsFromIncluded()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
@@ -370,7 +370,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_link_empty_singular_relations()
+    public function itDoesNotLinkEmptySingularRelations()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
@@ -413,7 +413,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_links_plural_relations_to_items_from_included()
+    public function itLinksPluralRelationsToItemsFromIncluded()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
@@ -474,7 +474,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_link_empty_plural_relations()
+    public function itDoesNotLinkEmptyPluralRelations()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('master', MasterItem::class);
@@ -526,7 +526,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_links()
+    public function itParsesLinks()
     {
         $parser = DocumentParser::create();
 
@@ -549,7 +549,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_errors()
+    public function itParsesErrors()
     {
         $parser = DocumentParser::create();
 
@@ -574,7 +574,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_meta()
+    public function itParsesMeta()
     {
         $parser = DocumentParser::create();
 
@@ -597,7 +597,7 @@ class DocumentParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_parses_jsonapi()
+    public function itParsesJsonapi()
     {
         $parser = DocumentParser::create();
 

@@ -14,7 +14,7 @@ class JsonapiParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_data_to_jsonapi()
+    public function itConvertsDataToJsonapi()
     {
         $parser = new JsonapiParser(new MetaParser());
         $jsonapi = $parser->parse($this->getJsonapi());
@@ -32,7 +32,7 @@ class JsonapiParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_data_is_not_an_object($invalidData)
+    public function itThrowsWhenDataIsNotAnObject($invalidData)
     {
         $parser = new JsonapiParser($this->createMock(MetaParser::class));
 
@@ -60,7 +60,7 @@ class JsonapiParserTest extends AbstractTest
      *
      * @param mixed $invalidJsonapi
      */
-    public function it_throws_when_version_is_not_a_string($invalidJsonapi)
+    public function itThrowsWhenVersionIsNotAString($invalidJsonapi)
     {
         $parser = new JsonapiParser($this->createMock(MetaParser::class));
 

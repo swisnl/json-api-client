@@ -12,7 +12,7 @@ class MetaParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_data_to_meta()
+    public function itConvertsDataToMeta()
     {
         $parser = new MetaParser();
         $meta = $parser->parse($this->getMeta());
@@ -28,7 +28,7 @@ class MetaParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_data_is_not_an_object($invalidData)
+    public function itThrowsWhenDataIsNotAnObject($invalidData)
     {
         $parser = new MetaParser();
 
