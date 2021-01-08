@@ -2,7 +2,9 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use stdClass;
 use Swis\JsonApi\Client\Collection;
+use Swis\JsonApi\Client\Exceptions\MassAssignmentException;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
@@ -10,9 +12,9 @@ use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\WithGetMutatorItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
+use Swis\JsonApi\Client\Tests\Mocks\ItemStub;
 
 class ItemTest extends AbstractTest
 {
@@ -21,8 +23,21 @@ class ItemTest extends AbstractTest
      */
     public function itCanInstantiateAnItem()
     {
-        $item = new Item();
+        $item = new Item(['name' => 'john']);
         $this->assertInstanceOf(Item::class, $item);
+        $this->assertEquals('john', $item->name);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanCreateANewInstanceWithAttributes()
+    {
+        $item = new ItemStub();
+        $instance = $item->newInstance(['name' => 'john']);
+
+        $this->assertInstanceOf(ItemStub::class, $instance);
+        $this->assertEquals('john', $instance->name);
     }
 
     /**
@@ -649,10 +664,399 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function itReturnsAttributeFromGetMutator()
+    public function itReturnsNullWhenProvidedAnEmptyKey()
     {
-        $item = new WithGetMutatorItem();
+        $item = new Item();
 
-        $this->assertEquals('test', $item->getAttribute('test_attribute'));
+        $this->assertNull($item->getAttribute(''));
+    }
+
+    /**
+     * @test
+     */
+    public function itReturnsNullWhenProvidedAKeyThatIsAMethodOnTheItem()
+    {
+        $item = new Item();
+
+        $this->assertNull($item->getAttribute('getAttribute'));
+    }
+
+    /**
+     * @test
+     */
+    public function itCanManipulateAttributes()
+    {
+        $item = new ItemStub();
+        $item->name = 'foo';
+
+        $this->assertEquals('foo', $item->name);
+        $this->assertTrue(isset($item->name));
+        unset($item->name);
+        $this->assertEquals(null, $item->name);
+        $this->assertFalse(isset($item->name));
+
+        $item['name'] = 'foo';
+        $this->assertTrue(isset($item['name']));
+        unset($item['name']);
+        $this->assertFalse(isset($item['name']));
+    }
+
+    /**
+     * @test
+     */
+    public function itDoesNotShowHiddenAttributes()
+    {
+        $item = new ItemStub();
+        $item->password = 'secret';
+
+        $attributes = $item->attributesToArray();
+        $this->assertFalse(isset($attributes['password']));
+        $this->assertEquals(['password'], $item->getHidden());
+    }
+
+    /**
+     * @test
+     */
+    public function itDoesShowVisibleAttributes()
+    {
+        $item = new ItemStub();
+        $item->setVisible(['name']);
+        $item->name = 'John Doe';
+        $item->city = 'Paris';
+
+        $attributes = $item->attributesToArray();
+        $this->assertEquals(['name' => 'John Doe'], $attributes);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanReturnTheItemInArrayForm()
+    {
+        $item = new ItemStub();
+        $item->name = 'foo';
+        $item->bar = null;
+        $item->password = 'password1';
+        $item->setHidden(['password']);
+        $item->setVisible(['name']);
+        $array = $item->toArray();
+
+        $this->assertIsArray($array);
+        $this->assertEquals('foo', $array['name']);
+        $this->assertFalse(isset($array['password']));
+        $this->assertEquals($array, $item->jsonSerialize());
+
+        $item->makeHidden(['name']);
+        $item->makeVisible('password');
+        $array = $item->toArray();
+        $this->assertIsArray($array);
+        $this->assertFalse(isset($array['name']));
+        $this->assertTrue(isset($array['password']));
+    }
+
+    /**
+     * @test
+     */
+    public function itCanReturnASubsetOfTheItemInArrayForm()
+    {
+        $item = new ItemStub();
+        $item->name = 'foo';
+        $item->bar = null;
+        $array = $item->only('name');
+
+        $this->assertIsArray($array);
+        $this->assertEquals(['name' => 'foo'], $array);
+        $this->assertFalse(isset($array['bar']));
+    }
+
+    /**
+     * @test
+     */
+    public function itCanReturnTheItemInJsonForm()
+    {
+        $item = new ItemStub();
+        $item->name = 'john';
+        $item->foo = 10;
+
+        $object = new stdClass();
+        $object->name = 'john';
+        $object->foo = 10;
+
+        $this->assertEquals(json_encode($object), $item->toJson());
+        $this->assertEquals(json_encode($object), (string) $item);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanMutateAttributes()
+    {
+        $item = new ItemStub();
+        $item->list_items = ['name' => 'john'];
+        $this->assertEquals(['name' => 'john'], $item->list_items);
+        $attributes = $item->getAttributes();
+        $this->assertEquals(json_encode(['name' => 'john']), $attributes['list_items']);
+
+        $birthday = strtotime('245 months ago');
+
+        $item = new ItemStub();
+        $item->birthday = '245 months ago';
+
+        $this->assertEquals(date('Y-m-d', $birthday), $item->birthday);
+        $this->assertEquals(20, $item->age);
+    }
+
+    /**
+     * @test
+     */
+    public function itUsesMutatorsInToArray()
+    {
+        $item = new ItemStub();
+        $item->list_items = [1, 2, 3];
+        $array = $item->toArray();
+
+        $this->assertEquals([1, 2, 3], $array['list_items']);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanReplicate()
+    {
+        $item = new ItemStub();
+        $item->name = 'John Doe';
+        $item->city = 'Paris';
+
+        $clone = $item->replicate();
+        $this->assertEquals($item, $clone);
+        $this->assertEquals($item->name, $clone->name);
+    }
+
+    /**
+     * @test
+     */
+    public function itAppendsMutators()
+    {
+        $item = new ItemStub();
+        $array = $item->toArray();
+        $this->assertFalse(isset($array['test']));
+
+        $item = new ItemStub();
+        $item->setAppends(['test']);
+        $array = $item->toArray();
+        $this->assertTrue(isset($array['test']));
+        $this->assertEquals('test', $array['test']);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanMergeAppends()
+    {
+        $item = new ItemStub();
+        $item->mergeAppends([__FUNCTION__]);
+        $this->assertTrue($item->hasAppended(__FUNCTION__));
+    }
+
+    /**
+     * @test
+     */
+    public function itCanUseArrayAccess()
+    {
+        $item = new ItemStub();
+        $item->name = 'John Doen';
+        $item['city'] = 'Paris';
+
+        $this->assertEquals($item->name, $item['name']);
+        $this->assertEquals($item->city, $item['city']);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanBeSerializedAndUnserialized()
+    {
+        $item = new ItemStub();
+        $item->name = 'john';
+        $item->foo = 10;
+
+        $serialized = serialize($item);
+        $this->assertEquals($item, unserialize($serialized));
+    }
+
+    /**
+     * @test
+     */
+    public function itCanCastAttributes()
+    {
+        $item = new ItemStub();
+        $item->score = '0.34';
+        $item->score_inf = 'Infinity';
+        $item->score_inf_neg = '-Infinity';
+        $item->score_nan = 'NaN';
+        $item->data = ['foo' => 'bar'];
+        $item->count = 1;
+        $item->object_data = ['foo' => 'bar'];
+        $item->active = 'true';
+        $item->default = 'bar';
+        $item->collection_data = [['foo' => 'bar', 'baz' => 'bat']];
+
+        $this->assertIsFloat($item->score);
+        $this->assertIsFloat($item->score_inf);
+        $this->assertEquals(INF, $item->score_inf);
+        $this->assertIsFloat($item->score_inf_neg);
+        $this->assertEquals(-INF, $item->score_inf_neg);
+        $this->assertIsFloat($item->score_nan);
+        $this->assertNan($item->score_nan);
+        $this->assertIsArray($item->data);
+        $this->assertIsBool($item->active);
+        $this->assertIsInt($item->count);
+        $this->assertEquals('bar', $item->default);
+        $this->assertInstanceOf(stdClass::class, $item->object_data);
+        $this->assertInstanceOf(Collection::class, $item->collection_data);
+
+        $attributes = $item->getAttributes();
+        $this->assertIsString($attributes['score']);
+        $this->assertIsString($attributes['score_inf']);
+        $this->assertIsString($attributes['score_inf_neg']);
+        $this->assertIsString($attributes['score_nan']);
+        $this->assertIsString($attributes['data']);
+        $this->assertIsString($attributes['active']);
+        $this->assertIsInt($attributes['count']);
+        $this->assertIsString($attributes['default']);
+        $this->assertIsString($attributes['object_data']);
+        $this->assertIsString($attributes['collection_data']);
+
+        $array = $item->toArray();
+        $this->assertIsFloat($array['score']);
+        $this->assertIsFloat($array['score_inf']);
+        $this->assertIsFloat($array['score_inf_neg']);
+        $this->assertIsFloat($array['score_nan']);
+        $this->assertIsArray($array['data']);
+        $this->assertIsBool($array['active']);
+        $this->assertIsInt($array['count']);
+        $this->assertEquals('bar', $array['default']);
+        $this->assertInstanceOf(stdClass::class, $array['object_data']);
+        $this->assertIsArray($array['collection_data']);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanMergeCasts()
+    {
+        $item = new ItemStub();
+        $item->mergeCasts([__FUNCTION__ => 'int']);
+        $this->assertArrayHasKey(__FUNCTION__, $item->getCasts());
+    }
+
+    /**
+     * @test
+     */
+    public function itCanGuardAttributes()
+    {
+        $item = new ItemStub(['secret' => 'foo']);
+        $this->assertTrue($item->isGuarded('secret'));
+        $this->assertNull($item->secret);
+        $this->assertContains('secret', $item->getGuarded());
+
+        $item->secret = 'bar';
+        $this->assertEquals('bar', $item->secret);
+
+        ItemStub::unguard();
+
+        $this->assertTrue(ItemStub::isUnguarded());
+        $item = new ItemStub(['secret' => 'foo']);
+        $this->assertEquals('foo', $item->secret);
+
+        ItemStub::reguard();
+    }
+
+    /**
+     * @test
+     */
+    public function itCanMergeGuarded()
+    {
+        $item = new Item();
+        $item->guard([]);
+        $this->assertFalse($item->isGuarded('foo'));
+
+        $item->guard(['id']);
+        $item->mergeGuarded(['foo']);
+
+        $this->assertEquals(['id', 'foo'], $item->getGuarded());
+        $this->assertTrue($item->isGuarded('id'));
+        $this->assertTrue($item->isGuarded('foo'));
+    }
+
+    /**
+     * @test
+     */
+    public function itCanUseTheGuardedCallback()
+    {
+        $mock = $this->getMockBuilder(stdClass::class)
+            ->addMethods(['callback'])
+            ->getMock();
+
+        $mock->expects($this->once())
+            ->method('callback')
+            ->willReturn('foo');
+
+        ItemStub::unguard();
+        $string = ItemStub::unguarded([$mock, 'callback']);
+        $this->assertEquals('foo', $string);
+        ItemStub::reguard();
+    }
+
+    /**
+     * @test
+     */
+    public function itCanBeTotallyGuarded()
+    {
+        $this->expectException(MassAssignmentException::class);
+
+        $item = new ItemStub();
+        $item->guard(['*']);
+        $item->fillable([]);
+        $item->fill(['name' => 'John Doe']);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanBeFillable()
+    {
+        $item = new ItemStub(['foo' => 'bar']);
+        $this->assertFalse($item->isFillable('foo'));
+        $this->assertNull($item->foo);
+        $this->assertNotContains('foo', $item->getFillable());
+
+        $item->foo = 'bar';
+        $this->assertEquals('bar', $item->foo);
+
+        $item = new ItemStub();
+        $item->forceFill(['foo' => 'bar']);
+        $this->assertEquals('bar', $item->foo);
+    }
+
+    /**
+     * @test
+     */
+    public function itCanMergeFillable()
+    {
+        $item = new ItemStub();
+        $item->fillable(['foo']);
+        $item->mergeFillable(['bar']);
+        $this->assertEquals(['foo', 'bar'], $item->getFillable());
+    }
+
+    /**
+     * @test
+     */
+    public function itCanHydrateAnArrayOfAttributes()
+    {
+        $items = ItemStub::hydrate([['name' => 'John Doe']]);
+        $this->assertInstanceOf(ItemStub::class, $items[0]);
+        $this->assertEquals('John Doe', $items[0]->name);
     }
 }

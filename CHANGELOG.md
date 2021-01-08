@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Added `Item::mergeAppends`, `Item::mergeCasts`, `Item::mergeFillable` and `Item::mergeGuarded`.
+
+### Changed
+
+* Renamed `Item::addHidden` to `Item::makeHidden`.
+* Merged `Item::addVisible` and `Item::withHidden` into `Item::makeVisible`.
+* The item's `toArray` method will now cast any attributes that implement `Illuminate\Contracts\Support\Arrayable` to an array.
+
 ### Removed
 
 * Removed Laravel <6 and PHP <7.2 support.
