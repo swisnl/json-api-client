@@ -12,7 +12,7 @@ class TypeMapperTest extends AbstractTest
     /**
      * @test
      */
-    public function it_remembers_type_mappings_after_setting()
+    public function itRemembersTypeMappingsAfterSetting()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', Item::class);
@@ -24,7 +24,7 @@ class TypeMapperTest extends AbstractTest
     /**
      * @test
      */
-    public function it_forgets_type_mappings_after_removing()
+    public function itForgetsTypeMappingsAfterRemoving()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('item', Item::class);
@@ -36,7 +36,7 @@ class TypeMapperTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_an_invalidargumentexception_when_mapping_doesnt_exist()
+    public function itThrowsAnInvalidargumentexceptionWhenMappingDoesntExist()
     {
         $this->expectException(TypeMappingException::class);
 
@@ -47,7 +47,7 @@ class TypeMapperTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_an_invalidargumentexception_when_class_doesnt_exist()
+    public function itThrowsAnInvalidargumentexceptionWhenClassDoesntExist()
     {
         $this->expectException(TypeMappingException::class);
         $this->expectExceptionMessage(sprintf('Class %s not found.', '\Non\Existing\Class'));
@@ -59,7 +59,7 @@ class TypeMapperTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_an_invalidargumentexception_when_class_doesnt_implement_iteminterface()
+    public function itThrowsAnInvalidargumentexceptionWhenClassDoesntImplementIteminterface()
     {
         $this->expectException(TypeMappingException::class);
         $this->expectExceptionMessage(sprintf('Class %s must implement %s.', TypeMapper::class, ItemInterface::class));

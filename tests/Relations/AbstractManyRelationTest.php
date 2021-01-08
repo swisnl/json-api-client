@@ -12,7 +12,7 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_can_associate_a_collection_and_get_the_included()
+    public function itCanAssociateACollectionAndGetTheIncluded()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
@@ -26,7 +26,7 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_can_dissociate_a_collection()
+    public function itCanDissociateACollection()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
@@ -43,7 +43,7 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_included()
+    public function itReturnsABooleanIndicatingIfItHasIncluded()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
@@ -58,7 +58,7 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_can_set_and_get_omit_included()
+    public function itCanSetAndGetOmitIncluded()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
@@ -72,7 +72,7 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_can_sort_the_included()
+    public function itCanSortTheIncluded()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);

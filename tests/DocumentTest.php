@@ -18,7 +18,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_a_response()
+    public function itCanGetAndSetAResponse()
     {
         $document = new Document();
         $response = new Response();
@@ -31,7 +31,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_errors()
+    public function itCanGetAndSetErrors()
     {
         $document = new Document();
         $errors = new ErrorCollection();
@@ -44,7 +44,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_errors()
+    public function itReturnsABooleanIndicatingIfItHasErrors()
     {
         $document = new Document();
         $this->assertEquals($document->isSuccess(), true);
@@ -64,7 +64,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_included()
+    public function itCanGetAndSetIncluded()
     {
         $document = new Document();
         $included = new Collection();
@@ -77,7 +77,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_jsonapi()
+    public function itCanGetAndSetJsonapi()
     {
         $document = new Document();
         $jsonApi = new Jsonapi();
@@ -90,7 +90,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_an_item_as_data()
+    public function itCanGetAndSetAnItemAsData()
     {
         $document = new Document();
         $data = new Item();
@@ -103,7 +103,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_a_collection_as_data()
+    public function itCanGetAndSetACollectionAsData()
     {
         $document = new Document();
         $data = new Collection([new Item()]);
@@ -116,7 +116,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_only_filled_properties_in_toArray()
+    public function itReturnsOnlyFilledPropertiesInToArray()
     {
         $document = new Document();
 
@@ -233,7 +233,7 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function it_serializes_empty_members_as_empty_objects()
+    public function itSerializesEmptyMembersAsEmptyObjects()
     {
         $document = new Document();
 

@@ -15,7 +15,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_the_client()
+    public function itCanGetTheClient()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -27,7 +27,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_the_endpoint()
+    public function itCanGetTheEndpoint()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -39,7 +39,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_all()
+    public function itCanGetAll()
     {
         $document = new Document();
 
@@ -59,7 +59,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_take_one()
+    public function itCanTakeOne()
     {
         $document = new Document();
 
@@ -79,7 +79,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_find_one()
+    public function itCanFindOne()
     {
         $document = new Document();
 
@@ -99,7 +99,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_save_new()
+    public function itCanSaveNew()
     {
         $document = new ItemDocument();
         $document->setData(new Item());
@@ -120,7 +120,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_save_existing()
+    public function itCanSaveExisting()
     {
         $document = new ItemDocument();
         $document->setData((new Item())->setId(1));
@@ -141,7 +141,7 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function it_can_delete()
+    public function itCanDelete()
     {
         $document = new Document();
 

@@ -17,7 +17,7 @@ class ErrorParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_data_to_error()
+    public function itConvertsDataToError()
     {
         $parser = new ErrorParser(new LinksParser(new MetaParser()), new MetaParser());
         $error = $parser->parse($this->getError());
@@ -44,7 +44,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_data_is_not_an_object($invalidData)
+    public function itThrowsWhenDataIsNotAnObject($invalidData)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -72,7 +72,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_id_is_not_a_string($invalidError)
+    public function itThrowsWhenIdIsNotAString($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -100,7 +100,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_status_is_not_a_string($invalidError)
+    public function itThrowsWhenStatusIsNotAString($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -128,7 +128,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_code_is_not_a_string($invalidError)
+    public function itThrowsWhenCodeIsNotAString($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -156,7 +156,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_title_is_not_a_string($invalidError)
+    public function itThrowsWhenTitleIsNotAString($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -184,7 +184,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_detail_is_not_a_string($invalidError)
+    public function itThrowsWhenDetailIsNotAString($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -212,7 +212,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_errorsource_is_not_an_object($invalidError)
+    public function itThrowsWhenErrorsourceIsNotAnObject($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -240,7 +240,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_errorsource_pointer_is_not_an_string($invalidError)
+    public function itThrowsWhenErrorsourcePointerIsNotAnString($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -268,7 +268,7 @@ class ErrorParserTest extends AbstractTest
      *
      * @param mixed $invalidError
      */
-    public function it_throws_when_errorsource_parameter_is_not_an_string($invalidError)
+    public function itThrowsWhenErrorsourceParameterIsNotAnString($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 

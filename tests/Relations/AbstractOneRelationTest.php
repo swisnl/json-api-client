@@ -11,7 +11,7 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_can_associate_an_item_and_get_the_included()
+    public function itCanAssociateAnItemAndGetTheIncluded()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);
@@ -25,7 +25,7 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_can_dissociate_an_item()
+    public function itCanDissociateAnItem()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);
@@ -42,7 +42,7 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_included()
+    public function itReturnsABooleanIndicatingIfItHasIncluded()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);
@@ -57,7 +57,7 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function it_can_set_and_get_omit_included()
+    public function itCanSetAndGetOmitIncluded()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);

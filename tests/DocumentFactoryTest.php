@@ -13,7 +13,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_makes_an_itemdocument_for_an_item()
+    public function itMakesAnItemdocumentForAnItem()
     {
         $item = (new Item(['foo' => 'bar']))->setId('123');
 
@@ -28,7 +28,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_makes_a_collectiondocument_for_a_collection()
+    public function itMakesACollectiondocumentForACollection()
     {
         $item = (new Item(['foo' => 'bar']))->setId('123');
         $collection = new Collection([$item]);
@@ -44,7 +44,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_adds_included_to_the_document_for_an_item()
+    public function itAddsIncludedToTheDocumentForAnItem()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
@@ -60,7 +60,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_adds_included_to_the_document_for_a_collection()
+    public function itAddsIncludedToTheDocumentForACollection()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
@@ -77,7 +77,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_adds_included_to_the_document_for_singular_relations()
+    public function itAddsIncludedToTheDocumentForSingularRelations()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
@@ -93,7 +93,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_adds_included_to_the_document_for_plural_relations()
+    public function itAddsIncludedToTheDocumentForPluralRelations()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
@@ -111,7 +111,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_add_included_to_the_document_if_it_has_no_type()
+    public function itDoesNotAddIncludedToTheDocumentIfItHasNoType()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setId('456');
@@ -127,7 +127,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_add_included_to_the_document_if_it_has_no_id()
+    public function itDoesNotAddIncludedToTheDocumentIfItHasNoId()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar');
@@ -143,7 +143,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_add_included_to_the_document_if_it_has_no_attributes_or_relationships()
+    public function itDoesNotAddIncludedToTheDocumentIfItHasNoAttributesOrRelationships()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item())->setType('foo-bar')->setId('456');
@@ -159,7 +159,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_adds_included_to_the_document_if_it_has_a_type_id_and_attributes_but_no_relationships()
+    public function itAddsIncludedToTheDocumentIfItHasATypeIdAndAttributesButNoRelationships()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');
@@ -175,7 +175,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_adds_included_to_the_document_if_it_has_a_type_id_and_relationships_but_no_attributes()
+    public function itAddsIncludedToTheDocumentIfItHasATypeIdAndRelationshipsButNoAttributes()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item())->setType('foo-bar')->setId('456');
@@ -193,7 +193,7 @@ class DocumentFactoryTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_add_included_to_the_document_if_the_relationship_should_be_omitted()
+    public function itDoesNotAddIncludedToTheDocumentIfTheRelationshipShouldBeOmitted()
     {
         $item = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('123');
         $childItem = (new Item(['foo' => 'bar']))->setType('foo-bar')->setId('456');

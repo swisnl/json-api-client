@@ -19,7 +19,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_an_item_as_relation()
+    public function itCanGetAndSetAnItemAsRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -36,7 +36,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_a_collection_as_relation()
+    public function itCanGetAndSetACollectionAsRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -53,7 +53,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_null_as_relation()
+    public function itCanGetAndSetNullAsRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -69,7 +69,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_does_not_set_false_as_relation()
+    public function itDoesNotSetFalseAsRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -84,7 +84,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_sets_the_links_on_the_relation()
+    public function itSetsTheLinksOnTheRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -100,7 +100,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_sets_the_meta_on_the_relation()
+    public function itSetsTheMetaOnTheRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -116,7 +116,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_all_relations()
+    public function itCanGetAllRelations()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -131,7 +131,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_a_relation_value()
+    public function itCanGetARelationValue()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -145,7 +145,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_null_when_getting_an_unexisting_relation_value()
+    public function itReturnsNullWhenGettingAnUnexistingRelationValue()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -156,7 +156,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_a_relation()
+    public function itReturnsABooleanIndicatingIfItHasARelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -172,7 +172,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_unset_a_relation()
+    public function itCanUnsetARelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -189,7 +189,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_has_one_relation()
+    public function itCanDefineAHasOneRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -203,7 +203,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_has_one_relation_with_the_calling_method_as_fallback_name()
+    public function itCanDefineAHasOneRelationWithTheCallingMethodAsFallbackName()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -217,7 +217,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_has_many_relation()
+    public function itCanDefineAHasManyRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -231,7 +231,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_has_many_relation_with_the_calling_method_as_fallback_name()
+    public function itCanDefineAHasManyRelationWithTheCallingMethodAsFallbackName()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -245,7 +245,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_morph_to_relation()
+    public function itCanDefineAMorphToRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -259,7 +259,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_morph_to_relation_with_the_calling_method_as_fallback_name()
+    public function itCanDefineAMorphToRelationWithTheCallingMethodAsFallbackName()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -273,7 +273,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_morph_to_many_relation()
+    public function itCanDefineAMorphToManyRelation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
@@ -287,7 +287,7 @@ class HasRelationsTest extends TestCase
     /**
      * @test
      */
-    public function it_can_define_a_morph_to_many_relation_with_the_calling_method_as_fallback_name()
+    public function itCanDefineAMorphToManyRelationWithTheCallingMethodAsFallbackName()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);

@@ -7,7 +7,7 @@ use Swis\JsonApi\Client\Meta;
 
 class MetaTest extends TestCase
 {
-    public function test__get()
+    public function testGet()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -23,7 +23,7 @@ class MetaTest extends TestCase
         $this->assertNull($meta['other']);
     }
 
-    public function test__isset()
+    public function testIsset()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -39,7 +39,7 @@ class MetaTest extends TestCase
         $this->assertFalse(isset($meta['other']));
     }
 
-    public function test__set()
+    public function testSet()
     {
         $meta = new Meta([]);
 
@@ -57,7 +57,7 @@ class MetaTest extends TestCase
         $this->assertEquals('bar', $meta['foo']);
     }
 
-    public function test__unset()
+    public function testUnset()
     {
         $meta = new Meta(['foo' => 'bar']);
 

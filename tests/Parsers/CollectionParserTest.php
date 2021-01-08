@@ -14,7 +14,7 @@ class CollectionParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_data_to_collection()
+    public function itConvertsDataToCollection()
     {
         $itemParser = $this->createMock(ItemParser::class);
         $itemParser->expects($this->exactly(2))
@@ -37,7 +37,7 @@ class CollectionParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_data_is_not_an_array($invalidData)
+    public function itThrowsWhenDataIsNotAnArray($invalidData)
     {
         $parser = new CollectionParser($this->createMock(ItemParser::class));
 

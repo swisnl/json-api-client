@@ -15,7 +15,7 @@ class DocumentClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_create_an_instance_using_a_factory_method()
+    public function itCanCreateAnInstanceUsingAFactoryMethod()
     {
         $this->assertInstanceOf(DocumentClient::class, DocumentClient::create());
     }
@@ -23,7 +23,7 @@ class DocumentClientTest extends AbstractTest
     /**
      * @test
      */
-    public function the_base_url_can_be_changed_after_instantiation()
+    public function theBaseUrlCanBeChangedAfterInstantiation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
@@ -48,7 +48,7 @@ class DocumentClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_get_request()
+    public function itBuildsAGetRequest()
     {
         $response = $this->createMock(ResponseInterface::class);
         $document = new Document();
@@ -79,7 +79,7 @@ class DocumentClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_delete_request()
+    public function itBuildsADeleteRequest()
     {
         $response = $this->createMock(ResponseInterface::class);
         $document = new Document();
@@ -110,7 +110,7 @@ class DocumentClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_patch_request()
+    public function itBuildsAPatchRequest()
     {
         $response = $this->createMock(ResponseInterface::class);
         $document = new Document();
@@ -143,7 +143,7 @@ class DocumentClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_post_request()
+    public function itBuildsAPostRequest()
     {
         $response = $this->createMock(ResponseInterface::class);
         $document = new Document();

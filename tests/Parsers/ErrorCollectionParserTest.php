@@ -14,7 +14,7 @@ class ErrorCollectionParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_converts_data_to_error_collection()
+    public function itConvertsDataToErrorCollection()
     {
         $errorParser = $this->createMock(ErrorParser::class);
         $errorParser->expects($this->exactly(2))
@@ -37,7 +37,7 @@ class ErrorCollectionParserTest extends AbstractTest
      *
      * @param mixed $invalidData
      */
-    public function it_throws_when_data_is_not_an_array($invalidData)
+    public function itThrowsWhenDataIsNotAnArray($invalidData)
     {
         $parser = new ErrorCollectionParser($this->createMock(ErrorParser::class));
 
@@ -65,7 +65,7 @@ class ErrorCollectionParserTest extends AbstractTest
     /**
      * @test
      */
-    public function it_throws_when_data_is_empty()
+    public function itThrowsWhenDataIsEmpty()
     {
         $parser = new ErrorCollectionParser($this->createMock(ErrorParser::class));
 

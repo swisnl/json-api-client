@@ -12,7 +12,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_get_and_set_the_base_url()
+    public function itCanGetAndSetTheBaseUrl()
     {
         $client = new Client();
 
@@ -24,7 +24,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_get_and_set_the_default_headers()
+    public function itCanGetAndSetTheDefaultHeaders()
     {
         $client = new Client();
 
@@ -55,7 +55,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_get_request()
+    public function itBuildsAGetRequest()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -79,7 +79,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_delete_request()
+    public function itBuildsADeleteRequest()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -103,7 +103,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_patch_request()
+    public function itBuildsAPatchRequest()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -128,7 +128,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_a_post_request()
+    public function itBuildsAPostRequest()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -153,7 +153,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_other_requests()
+    public function itBuildsOtherRequests()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -177,7 +177,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_requests_with_a_string_as_body()
+    public function itBuildsRequestsWithAStringAsBody()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -192,7 +192,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_requests_with_a_resource_as_body()
+    public function itBuildsRequestsWithAResourceAsBody()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -208,7 +208,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_requests_with_a_stream_as_body()
+    public function itBuildsRequestsWithAStreamAsBody()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -223,7 +223,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_builds_requests_without_a_body()
+    public function itBuildsRequestsWithoutABody()
     {
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
@@ -238,7 +238,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_prepends_the_base_uri_if_the_endpoint_is_relative()
+    public function itPrependsTheBaseUriIfTheEndpointIsRelative()
     {
         $baseUri = 'http://example.com/api';
         $endpoint = '/test/1';
@@ -255,7 +255,7 @@ class ClientTest extends AbstractTest
     /**
      * @test
      */
-    public function it_does_not_prepend_the_base_uri_if_the_endpoint_is_already_absolute()
+    public function itDoesNotPrependTheBaseUriIfTheEndpointIsAlreadyAbsolute()
     {
         $baseUri = 'http://example.com/api';
         $endpoint = 'http://foo.bar/test/1';

@@ -19,7 +19,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_instantiate_an_item()
+    public function itCanInstantiateAnItem()
     {
         $item = new Item();
         $this->assertInstanceOf(Item::class, $item);
@@ -28,7 +28,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_shows_type_and_id_and_attributes_in_to_json_api_array()
+    public function isShowsTypeAndIdAndAttributesInToJsonApiArray()
     {
         $attributes = [
             'testKey' => 'testValue',
@@ -55,7 +55,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_does_not_show_attributes_in_to_json_api_array_when_it_has_no_attributes()
+    public function isDoesNotShowAttributesInToJsonApiArrayWhenItHasNoAttributes()
     {
         $item = new WithHiddenItem(['testKey' => 'testValue']);
         $item->setType('testType');
@@ -73,7 +73,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_hasone_relation_in_to_json_api_array()
+    public function isAddsHasoneRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -109,7 +109,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_empty_hasone_relation_in_to_json_api_array()
+    public function isAddsEmptyHasoneRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -132,7 +132,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_does_not_add_hasone_relation_without_data_in_to_json_api_array()
+    public function isDoesNotAddHasoneRelationWithoutDataInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -152,7 +152,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_hasmany_relation_in_to_json_api_array()
+    public function isAddsHasmanyRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -190,7 +190,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_empty_hasmany_relation_in_to_json_api_array()
+    public function isAddsEmptyHasmanyRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -213,7 +213,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_does_not_add_hasmany_relation_without_data_in_to_json_api_array()
+    public function isDoesNotAddHasmanyRelationWithoutDataInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -233,7 +233,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_morphto_relation_in_to_json_api_array()
+    public function isAddsMorphtoRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -269,7 +269,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_empty_morphto_relation_in_to_json_api_array()
+    public function isAddsEmptyMorphtoRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -292,7 +292,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_does_not_add_morphto_relation_without_data_in_to_json_api_array()
+    public function isDoesNotAddMorphtoRelationWithoutDataInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -312,7 +312,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_morphtomany_relation_in_to_json_api_array()
+    public function isAddsMorphtomanyRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -350,7 +350,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_empty_morphtomany_relation_in_to_json_api_array()
+    public function isAddsEmptyMorphtomanyRelationInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -373,7 +373,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_does_not_add_morphtomany_relation_without_data_in_to_json_api_array()
+    public function isDoesNotAddMorphtomanyRelationWithoutDataInToJsonApiArray()
     {
         $item = new WithRelationshipItem();
         $item->setId('1234');
@@ -393,7 +393,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_links_in_to_json_api_array()
+    public function isAddsLinksInToJsonApiArray()
     {
         $item = new Item();
         $item->setType('testType');
@@ -433,7 +433,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function is_adds_meta_in_to_json_api_array()
+    public function isAddsMetaInToJsonApiArray()
     {
         $item = new Item();
         $item->setType('testType');
@@ -455,7 +455,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_is_new_when_no_id_isset()
+    public function itIsNewWhenNoIdIsset()
     {
         $item = new Item();
         $item->setType('testType');
@@ -469,7 +469,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_get_a_relation_value_using_get_attribute_method()
+    public function itCanGetARelationValueUsingGetAttributeMethod()
     {
         $masterItem = new MasterItem();
         $childItem = new ChildItem();
@@ -481,7 +481,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_returns_attributes()
+    public function itReturnsAttributes()
     {
         $attributes = [
             'foo' => 'bar',
@@ -493,7 +493,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_attributes()
+    public function itReturnsABooleanIndicatingIfItHasAttributes()
     {
         $item = new Item();
         $this->assertFalse($item->hasAttributes());
@@ -506,7 +506,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_get_all_relationships()
+    public function itCanGetAllRelationships()
     {
         $masterItem = new MasterItem();
         $childItem = new ChildItem();
@@ -528,7 +528,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_returns_a_boolean_indicating_if_it_has_relationships()
+    public function itReturnsABooleanIndicatingIfItHasRelationships()
     {
         $masterItem = new MasterItem();
         $this->assertFalse($masterItem->hasRelationships());
@@ -542,7 +542,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_uses_initial_values()
+    public function itUsesInitialValues()
     {
         $itemBuilder = new Item();
         $itemBuilder->fill(['testKey' => 1, 'anotherTestKey' => 'someValue']);
@@ -555,7 +555,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_set_the_id_using_the_magic_method()
+    public function itCanSetTheIdUsingTheMagicMethod()
     {
         $item = new Item();
 
@@ -566,7 +566,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_get_the_id_using_the_magic_method()
+    public function itCanGetTheIdUsingTheMagicMethod()
     {
         $item = new Item();
         $item->setId('1234');
@@ -577,7 +577,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_check_if_the_id_is_set_using_the_magic_method()
+    public function itCanCheckIfTheIdIsSetUsingTheMagicMethod()
     {
         $item = new Item();
 
@@ -589,7 +589,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_unset_the_id_using_the_magic_method()
+    public function itCanUnsetTheIdUsingTheMagicMethod()
     {
         $item = new Item();
 
@@ -601,7 +601,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_set_an_attribute_using_the_magic_method()
+    public function itCanSetAnAttributeUsingTheMagicMethod()
     {
         $item = new Item();
 
@@ -612,7 +612,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_get_an_attribute_using_the_magic_method()
+    public function itCanGetAnAttributeUsingTheMagicMethod()
     {
         $item = new Item();
         $item->setAttribute('foo', 'bar');
@@ -623,7 +623,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_check_if_an_attribute_is_set_using_the_magic_method()
+    public function itCanCheckIfAnAttributeIsSetUsingTheMagicMethod()
     {
         $item = new Item();
 
@@ -635,7 +635,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_can_unset_an_attribute_using_the_magic_method()
+    public function itCanUnsetAnAttributeUsingTheMagicMethod()
     {
         $item = new Item();
 
@@ -649,7 +649,7 @@ class ItemTest extends AbstractTest
     /**
      * @test
      */
-    public function it_returns_attribute_from_get_mutator()
+    public function itReturnsAttributeFromGetMutator()
     {
         $item = new WithGetMutatorItem();
 
