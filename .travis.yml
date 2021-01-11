@@ -24,4 +24,6 @@ after_script:
   - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
 
 branches:
-  only: master
+  only:
+    - 1.x
+    - master
