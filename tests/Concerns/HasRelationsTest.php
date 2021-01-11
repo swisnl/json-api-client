@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests\Concerns;
 
+use Illuminate\Support\Str;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Concerns\HasRelations;
@@ -211,7 +212,7 @@ class HasRelationsTest extends TestCase
         $relation = $mock->hasOne(MasterItem::class);
 
         $this->assertInstanceOf(HasOneRelation::class, $relation);
-        $this->assertSame($relation, $mock->getRelation(__FUNCTION__));
+        $this->assertSame($relation, $mock->getRelation(Str::snake(__FUNCTION__)));
     }
 
     /**
@@ -239,7 +240,7 @@ class HasRelationsTest extends TestCase
         $relation = $mock->hasMany(MasterItem::class);
 
         $this->assertInstanceOf(HasManyRelation::class, $relation);
-        $this->assertSame($relation, $mock->getRelation(__FUNCTION__));
+        $this->assertSame($relation, $mock->getRelation(Str::snake(__FUNCTION__)));
     }
 
     /**
@@ -267,7 +268,7 @@ class HasRelationsTest extends TestCase
         $relation = $mock->morphTo();
 
         $this->assertInstanceOf(MorphToRelation::class, $relation);
-        $this->assertSame($relation, $mock->getRelation(__FUNCTION__));
+        $this->assertSame($relation, $mock->getRelation(Str::snake(__FUNCTION__)));
     }
 
     /**
@@ -295,6 +296,6 @@ class HasRelationsTest extends TestCase
         $relation = $mock->morphToMany();
 
         $this->assertInstanceOf(MorphToManyRelation::class, $relation);
-        $this->assertSame($relation, $mock->getRelation(__FUNCTION__));
+        $this->assertSame($relation, $mock->getRelation(Str::snake(__FUNCTION__)));
     }
 }
