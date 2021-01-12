@@ -56,6 +56,9 @@
         "fix-style": "php-cs-fixer fix"
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Swis\\JsonApi\\Client\\Providers\\ServiceProvider"
