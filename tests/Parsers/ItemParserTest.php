@@ -657,7 +657,7 @@ class ItemParserTest extends AbstractTest
 
         $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
 
-        $dataMeta = $item->getRelation('childwithdatameta')->getIncluded()->getDataMeta();
+        $dataMeta = $item->getRelation('childwithdatameta')->getIncluded()->getMeta();
         static::assertInstanceOf(Meta::class, $dataMeta);
 
         $image = $dataMeta->imageDerivatives->links->header->href;
