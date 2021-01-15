@@ -115,6 +115,14 @@ class Item extends Model implements ItemInterface
     }
 
     /**
+     * @return Meta
+     */
+    public function getDataMeta(): Meta
+    {
+        return $this->meta;
+    }
+
+    /**
      * @return array
      */
     public function getAvailableRelations(): array
