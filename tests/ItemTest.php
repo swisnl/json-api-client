@@ -511,7 +511,9 @@ class ItemTest extends AbstractTest
         $masterItem = new MasterItem();
         $childItem = new ChildItem();
         $childItem->setId('1');
+        $childItem->setMeta(new Meta(['foo' => 'bar']));
         $masterItem->child()->associate($childItem);
+        $masterItem->children()->associate(new Collection([$childItem]));
 
         $relations = $masterItem->getRelationships();
 
@@ -520,6 +522,20 @@ class ItemTest extends AbstractTest
                 'data' => [
                     'type' => 'child',
                     'id' => '1',
+                    'meta' => [
+                        'foo' => 'bar',
+                    ],
+                ],
+            ],
+            'children' => [
+                'data' => [
+                    [
+                        'type' => 'child',
+                        'id' => '1',
+                        'meta' => [
+                            'foo' => 'bar',
+                        ],
+                    ],
                 ],
             ],
         ], $relations);

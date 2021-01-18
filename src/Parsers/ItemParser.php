@@ -191,6 +191,11 @@ class ItemParser
             throw new ValidationException(sprintf('ResourceIdentifier property "id" MUST be a string, "%s" given.', gettype($data->id)));
         }
 
-        return $this->getItemInstance($data->type)->setId($data->id);
+        $item = $this->getItemInstance($data->type)->setId($data->id);
+        if (property_exists($data, 'meta')) {
+            $item->setMeta($this->metaParser->parse($data->meta));
+        }
+
+        return $item;
     }
 }
