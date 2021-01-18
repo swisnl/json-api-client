@@ -646,6 +646,25 @@ class ItemParserTest extends AbstractTest
     }
 
     /**
+     * @test
+     */
+    public function itParsesMetaInData()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('child', ChildItem::class);
+        $typeMapper->setMapping('master', MasterItem::class);
+        $parser = $this->getItemParser($typeMapper);
+
+        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+
+        $dataMeta = $item->getRelation('childwithdatameta')->getIncluded()->getMeta();
+        static::assertInstanceOf(Meta::class, $dataMeta);
+
+        $image = $dataMeta->imageDerivatives->links->header->href;
+        $this->assertEquals('https://example.com/image/header/about-us.jpeg', $image);
+    }
+
+    /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
      *
      * @return \Swis\JsonApi\Client\Parsers\ItemParser
@@ -764,6 +783,30 @@ class ItemParserTest extends AbstractTest
                     ],
                     'meta' => [
                         'foo' => 'bar',
+                    ],
+                ],
+                'childwithdatameta' => [
+                    'data' => [
+                        'type' => 'child',
+                        'id' => '9',
+                        'meta' => [
+                          'alt' => '',
+                          'width' => 1920,
+                          'height' => 1280,
+                          'imageDerivatives' => [
+                            'links' => [
+                              'header' => [
+                                'href' => 'https://example.com/image/header/about-us.jpeg',
+                                'meta' => [
+                                  'rel' => 'drupal://jsonapi/extensions/consumer_image_styles/links/relation-types/#derivative',
+                                ],
+                              ],
+                            ],
+                          ],
+                        ],
+                    ],
+                    'links' => [
+                        'self' => 'http://example.com/'.$type.'/'.$id.'/relationships/childwithdatameta',
                     ],
                 ],
                 'empty' => [

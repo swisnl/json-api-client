@@ -25,7 +25,7 @@ abstract class AbstractOneRelation extends AbstractRelation implements OneRelati
     /**
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
      */
-    public function getIncluded(): ? ItemInterface
+    public function getIncluded(): ?ItemInterface
     {
         return $this->included ?: null;
     }

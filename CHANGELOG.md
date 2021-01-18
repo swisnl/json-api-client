@@ -21,6 +21,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Removed Laravel <6 and PHP <7.2 support.
 * Removed `jenssegers/model` dependency and added the classes into the package.
 
+## [1.3.3] - 2021-01-18
+
+### Fixed
+
+* Parse meta in resource identifier objects [#89](https://github.com/swisnl/json-api-client/pull/89).
+
 ## [1.3.2] - 2020-10-28
 
 ### Fixed

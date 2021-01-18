@@ -14,14 +14,14 @@ interface DocumentInterface extends \JsonSerializable
     /**
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function getResponse(): ? ResponseInterface;
+    public function getResponse(): ?ResponseInterface;
 
     /**
      * @param \Psr\Http\Message\ResponseInterface|null $response
      *
      * @return $this
      */
-    public function setResponse(? ResponseInterface $response);
+    public function setResponse(?ResponseInterface $response);
 
     /**
      * @return \Swis\JsonApi\Client\Interfaces\DataInterface
@@ -55,26 +55,26 @@ interface DocumentInterface extends \JsonSerializable
     /**
      * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta(): ? Meta;
+    public function getMeta(): ?Meta;
 
     /**
      * @param \Swis\JsonApi\Client\Meta|null $meta
      *
      * @return $this
      */
-    public function setMeta(? Meta $meta);
+    public function setMeta(?Meta $meta);
 
     /**
      * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks(): ? Links;
+    public function getLinks(): ?Links;
 
     /**
      * @param \Swis\JsonApi\Client\Links|null $links
      *
      * @return $this
      */
-    public function setLinks(? Links $links);
+    public function setLinks(?Links $links);
 
     /**
      * @return mixed
@@ -91,14 +91,14 @@ interface DocumentInterface extends \JsonSerializable
     /**
      * @return \Swis\JsonApi\Client\Jsonapi|null
      */
-    public function getJsonapi(): ? Jsonapi;
+    public function getJsonapi(): ?Jsonapi;
 
     /**
      * @param \Swis\JsonApi\Client\Jsonapi|null $jsonapi
      *
      * @return $this
      */
-    public function setJsonapi(? Jsonapi $jsonapi);
+    public function setJsonapi(?Jsonapi $jsonapi);
 
     /**
      * @return array

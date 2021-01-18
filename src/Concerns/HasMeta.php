@@ -14,7 +14,7 @@ trait HasMeta
     /**
      * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta(): ? Meta
+    public function getMeta(): ?Meta
     {
         return $this->meta;
     }
@@ -24,7 +24,7 @@ trait HasMeta
      *
      * @return $this
      */
-    public function setMeta(? Meta $meta)
+    public function setMeta(?Meta $meta)
     {
         $this->meta = $meta;
 
