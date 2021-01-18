@@ -10,7 +10,7 @@ interface ItemInterface extends DataInterface
     /**
      * @return string|null
      */
-    public function getId(): ? string;
+    public function getId(): ?string;
 
     /**
      * @return bool
@@ -27,7 +27,7 @@ interface ItemInterface extends DataInterface
      *
      * @return static
      */
-    public function setId(? string $id);
+    public function setId(?string $id);
 
     /**
      * @return string
@@ -51,24 +51,24 @@ interface ItemInterface extends DataInterface
      *
      * @return $this
      */
-    public function setLinks(? Links $links);
+    public function setLinks(?Links $links);
 
     /**
      * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks(): ? Links;
+    public function getLinks(): ?Links;
 
     /**
      * @param \Swis\JsonApi\Client\Meta|null $meta
      *
      * @return $this
      */
-    public function setMeta(? Meta $meta);
+    public function setMeta(?Meta $meta);
 
     /**
      * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta(): ? Meta;
+    public function getMeta(): ?Meta;
 
     /**
      * @param array $attributes

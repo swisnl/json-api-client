@@ -70,7 +70,7 @@ class LinksParser
      *
      * @return \Swis\JsonApi\Client\Link
      */
-    private function buildLink($data, string $name): ? Link
+    private function buildLink($data, string $name): ?Link
     {
         if (in_array($name, self::LINKS_THAT_MAY_NOT_BE_NULL_WHEN_PRESENT, true) && !is_string($data) && !is_object($data)) {
             throw new ValidationException(sprintf('Link "%s" MUST be an object or string, "%s" given.', $name, gettype($data)));

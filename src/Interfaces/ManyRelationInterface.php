@@ -45,20 +45,20 @@ interface ManyRelationInterface
     /**
      * @param \Swis\JsonApi\Client\Links|null $links
      */
-    public function setLinks(? Links $links);
+    public function setLinks(?Links $links);
 
     /**
      * @return \Swis\JsonApi\Client\Links|null
      */
-    public function getLinks(): ? Links;
+    public function getLinks(): ?Links;
 
     /**
      * @param \Swis\JsonApi\Client\Meta|null $meta
      */
-    public function setMeta(? Meta $meta);
+    public function setMeta(?Meta $meta);
 
     /**
      * @return \Swis\JsonApi\Client\Meta|null
      */
-    public function getMeta(): ? Meta;
+    public function getMeta(): ?Meta;
 }
