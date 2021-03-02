@@ -50,7 +50,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @param array $attributes
      *
-     * @throws \Illuminate\Database\Eloquent\MassAssignmentException
+     * @throws \Swis\JsonApi\Client\Exceptions\MassAssignmentException
      *
      * @return $this
      */
