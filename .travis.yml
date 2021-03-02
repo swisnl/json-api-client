@@ -29,7 +29,7 @@ install:
 
 script:
   - if [ "$RUN_CS_FIXER" ] ; then vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no ; fi
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+  - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
