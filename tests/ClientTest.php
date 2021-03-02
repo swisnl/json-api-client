@@ -4,10 +4,11 @@ namespace Swis\JsonApi\Client\Tests;
 
 use function GuzzleHttp\Psr7\stream_for;
 use Http\Mock\Client as HttpMockClient;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Client;
 
-class ClientTest extends AbstractTest
+class ClientTest extends TestCase
 {
     /**
      * @test

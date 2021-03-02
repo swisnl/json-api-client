@@ -2,13 +2,14 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\DocumentFactory;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\ItemDocument;
 
-class DocumentFactoryTest extends AbstractTest
+class DocumentFactoryTest extends TestCase
 {
     /**
      * @test

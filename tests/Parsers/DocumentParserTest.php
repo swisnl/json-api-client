@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
+use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
@@ -15,12 +16,11 @@ use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Parsers\DocumentParser;
-use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
 use Swis\JsonApi\Client\TypeMapper;
 
-class DocumentParserTest extends AbstractTest
+class DocumentParserTest extends TestCase
 {
     /**
      * @test

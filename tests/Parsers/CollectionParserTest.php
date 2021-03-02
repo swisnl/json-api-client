@@ -2,14 +2,14 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
+use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Parsers\CollectionParser;
 use Swis\JsonApi\Client\Parsers\ItemParser;
-use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\PlainItem;
 
-class CollectionParserTest extends AbstractTest
+class CollectionParserTest extends TestCase
 {
     /**
      * @test

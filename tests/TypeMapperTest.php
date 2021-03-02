@@ -2,12 +2,13 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Exceptions\TypeMappingException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\TypeMapper;
 
-class TypeMapperTest extends AbstractTest
+class TypeMapperTest extends TestCase
 {
     /**
      * @test

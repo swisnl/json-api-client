@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Exceptions\HydrationException;
 use Swis\JsonApi\Client\Item;
@@ -16,7 +17,7 @@ use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 use Swis\JsonApi\Client\TypeMapper;
 
-class ItemHydratorTest extends AbstractTest
+class ItemHydratorTest extends TestCase
 {
     /**
      * @return \Swis\JsonApi\Client\ItemHydrator

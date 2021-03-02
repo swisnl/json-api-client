@@ -2,12 +2,12 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
+use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Parsers\MetaParser;
-use Swis\JsonApi\Client\Tests\AbstractTest;
 
-class MetaParserTest extends AbstractTest
+class MetaParserTest extends TestCase
 {
     /**
      * @test
