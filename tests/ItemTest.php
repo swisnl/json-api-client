@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Exceptions\MassAssignmentException;
@@ -16,7 +17,7 @@ use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
 use Swis\JsonApi\Client\Tests\Mocks\ItemStub;
 
-class ItemTest extends AbstractTest
+class ItemTest extends TestCase
 {
     /**
      * @test

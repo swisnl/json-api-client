@@ -15,6 +15,8 @@ A PHP package for mapping remote [JSON:API](http://jsonapi.org/) resources to El
 
 ## Installation
 
+:information_source: Using Laravel? Take a look at [swisnl/json-api-client-laravel](https://github.com/swisnl/json-api-client-laravel) for easy Laravel integration.
+
 ``` bash
 composer require swisnl/json-api-client
 ```
@@ -31,57 +33,7 @@ To use Guzzle 7, for example, simply require `guzzlehttp/guzzle`:
 composer require guzzlehttp/guzzle:^7.0
 ```
 
-See [Bind clients](#bind-clients) if you want to use your own HTTP client or use specific configuration options.
-
-### Laravel
-
-This package includes some Laravel specific classes to make it easier to use it with Laravel.
-
-#### Service Provider and Facade Aliases
-
-The required service provider and some facade aliases are automatically discovered by Laravel.
-However, if you've disabled package auto discover, you must add the service provider and optionally the facade aliases to your `config/app.php` file:
-
-``` php
-'providers' => [
-    ...,
-    \Swis\JsonApi\Client\Providers\ServiceProvider::class,
-],
-'aliases' => [
-    ...,
-    'DocumentFactory' => \Swis\JsonApi\Client\Facades\DocumentFactoryFacade::class,
-    'DocumentParser' => \Swis\JsonApi\Client\Facades\DocumentParserFacade::class,
-    'ItemHydrator' => \Swis\JsonApi\Client\Facades\ItemHydratorFacade::class,
-    'ResponseParser' => \Swis\JsonApi\Client\Facades\ResponseParserFacade::class,
-    'TypeMapper' => \Swis\JsonApi\Client\Facades\TypeMapperFacade::class,
-],
-```
-
-#### Configuration
-
-The following is the default configuration provided by this package:
-
-``` php
-return [
-    /*
-    |--------------------------------------------------------------------------
-    | Base URI
-    |--------------------------------------------------------------------------
-    |
-    | Specify a base uri which will be prepended to every URI.
-    |
-    | Default: empty string
-    |
-    */
-    'base_uri' => '',
-];
-```
-        
-If you would like to make changes to the default configuration, publish and edit the configuration file:
-
-``` bash
-php artisan vendor:publish --provider="Swis\JsonApi\Client\Providers\ServiceProvider" --tag="config"
-```
+See [HTTP Clients](#http-clients) if you want to use your own HTTP client or use specific configuration options.
 
 
 ## Getting started
@@ -288,28 +240,6 @@ echo $meta->written_at; // 2019-07-16T13:47:26
 All custom models must be registered with the `TypeMapper`.
 This `TypeMapper` maps, as the name suggests, JSON:API types to custom [items](#items).
 
-### Mapping types
-
-You can manually register items with the `\Swis\JsonApi\Client\TypeMapper` or use the supplied `\Swis\JsonApi\Client\Providers\TypeMapperServiceProvider`:
-
-``` php
-use Swis\JsonApi\Client\Providers\TypeMapperServiceProvider as BaseTypeMapperServiceProvider;
-
-class TypeMapperServiceProvider extends BaseTypeMapperServiceProvider
-{
-    /**
-     * A list of class names implementing \Swis\JsonApi\Client\Interfaces\ItemInterface.
-     *
-     * @var string[]
-     */
-    protected $items = [
-        \App\Items\Author::class,
-        \App\Items\Blog::class,
-        \App\Items\Comment::class,
-    ];
-}
-```
-
 
 ## Repository
 
@@ -343,9 +273,9 @@ The `ItemHydrator` can be used to fill/hydrate an item and its relations using a
 This is useful if you would like to hydrate an item with POST data from your request:
 
 ``` php
-$typeMapper = app(Swis\JsonApi\Client\TypeMapper::class);
-$itemHydrator = app(Swis\JsonApi\Client\ItemHydrator::class);
-$blogRepository = app(App\Repositiories\BlogRepository::class);
+$typeMapper = new TypeMapper();
+$itemHydrator = new ItemHydrator($typeMapper);
+$blogRepository = new BlogRepository(DocumentClient::create($typeMapper), new DocumentFactory());
 
 $item = $itemHydrator->hydrate(
     $typeMapper->getMapping('blog'),
@@ -502,45 +432,29 @@ Such documents can easily be created using the `DocumentFactory` by giving it a 
 This can be an `ItemInterface`, usually created by the [ItemHydrator](#itemhydrator), or a `Collection`.
 
 
-## Service Provider
+## HTTP Clients
 
-The `\Swis\JsonApi\Client\Providers\ServiceProvider` registers the `TypeMapper`, `JsonApi\Parser` and both clients; `Client` and `DocumentClient`.
-Each section can be overwritten to allow extended customization.
-
-### Bind TypeMapper
-
-The service provider registers the `TypeMapper` as a singleton so your entire application has the same mappings available.
-
-### Bind Clients
-
-The service provider registers the `Client` and `DocumentClient` to your application.
 By default the `Client` uses [php-http/discovery](https://github.com/php-http/discovery) to find an available HTTP client, request factory and stream factory so you don't have to setup those yourself.
-You can specify your own HTTP client, request factory or stream factory by customizing the container binding.
+You can also specify your own HTTP client, request factory or stream factory.
 This is a perfect way to add extra options to your HTTP client or register a mock HTTP client for your tests:
 
 ``` php
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
-{
-    public function register()
-    {
-        $this->app->bind(\Swis\JsonApi\Client\Client::class, function ($app) {
-            if ($app->environment('testing')) {
-                $httpClient = new \Swis\Http\Fixture\Client(
-                    new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures')
-                );
-            } else {
-                $httpClient = new \GuzzleHttp\Client(
-                    [
-                        'http_errors' => false,
-                        'timeout' => 2,
-                    ]
-                );
-            }
-    
-            return new \Swis\JsonApi\Client\Client($httpClient);
-        });
-    }
+if (app()->environment('testing')) {
+    $httpClient = new \Swis\Http\Fixture\Client(
+        new \Swis\Http\Fixture\ResponseBuilder('/path/to/fixtures')
+    );
+} else {
+    $httpClient = new \GuzzleHttp\Client(
+        [
+            'http_errors' => false,
+            'timeout' => 2,
+        ]
+    );
 }
+
+$typeMapper = new TypeMapper();
+$client = DocumentClient::create($typeMapper, $httpClient);
+$document = $client->get('https://cms.contentacms.io/api/recipes');
 ```
 
 N.B. This example uses our [swisnl/php-http-fixture-client](https://github.com/swisnl/php-http-fixture-client) when in testing environment.

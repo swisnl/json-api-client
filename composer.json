@@ -5,18 +5,18 @@
     "require": {
         "php": ">=7.2.5",
         "ext-json": "*",
-        "illuminate/support": "^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0",
         "nyholm/psr7": "^1.2",
         "php-http/discovery": "^1.0",
         "psr/http-client": "^1.0",
         "psr/http-client-implementation": "^1.0",
         "psr/http-factory": "^1.0",
         "psr/http-factory-implementation": "^1.0",
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "swisnl/illuminate-collections": "^6.0|^7.0|^8.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
-        "graham-campbell/testbench": "^5.5",
         "phpunit/phpunit": "^6.5|^7.0|^8.0",
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/mock-client": "^1.2"
@@ -58,18 +58,6 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"
-        },
-        "laravel": {
-            "providers": [
-                "Swis\\JsonApi\\Client\\Providers\\ServiceProvider"
-            ],
-            "aliases":{
-                "DocumentFactory": "Swis\\JsonApi\\Client\\Facades\\DocumentFactoryFacade",
-                "DocumentParser": "Swis\\JsonApi\\Client\\Facades\\DocumentParserFacade",
-                "ItemHydrator": "Swis\\JsonApi\\Client\\Facades\\ItemHydratorFacade",
-                "ResponseParser": "Swis\\JsonApi\\Client\\Facades\\ResponseParserFacade",
-                "TypeMapper": "Swis\\JsonApi\\Client\\Facades\\TypeMapperFacade"
-            }
         }
     }
 }

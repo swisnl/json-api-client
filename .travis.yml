@@ -12,7 +12,7 @@ matrix:
 sudo: false
 
 install:
-  - composer require "illuminate/support:${LARAVEL_VERSION}" --no-update --no-interaction
+  - composer require "illuminate/contracts:${LARAVEL_VERSION}" "swisnl/illuminate-collections:${LARAVEL_VERSION}" --no-update --no-interaction
   - travis_retry composer install --no-interaction --prefer-dist
 
 script:

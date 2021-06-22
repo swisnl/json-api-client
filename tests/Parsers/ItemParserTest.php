@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
+use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Exceptions\ValidationException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
@@ -16,14 +17,13 @@ use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
-use Swis\JsonApi\Client\Tests\AbstractTest;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\PlainItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithoutRelationshipsItem;
 use Swis\JsonApi\Client\TypeMapper;
 
-class ItemParserTest extends AbstractTest
+class ItemParserTest extends TestCase
 {
     /**
      * @test

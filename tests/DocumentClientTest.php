@@ -2,6 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\DocumentClient;
@@ -10,7 +11,7 @@ use Swis\JsonApi\Client\Interfaces\ResponseParserInterface;
 use Swis\JsonApi\Client\Item;
 use Swis\JsonApi\Client\ItemDocument;
 
-class DocumentClientTest extends AbstractTest
+class DocumentClientTest extends TestCase
 {
     /**
      * @test
