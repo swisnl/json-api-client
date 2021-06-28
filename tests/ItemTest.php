@@ -35,9 +35,11 @@ class ItemTest extends TestCase
     public function itCanCreateANewInstanceWithAttributes()
     {
         $item = new ItemStub();
+        $item->setType('foo-bar');
         $instance = $item->newInstance(['name' => 'john']);
 
         $this->assertInstanceOf(ItemStub::class, $instance);
+        $this->assertEquals($item->getType(), $instance->getType());
         $this->assertEquals('john', $instance->name);
     }
 

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Renamed `Item::addHidden` to `Item::makeHidden`.
 * Merged `Item::addVisible` and `Item::withHidden` into `Item::makeVisible`.
 * The item's `toArray` method will now cast any attributes that implement `Illuminate\Contracts\Support\Arrayable` to an array.
+* The item's `newInstance` method will now copy the type of the original item.
 
 ### Removed
 

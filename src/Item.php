@@ -97,6 +97,9 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
     {
         $model = new static($attributes);
 
+        if ($this->type) {
+            $model->setType($this->type);
+        }
         $model->mergeCasts($this->casts);
 
         return $model;
