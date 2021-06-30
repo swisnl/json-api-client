@@ -17,8 +17,8 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
+        "guzzlehttp/guzzle": "^7.0",
         "phpunit/phpunit": "^8.0|^9.0",
-        "php-http/guzzle6-adapter": "^2.0",
         "php-http/mock-client": "^1.2"
     },
     "suggest": {

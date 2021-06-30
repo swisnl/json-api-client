@@ -2,7 +2,7 @@
 
 namespace Swis\JsonApi\Client\Tests;
 
-use function GuzzleHttp\Psr7\stream_for;
+use GuzzleHttp\Psr7\Utils;
 use Http\Mock\Client as HttpMockClient;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -214,7 +214,7 @@ class ClientTest extends TestCase
         $httpClient = new HttpMockClient();
         $client = new Client($httpClient);
 
-        $body = stream_for('testvar=testvalue');
+        $body = Utils::streamFor('testvar=testvalue');
 
         $response = $client->request('POST', '/test/1', $body);
         $this->assertInstanceOf(ResponseInterface::class, $response);
