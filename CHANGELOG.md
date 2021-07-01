@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+Please see [UPGRADING](UPGRADING.md) for details on how to upgrade.
+
 ### Added
 
 * Added `Item::mergeAppends`, `Item::mergeCasts`, `Item::mergeFillable` and `Item::mergeGuarded`.
