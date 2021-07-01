@@ -203,7 +203,7 @@ trait HasRelations
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return static
      */
