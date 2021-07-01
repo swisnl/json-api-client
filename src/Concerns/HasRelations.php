@@ -34,10 +34,15 @@ trait HasRelations
         $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
-            $this->relations[$name] = new HasOneRelation((new $itemClass())->getType());
+            $this->relations[$name] = $this->newHasOne((new $itemClass())->getType());
         }
 
         return $this->relations[$name];
+    }
+
+    protected function newHasOne(string $type): OneRelationInterface
+    {
+        return new HasOneRelation($type);
     }
 
     /**
@@ -53,10 +58,15 @@ trait HasRelations
         $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
-            $this->relations[$name] = new HasManyRelation((new $itemClass())->getType());
+            $this->relations[$name] = $this->newHasMany((new $itemClass())->getType());
         }
 
         return $this->relations[$name];
+    }
+
+    protected function newHasMany(string $type): ManyRelationInterface
+    {
+        return new HasManyRelation($type);
     }
 
     /**
@@ -71,10 +81,15 @@ trait HasRelations
         $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
-            $this->relations[$name] = new MorphToRelation();
+            $this->relations[$name] = $this->newMorphTo();
         }
 
         return $this->relations[$name];
+    }
+
+    protected function newMorphTo(): OneRelationInterface
+    {
+        return new MorphToRelation();
     }
 
     /**
@@ -89,10 +104,15 @@ trait HasRelations
         $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
 
         if (!array_key_exists($name, $this->relations)) {
-            $this->relations[$name] = new MorphToManyRelation();
+            $this->relations[$name] = $this->newMorphToMany();
         }
 
         return $this->relations[$name];
+    }
+
+    protected function newMorphToMany(): ManyRelationInterface
+    {
+        return new MorphToManyRelation();
     }
 
     /**
