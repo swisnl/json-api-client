@@ -22,7 +22,7 @@ Please see [UPGRADING](UPGRADING.md) for details on how to upgrade.
 
 ### Removed
 
-* Removed Laravel <6 and PHP <7.2 support.
+* Dropped Laravel <6 and PHP <7.2 support.
 * Removed `jenssegers/model` dependency and added the classes into the package.
 * Removed unintended array access to internal properties on the item (e.g. `$item['attributes']`).
 * Extracted Laravel parts (config, service provider and facades) into [swisnl/json-api-client-laravel](https://github.com/swisnl/json-api-client-laravel).
