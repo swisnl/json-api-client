@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [2.0.0-beta] - 2021-07-01
+
 Please see [UPGRADING](UPGRADING.md) for details on how to upgrade.
 
 ### Added
