@@ -15,7 +15,7 @@
         "swisnl/illuminate-collections": "^6.0|^7.0|^8.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "guzzlehttp/guzzle": "^7.3",
         "phpunit/phpunit": "^8.0|^9.0",
         "php-http/mock-client": "^1.2"
