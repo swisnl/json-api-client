@@ -16,6 +16,7 @@ Please see [UPGRADING](UPGRADING.md) for details on how to upgrade.
 
 * Renamed `Item::addHidden` to `Item::makeHidden`.
 * Merged `Item::addVisible` and `Item::withHidden` into `Item::makeVisible`.
+* Changed visibility of `Item::getAttributeValue` to public.
 * The item's `toArray` method will now cast any attributes that implement `Illuminate\Contracts\Support\Arrayable` to an array.
 * The item's `newInstance` method will now copy the type of the original item.
 
@@ -23,6 +24,7 @@ Please see [UPGRADING](UPGRADING.md) for details on how to upgrade.
 
 * Removed Laravel <6 and PHP <7.2 support.
 * Removed `jenssegers/model` dependency and added the classes into the package.
+* Removed unintended array access to internal properties on the item (e.g. `$item['attributes']`).
 * Extracted Laravel parts (config, service provider and facades) into [swisnl/json-api-client-laravel](https://github.com/swisnl/json-api-client-laravel).
 
 ## [1.3.3] - 2021-01-18
