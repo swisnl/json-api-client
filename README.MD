@@ -21,16 +21,16 @@ A PHP package for mapping remote [JSON:API](http://jsonapi.org/) resources to El
 composer require swisnl/json-api-client
 ```
 
-N.B. Make sure you have installed a PSR-18 HTTP Client before you install this package or install one at the same time e.g. `composer require swisnl/json-api-client guzzlehttp/guzzle:^7.0`.
+N.B. Make sure you have installed a PSR-18 HTTP Client and PSR-17 HTTP Factories before you install this package or install one at the same time e.g. `composer require swisnl/json-api-client guzzlehttp/guzzle:^7.3`.
 
 ### HTTP Client
 
-We are decoupled from any HTTP messaging client with the help of [PSR-18 HTTP Client](https://www.php-fig.org/psr/psr-18/).
-This requires an extra package providing [psr/http-client-implementation](https://packagist.org/providers/psr/http-client-implementation).
+We are decoupled from any HTTP messaging client with the help of [PSR-18 HTTP Client](https://www.php-fig.org/psr/psr-18/) and [PSR-17 HTTP Factories](https://www.php-fig.org/psr/psr-17/).
+This requires an extra package providing [psr/http-client-implementation](https://packagist.org/providers/psr/http-client-implementation) and [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation).
 To use Guzzle 7, for example, simply require `guzzlehttp/guzzle`:
 
 ``` bash
-composer require guzzlehttp/guzzle:^7.0
+composer require guzzlehttp/guzzle:^7.3
 ```
 
 See [HTTP Clients](#http-clients) if you want to use your own HTTP client or use specific configuration options.
