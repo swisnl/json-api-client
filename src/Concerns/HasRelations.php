@@ -31,7 +31,7 @@ trait HasRelations
      */
     public function hasOne(string $itemClass, string $name = null): OneRelationInterface
     {
-        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
+        $name = $name ?: $this->guessRelationName();
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = $this->newHasOne((new $itemClass())->getType());
@@ -55,7 +55,7 @@ trait HasRelations
      */
     public function hasMany(string $itemClass, string $name = null): ManyRelationInterface
     {
-        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
+        $name = $name ?: $this->guessRelationName();
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = $this->newHasMany((new $itemClass())->getType());
@@ -78,7 +78,7 @@ trait HasRelations
      */
     public function morphTo(string $name = null): OneRelationInterface
     {
-        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
+        $name = $name ?: $this->guessRelationName();
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = $this->newMorphTo();
@@ -101,7 +101,7 @@ trait HasRelations
      */
     public function morphToMany(string $name = null): ManyRelationInterface
     {
-        $name = $name ?: Util::stringSnake(debug_backtrace()[1]['function']);
+        $name = $name ?: $this->guessRelationName();
 
         if (!array_key_exists($name, $this->relations)) {
             $this->relations[$name] = $this->newMorphToMany();
@@ -113,6 +113,18 @@ trait HasRelations
     protected function newMorphToMany(): ManyRelationInterface
     {
         return new MorphToManyRelation();
+    }
+
+    /**
+     * Guess the relationship name.
+     *
+     * @return string
+     */
+    protected function guessRelationName(): string
+    {
+        [$one, $two, $caller] = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+
+        return Util::stringSnake($caller['function']);
     }
 
     /**
