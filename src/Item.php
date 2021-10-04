@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client;
 
 use ArrayAccess;
@@ -378,7 +380,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
     public function offsetSet($offset, $value)
     {
         if ($offset === 'id') {
-            $this->setId($value);
+            $this->setId($value ? (string) $value : null);
 
             return;
         }
@@ -396,7 +398,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
     public function offsetUnset($offset)
     {
         if ($offset === 'id') {
-            $this->id = null;
+            $this->setId(null);
         }
 
         unset($this->attributes[$offset], $this->relations[$offset]);

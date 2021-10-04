@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client\Tests;
 
 use GuzzleHttp\Psr7\Utils;

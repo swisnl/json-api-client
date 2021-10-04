@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client\Parsers;
 
 use Swis\JsonApi\Client\Collection;
@@ -73,10 +75,7 @@ class ItemParser
         }
 
         $item = $this->getItemInstance($data->type);
-
-        if (property_exists($data, 'id')) {
-            $item->setId($data->id);
-        }
+        $item->setId((string) $data->id);
 
         if (property_exists($data, 'attributes')) {
             $item->fill((array) $data->attributes);
@@ -191,7 +190,7 @@ class ItemParser
             throw new ValidationException(sprintf('ResourceIdentifier property "id" MUST be a string, "%s" given.', gettype($data->id)));
         }
 
-        $item = $this->getItemInstance($data->type)->setId($data->id);
+        $item = $this->getItemInstance($data->type)->setId((string) $data->id);
         if (property_exists($data, 'meta')) {
             $item->setMeta($this->metaParser->parse($data->meta));
         }

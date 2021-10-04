@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -93,7 +95,7 @@ class RepositoryTest extends TestCase
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->find(1, ['foo' => 'bar']));
+        $this->assertSame($document, $repository->find('1', ['foo' => 'bar']));
     }
 
     /**
@@ -123,7 +125,7 @@ class RepositoryTest extends TestCase
     public function itCanSaveExisting()
     {
         $document = new ItemDocument();
-        $document->setData((new Item())->setId(1));
+        $document->setData((new Item())->setId('1'));
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -135,7 +137,7 @@ class RepositoryTest extends TestCase
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->save((new Item())->setId(1), ['foo' => 'bar']));
+        $this->assertSame($document, $repository->save((new Item())->setId('1'), ['foo' => 'bar']));
     }
 
     /**
@@ -155,6 +157,6 @@ class RepositoryTest extends TestCase
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->delete(1, ['foo' => 'bar']));
+        $this->assertSame($document, $repository->delete('1', ['foo' => 'bar']));
     }
 }

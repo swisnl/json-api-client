@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client\Relations;
 
 use Swis\JsonApi\Client\Concerns\HasLinks;
