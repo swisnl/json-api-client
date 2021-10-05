@@ -9,6 +9,7 @@ $finder = (new PhpCsFixer\Finder())
 
 return (new PhpCsFixer\Config())
     ->setFinder($finder)
+    ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
@@ -18,5 +19,6 @@ return (new PhpCsFixer\Config())
         'phpdoc_order' => true,
         'yoda_style' => false,
         'no_superfluous_phpdoc_tags' => false,
+        'declare_strict_types' => true,
     ])
 ;

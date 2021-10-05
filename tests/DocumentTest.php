@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client\Tests;
 
 use GuzzleHttp\Psr7\Response;
@@ -141,14 +143,14 @@ class DocumentTest extends TestCase
         $document->setData(
             (new Item(['title' => 'JSON:API paints my bikeshed!']))
                 ->setType('articles')
-                ->setId(1)
+                ->setId('1')
         );
         $document->setIncluded(
             new Collection(
                 [
                     (new Item(['firstName' => 'Dan', 'lastName' => 'Gebhardt', 'twitter' => 'dgeb']))
                         ->setType('people')
-                        ->setId(9),
+                        ->setId('9'),
                 ]
             )
         );

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client;
 
 use Swis\JsonApi\Client\Exceptions\HydrationException;
@@ -202,6 +204,6 @@ class ItemHydrator
             $item = $this->typeMapper->getMapping($type);
         }
 
-        return $this->hydrate($item, $attributes, $attributes['id']);
+        return $this->hydrate($item, $attributes, (string) $attributes['id']);
     }
 }

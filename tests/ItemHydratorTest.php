@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -44,7 +46,7 @@ class ItemHydratorTest extends TestCase
             'testobject' => [
                 'foo' => 'bar',
             ],
-            'testarray' => [1, 2, 3],
+            'testarray' => ['1', '2', '3'],
         ];
 
         $item = new Item();
@@ -59,7 +61,7 @@ class ItemHydratorTest extends TestCase
     public function itHydratesHasoneRelationshipsById()
     {
         $data = [
-            'hasone_relation' => 1,
+            'hasone_relation' => '1',
         ];
 
         $item = new WithRelationshipItem();
@@ -82,7 +84,7 @@ class ItemHydratorTest extends TestCase
     {
         $data = [
             'hasone_relation' => [
-                'id' => 1,
+                'id' => '1',
                 'test_related_attribute1' => 'test',
                 'test_related_attribute2' => 'test2',
             ],
@@ -132,8 +134,8 @@ class ItemHydratorTest extends TestCase
     {
         $data = [
             'hasmany_relation' => [
-                1,
-                2,
+                '1',
+                '2',
             ],
         ];
 
@@ -163,12 +165,12 @@ class ItemHydratorTest extends TestCase
         $data = [
             'hasmany_relation' => [
                 [
-                    'id' => 1,
+                    'id' => '1',
                     'test_related_attribute1' => 'test',
                     'test_related_attribute2' => 'test2',
                 ],
                 [
-                    'id' => 2,
+                    'id' => '2',
                     'test_related_attribute1' => 'test',
                     'test_related_attribute2' => 'test2',
                 ],
@@ -226,7 +228,7 @@ class ItemHydratorTest extends TestCase
     {
         $data = [
             'morphto_relation' => [
-                'id' => 1,
+                'id' => '1',
                 'type' => 'related-item',
             ],
         ];
@@ -252,7 +254,7 @@ class ItemHydratorTest extends TestCase
     {
         $data = [
             'morphto_relation' => [
-                'id' => 1,
+                'id' => '1',
                 'type' => 'related-item',
                 'test_related_attribute1' => 'test',
             ],
@@ -302,7 +304,7 @@ class ItemHydratorTest extends TestCase
     {
         $data = [
             'morphto_relation' => [
-                'id' => 1,
+                'id' => '1',
                 'type' => 'unmapped-item',
             ],
         ];
@@ -326,7 +328,7 @@ class ItemHydratorTest extends TestCase
     {
         $data = [
             'morphto_relation' => [
-                'id' => 1,
+                'id' => '1',
                 'test_related_attribute1' => 'test',
             ],
         ];
@@ -345,11 +347,11 @@ class ItemHydratorTest extends TestCase
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id' => 1,
+                    'id' => '1',
                     'type' => 'related-item',
                 ],
                 [
-                    'id' => 2,
+                    'id' => '2',
                     'type' => 'another-related-item',
                 ],
             ],
@@ -383,12 +385,12 @@ class ItemHydratorTest extends TestCase
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id' => 1,
+                    'id' => '1',
                     'type' => 'related-item',
                     'test_related_attribute1' => 'test1',
                 ],
                 [
-                    'id' => 2,
+                    'id' => '2',
                     'type' => 'another-related-item',
                     'test_related_attribute1' => 'test2',
                 ],
@@ -447,11 +449,11 @@ class ItemHydratorTest extends TestCase
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id' => 1,
+                    'id' => '1',
                     'type' => 'unmapped-item',
                 ],
                 [
-                    'id' => 2,
+                    'id' => '2',
                     'type' => 'unmapped-item',
                 ],
             ],
@@ -482,7 +484,7 @@ class ItemHydratorTest extends TestCase
         $data = [
             'morphtomany_relation' => [
                 [
-                    'id' => 1,
+                    'id' => '1',
                     'test_related_attribute1' => 'test',
                 ],
             ],
@@ -501,8 +503,8 @@ class ItemHydratorTest extends TestCase
     {
         $data = [
             'hasone_relation' => [
-                'id' => 1,
-                'parent_relation' => 5,
+                'id' => '1',
+                'parent_relation' => '5',
             ],
         ];
 
@@ -532,7 +534,7 @@ class ItemHydratorTest extends TestCase
         $data = [
             'hasone_relation' => null,
             'morphto_relation' => [
-                'id' => 1,
+                'id' => '1',
                 'type' => 'related-item',
             ],
         ];
@@ -583,7 +585,7 @@ class ItemHydratorTest extends TestCase
     public function itThrowsWhenRelationshipIsPresentInAvailableRelationshipsButTheMethodDoesNotExist()
     {
         $data = [
-            'does_not_exist' => 1,
+            'does_not_exist' => '1',
         ];
 
         $item = new MasterItem();

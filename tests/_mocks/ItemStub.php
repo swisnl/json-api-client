@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Swis\JsonApi\Client\Tests\Mocks;
 
 use DateTime;
@@ -63,7 +65,7 @@ class ItemStub extends Item
 
     public function getAgeAttribute($value)
     {
-        $date = DateTime::createFromFormat('U', $this->attributes['birthday']);
+        $date = DateTime::createFromFormat('U', (string) $this->attributes['birthday']);
 
         return $date->diff(new DateTime('now'))->y;
     }
