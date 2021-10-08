@@ -29,7 +29,7 @@ trait HasRelations
      * @param string      $itemClass
      * @param string|null $name
      *
-     * @return \Swis\JsonApi\Client\Relations\HasOneRelation
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface
      */
     public function hasOne(string $itemClass, string $name = null): OneRelationInterface
     {
@@ -53,7 +53,7 @@ trait HasRelations
      * @param string      $itemClass
      * @param string|null $name
      *
-     * @return \Swis\JsonApi\Client\Relations\HasManyRelation
+     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface
      */
     public function hasMany(string $itemClass, string $name = null): ManyRelationInterface
     {
@@ -76,7 +76,7 @@ trait HasRelations
      *
      * @param string|null $name
      *
-     * @return \Swis\JsonApi\Client\Relations\MorphToRelation
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface
      */
     public function morphTo(string $name = null): OneRelationInterface
     {
@@ -99,7 +99,7 @@ trait HasRelations
      *
      * @param string|null $name
      *
-     * @return \Swis\JsonApi\Client\Relations\MorphToManyRelation
+     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface
      */
     public function morphToMany(string $name = null): ManyRelationInterface
     {

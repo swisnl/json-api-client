@@ -14,7 +14,7 @@ use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 
 /**
- * @property string|null id
+ * @property string|null $id
  */
 class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemInterface
 {
@@ -93,11 +93,11 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @param array $attributes
      *
-     * @return static
+     * @return self
      */
     public function newInstance(array $attributes = [])
     {
-        $model = new static($attributes);
+        $model = new self($attributes);
 
         if ($this->type) {
             $model->setType($this->type);
@@ -116,7 +116,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      */
     public static function hydrate(array $items): array
     {
-        $instance = new static();
+        $instance = new self();
 
         return array_map(static function ($item) use ($instance) {
             return $instance->newInstance($item);
@@ -196,13 +196,13 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @param array|null $except
      *
-     * @return static
+     * @return self
      */
     public function replicate(array $except = null)
     {
         $attributes = Util::arrayExcept($this->getAttributes(), $except ?? []);
 
-        return new static($attributes);
+        return new self($attributes);
     }
 
     /**

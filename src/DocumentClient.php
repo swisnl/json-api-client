@@ -40,11 +40,11 @@ class DocumentClient implements DocumentClientInterface
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
      * @param \Psr\Http\Client\ClientInterface|null                    $client
      *
-     * @return static
+     * @return self
      */
     public static function create(TypeMapperInterface $typeMapper = null, HttpClientInterface $client = null): self
     {
-        return new static(new Client($client), ResponseParser::create($typeMapper));
+        return new self(new Client($client), ResponseParser::create($typeMapper));
     }
 
     /**

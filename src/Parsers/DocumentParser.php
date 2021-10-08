@@ -76,7 +76,7 @@ class DocumentParser implements DocumentParserInterface
     /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
      *
-     * @return static
+     * @return self
      */
     public static function create(TypeMapperInterface $typeMapper = null): self
     {
@@ -84,7 +84,7 @@ class DocumentParser implements DocumentParserInterface
         $linksParser = new LinksParser($metaParser);
         $itemParser = new ItemParser($typeMapper ?? new TypeMapper(), $linksParser, $metaParser);
 
-        return new static(
+        return new self(
             $itemParser,
             new CollectionParser($itemParser),
             new ErrorCollectionParser(

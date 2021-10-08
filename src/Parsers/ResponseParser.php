@@ -30,11 +30,11 @@ class ResponseParser implements ResponseParserInterface
     /**
      * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
      *
-     * @return static
+     * @return self
      */
     public static function create(TypeMapperInterface $typeMapper = null): self
     {
-        return new static(DocumentParser::create($typeMapper));
+        return new self(DocumentParser::create($typeMapper));
     }
 
     /**

@@ -92,20 +92,20 @@ interface ItemInterface extends DataInterface
     public function getAttributes();
 
     /**
-     * @param $key
+     * @param mixed $key
      *
      * @return mixed
      */
     public function getAttribute($key);
 
     /**
-     * @param $key
-     * @param $value
+     * @param mixed $key
+     * @param mixed $value
      */
     public function setAttribute($key, $value);
 
     /**
-     * @param $key
+     * @param mixed $key
      *
      * @return bool
      */

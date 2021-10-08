@@ -79,7 +79,7 @@ interface DocumentInterface extends \JsonSerializable
     public function setLinks(?Links $links);
 
     /**
-     * @return mixed
+     * @return Collection
      */
     public function getIncluded(): Collection;
 

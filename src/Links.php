@@ -25,7 +25,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * @param $key
+     * @param mixed $key
      *
      * @return bool
      */
@@ -35,7 +35,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * @param $key
+     * @param mixed $key
      *
      * @return mixed
      */
@@ -45,7 +45,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * @param $key
+     * @param mixed $key
      */
     public function __unset($key)
     {
@@ -53,8 +53,8 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param mixed $key
+     * @param mixed $value
      */
     public function __set($key, $value)
     {
