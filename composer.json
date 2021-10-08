@@ -18,7 +18,8 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "guzzlehttp/guzzle": "^7.3",
         "phpunit/phpunit": "^8.0|^9.0",
-        "php-http/mock-client": "^1.2"
+        "php-http/mock-client": "^1.2",
+        "phpstan/phpstan": "^0.12.99"
     },
     "suggest": {
         "swisnl/php-http-fixture-client": "Allows for easily mocking API calls with fixtures in your tests"
@@ -51,6 +52,7 @@
     ],
     "scripts": {
         "test": "phpunit",
+        "analyse": "phpstan analyse -l 4 src",
         "check-style": "php-cs-fixer fix --dry-run -v",
         "fix-style": "php-cs-fixer fix"
     },
