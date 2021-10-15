@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * All classes now use strict typing [#93](https://github.com/swisnl/json-api-client/pull/93).
 
+### Removed
+
+* Dropped PHP <7.3 support.
+
 ## [2.0.0-beta] - 2021-07-01
 
 Please see [UPGRADING](UPGRADING.md) for details on how to upgrade.
