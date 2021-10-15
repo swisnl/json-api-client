@@ -426,7 +426,7 @@ trait HasAttributes
      */
     protected function asJson($value)
     {
-        return json_encode($value);
+        return json_encode($value, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -439,7 +439,7 @@ trait HasAttributes
      */
     public function fromJson(string $value, $asObject = false)
     {
-        return json_decode($value, !$asObject);
+        return json_decode($value, !$asObject, 512, JSON_THROW_ON_ERROR);
     }
 
     /**

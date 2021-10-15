@@ -168,7 +168,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      */
     public function toJson($options = 0)
     {
-        return json_encode($this->jsonSerialize(), $options);
+        return json_encode($this->jsonSerialize(), JSON_THROW_ON_ERROR | $options);
     }
 
     /**

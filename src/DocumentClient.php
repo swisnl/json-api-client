@@ -116,7 +116,7 @@ class DocumentClient implements DocumentClientInterface
      */
     protected function prepareBody(ItemDocumentInterface $body): string
     {
-        return $this->sanitizeJson(json_encode($body));
+        return $this->sanitizeJson(json_encode($body, JSON_THROW_ON_ERROR));
     }
 
     /**
