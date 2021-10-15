@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 * All classes now use strict typing [#93](https://github.com/swisnl/json-api-client/pull/93).
+* All JSON-actions (`json_encode` and `json_decode`) will throw JsonExceptions on error [#94](https://github.com/swisnl/json-api-client/pull/94).
 
 ### Removed
 
