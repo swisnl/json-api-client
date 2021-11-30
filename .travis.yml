@@ -17,11 +17,12 @@ install:
 
 script:
   - if [ "$RUN_CS_FIXER" ] ; then vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no ; fi
-  - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+  - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
+  - |
+    composer global require --no-interaction --prefer-dist scrutinizer/ocular
+    ~/.config/composer/vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
 
 branches:
   only:
