@@ -68,6 +68,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->links[$offset]);
@@ -80,6 +81,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->links[$offset] ?? null;
@@ -91,6 +93,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      * @param mixed $offset
      * @param mixed $value
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->links[$offset] = $value;
@@ -101,6 +104,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      *
      * @param mixed $offset
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->links[$offset]);
@@ -138,6 +142,7 @@ class Links implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
      *
      * @return object
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return (object) $this->toArray();

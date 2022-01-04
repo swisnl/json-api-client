@@ -73,6 +73,7 @@ class Jsonapi implements Arrayable, Jsonable, JsonSerializable
      *
      * @return object
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return (object) $this->toArray();

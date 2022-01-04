@@ -176,6 +176,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();
@@ -344,6 +345,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         if ($offset === 'id') {
@@ -360,6 +362,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if ($offset === 'id') {
@@ -377,6 +380,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if ($offset === 'id') {
@@ -395,6 +399,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         if ($offset === 'id') {

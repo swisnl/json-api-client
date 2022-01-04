@@ -201,6 +201,7 @@ class Document implements DocumentInterface
      *
      * @return object
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         $document = [];
