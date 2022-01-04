@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Fixed
+
+* Temporarily suppress PHP 8.1 notices about inconsistencies with interfaces.
 
 ## [2.0.0] - 2022-01-04
 
