@@ -4,7 +4,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/json-api-client.svg)](https://packagist.org/packages/swisnl/json-api-client)
 [![Software License](https://img.shields.io/packagist/l/swisnl/json-api-client.svg)](LICENSE)
 [![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen.svg)](https://plant.treeware.earth/swisnl/json-api-client)
-[![Build Status](https://travis-ci.com/swisnl/json-api-client.svg?branch=master)](https://travis-ci.com/swisnl/json-api-client)
+[![Build Status](https://travis-ci.com/swisnl/json-api-client.svg?branch=master)](https://travis-ci.com/github/swisnl/json-api-client)
 [![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/swisnl/json-api-client.svg)](https://scrutinizer-ci.com/g/swisnl/json-api-client/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/swisnl/json-api-client.svg)](https://scrutinizer-ci.com/g/swisnl/json-api-client/?branch=master)
 [![Made by SWIS](https://img.shields.io/badge/%F0%9F%9A%80-made%20by%20SWIS-%23D9021B.svg)](https://www.swis.nl)
