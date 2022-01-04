@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [2.0.0] - 2022-01-04
+
+Please also check the changes in 2.0.0-beta and see [UPGRADING](UPGRADING.md) for details on how to upgrade.
+
 ### Changed
 
 * All classes now use strict typing [#93](https://github.com/swisnl/json-api-client/pull/93).
