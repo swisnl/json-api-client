@@ -5,14 +5,14 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "*",
-        "illuminate/contracts": "^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0",
         "php-http/discovery": "^1.0",
         "psr/http-client": "^1.0",
         "psr/http-client-implementation": "^1.0",
         "psr/http-factory": "^1.0",
         "psr/http-factory-implementation": "^1.0",
         "psr/http-message": "^1.0",
-        "swisnl/illuminate-collections": "^6.0|^7.0|^8.0"
+        "swisnl/illuminate-collections": "^6.0|^7.0|^8.0|^9.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -58,5 +58,7 @@
         "branch-alias": {
             "dev-master": "2.0.x-dev"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
