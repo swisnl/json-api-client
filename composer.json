@@ -42,7 +42,9 @@
         },
         {
             "name": "Jasper Zonneveld",
-            "email": "jasper@swis.nl"
+            "email": "jasper@swis.nl",
+            "homepage": "https://github.com/JaZo",
+            "role": "Developer"
         },
         {
             "name": "Björn Brala",
