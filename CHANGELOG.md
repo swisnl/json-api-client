@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing
+### Fixed
+
+* Fix ParamNameMismatch issue [#96](https://github.com/swisnl/json-api-client/issues/96).
 
 ## [2.0.1] - 2022-02-08
 

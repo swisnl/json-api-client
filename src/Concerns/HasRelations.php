@@ -175,29 +175,29 @@ trait HasRelations
     /**
      * Set the specific relationship on the model.
      *
-     * @param string                                                   $name
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface|false|null $data
+     * @param string                                                   $relation
+     * @param \Swis\JsonApi\Client\Interfaces\DataInterface|false|null $value
      * @param \Swis\JsonApi\Client\Links|null                          $links
      * @param \Swis\JsonApi\Client\Meta|null                           $meta
      *
      * @return static
      */
-    public function setRelation(string $name, $data = false, Links $links = null, Meta $meta = null)
+    public function setRelation(string $relation, $value = false, Links $links = null, Meta $meta = null)
     {
-        $method = Util::stringCamel($name);
+        $method = Util::stringCamel($relation);
         if (method_exists($this, $method)) {
             /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
             $relationObject = $this->$method();
-        } elseif ($data instanceof Collection) {
-            $relationObject = $this->morphToMany($name);
+        } elseif ($value instanceof Collection) {
+            $relationObject = $this->morphToMany($relation);
         } else {
-            $relationObject = $this->morphTo($name);
+            $relationObject = $this->morphTo($relation);
         }
 
-        if ($data !== false) {
+        if ($value !== false) {
             $relationObject->dissociate();
-            if ($data !== null) {
-                $relationObject->associate($data);
+            if ($value !== null) {
+                $relationObject->associate($value);
             }
         }
         $relationObject->setLinks($links);
