@@ -6,7 +6,7 @@
         "php": "^7.3|^8.0",
         "ext-json": "*",
         "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0",
-        "php-http/discovery": "^1.0",
+        "php-http/discovery": "^1.9",
         "psr/http-client": "^1.0",
         "psr/http-client-implementation": "^1.0",
         "psr/http-factory": "^1.0",
