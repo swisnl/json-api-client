@@ -1,0 +1,62 @@
+name: Run tests
+
+on: [ push, pull_request ]
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '7.3', '7.4', '8.0', '8.1' ]
+        laravel: [ '6.*', '7.*', '8.*', '9.*' ]
+        stability: [ prefer-lowest, prefer-stable ]
+        exclude:
+          - laravel: '6.*'
+            php: '8.1'
+          - laravel: '7.*'
+            php: '8.1'
+          - laravel: '9.*'
+            php: '7.3'
+          - laravel: '9.*'
+            php: '7.4'
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: php-${{ matrix.php }}-laravel-${{ matrix.laravel }}-composer-${{ matrix.stability }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: php-${{ matrix.php }}-laravel-${{ matrix.laravel }}-composer-${{ matrix.stability }}-
+
+      - name: Install dependencies
+        run: |
+          composer require "illuminate/contracts:${{ matrix.laravel }}" "swisnl/illuminate-collections:${{ matrix.laravel }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
+
+      - name: Execute tests
+        run: XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+      - name: Upload Scrutinizer coverage
+        uses: sudo-bot/action-scrutinizer@latest
+        # Do not run this step on forked versions of the main repository (example: contributor forks)
+        if: matrix.laravel == '9.*' && github.repository == 'swisnl/json-api-client'
+        with:
+          cli-args: "--format=php-clover coverage.clover --revision=${{ github.event.pull_request.head.sha || github.sha }}"
