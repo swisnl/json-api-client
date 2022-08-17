@@ -255,6 +255,21 @@ class BlogRepository extends \Swis\JsonApi\Client\Repository
 }
 ```
 
+The above repository will have a method for all CRUD-actions. If you work with a read-only API and don't want to have all actions, you can build your own repository by extending `\Swis\JsonApi\Client\BaseRepository` and including just the actions/traits you need.
+
+``` php
+use Swis\JsonApi\Client\Actions\FetchMany;
+use Swis\JsonApi\Client\Actions\FetchOne;
+
+class BlogRepository extends \Swis\JsonApi\Client\BaseRepository
+{
+    use FetchMany;
+    use FetchOne;
+    
+    protected $endpoint = 'blogs';
+}
+```
+
 If this repository (pattern) doesn't fit your needs, you can create your own implementation using the [clients](#clients) provided by this package.
 
 ### Request parameters

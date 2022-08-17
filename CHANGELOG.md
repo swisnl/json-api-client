@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+* The `Repository` is split up into one trait per action [#91](https://github.com/swisnl/json-api-client/issues/91). This allows you to build your own repository by extending the `BaseRepository` and including just the actions/traits you need. See the (updated) readme for usage instructions. The `Repository` now uses these new traits and should be fully backwards compatible.
+
 ### Fixed
 
 * Fix ParamNameMismatch issue [#96](https://github.com/swisnl/json-api-client/issues/96).
