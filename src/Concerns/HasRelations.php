@@ -160,13 +160,13 @@ trait HasRelations
         // it is a relationship and will load and return the included items in the relationship
         $method = Util::stringCamel($name);
         if (method_exists($this, $method)) {
-            return $this->$method()->getIncluded();
+            return $this->$method()->getAssociated();
         }
 
         // If the "attribute" exists as a relationship on the model, we will return
         // the included items in the relationship
         if ($this->hasRelation($name)) {
-            return $this->getRelation($name)->getIncluded();
+            return $this->getRelation($name)->getAssociated();
         }
 
         return null;

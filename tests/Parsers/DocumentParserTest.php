@@ -602,6 +602,60 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
+    public function itParsesMetaInRelationshipDataAndIncluded()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('child', ChildItem::class);
+        $parser = DocumentParser::create($typeMapper);
+
+        $document = $parser->parse(
+            json_encode(
+                [
+                    'data' => [
+                        'type' => 'master',
+                        'id' => '1',
+                        'attributes' => [
+                            'foo' => 'bar',
+                        ],
+                        'relationships' => [
+                            'child' => [
+                                'data' => [
+                                    'type' => 'child',
+                                    'id' => '1',
+                                    'meta' => [
+                                        'a' => 'foo',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'included' => [
+                        [
+                            'type' => 'child',
+                            'id' => '1',
+                            'attributes' => [
+                                'foo' => 'baz',
+                            ],
+                            'meta' => [
+                                'b' => 'bar',
+                            ],
+                        ],
+                    ],
+                ]
+            )
+        );
+
+        static::assertInstanceOf(Meta::class, $document->getData()->child()->getData()->getMeta());
+        static::assertInstanceOf(Meta::class, $document->getData()->child()->getIncluded()->getMeta());
+
+        static::assertEquals(new Meta(['a' => 'foo']), $document->getData()->child()->getData()->getMeta());
+        static::assertEquals(new Meta(['b' => 'bar']), $document->getData()->child()->getIncluded()->getMeta());
+    }
+
+    /**
+     * @test
+     */
     public function itParsesJsonapi()
     {
         $parser = DocumentParser::create();

@@ -213,7 +213,7 @@ class DocumentParser implements DocumentParserInterface
                 foreach ($item->getRelations() as $name => $relation) {
                     if ($relation instanceof OneRelationInterface) {
                         /** @var \Swis\JsonApi\Client\Interfaces\ItemInterface|null $relatedItem */
-                        $relatedItem = $relation->getIncluded();
+                        $relatedItem = $relation->getData();
 
                         if ($relatedItem === null) {
                             continue;
@@ -221,19 +221,21 @@ class DocumentParser implements DocumentParserInterface
 
                         $includedItem = $this->getItem($keyedItems, $relatedItem);
                         if ($includedItem !== null) {
-                            $relation->associate($includedItem);
+                            $relation->setIncluded($includedItem);
                         }
                     } elseif ($relation instanceof ManyRelationInterface) {
-                        /** @var \Swis\JsonApi\Client\Collection $relatedCollection */
-                        $relatedCollection = $relation->getIncluded();
+                        /** @var \Swis\JsonApi\Client\Collection|null $relatedCollection */
+                        $relatedCollection = $relation->getData();
 
-                        /** @var \Swis\JsonApi\Client\Interfaces\ItemInterface $relatedItem */
-                        foreach ($relatedCollection as $key => $relatedItem) {
-                            $includedItem = $this->getItem($keyedItems, $relatedItem);
-                            if ($includedItem !== null) {
-                                $relatedCollection->put($key, $includedItem);
-                            }
+                        if ($relatedCollection === null) {
+                            continue;
                         }
+
+                        $relation->setIncluded(
+                            $relatedCollection->map(function (ItemInterface $relatedItem) use ($keyedItems) {
+                                return $this->getItem($keyedItems, $relatedItem) ?? $relatedItem;
+                            })
+                        );
                     }
                 }
             }

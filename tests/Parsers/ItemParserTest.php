@@ -659,7 +659,25 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesMetaInData()
+    public function itParsesMetaInRelationship()
+    {
+        $typeMapper = new TypeMapper();
+        $typeMapper->setMapping('child', ChildItem::class);
+        $typeMapper->setMapping('master', MasterItem::class);
+        $parser = $this->getItemParser($typeMapper);
+
+        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+
+        $meta = $item->getRelation('child')->getMeta();
+        static::assertInstanceOf(Meta::class, $meta);
+
+        $this->assertEquals('bar', $meta->foo);
+    }
+
+    /**
+     * @test
+     */
+    public function itParsesMetaInRelationshipData()
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
@@ -801,19 +819,19 @@ class ItemParserTest extends TestCase
                         'type' => 'child',
                         'id' => '9',
                         'meta' => [
-                          'alt' => '',
-                          'width' => 1920,
-                          'height' => 1280,
-                          'imageDerivatives' => [
-                            'links' => [
-                              'header' => [
-                                'href' => 'https://example.com/image/header/about-us.jpeg',
-                                'meta' => [
-                                  'rel' => 'drupal://jsonapi/extensions/consumer_image_styles/links/relation-types/#derivative',
+                            'alt' => '',
+                            'width' => 1920,
+                            'height' => 1280,
+                            'imageDerivatives' => [
+                                'links' => [
+                                    'header' => [
+                                        'href' => 'https://example.com/image/header/about-us.jpeg',
+                                        'meta' => [
+                                            'rel' => 'drupal://jsonapi/extensions/consumer_image_styles/links/relation-types/#derivative',
+                                        ],
+                                    ],
                                 ],
-                              ],
                             ],
-                          ],
                         ],
                     ],
                     'links' => [
