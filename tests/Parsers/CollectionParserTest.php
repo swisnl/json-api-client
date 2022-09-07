@@ -35,6 +35,7 @@ class CollectionParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidData
      *
      * @param mixed $invalidData

@@ -51,6 +51,7 @@ class LinksParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidData
      *
      * @param mixed $invalidData
@@ -79,6 +80,7 @@ class LinksParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidLinkData
      *
      * @param mixed $invalidData

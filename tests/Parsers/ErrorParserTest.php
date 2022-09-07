@@ -42,6 +42,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidData
      *
      * @param mixed $invalidData
@@ -70,6 +71,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidIdError
      *
      * @param mixed $invalidError
@@ -98,6 +100,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidStatusError
      *
      * @param mixed $invalidError
@@ -126,6 +129,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidCodeError
      *
      * @param mixed $invalidError
@@ -154,6 +158,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidTitleError
      *
      * @param mixed $invalidError
@@ -182,6 +187,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidDetailError
      *
      * @param mixed $invalidError
@@ -210,6 +216,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidErrorSourceError
      *
      * @param mixed $invalidError
@@ -238,6 +245,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidErrorSourcePointerError
      *
      * @param mixed $invalidError
@@ -266,6 +274,7 @@ class ErrorParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidErrorSourceParameterError
      *
      * @param mixed $invalidError

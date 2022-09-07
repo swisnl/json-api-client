@@ -555,6 +555,7 @@ class ItemHydratorTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideIdArguments
      *
      * @param $givenId

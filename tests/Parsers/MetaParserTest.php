@@ -26,6 +26,7 @@ class MetaParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidData
      *
      * @param mixed $invalidData

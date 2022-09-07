@@ -56,6 +56,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidData
      *
      * @param mixed $invalidData
@@ -110,6 +111,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidIdItem
      *
      * @param mixed $invalidItem
@@ -136,6 +138,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidTypeItem
      *
      * @param mixed $invalidItem
@@ -164,6 +167,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidAttributesItem
      *
      * @param mixed $invalidItem
@@ -244,6 +248,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidRelationshipsItem
      *
      * @param mixed $invalidItem
@@ -311,6 +316,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidRelationshipsItemItem
      *
      * @param mixed $invalidItem
@@ -352,6 +358,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidRelationshipsItemIdentifierItem
      *
      * @param mixed $invalidItem
@@ -404,6 +411,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidRelationshipsItemIdentifierIdItem
      *
      * @param mixed $invalidItem
@@ -430,6 +438,7 @@ class ItemParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidRelationshipsItemIdentifierTypeItem
      *
      * @param mixed $invalidItem

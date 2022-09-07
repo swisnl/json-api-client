@@ -64,6 +64,7 @@ class DocumentParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidJson
      *
      * @param string $invalidJson
@@ -131,6 +132,7 @@ class DocumentParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidData
      *
      * @param mixed $invalidData
@@ -157,6 +159,7 @@ class DocumentParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidIncluded
      *
      * @param mixed $invalidIncluded

@@ -30,6 +30,7 @@ class JsonapiParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidData
      *
      * @param mixed $invalidData
@@ -58,6 +59,7 @@ class JsonapiParserTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider provideInvalidVersionJsonapi
      *
      * @param mixed $invalidJsonapi
