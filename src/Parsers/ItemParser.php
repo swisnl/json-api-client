@@ -16,26 +16,12 @@ use Swis\JsonApi\Client\Item;
  */
 class ItemParser
 {
-    /**
-     * @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface
-     */
-    private $typeMapper;
+    private TypeMapperInterface $typeMapper;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\LinksParser
-     */
-    private $linksParser;
+    private LinksParser $linksParser;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\MetaParser
-     */
-    private $metaParser;
+    private MetaParser $metaParser;
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface $typeMapper
-     * @param \Swis\JsonApi\Client\Parsers\LinksParser            $linksParser
-     * @param \Swis\JsonApi\Client\Parsers\MetaParser             $metaParser
-     */
     public function __construct(TypeMapperInterface $typeMapper, LinksParser $linksParser, MetaParser $metaParser)
     {
         $this->typeMapper = $typeMapper;

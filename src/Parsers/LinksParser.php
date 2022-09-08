@@ -27,14 +27,8 @@ class LinksParser
         'related',
     ];
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\MetaParser
-     */
-    private $metaParser;
+    private MetaParser $metaParser;
 
-    /**
-     * @param \Swis\JsonApi\Client\Parsers\MetaParser $metaParser
-     */
     public function __construct(MetaParser $metaParser)
     {
         $this->metaParser = $metaParser;

@@ -16,20 +16,10 @@ use Swis\JsonApi\Client\Parsers\ResponseParser;
 
 class DocumentClient implements DocumentClientInterface
 {
-    /**
-     * @var \Swis\JsonApi\Client\Interfaces\ClientInterface
-     */
-    private $client;
+    private ClientInterface $client;
 
-    /**
-     * @var \Swis\JsonApi\Client\Interfaces\ResponseParserInterface
-     */
-    private $parser;
+    private ResponseParserInterface $parser;
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\ClientInterface         $client
-     * @param \Swis\JsonApi\Client\Interfaces\ResponseParserInterface $parser
-     */
     public function __construct(ClientInterface $client, ResponseParserInterface $parser)
     {
         $this->client = $client;

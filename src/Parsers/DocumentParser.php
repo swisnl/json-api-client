@@ -20,44 +20,18 @@ use Swis\JsonApi\Client\TypeMapper;
 
 class DocumentParser implements DocumentParserInterface
 {
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\ItemParser
-     */
-    private $itemParser;
+    private ItemParser $itemParser;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\CollectionParser
-     */
-    private $collectionParser;
+    private CollectionParser $collectionParser;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\ErrorCollectionParser
-     */
-    private $errorCollectionParser;
+    private ErrorCollectionParser $errorCollectionParser;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\LinksParser
-     */
-    private $linksParser;
+    private LinksParser $linksParser;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\JsonapiParser
-     */
-    private $jsonapiParser;
+    private JsonapiParser $jsonapiParser;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\MetaParser
-     */
-    private $metaParser;
+    private MetaParser $metaParser;
 
-    /**
-     * @param \Swis\JsonApi\Client\Parsers\ItemParser            $itemParser
-     * @param \Swis\JsonApi\Client\Parsers\CollectionParser      $collectionParser
-     * @param \Swis\JsonApi\Client\Parsers\ErrorCollectionParser $errorCollectionParser
-     * @param \Swis\JsonApi\Client\Parsers\LinksParser           $linksParser
-     * @param \Swis\JsonApi\Client\Parsers\JsonapiParser         $jsonapiParser
-     * @param \Swis\JsonApi\Client\Parsers\MetaParser            $metaParser
-     */
     public function __construct(
         ItemParser $itemParser,
         CollectionParser $collectionParser,

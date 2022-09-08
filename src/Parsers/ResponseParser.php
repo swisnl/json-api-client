@@ -14,14 +14,8 @@ use Swis\JsonApi\Client\InvalidResponseDocument;
 
 class ResponseParser implements ResponseParserInterface
 {
-    /**
-     * @var \Swis\JsonApi\Client\Interfaces\DocumentParserInterface
-     */
-    private $parser;
+    private DocumentParserInterface $parser;
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\DocumentParserInterface $parser
-     */
     public function __construct(DocumentParserInterface $parser)
     {
         $this->parser = $parser;

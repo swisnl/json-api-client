@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client;
 
+/**
+ * @internal
+ */
 class Util
 {
-    /**
-     * The cache of snake-cased words.
-     *
-     * @var array
-     */
-    protected static $snakeCache = [];
+    private static array $camelCache = [];
 
-    /**
-     * The cache of studly-cased words.
-     *
-     * @var array
-     */
-    protected static $studlyCache = [];
+    private static array $snakeCache = [];
 
-    private static $camelCache;
+    private static array $studlyCache = [];
 
     /**
      * Convert the given string to lower-case.

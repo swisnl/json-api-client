@@ -16,39 +16,19 @@ use Swis\JsonApi\Client\Interfaces\ClientInterface;
 
 class Client implements ClientInterface
 {
-    /**
-     * @var \Psr\Http\Client\ClientInterface
-     */
-    private $client;
+    private HttpClientInterface $client;
 
-    /**
-     * @var \Psr\Http\Message\RequestFactoryInterface
-     */
-    private $requestFactory;
+    private RequestFactoryInterface $requestFactory;
 
-    /**
-     * @var \Psr\Http\Message\StreamFactoryInterface
-     */
-    private $streamFactory;
+    private StreamFactoryInterface $streamFactory;
 
-    /**
-     * @var string
-     */
-    private $baseUri = '';
+    private string $baseUri = '';
 
-    /**
-     * @var array
-     */
-    private $defaultHeaders = [
+    private array $defaultHeaders = [
         'Accept' => 'application/vnd.api+json',
         'Content-Type' => 'application/vnd.api+json',
     ];
 
-    /**
-     * @param \Psr\Http\Client\ClientInterface|null          $client
-     * @param \Psr\Http\Message\RequestFactoryInterface|null $requestFactory
-     * @param \Psr\Http\Message\StreamFactoryInterface|null  $streamFactory
-     */
     public function __construct(
         HttpClientInterface $client = null,
         RequestFactoryInterface $requestFactory = null,

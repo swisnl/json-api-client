@@ -13,20 +13,10 @@ use Swis\JsonApi\Client\Exceptions\ValidationException;
  */
 class ErrorParser
 {
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\LinksParser
-     */
-    private $linksParser;
+    private LinksParser $linksParser;
 
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\MetaParser
-     */
-    private $metaParser;
+    private MetaParser $metaParser;
 
-    /**
-     * @param \Swis\JsonApi\Client\Parsers\LinksParser $linksParser
-     * @param \Swis\JsonApi\Client\Parsers\MetaParser  $metaParser
-     */
     public function __construct(LinksParser $linksParser, MetaParser $metaParser)
     {
         $this->linksParser = $linksParser;

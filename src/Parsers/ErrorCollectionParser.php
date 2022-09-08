@@ -12,14 +12,8 @@ use Swis\JsonApi\Client\Exceptions\ValidationException;
  */
 class ErrorCollectionParser
 {
-    /**
-     * @var \Swis\JsonApi\Client\Parsers\ErrorParser
-     */
-    private $errorParser;
+    private ErrorParser $errorParser;
 
-    /**
-     * @param \Swis\JsonApi\Client\Parsers\ErrorParser $errorParser
-     */
     public function __construct(ErrorParser $errorParser)
     {
         $this->errorParser = $errorParser;
