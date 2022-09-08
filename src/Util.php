@@ -39,8 +39,8 @@ class Util
     {
         $key = $value;
 
-        if (isset(static::$snakeCache[$key][$delimiter])) {
-            return static::$snakeCache[$key][$delimiter];
+        if (isset(self::$snakeCache[$key][$delimiter])) {
+            return self::$snakeCache[$key][$delimiter];
         }
 
         if (!ctype_lower($value)) {
@@ -49,7 +49,7 @@ class Util
             $value = static::stringLower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
         }
 
-        return static::$snakeCache[$key][$delimiter] = $value;
+        return self::$snakeCache[$key][$delimiter] = $value;
     }
 
     /**
@@ -63,13 +63,13 @@ class Util
     {
         $key = $value;
 
-        if (isset(static::$studlyCache[$key])) {
-            return static::$studlyCache[$key];
+        if (isset(self::$studlyCache[$key])) {
+            return self::$studlyCache[$key];
         }
 
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
 
-        return static::$studlyCache[$key] = str_replace(' ', '', $value);
+        return self::$studlyCache[$key] = str_replace(' ', '', $value);
     }
 
     /**
@@ -81,11 +81,11 @@ class Util
      */
     public static function stringCamel(string $value)
     {
-        if (isset(static::$camelCache[$value])) {
-            return static::$camelCache[$value];
+        if (isset(self::$camelCache[$value])) {
+            return self::$camelCache[$value];
         }
 
-        return static::$camelCache[$value] = lcfirst(static::stringStudly($value));
+        return self::$camelCache[$value] = lcfirst(static::stringStudly($value));
     }
 
     /**
