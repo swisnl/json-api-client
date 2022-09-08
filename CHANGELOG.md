@@ -6,7 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-* Nothing.
+### Added
+
+* Added `getData` method on relationships to get the relationship data [#97](https://github.com/swisnl/json-api-client/issues/97).
+
+### Fixed
+
+* Fix relationship data meta issue [#97](https://github.com/swisnl/json-api-client/issues/97).
 
 ## [2.1.0] - 2022-08-17
 
