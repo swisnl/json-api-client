@@ -83,9 +83,7 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
      */
     public function forceFill(array $attributes)
     {
-        return static::unguarded(function () use ($attributes) {
-            return $this->fill($attributes);
-        });
+        return static::unguarded(fn () => $this->fill($attributes));
     }
 
     /**
@@ -118,9 +116,10 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
     {
         $instance = new static();
 
-        return array_map(static function ($item) use ($instance) {
-            return $instance->newInstance($item);
-        }, $items);
+        return array_map(
+            static fn ($item) => $instance->newInstance($item),
+            $items
+        );
     }
 
     /**

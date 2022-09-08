@@ -202,11 +202,7 @@ class DocumentParser implements DocumentParserInterface
      */
     private function linkRelationships(Collection $items): void
     {
-        $keyedItems = $items->keyBy(
-            function (ItemInterface $item) {
-                return $this->getItemKey($item);
-            }
-        );
+        $keyedItems = $items->keyBy(fn (ItemInterface $item) => $this->getItemKey($item));
 
         $items->each(
             function (ItemInterface $item) use ($keyedItems) {
@@ -232,9 +228,7 @@ class DocumentParser implements DocumentParserInterface
                         }
 
                         $relation->setIncluded(
-                            $relatedCollection->map(function (ItemInterface $relatedItem) use ($keyedItems) {
-                                return $this->getItem($keyedItems, $relatedItem) ?? $relatedItem;
-                            })
+                            $relatedCollection->map(fn (ItemInterface $relatedItem) => $this->getItem($keyedItems, $relatedItem) ?? $relatedItem)
                         );
                     }
                 }
@@ -270,10 +264,6 @@ class DocumentParser implements DocumentParserInterface
      */
     private function getDuplicateItems(Collection $items): Collection
     {
-        $valueRetriever = function (ItemInterface $item) {
-            return $this->getItemKey($item);
-        };
-
-        return $items->duplicates($valueRetriever);
+        return $items->duplicates(fn (ItemInterface $item) => $this->getItemKey($item));
     }
 }

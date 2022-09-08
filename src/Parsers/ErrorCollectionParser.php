@@ -41,9 +41,7 @@ class ErrorCollectionParser
 
         return new ErrorCollection(
             array_map(
-                function ($error) {
-                    return $this->errorParser->parse($error);
-                },
+                fn ($error) => $this->errorParser->parse($error),
                 $data
             )
         );

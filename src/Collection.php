@@ -16,9 +16,7 @@ class Collection extends \Illuminate\Support\Collection implements DataInterface
     public function toJsonApiArray(): array
     {
         return array_map(
-            function ($value) {
-                return $value instanceof DataInterface ? $value->toJsonApiArray() : $value;
-            },
+            static fn ($value) => $value instanceof DataInterface ? $value->toJsonApiArray() : $value,
             $this->items
         );
     }

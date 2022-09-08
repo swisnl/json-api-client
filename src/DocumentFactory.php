@@ -37,16 +37,8 @@ class DocumentFactory
     private function getIncluded(DataInterface $data): Collection
     {
         return Collection::wrap($data)
-            ->flatMap(
-                function (ItemInterface $item) {
-                    return $this->getIncludedFromItem($item);
-                }
-            )
-            ->unique(
-                static function (ItemInterface $item) {
-                    return sprintf('%s:%s', $item->getType(), $item->getId());
-                }
-            )
+            ->flatMap(fn (ItemInterface $item) => $this->getIncludedFromItem($item))
+            ->unique(static fn (ItemInterface $item) => sprintf('%s:%s', $item->getType(), $item->getId()))
             ->values();
     }
 
@@ -70,16 +62,8 @@ class DocumentFactory
                     return Collection::wrap($relationship->getIncluded());
                 }
             )
-            ->flatMap(
-                function (ItemInterface $item) {
-                    return Collection::wrap($item)->merge($this->getIncludedFromItem($item));
-                }
-            )
-            ->filter(
-                function (ItemInterface $item) {
-                    return $this->itemCanBeIncluded($item);
-                }
-            );
+            ->flatMap(fn (ItemInterface $item) => Collection::wrap($item)->merge($this->getIncludedFromItem($item)))
+            ->filter(fn (ItemInterface $item) => $this->itemCanBeIncluded($item));
     }
 
     /**

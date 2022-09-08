@@ -37,10 +37,6 @@ class CollectionParser
         }
 
         return Collection::make($data)
-            ->map(
-                function ($item) {
-                    return $this->itemParser->parse($item);
-                }
-            );
+            ->map(fn ($item) => $this->itemParser->parse($item));
     }
 }

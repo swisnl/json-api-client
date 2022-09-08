@@ -167,11 +167,7 @@ class ItemParser
     {
         if (is_array($data)) {
             return Collection::make($data)
-                ->map(
-                    function ($identifier) {
-                        return $this->parseRelationshipData($identifier);
-                    }
-                );
+                ->map(fn ($identifier) => $this->parseRelationshipData($identifier));
         }
 
         if (!is_object($data)) {
