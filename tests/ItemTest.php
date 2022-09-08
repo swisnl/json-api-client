@@ -13,7 +13,7 @@ use Swis\JsonApi\Client\Link;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ParentItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithHiddenItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem;
@@ -491,11 +491,11 @@ class ItemTest extends TestCase
      */
     public function itCanGetARelationValueUsingGetAttributeMethod()
     {
-        $masterItem = new MasterItem();
+        $parentItem = new ParentItem();
         $childItem = new ChildItem();
-        $masterItem->child()->associate($childItem);
+        $parentItem->child()->associate($childItem);
 
-        $this->assertSame($childItem, $masterItem->getAttribute('child'));
+        $this->assertSame($childItem, $parentItem->getAttribute('child'));
     }
 
     /**
@@ -528,14 +528,14 @@ class ItemTest extends TestCase
      */
     public function itCanGetAllRelationships()
     {
-        $masterItem = new MasterItem();
+        $parentItem = new ParentItem();
         $childItem = new ChildItem();
         $childItem->setId('1');
         $childItem->setMeta(new Meta(['foo' => 'bar']));
-        $masterItem->child()->associate($childItem);
-        $masterItem->children()->associate(new Collection([$childItem]));
+        $parentItem->child()->associate($childItem);
+        $parentItem->children()->associate(new Collection([$childItem]));
 
-        $relations = $masterItem->getRelationships();
+        $relations = $parentItem->getRelationships();
 
         $this->assertSame([
             'child' => [
@@ -566,13 +566,13 @@ class ItemTest extends TestCase
      */
     public function itReturnsABooleanIndicatingIfItHasRelationships()
     {
-        $masterItem = new MasterItem();
-        $this->assertFalse($masterItem->hasRelationships());
+        $parentItem = new ParentItem();
+        $this->assertFalse($parentItem->hasRelationships());
 
         $childItem = (new ChildItem())->setId('1');
-        $masterItem->child()->associate($childItem);
+        $parentItem->child()->associate($childItem);
 
-        $this->assertTrue($masterItem->hasRelationships());
+        $this->assertTrue($parentItem->hasRelationships());
     }
 
     /**

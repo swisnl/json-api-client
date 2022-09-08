@@ -19,7 +19,7 @@ use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 use Swis\JsonApi\Client\Parsers\DocumentParser;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ParentItem;
 use Swis\JsonApi\Client\TypeMapper;
 
 class DocumentParserTest extends TestCase
@@ -201,7 +201,7 @@ class DocumentParserTest extends TestCase
                 [
                     'data' => [
                         [
-                            'type' => 'master',
+                            'type' => 'parent',
                             'id' => '1',
                             'attributes' => [
                                 'foo' => 'bar',
@@ -210,7 +210,7 @@ class DocumentParserTest extends TestCase
                     ],
                     'included' => [
                         [
-                            'type' => 'master',
+                            'type' => 'parent',
                             'id' => '1',
                             'attributes' => [
                                 'foo' => 'bar',
@@ -232,7 +232,7 @@ class DocumentParserTest extends TestCase
             json_encode(
                 [
                     'data' => [
-                        'type' => 'master',
+                        'type' => 'parent',
                         'id' => '1',
                         'attributes' => [
                             'foo' => 'bar',
@@ -244,7 +244,7 @@ class DocumentParserTest extends TestCase
 
         $this->assertInstanceOf(ItemDocument::class, $document);
         $this->assertInstanceOf(ItemInterface::class, $document->getData());
-        $this->assertEquals('master', $document->getData()->getType());
+        $this->assertEquals('parent', $document->getData()->getType());
         $this->assertEquals('1', $document->getData()->getId());
     }
 
@@ -259,7 +259,7 @@ class DocumentParserTest extends TestCase
                 [
                     'data' => [
                         [
-                            'type' => 'master',
+                            'type' => 'parent',
                             'id' => '1',
                             'attributes' => [
                                 'foo' => 'bar',
@@ -273,7 +273,7 @@ class DocumentParserTest extends TestCase
         $this->assertInstanceOf(CollectionDocument::class, $document);
         $this->assertInstanceOf(Collection::class, $document->getData());
         $this->assertCount(1, $document->getData());
-        $this->assertEquals('master', $document->getData()->get(0)->getType());
+        $this->assertEquals('parent', $document->getData()->get(0)->getType());
         $this->assertEquals('1', $document->getData()->get(0)->getId());
     }
 
@@ -308,7 +308,7 @@ class DocumentParserTest extends TestCase
                     'data' => [],
                     'included' => [
                         [
-                            'type' => 'master',
+                            'type' => 'parent',
                             'id' => '1',
                             'attributes' => [
                                 'foo' => 'bar',
@@ -322,7 +322,7 @@ class DocumentParserTest extends TestCase
         $this->assertInstanceOf(CollectionDocument::class, $document);
         $this->assertInstanceOf(Collection::class, $document->getIncluded());
         $this->assertCount(1, $document->getIncluded());
-        $this->assertEquals('master', $document->getIncluded()->get(0)->getType());
+        $this->assertEquals('parent', $document->getIncluded()->get(0)->getType());
         $this->assertEquals('1', $document->getIncluded()->get(0)->getId());
     }
 
@@ -332,7 +332,7 @@ class DocumentParserTest extends TestCase
     public function itLinksSingularRelationsToItemsFromIncluded()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
 
@@ -340,7 +340,7 @@ class DocumentParserTest extends TestCase
             json_encode(
                 [
                     'data' => [
-                        'type' => 'master',
+                        'type' => 'parent',
                         'id' => '1',
                         'attributes' => [
                             'foo' => 'bar',
@@ -367,7 +367,7 @@ class DocumentParserTest extends TestCase
             )
         );
 
-        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertInstanceOf(ParentItem::class, $document->getData());
         $this->assertInstanceOf(ChildItem::class, $document->getData()->child()->getIncluded());
         $this->assertSame($document->getIncluded()->get(0), $document->getData()->child()->getIncluded());
     }
@@ -378,7 +378,7 @@ class DocumentParserTest extends TestCase
     public function itDoesNotLinkEmptySingularRelations()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
 
@@ -386,7 +386,7 @@ class DocumentParserTest extends TestCase
             json_encode(
                 [
                     'data' => [
-                        'type' => 'master',
+                        'type' => 'parent',
                         'id' => '1',
                         'attributes' => [
                             'foo' => 'bar',
@@ -410,7 +410,7 @@ class DocumentParserTest extends TestCase
             )
         );
 
-        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertInstanceOf(ParentItem::class, $document->getData());
         $this->assertNull($document->getData()->child()->getIncluded());
         $this->assertInstanceOf(ChildItem::class, $document->getIncluded()->get(0));
     }
@@ -421,7 +421,7 @@ class DocumentParserTest extends TestCase
     public function itLinksPluralRelationsToItemsFromIncluded()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
 
@@ -429,7 +429,7 @@ class DocumentParserTest extends TestCase
             json_encode(
                 [
                     'data' => [
-                        'type' => 'master',
+                        'type' => 'parent',
                         'id' => '1',
                         'attributes' => [
                             'foo' => 'bar',
@@ -469,7 +469,7 @@ class DocumentParserTest extends TestCase
             )
         );
 
-        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertInstanceOf(ParentItem::class, $document->getData());
         $this->assertInstanceOf(Collection::class, $document->getData()->children()->getIncluded());
         $this->assertInstanceOf(ChildItem::class, $document->getData()->children()->getIncluded()->get(0));
         $this->assertSame($document->getIncluded()->get(0), $document->getData()->children()->getIncluded()->get(0));
@@ -482,7 +482,7 @@ class DocumentParserTest extends TestCase
     public function itDoesNotLinkEmptyPluralRelations()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
 
@@ -490,7 +490,7 @@ class DocumentParserTest extends TestCase
             json_encode(
                 [
                     'data' => [
-                        'type' => 'master',
+                        'type' => 'parent',
                         'id' => '1',
                         'attributes' => [
                             'foo' => 'bar',
@@ -521,7 +521,7 @@ class DocumentParserTest extends TestCase
             )
         );
 
-        $this->assertInstanceOf(MasterItem::class, $document->getData());
+        $this->assertInstanceOf(ParentItem::class, $document->getData());
         $this->assertInstanceOf(Collection::class, $document->getData()->children()->getIncluded());
         $this->assertEmpty($document->getData()->children()->getIncluded());
         $this->assertInstanceOf(ChildItem::class, $document->getIncluded()->get(0));
@@ -605,7 +605,7 @@ class DocumentParserTest extends TestCase
     public function itParsesMetaInRelationshipDataAndIncluded()
     {
         $typeMapper = new TypeMapper();
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
 
@@ -613,7 +613,7 @@ class DocumentParserTest extends TestCase
             json_encode(
                 [
                     'data' => [
-                        'type' => 'master',
+                        'type' => 'parent',
                         'id' => '1',
                         'attributes' => [
                             'foo' => 'bar',

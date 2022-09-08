@@ -20,7 +20,7 @@ use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
 use Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem;
-use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ParentItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\PlainItem;
 use Swis\JsonApi\Client\Tests\Mocks\Items\WithoutRelationshipsItem;
 use Swis\JsonApi\Client\TypeMapper;
@@ -33,11 +33,11 @@ class ItemParserTest extends TestCase
     public function itConvertsDataToItem()
     {
         $parser = $this->getItemParser();
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(ItemInterface::class, $item);
 
-        static::assertEquals('master', $item->getType());
+        static::assertEquals('parent', $item->getType());
         static::assertEquals('1', $item->getId());
         $object = new \stdClass();
         $object->foo = 'bar';
@@ -472,10 +472,10 @@ class ItemParserTest extends TestCase
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(HasOneRelation::class, $item->getRelation('child'));
         static::assertInstanceOf(Links::class, $item->getRelation('child')->getLinks());
@@ -493,10 +493,10 @@ class ItemParserTest extends TestCase
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(HasOneRelation::class, $item->getRelation('empty'));
         static::assertNull($item->getRelation('empty')->getLinks());
@@ -512,10 +512,10 @@ class ItemParserTest extends TestCase
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(HasManyRelation::class, $item->getRelation('children'));
         static::assertInstanceOf(Links::class, $item->getRelation('children')->getLinks());
@@ -536,10 +536,10 @@ class ItemParserTest extends TestCase
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(MorphToRelation::class, $item->getRelation('morph'));
         static::assertInstanceOf(Links::class, $item->getRelation('morph')->getLinks());
@@ -557,10 +557,10 @@ class ItemParserTest extends TestCase
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(MorphToManyRelation::class, $item->getRelation('morphmany'));
         static::assertInstanceOf(Links::class, $item->getRelation('morphmany')->getLinks());
@@ -585,7 +585,7 @@ class ItemParserTest extends TestCase
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(MorphToRelation::class, $item->getRelation('morph'));
         static::assertInstanceOf(Links::class, $item->getRelation('morph')->getLinks());
@@ -603,7 +603,7 @@ class ItemParserTest extends TestCase
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(MorphToManyRelation::class, $item->getRelation('morphmany'));
         static::assertInstanceOf(Links::class, $item->getRelation('morphmany')->getLinks());
@@ -620,7 +620,7 @@ class ItemParserTest extends TestCase
     {
         $parser = $this->getItemParser();
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(MorphToRelation::class, $item->getRelation('nodata'));
         static::assertInstanceOf(Links::class, $item->getRelation('nodata')->getLinks());
@@ -635,11 +635,11 @@ class ItemParserTest extends TestCase
     {
         $parser = $this->getItemParser();
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(Links::class, $item->getLinks());
 
-        static::assertEquals(new Links(['self' => new Link('http://example.com/master/1')]), $item->getLinks());
+        static::assertEquals(new Links(['self' => new Link('http://example.com/parent/1')]), $item->getLinks());
     }
 
     /**
@@ -649,7 +649,7 @@ class ItemParserTest extends TestCase
     {
         $parser = $this->getItemParser();
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         static::assertInstanceOf(Meta::class, $item->getMeta());
 
@@ -663,10 +663,10 @@ class ItemParserTest extends TestCase
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         $meta = $item->getRelation('child')->getMeta();
         static::assertInstanceOf(Meta::class, $meta);
@@ -681,10 +681,10 @@ class ItemParserTest extends TestCase
     {
         $typeMapper = new TypeMapper();
         $typeMapper->setMapping('child', ChildItem::class);
-        $typeMapper->setMapping('master', MasterItem::class);
+        $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
 
-        $item = $parser->parse($this->getJsonApiItemMock('master', '1'));
+        $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
 
         $dataMeta = $item->getRelation('childwithdatameta')->getIncluded()->getMeta();
         static::assertInstanceOf(Meta::class, $dataMeta);
@@ -851,7 +851,7 @@ class ItemParserTest extends TestCase
                 ],
             ],
             'links' => [
-                'self' => 'http://example.com/master/1',
+                'self' => 'http://example.com/'.$type.'/'.$id,
             ],
             'meta' => [
                 'foo' => 'bar',

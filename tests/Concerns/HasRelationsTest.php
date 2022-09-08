@@ -14,7 +14,7 @@ use Swis\JsonApi\Client\Relations\HasManyRelation;
 use Swis\JsonApi\Client\Relations\HasOneRelation;
 use Swis\JsonApi\Client\Relations\MorphToManyRelation;
 use Swis\JsonApi\Client\Relations\MorphToRelation;
-use Swis\JsonApi\Client\Tests\Mocks\Items\MasterItem;
+use Swis\JsonApi\Client\Tests\Mocks\Items\ParentItem;
 use Swis\JsonApi\Client\Util;
 
 class HasRelationsTest extends TestCase
@@ -197,7 +197,7 @@ class HasRelationsTest extends TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
 
-        $relation = $mock->hasOne(MasterItem::class, 'foo-bar');
+        $relation = $mock->hasOne(ParentItem::class, 'foo-bar');
 
         $this->assertInstanceOf(HasOneRelation::class, $relation);
         $this->assertSame($relation, $mock->getRelation('foo-bar'));
@@ -211,7 +211,7 @@ class HasRelationsTest extends TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
 
-        $relation = $mock->hasOne(MasterItem::class);
+        $relation = $mock->hasOne(ParentItem::class);
 
         $this->assertInstanceOf(HasOneRelation::class, $relation);
         $this->assertSame($relation, $mock->getRelation(Util::stringSnake(__FUNCTION__)));
@@ -225,7 +225,7 @@ class HasRelationsTest extends TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
 
-        $relation = $mock->hasMany(MasterItem::class, 'foo-bar');
+        $relation = $mock->hasMany(ParentItem::class, 'foo-bar');
 
         $this->assertInstanceOf(HasManyRelation::class, $relation);
         $this->assertSame($relation, $mock->getRelation('foo-bar'));
@@ -239,7 +239,7 @@ class HasRelationsTest extends TestCase
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasRelations $mock */
         $mock = $this->getMockForTrait(HasRelations::class);
 
-        $relation = $mock->hasMany(MasterItem::class);
+        $relation = $mock->hasMany(ParentItem::class);
 
         $this->assertInstanceOf(HasManyRelation::class, $relation);
         $this->assertSame($relation, $mock->getRelation(Util::stringSnake(__FUNCTION__)));
