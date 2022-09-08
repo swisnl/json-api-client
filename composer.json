@@ -3,7 +3,7 @@
     "type": "library",
     "description": "A PHP package for mapping remote JSON:API resources to Eloquent like models and collections.",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "ext-json": "*",
         "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0",
         "php-http/discovery": "^1.9",
