@@ -15,6 +15,11 @@ abstract class AbstractRelation
     /**
      * @var \Swis\JsonApi\Client\Interfaces\DataInterface|false|null
      */
+    protected $data = false;
+
+    /**
+     * @var \Swis\JsonApi\Client\Interfaces\DataInterface|false|null
+     */
     protected $included = false;
 
     /**
@@ -23,13 +28,11 @@ abstract class AbstractRelation
     protected $omitIncluded = false;
 
     /**
-     * @return $this
+     * @return bool
      */
-    public function dissociate()
+    public function hasData(): bool
     {
-        $this->included = null;
-
-        return $this;
+        return $this->data !== false;
     }
 
     /**
@@ -38,6 +41,25 @@ abstract class AbstractRelation
     public function hasIncluded(): bool
     {
         return $this->included !== false;
+    }
+
+    /**
+     * @return $this
+     */
+    public function dissociate()
+    {
+        $this->data = null;
+        $this->included = null;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAssociated(): bool
+    {
+        return $this->hasData() || $this->hasIncluded();
     }
 
     /**

@@ -11,6 +11,36 @@ use Swis\JsonApi\Client\Meta;
 interface ManyRelationInterface
 {
     /**
+     * @param \Swis\JsonApi\Client\Collection|null $data
+     */
+    public function setData(?Collection $data);
+
+    /**
+     * @return \Swis\JsonApi\Client\Collection|null
+     */
+    public function getData(): ?Collection;
+
+    /**
+     * @return bool
+     */
+    public function hasData(): bool;
+
+    /**
+     * @param \Swis\JsonApi\Client\Collection $included
+     */
+    public function setIncluded(Collection $included);
+
+    /**
+     * @return \Swis\JsonApi\Client\Collection
+     */
+    public function getIncluded(): Collection;
+
+    /**
+     * @return bool
+     */
+    public function hasIncluded(): bool;
+
+    /**
      * @param \Swis\JsonApi\Client\Collection $included
      *
      * @return static
@@ -23,14 +53,14 @@ interface ManyRelationInterface
     public function dissociate();
 
     /**
-     * @return bool
-     */
-    public function hasIncluded(): bool;
-
-    /**
      * @return \Swis\JsonApi\Client\Collection
      */
-    public function getIncluded(): Collection;
+    public function getAssociated(): Collection;
+
+    /**
+     * @return bool
+     */
+    public function hasAssociated(): bool;
 
     /**
      * @param bool $omitIncluded

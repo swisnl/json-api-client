@@ -10,6 +10,36 @@ use Swis\JsonApi\Client\Meta;
 interface OneRelationInterface
 {
     /**
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface|null $data
+     */
+    public function setData(?ItemInterface $data);
+
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
+     */
+    public function getData(): ?ItemInterface;
+
+    /**
+     * @return bool
+     */
+    public function hasData(): bool;
+
+    /**
+     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface|null $included
+     */
+    public function setIncluded(?ItemInterface $included);
+
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
+     */
+    public function getIncluded(): ?ItemInterface;
+
+    /**
+     * @return bool
+     */
+    public function hasIncluded(): bool;
+
+    /**
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $included
      *
      * @return static
@@ -22,14 +52,14 @@ interface OneRelationInterface
     public function dissociate();
 
     /**
-     * @return bool
-     */
-    public function hasIncluded(): bool;
-
-    /**
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
      */
-    public function getIncluded(): ?ItemInterface;
+    public function getAssociated(): ?ItemInterface;
+
+    /**
+     * @return bool
+     */
+    public function hasAssociated(): bool;
 
     /**
      * @param bool $omitIncluded

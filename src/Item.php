@@ -248,26 +248,26 @@ class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemIn
         $relationships = [];
 
         foreach ($this->getRelations() as $name => $relation) {
-            if (!$relation->hasIncluded()) {
+            if (!$relation->hasAssociated()) {
                 continue;
             }
 
             if ($relation instanceof OneRelationInterface) {
                 $relationships[$name]['data'] = null;
 
-                if ($relation->getIncluded() !== null) {
+                if ($relation->getAssociated() !== null) {
                     $relationships[$name]['data'] = [
-                        'type' => $relation->getIncluded()->getType(),
-                        'id' => $relation->getIncluded()->getId(),
+                        'type' => $relation->getAssociated()->getType(),
+                        'id' => $relation->getAssociated()->getId(),
                     ];
-                    if ($relation->getIncluded()->getMeta()) {
-                        $relationships[$name]['data']['meta'] = $relation->getIncluded()->getMeta()->toArray();
+                    if ($relation->getAssociated()->getMeta()) {
+                        $relationships[$name]['data']['meta'] = $relation->getAssociated()->getMeta()->toArray();
                     }
                 }
             } elseif ($relation instanceof ManyRelationInterface) {
                 $relationships[$name]['data'] = [];
 
-                foreach ($relation->getIncluded() as $item) {
+                foreach ($relation->getAssociated() as $item) {
                     $data = [
                         'type' => $item->getType(),
                         'id' => $item->getId(),
