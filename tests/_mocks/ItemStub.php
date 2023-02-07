@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Mocks;
 
-use DateTime;
 use Swis\JsonApi\Client\Item;
 
 class ItemStub extends Item
@@ -65,9 +64,9 @@ class ItemStub extends Item
 
     public function getAgeAttribute($value)
     {
-        $date = DateTime::createFromFormat('U', (string) $this->attributes['birthday']);
+        $date = \DateTime::createFromFormat('U', (string) $this->attributes['birthday']);
 
-        return $date->diff(new DateTime('now'))->y;
+        return $date->diff(new \DateTime('now'))->y;
     }
 
     public function getTestAttribute($value)

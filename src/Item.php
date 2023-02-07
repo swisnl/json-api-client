@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client;
 
-use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use JsonSerializable;
 use Swis\JsonApi\Client\Exceptions\MassAssignmentException;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
@@ -16,7 +14,7 @@ use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 /**
  * @property string|null id
  */
-class Item implements ArrayAccess, Arrayable, Jsonable, JsonSerializable, ItemInterface
+class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, ItemInterface
 {
     use Concerns\GuardsAttributes;
     use Concerns\HasAttributes;

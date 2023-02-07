@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Swis\JsonApi\Client\Tests;
 
 use PHPUnit\Framework\TestCase;
-use stdClass;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Exceptions\MassAssignmentException;
 use Swis\JsonApi\Client\Item;
@@ -799,7 +798,7 @@ class ItemTest extends TestCase
         $item->name = 'john';
         $item->foo = 10;
 
-        $object = new stdClass();
+        $object = new \stdClass();
         $object->name = 'john';
         $object->foo = 10;
 
@@ -933,7 +932,7 @@ class ItemTest extends TestCase
         $this->assertIsBool($item->active);
         $this->assertIsInt($item->count);
         $this->assertEquals('bar', $item->default);
-        $this->assertInstanceOf(stdClass::class, $item->object_data);
+        $this->assertInstanceOf(\stdClass::class, $item->object_data);
         $this->assertInstanceOf(Collection::class, $item->collection_data);
 
         $attributes = $item->getAttributes();
@@ -957,7 +956,7 @@ class ItemTest extends TestCase
         $this->assertIsBool($array['active']);
         $this->assertIsInt($array['count']);
         $this->assertEquals('bar', $array['default']);
-        $this->assertInstanceOf(stdClass::class, $array['object_data']);
+        $this->assertInstanceOf(\stdClass::class, $array['object_data']);
         $this->assertIsArray($array['collection_data']);
     }
 
@@ -1015,7 +1014,7 @@ class ItemTest extends TestCase
      */
     public function itCanUseTheGuardedCallback()
     {
-        $mock = $this->getMockBuilder(stdClass::class)
+        $mock = $this->getMockBuilder(\stdClass::class)
             ->addMethods(['callback'])
             ->getMock();
 

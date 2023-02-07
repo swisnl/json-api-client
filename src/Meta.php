@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client;
 
-use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use JsonSerializable;
 
-class Meta implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
+class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
 {
     /**
      * @var array

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Parsers;
 
-use JsonException;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
@@ -129,7 +128,7 @@ class DocumentParser implements DocumentParserInterface
     {
         try {
             return json_decode($json, false, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $exception) {
+        } catch (\JsonException $exception) {
             throw new ValidationException(sprintf('Unable to parse JSON data: %s', $exception->getMessage()), 0, $exception);
         }
     }

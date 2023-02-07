@@ -6,10 +6,9 @@ namespace Swis\JsonApi\Client;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use JsonSerializable;
 use Swis\JsonApi\Client\Concerns\HasMeta;
 
-class Jsonapi implements Arrayable, Jsonable, JsonSerializable
+class Jsonapi implements Arrayable, Jsonable, \JsonSerializable
 {
     use HasMeta;
 
