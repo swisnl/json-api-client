@@ -10,15 +10,15 @@ jobs:
       fail-fast: false
       matrix:
         php: [ '7.4', '8.0', '8.1' ]
-        laravel: [ '6.*', '7.*', '8.*', '9.*' ]
+        laravel: [ '8.*', '9.*', '10.*' ]
         stability: [ prefer-lowest, prefer-stable ]
         exclude:
-          - laravel: '6.*'
-            php: '8.1'
-          - laravel: '7.*'
-            php: '8.1'
           - laravel: '9.*'
             php: '7.4'
+          - laravel: '10.*'
+            php: '7.4'
+          - laravel: '10.*'
+            php: '8.0'
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
 
@@ -49,7 +49,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "illuminate/contracts:${{ matrix.laravel }}" "swisnl/illuminate-collections:${{ matrix.laravel }}" --no-interaction --no-update
+          composer require "illuminate/collections:${{ matrix.laravel }}" "illuminate/contracts:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
