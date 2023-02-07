@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+* Added support for Laravel 10.
+
 ### Removed
 
 * Dropped PHP <7.4 support.
+* Dropped Laravel <8 support.
 
 ## [2.2.0] - 2022-09-08
 
