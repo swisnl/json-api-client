@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing
+
+## [2.3.1] - 2023-09-04
+
 ### Added
 
 * Added support for `psr/http-message` v2 [#100](https://github.com/swisnl/json-api-client/issues/100).
