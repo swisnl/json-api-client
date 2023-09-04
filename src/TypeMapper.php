@@ -55,7 +55,7 @@ class TypeMapper implements TypeMapperInterface
     /**
      * @param string $type
      *
-     *@throws \Swis\JsonApi\Client\Exceptions\TypeMappingException
+     * @throws \Swis\JsonApi\Client\Exceptions\TypeMappingException
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */

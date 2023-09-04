@@ -80,8 +80,8 @@ class ItemHydrator
 
             // The relation should be unset
             if (
-                ($relation instanceof OneRelationInterface && $attributes[$availableRelation] === null) ||
-                ($relation instanceof ManyRelationInterface && $attributes[$availableRelation] === [])
+                ($relation instanceof OneRelationInterface && $attributes[$availableRelation] === null)
+                || ($relation instanceof ManyRelationInterface && $attributes[$availableRelation] === [])
             ) {
                 $relation->dissociate();
 

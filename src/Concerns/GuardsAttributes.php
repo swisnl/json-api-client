@@ -200,8 +200,8 @@ trait GuardsAttributes
             return false;
         }
 
-        return $this->getGuarded() == ['*'] ||
-            !empty(preg_grep('/^'.preg_quote($key, '/').'$/i', $this->getGuarded()));
+        return $this->getGuarded() == ['*']
+            || !empty(preg_grep('/^'.preg_quote($key, '/').'$/i', $this->getGuarded()));
     }
 
     /**
