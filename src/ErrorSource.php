@@ -20,7 +20,7 @@ class ErrorSource
      * @param string|null $pointer
      * @param string|null $parameter
      */
-    public function __construct(string $pointer = null, string $parameter = null)
+    public function __construct(?string $pointer = null, ?string $parameter = null)
     {
         $this->pointer = $pointer;
         $this->parameter = $parameter;

@@ -38,7 +38,7 @@ class ItemHydrator
      *
      * @return \Swis\JsonApi\Client\Interfaces\ItemInterface
      */
-    public function hydrate(ItemInterface $item, array $attributes, string $id = null): ItemInterface
+    public function hydrate(ItemInterface $item, array $attributes, ?string $id = null): ItemInterface
     {
         $this->fill($item, $attributes);
         $this->fillRelations($item, $attributes);

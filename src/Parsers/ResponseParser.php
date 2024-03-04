@@ -26,7 +26,7 @@ class ResponseParser implements ResponseParserInterface
      *
      * @return static
      */
-    public static function create(TypeMapperInterface $typeMapper = null): self
+    public static function create(?TypeMapperInterface $typeMapper = null): self
     {
         return new static(DocumentParser::create($typeMapper));
     }

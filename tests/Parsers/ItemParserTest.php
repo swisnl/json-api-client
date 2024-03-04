@@ -698,7 +698,7 @@ class ItemParserTest extends TestCase
      *
      * @return \Swis\JsonApi\Client\Parsers\ItemParser
      */
-    private function getItemParser(TypeMapperInterface $typeMapper = null): ItemParser
+    private function getItemParser(?TypeMapperInterface $typeMapper = null): ItemParser
     {
         return new ItemParser(
             $typeMapper ?? $this->getTypeMapperMock(),

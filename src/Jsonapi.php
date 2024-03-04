@@ -21,7 +21,7 @@ class Jsonapi implements Arrayable, Jsonable, \JsonSerializable
      * @param string|null                    $version
      * @param \Swis\JsonApi\Client\Meta|null $meta
      */
-    public function __construct(string $version = null, Meta $meta = null)
+    public function __construct(?string $version = null, ?Meta $meta = null)
     {
         $this->version = $version;
         $this->meta = $meta;

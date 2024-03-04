@@ -53,14 +53,14 @@ class Error
      * @param \Swis\JsonApi\Client\Meta|null        $meta
      */
     public function __construct(
-        string $id = null,
-        Links $links = null,
-        string $status = null,
-        string $code = null,
-        string $title = null,
-        string $detail = null,
-        ErrorSource $source = null,
-        Meta $meta = null
+        ?string $id = null,
+        ?Links $links = null,
+        ?string $status = null,
+        ?string $code = null,
+        ?string $title = null,
+        ?string $detail = null,
+        ?ErrorSource $source = null,
+        ?Meta $meta = null
     ) {
         $this->id = $id;
         $this->links = $links;

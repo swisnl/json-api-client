@@ -52,7 +52,7 @@ class DocumentParser implements DocumentParserInterface
      *
      * @return static
      */
-    public static function create(TypeMapperInterface $typeMapper = null): self
+    public static function create(?TypeMapperInterface $typeMapper = null): self
     {
         $metaParser = new MetaParser();
         $linksParser = new LinksParser($metaParser);

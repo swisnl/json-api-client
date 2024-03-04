@@ -196,7 +196,7 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
      *
      * @return static
      */
-    public function replicate(array $except = null)
+    public function replicate(?array $except = null)
     {
         $attributes = Util::arrayExcept($this->getAttributes(), $except ?? []);
 

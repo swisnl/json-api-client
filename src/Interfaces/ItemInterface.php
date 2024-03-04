@@ -136,7 +136,7 @@ interface ItemInterface extends DataInterface
      *
      * @return static
      */
-    public function setRelation(string $relation, $value = false, Links $links = null, Meta $meta = null);
+    public function setRelation(string $relation, $value = false, ?Links $links = null, ?Meta $meta = null);
 
     /**
      * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]

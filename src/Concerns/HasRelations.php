@@ -31,7 +31,7 @@ trait HasRelations
      *
      * @return \Swis\JsonApi\Client\Relations\HasOneRelation
      */
-    public function hasOne(string $itemClass, string $name = null): OneRelationInterface
+    public function hasOne(string $itemClass, ?string $name = null): OneRelationInterface
     {
         $name = $name ?: $this->guessRelationName();
 
@@ -55,7 +55,7 @@ trait HasRelations
      *
      * @return \Swis\JsonApi\Client\Relations\HasManyRelation
      */
-    public function hasMany(string $itemClass, string $name = null): ManyRelationInterface
+    public function hasMany(string $itemClass, ?string $name = null): ManyRelationInterface
     {
         $name = $name ?: $this->guessRelationName();
 
@@ -78,7 +78,7 @@ trait HasRelations
      *
      * @return \Swis\JsonApi\Client\Relations\MorphToRelation
      */
-    public function morphTo(string $name = null): OneRelationInterface
+    public function morphTo(?string $name = null): OneRelationInterface
     {
         $name = $name ?: $this->guessRelationName();
 
@@ -101,7 +101,7 @@ trait HasRelations
      *
      * @return \Swis\JsonApi\Client\Relations\MorphToManyRelation
      */
-    public function morphToMany(string $name = null): ManyRelationInterface
+    public function morphToMany(?string $name = null): ManyRelationInterface
     {
         $name = $name ?: $this->guessRelationName();
 
@@ -182,7 +182,7 @@ trait HasRelations
      *
      * @return static
      */
-    public function setRelation(string $relation, $value = false, Links $links = null, Meta $meta = null)
+    public function setRelation(string $relation, $value = false, ?Links $links = null, ?Meta $meta = null)
     {
         $method = Util::stringCamel($relation);
         if (method_exists($this, $method)) {

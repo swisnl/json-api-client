@@ -32,7 +32,7 @@ class DocumentClient implements DocumentClientInterface
      *
      * @return static
      */
-    public static function create(TypeMapperInterface $typeMapper = null, HttpClientInterface $client = null): self
+    public static function create(?TypeMapperInterface $typeMapper = null, ?HttpClientInterface $client = null): self
     {
         return new static(new Client($client), ResponseParser::create($typeMapper));
     }
