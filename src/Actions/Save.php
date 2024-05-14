@@ -14,15 +14,16 @@ trait Save
     /**
      * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
      * @param array                                         $parameters
+     * @param array                                         $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function save(ItemInterface $item, array $parameters = [])
+    public function save(ItemInterface $item, array $parameters = [], array $headers = [])
     {
         if ($item->isNew()) {
-            return $this->saveNew($item, $parameters);
+            return $this->saveNew($item, $parameters, $headers);
         }
 
-        return $this->saveExisting($item, $parameters);
+        return $this->saveExisting($item, $parameters, $headers);
     }
 }

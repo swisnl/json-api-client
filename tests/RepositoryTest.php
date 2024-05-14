@@ -50,12 +50,12 @@ class RepositoryTest extends TestCase
 
         $client->expects($this->once())
             ->method('get')
-            ->with('mocks?foo=bar')
+            ->with('mocks?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->all(['foo' => 'bar']));
+        $this->assertSame($document, $repository->all(['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 
     /**
@@ -70,12 +70,12 @@ class RepositoryTest extends TestCase
 
         $client->expects($this->once())
             ->method('get')
-            ->with('mocks?foo=bar')
+            ->with('mocks?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->take(['foo' => 'bar']));
+        $this->assertSame($document, $repository->take(['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 
     /**
@@ -90,12 +90,12 @@ class RepositoryTest extends TestCase
 
         $client->expects($this->once())
             ->method('get')
-            ->with('mocks/1?foo=bar')
+            ->with('mocks/1?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->find('1', ['foo' => 'bar']));
+        $this->assertSame($document, $repository->find('1', ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 
     /**
@@ -111,12 +111,12 @@ class RepositoryTest extends TestCase
 
         $client->expects($this->once())
             ->method('post')
-            ->with('mocks?foo=bar')
+            ->with('mocks?foo=bar', $document, ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->save(new Item(), ['foo' => 'bar']));
+        $this->assertSame($document, $repository->save(new Item(), ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 
     /**
@@ -132,12 +132,12 @@ class RepositoryTest extends TestCase
 
         $client->expects($this->once())
             ->method('patch')
-            ->with('mocks/1?foo=bar')
+            ->with('mocks/1?foo=bar', $document, ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->save((new Item())->setId('1'), ['foo' => 'bar']));
+        $this->assertSame($document, $repository->save((new Item())->setId('1'), ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 
     /**
@@ -152,11 +152,11 @@ class RepositoryTest extends TestCase
 
         $client->expects($this->once())
             ->method('delete')
-            ->with('mocks/1?foo=bar')
+            ->with('mocks/1?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
         $repository = new MockRepository($client, new DocumentFactory());
 
-        $this->assertSame($document, $repository->delete('1', ['foo' => 'bar']));
+        $this->assertSame($document, $repository->delete('1', ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 }
