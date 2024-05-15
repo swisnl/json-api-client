@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing
 
+## [2.4.0] - 2024-05-15
+
+### Added
+
+* Added the ability to send headers through repositories [#103](https://github.com/swisnl/json-api-client/issues/103).
+
 ## [2.3.2] - 2024-03-05
 
 ### Added
