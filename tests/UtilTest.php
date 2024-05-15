@@ -49,11 +49,11 @@ class UtilTest extends TestCase
     public function testArrayExcept()
     {
         $testArray = [
-        'first' => 'First',
-        'second' => 'second',
-        'third' => 'third',
-        'fourth' => 'fourth',
-      ];
+            'first' => 'First',
+            'second' => 'second',
+            'third' => 'third',
+            'fourth' => 'fourth',
+        ];
         $this->assertArrayHasKey('first', $testArray);
         $this->assertArrayNotHasKey('first', Util::arrayExcept($testArray, ['first']));
         $this->assertArrayNotHasKey('third', Util::arrayExcept($testArray, ['third']));
