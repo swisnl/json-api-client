@@ -8,11 +8,12 @@ trait TakeOne
 {
     /**
      * @param array $parameters
+     * @param array $headers
      *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
-    public function take(array $parameters = [])
+    public function take(array $parameters = [], array $headers = [])
     {
-        return $this->getClient()->get($this->getEndpoint().'?'.http_build_query($parameters));
+        return $this->getClient()->get($this->getEndpoint().'?'.http_build_query($parameters), $headers);
     }
 }
