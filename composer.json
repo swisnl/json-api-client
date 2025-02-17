@@ -6,7 +6,7 @@
         "php": "^7.4|^8.0",
         "ext-json": "*",
         "illuminate/collections": "^8.0|^9.0|^10.0|^11.0",
-        "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
+        "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0",
         "php-http/discovery": "^1.9",
         "psr/http-client": "^1.0",
         "psr/http-client-implementation": "^1.0",
@@ -29,9 +29,9 @@
         }
     },
     "autoload-dev": {
-        "psr-4" : {
-            "Swis\\JsonApi\\Client\\Tests\\" : "tests/",
-            "Swis\\JsonApi\\Client\\Tests\\Mocks\\" : "tests/_mocks/"
+        "psr-4": {
+            "Swis\\JsonApi\\Client\\Tests\\": "tests/",
+            "Swis\\JsonApi\\Client\\Tests\\Mocks\\": "tests/_mocks/"
         }
     },
     "license": "MIT",
