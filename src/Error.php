@@ -60,7 +60,7 @@ class Error
         ?string $title = null,
         ?string $detail = null,
         ?ErrorSource $source = null,
-        ?Meta $meta = null
+        ?Meta $meta = null,
     ) {
         $this->id = $id;
         $this->links = $links;

@@ -37,7 +37,7 @@ class DocumentParser implements DocumentParserInterface
         ErrorCollectionParser $errorCollectionParser,
         LinksParser $linksParser,
         JsonapiParser $jsonapiParser,
-        MetaParser $metaParser
+        MetaParser $metaParser,
     ) {
         $this->itemParser = $itemParser;
         $this->collectionParser = $collectionParser;
