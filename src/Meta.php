@@ -7,24 +7,19 @@ namespace Swis\JsonApi\Client;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
-class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
+class Meta implements \ArrayAccess, \JsonSerializable, Arrayable, Jsonable
 {
     /**
      * @var array
      */
     protected $data = [];
 
-    /**
-     * @param array $data
-     */
     public function __construct(array $data)
     {
         $this->data = $data;
     }
 
     /**
-     * @param $key
-     *
      * @return bool
      */
     public function __isset($key)
@@ -33,8 +28,6 @@ class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     }
 
     /**
-     * @param $key
-     *
      * @return mixed
      */
     public function __get($key)
@@ -42,18 +35,11 @@ class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
         return $this->offsetGet($key);
     }
 
-    /**
-     * @param $key
-     */
     public function __unset($key)
     {
         $this->offsetUnset($key);
     }
 
-    /**
-     * @param $key
-     * @param $value
-     */
     public function __set($key, $value)
     {
         $this->offsetSet($key, $value);
@@ -62,8 +48,7 @@ class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return bool
      */
     #[\ReturnTypeWillChange]
@@ -75,8 +60,7 @@ class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return mixed
      */
     #[\ReturnTypeWillChange]
@@ -88,8 +72,8 @@ class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param  mixed  $offset
+     * @param  mixed  $value
      */
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
@@ -100,7 +84,7 @@ class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
+     * @param  mixed  $offset
      */
     #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
@@ -121,8 +105,7 @@ class Meta implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param int $options
-     *
+     * @param  int  $options
      * @return false|string
      */
     public function toJson($options = 0)

@@ -11,9 +11,6 @@ class HasOneRelation extends AbstractOneRelation implements TypedRelationInterfa
 {
     use HasType;
 
-    /**
-     * @param string $type
-     */
     public function __construct(string $type)
     {
         $this->setType($type);

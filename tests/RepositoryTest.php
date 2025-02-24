@@ -17,11 +17,11 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetTheClient()
+    public function it_can_get_the_client()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
         $this->assertSame($client, $repository->getClient());
     }
@@ -29,11 +29,11 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetTheEndpoint()
+    public function it_can_get_the_endpoint()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
         $this->assertSame('mocks', $repository->getEndpoint());
     }
@@ -41,9 +41,9 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAll()
+    public function it_can_get_all()
     {
-        $document = new Document();
+        $document = new Document;
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -53,7 +53,7 @@ class RepositoryTest extends TestCase
             ->with('mocks?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->all(['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
@@ -61,9 +61,9 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function itCanTakeOne()
+    public function it_can_take_one()
     {
-        $document = new Document();
+        $document = new Document;
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -73,7 +73,7 @@ class RepositoryTest extends TestCase
             ->with('mocks?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->take(['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
@@ -81,9 +81,9 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function itCanFindOne()
+    public function it_can_find_one()
     {
-        $document = new Document();
+        $document = new Document;
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -93,7 +93,7 @@ class RepositoryTest extends TestCase
             ->with('mocks/1?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->find('1', ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
@@ -101,10 +101,10 @@ class RepositoryTest extends TestCase
     /**
      * @test
      */
-    public function itCanSaveNew()
+    public function it_can_save_new()
     {
-        $document = new ItemDocument();
-        $document->setData(new Item());
+        $document = new ItemDocument;
+        $document->setData(new Item);
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -114,18 +114,18 @@ class RepositoryTest extends TestCase
             ->with('mocks?foo=bar', $document, ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
-        $this->assertSame($document, $repository->save(new Item(), ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
+        $this->assertSame($document, $repository->save(new Item, ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 
     /**
      * @test
      */
-    public function itCanSaveExisting()
+    public function it_can_save_existing()
     {
-        $document = new ItemDocument();
-        $document->setData((new Item())->setId('1'));
+        $document = new ItemDocument;
+        $document->setData((new Item)->setId('1'));
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -135,17 +135,17 @@ class RepositoryTest extends TestCase
             ->with('mocks/1?foo=bar', $document, ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
-        $this->assertSame($document, $repository->save((new Item())->setId('1'), ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
+        $this->assertSame($document, $repository->save((new Item)->setId('1'), ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }
 
     /**
      * @test
      */
-    public function itCanDelete()
+    public function it_can_delete()
     {
-        $document = new Document();
+        $document = new Document;
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
@@ -155,7 +155,7 @@ class RepositoryTest extends TestCase
             ->with('mocks/1?foo=bar', ['Test-Header' => 'Foo-Bar'])
             ->willReturn($document);
 
-        $repository = new MockRepository($client, new DocumentFactory());
+        $repository = new MockRepository($client, new DocumentFactory);
 
         $this->assertSame($document, $repository->delete('1', ['foo' => 'bar'], ['Test-Header' => 'Foo-Bar']));
     }

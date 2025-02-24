@@ -14,7 +14,7 @@ use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 /**
  * @property string|null id
  */
-class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, ItemInterface
+class Item implements \ArrayAccess, \JsonSerializable, Arrayable, ItemInterface, Jsonable
 {
     use Concerns\GuardsAttributes;
     use Concerns\HasAttributes;
@@ -36,7 +36,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Create a new Item instance.
      *
-     * @param array $attributes
      *
      * @return void
      */
@@ -48,11 +47,10 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Fill the model with an array of attributes.
      *
-     * @param array $attributes
-     *
-     * @throws \Swis\JsonApi\Client\Exceptions\MassAssignmentException
      *
      * @return $this
+     *
+     * @throws \Swis\JsonApi\Client\Exceptions\MassAssignmentException
      */
     public function fill(array $attributes)
     {
@@ -75,7 +73,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Fill the model with an array of attributes. Force mass assignment.
      *
-     * @param array $attributes
      *
      * @return $this
      */
@@ -87,7 +84,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Create a new instance of the given model.
      *
-     * @param array $attributes
      *
      * @return static
      */
@@ -105,14 +101,10 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
 
     /**
      * Create a list of models from plain arrays.
-     *
-     * @param array $items
-     *
-     * @return array
      */
     public static function hydrate(array $items): array
     {
-        $instance = new static();
+        $instance = new static;
 
         return array_map(
             static fn ($item) => $instance->newInstance($item),
@@ -120,9 +112,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
         );
     }
 
-    /**
-     * @return array
-     */
     public function toJsonApiArray(): array
     {
         $data = [
@@ -134,12 +123,12 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
         }
 
         $attributes = $this->toArray();
-        if (!empty($attributes)) {
+        if (! empty($attributes)) {
             $data['attributes'] = $attributes;
         }
 
         $relationships = $this->getRelationships();
-        if (!empty($relationships)) {
+        if (! empty($relationships)) {
             $data['relationships'] = $relationships;
         }
 
@@ -159,8 +148,7 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Convert the model instance to JSON.
      *
-     * @param int $options
-     *
+     * @param  int  $options
      * @return string
      */
     public function toJson($options = 0)
@@ -192,7 +180,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Clone the model into a new, non-existing instance.
      *
-     * @param array|null $except
      *
      * @return static
      */
@@ -203,49 +190,35 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
         return new static($attributes);
     }
 
-    /**
-     * @return bool
-     */
     public function isNew(): bool
     {
-        return !$this->hasId();
+        return ! $this->hasId();
     }
 
-    /**
-     * @return bool
-     */
     public function hasAttributes(): bool
     {
-        return !empty($this->toArray());
+        return ! empty($this->toArray());
     }
 
     /**
-     * @param string $key
-     *
-     * @return bool
+     * @param  string  $key
      */
     public function hasAttribute($key): bool
     {
         return array_key_exists($key, $this->attributes);
     }
 
-    /**
-     * @return array
-     */
     public function getAvailableRelations(): array
     {
         return $this->availableRelations;
     }
 
-    /**
-     * @return array
-     */
     public function getRelationships(): array
     {
         $relationships = [];
 
         foreach ($this->getRelations() as $name => $relation) {
-            if (!$relation->hasAssociated()) {
+            if (! $relation->hasAssociated()) {
                 continue;
             }
 
@@ -290,12 +263,9 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
         return $relationships;
     }
 
-    /**
-     * @return bool
-     */
     public function hasRelationships(): bool
     {
-        return !empty($this->getRelationships());
+        return ! empty($this->getRelationships());
     }
 
     /**
@@ -313,7 +283,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Dynamically retrieve attributes on the model.
      *
-     * @param string $key
      *
      * @return mixed
      */
@@ -325,9 +294,7 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Dynamically set attributes on the model.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function __set(string $key, $value)
@@ -338,8 +305,7 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Determine if the given attribute exists.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return bool
      */
     #[\ReturnTypeWillChange]
@@ -349,14 +315,13 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
             return $this->hasId();
         }
 
-        return !is_null($this->getAttribute($offset));
+        return ! is_null($this->getAttribute($offset));
     }
 
     /**
      * Get the value for a given offset.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return mixed
      */
     #[\ReturnTypeWillChange]
@@ -372,9 +337,8 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Set the value for a given offset.
      *
-     * @param mixed $offset
-     * @param mixed $value
-     *
+     * @param  mixed  $offset
+     * @param  mixed  $value
      * @return void
      */
     #[\ReturnTypeWillChange]
@@ -392,8 +356,7 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Unset the value for a given offset.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return void
      */
     #[\ReturnTypeWillChange]
@@ -409,7 +372,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Determine if an attribute or relation exists on the model.
      *
-     * @param string $key
      *
      * @return bool
      */
@@ -421,7 +383,6 @@ class Item implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable, Item
     /**
      * Unset an attribute on the model.
      *
-     * @param string $key
      *
      * @return void
      */

@@ -13,11 +13,11 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function itCanAssociateAnItemAndGetTheIncluded()
+    public function it_can_associate_an_item_and_get_the_included()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);
-        $item = new Item();
+        $item = new Item;
 
         $mock->associate($item);
 
@@ -27,11 +27,11 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function itCanDissociateAnItem()
+    public function it_can_dissociate_an_item()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);
-        $item = new Item();
+        $item = new Item;
 
         $mock->associate($item);
         $this->assertNotNull($mock->getIncluded());
@@ -44,11 +44,11 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsABooleanIndicatingIfItHasIncluded()
+    public function it_returns_a_boolean_indicating_if_it_has_included()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);
-        $item = new Item();
+        $item = new Item;
 
         $this->assertFalse($mock->hasIncluded());
         $mock->associate($item);
@@ -59,7 +59,7 @@ class AbstractOneRelationTest extends TestCase
     /**
      * @test
      */
-    public function itCanSetAndGetOmitIncluded()
+    public function it_can_set_and_get_omit_included()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractOneRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractOneRelation::class);

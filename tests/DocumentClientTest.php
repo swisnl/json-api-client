@@ -18,7 +18,7 @@ class DocumentClientTest extends TestCase
     /**
      * @test
      */
-    public function itCanCreateAnInstanceUsingAFactoryMethod()
+    public function it_can_create_an_instance_using_a_factory_method()
     {
         $this->assertInstanceOf(DocumentClient::class, DocumentClient::create());
     }
@@ -26,7 +26,7 @@ class DocumentClientTest extends TestCase
     /**
      * @test
      */
-    public function theBaseUrlCanBeChangedAfterInstantiation()
+    public function the_base_url_can_be_changed_after_instantiation()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
@@ -51,10 +51,10 @@ class DocumentClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsAGetRequest()
+    public function it_builds_a_get_request()
     {
         $response = $this->createMock(ResponseInterface::class);
-        $document = new Document();
+        $document = new Document;
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
@@ -82,10 +82,10 @@ class DocumentClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsADeleteRequest()
+    public function it_builds_a_delete_request()
     {
         $response = $this->createMock(ResponseInterface::class);
-        $document = new Document();
+        $document = new Document;
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
@@ -113,12 +113,12 @@ class DocumentClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsAPatchRequest()
+    public function it_builds_a_patch_request()
     {
         $response = $this->createMock(ResponseInterface::class);
-        $document = new Document();
-        $itemDocument = new ItemDocument();
-        $itemDocument->setData((new Item())->setType('test')->setId('1'));
+        $document = new Document;
+        $itemDocument = new ItemDocument;
+        $itemDocument->setData((new Item)->setType('test')->setId('1'));
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
@@ -146,12 +146,12 @@ class DocumentClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsAPostRequest()
+    public function it_builds_a_post_request()
     {
         $response = $this->createMock(ResponseInterface::class);
-        $document = new Document();
-        $itemDocument = new ItemDocument();
-        $itemDocument->setData((new Item())->setType('test'));
+        $document = new Document;
+        $itemDocument = new ItemDocument;
+        $itemDocument->setData((new Item)->setType('test'));
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);

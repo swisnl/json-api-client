@@ -24,28 +24,26 @@ class ErrorParser
     }
 
     /**
-     * @param mixed $data
-     *
-     * @return \Swis\JsonApi\Client\Error
+     * @param  mixed  $data
      */
     public function parse($data): Error
     {
-        if (!is_object($data)) {
+        if (! is_object($data)) {
             throw new ValidationException(sprintf('Error MUST be an object, "%s" given.', gettype($data)));
         }
-        if (property_exists($data, 'id') && !is_string($data->id)) {
+        if (property_exists($data, 'id') && ! is_string($data->id)) {
             throw new ValidationException(sprintf('Error property "id" MUST be a string, "%s" given.', gettype($data->id)));
         }
-        if (property_exists($data, 'status') && !is_string($data->status)) {
+        if (property_exists($data, 'status') && ! is_string($data->status)) {
             throw new ValidationException(sprintf('Error property "status" MUST be a string, "%s" given.', gettype($data->status)));
         }
-        if (property_exists($data, 'code') && !is_string($data->code)) {
+        if (property_exists($data, 'code') && ! is_string($data->code)) {
             throw new ValidationException(sprintf('Error property "code" MUST be a string, "%s" given.', gettype($data->code)));
         }
-        if (property_exists($data, 'title') && !is_string($data->title)) {
+        if (property_exists($data, 'title') && ! is_string($data->title)) {
             throw new ValidationException(sprintf('Error property "title" MUST be a string, "%s" given.', gettype($data->title)));
         }
-        if (property_exists($data, 'detail') && !is_string($data->detail)) {
+        if (property_exists($data, 'detail') && ! is_string($data->detail)) {
             throw new ValidationException(sprintf('Error property "detail" MUST be a string, "%s" given.', gettype($data->detail)));
         }
 
@@ -62,19 +60,17 @@ class ErrorParser
     }
 
     /**
-     * @param mixed $data
-     *
-     * @return \Swis\JsonApi\Client\ErrorSource
+     * @param  mixed  $data
      */
     private function buildErrorSource($data): ErrorSource
     {
-        if (!is_object($data)) {
+        if (! is_object($data)) {
             throw new ValidationException(sprintf('ErrorSource MUST be an object, "%s" given.', gettype($data)));
         }
-        if (property_exists($data, 'pointer') && !is_string($data->pointer)) {
+        if (property_exists($data, 'pointer') && ! is_string($data->pointer)) {
             throw new ValidationException(sprintf('ErrorSource property "pointer" MUST be a string, "%s" given.', gettype($data->pointer)));
         }
-        if (property_exists($data, 'parameter') && !is_string($data->parameter)) {
+        if (property_exists($data, 'parameter') && ! is_string($data->parameter)) {
             throw new ValidationException(sprintf('ErrorSource property "parameter" MUST be a string, "%s" given.', gettype($data->parameter)));
         }
 

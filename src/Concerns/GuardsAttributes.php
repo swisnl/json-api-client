@@ -40,7 +40,6 @@ trait GuardsAttributes
     /**
      * Set the fillable attributes for the model.
      *
-     * @param array $fillable
      *
      * @return $this
      */
@@ -54,7 +53,6 @@ trait GuardsAttributes
     /**
      * Merge new fillable attributes with existing fillable attributes on the model.
      *
-     * @param array $fillable
      *
      * @return $this
      */
@@ -78,8 +76,7 @@ trait GuardsAttributes
     /**
      * Set the guarded attributes for the model.
      *
-     * @param string[] $guarded
-     *
+     * @param  string[]  $guarded
      * @return $this
      */
     public function guard(array $guarded)
@@ -92,7 +89,6 @@ trait GuardsAttributes
     /**
      * Merge new guarded attributes with existing guarded attributes on the model.
      *
-     * @param array $guarded
      *
      * @return $this
      */
@@ -106,8 +102,7 @@ trait GuardsAttributes
     /**
      * Disable all mass assignable restrictions.
      *
-     * @param bool $state
-     *
+     * @param  bool  $state
      * @return void
      */
     public static function unguard($state = true)
@@ -138,7 +133,6 @@ trait GuardsAttributes
     /**
      * Run the given callable while being unguarded.
      *
-     * @param callable $callback
      *
      * @return mixed
      */
@@ -160,8 +154,7 @@ trait GuardsAttributes
     /**
      * Determine if the given attribute may be mass assigned.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function isFillable($key)
@@ -190,8 +183,7 @@ trait GuardsAttributes
     /**
      * Determine if the given key is guarded.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function isGuarded($key)
@@ -201,7 +193,7 @@ trait GuardsAttributes
         }
 
         return $this->getGuarded() == ['*']
-            || !empty(preg_grep('/^'.preg_quote($key, '/').'$/i', $this->getGuarded()));
+            || ! empty(preg_grep('/^'.preg_quote($key, '/').'$/i', $this->getGuarded()));
     }
 
     /**
@@ -217,13 +209,12 @@ trait GuardsAttributes
     /**
      * Get the fillable attributes of a given array.
      *
-     * @param array $attributes
      *
      * @return array
      */
     protected function fillableFromArray(array $attributes)
     {
-        if (count($this->getFillable()) > 0 && !static::$unguarded) {
+        if (count($this->getFillable()) > 0 && ! static::$unguarded) {
             return array_intersect_key($attributes, array_flip($this->getFillable()));
         }
 

@@ -15,19 +15,12 @@ class Link
      */
     protected $href;
 
-    /**
-     * @param string                         $href
-     * @param \Swis\JsonApi\Client\Meta|null $meta
-     */
     public function __construct(string $href, ?Meta $meta = null)
     {
         $this->href = $href;
         $this->meta = $meta;
     }
 
-    /**
-     * @return string
-     */
     public function getHref(): string
     {
         return $this->href;

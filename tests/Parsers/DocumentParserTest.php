@@ -27,7 +27,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itCanCreateAnInstanceUsingAFactoryMethod()
+    public function it_can_create_an_instance_using_a_factory_method()
     {
         $this->assertInstanceOf(DocumentParser::class, DocumentParser::create());
     }
@@ -35,7 +35,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsJsondocumentToDocument()
+    public function it_converts_jsondocument_to_document()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -52,7 +52,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenJsonIsNotValid()
+    public function it_throws_when_json_is_not_valid()
     {
         $parser = DocumentParser::create();
 
@@ -66,10 +66,8 @@ class DocumentParserTest extends TestCase
      * @test
      *
      * @dataProvider provideInvalidJson
-     *
-     * @param string $invalidJson
      */
-    public function itThrowsWhenJsonIsNotAJsonapiDocument(string $invalidJson)
+    public function it_throws_when_json_is_not_a_jsonapi_document(string $invalidJson)
     {
         $parser = DocumentParser::create();
 
@@ -94,20 +92,20 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenDataErrorsAndMetaAreMissing()
+    public function it_throws_when_data_errors_and_meta_are_missing()
     {
         $parser = DocumentParser::create();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Document MUST contain at least one of the following properties: `data`, `errors`, `meta`.');
 
-        $parser->parse(json_encode(new \stdClass()));
+        $parser->parse(json_encode(new \stdClass));
     }
 
     /**
      * @test
      */
-    public function itThrowsWhenBothDataAndErrorsArePresent()
+    public function it_throws_when_both_data_and_errors_are_present()
     {
         $parser = DocumentParser::create();
 
@@ -120,7 +118,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenIncludedIsPresentButDataIsNot()
+    public function it_throws_when_included_is_present_but_data_is_not()
     {
         $parser = DocumentParser::create();
 
@@ -135,9 +133,9 @@ class DocumentParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenDataIsNotAnArrayObjectOrNull($invalidData)
+    public function it_throws_when_data_is_not_an_array_object_or_null($invalidData)
     {
         $parser = DocumentParser::create();
 
@@ -162,9 +160,9 @@ class DocumentParserTest extends TestCase
      *
      * @dataProvider provideInvalidIncluded
      *
-     * @param mixed $invalidIncluded
+     * @param  mixed  $invalidIncluded
      */
-    public function itThrowsWhenIncludedIsNotAnArray($invalidIncluded)
+    public function it_throws_when_included_is_not_an_array($invalidIncluded)
     {
         $parser = DocumentParser::create();
 
@@ -189,7 +187,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenItFindsDuplicateResources()
+    public function it_throws_when_it_finds_duplicate_resources()
     {
         $parser = DocumentParser::create();
 
@@ -225,7 +223,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAResourceDocument()
+    public function it_parses_a_resource_document()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -251,7 +249,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAResourceCollectionDocument()
+    public function it_parses_a_resource_collection_document()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -280,7 +278,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesADocumentWithoutData()
+    public function it_parses_a_document_without_data()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -299,7 +297,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesIncluded()
+    public function it_parses_included()
     {
         $parser = DocumentParser::create();
         $document = $parser->parse(
@@ -329,9 +327,9 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itLinksSingularRelationsToItemsFromIncluded()
+    public function it_links_singular_relations_to_items_from_included()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
@@ -375,9 +373,9 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itDoesNotLinkEmptySingularRelations()
+    public function it_does_not_link_empty_singular_relations()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
@@ -418,9 +416,9 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itLinksPluralRelationsToItemsFromIncluded()
+    public function it_links_plural_relations_to_items_from_included()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
@@ -479,9 +477,9 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itDoesNotLinkEmptyPluralRelations()
+    public function it_does_not_link_empty_plural_relations()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
@@ -531,7 +529,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesLinks()
+    public function it_parses_links()
     {
         $parser = DocumentParser::create();
 
@@ -554,7 +552,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesErrors()
+    public function it_parses_errors()
     {
         $parser = DocumentParser::create();
 
@@ -579,7 +577,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesMeta()
+    public function it_parses_meta()
     {
         $parser = DocumentParser::create();
 
@@ -602,9 +600,9 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesMetaInRelationshipDataAndIncluded()
+    public function it_parses_meta_in_relationship_data_and_included()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('parent', ParentItem::class);
         $typeMapper->setMapping('child', ChildItem::class);
         $parser = DocumentParser::create($typeMapper);
@@ -656,7 +654,7 @@ class DocumentParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesJsonapi()
+    public function it_parses_jsonapi()
     {
         $parser = DocumentParser::create();
 

@@ -20,13 +20,11 @@ class CollectionParser
     }
 
     /**
-     * @param mixed $data
-     *
-     * @return \Swis\JsonApi\Client\Collection
+     * @param  mixed  $data
      */
     public function parse($data): Collection
     {
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             throw new ValidationException(sprintf('ResourceCollection MUST be an array, "%s" given.', gettype($data)));
         }
 

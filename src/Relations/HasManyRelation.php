@@ -11,9 +11,6 @@ class HasManyRelation extends AbstractManyRelation implements TypedRelationInter
 {
     use HasType;
 
-    /**
-     * @param string $type
-     */
     public function __construct(string $type)
     {
         $this->setType($type);

@@ -20,10 +20,10 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetAResponse()
+    public function it_can_get_and_set_a_response()
     {
-        $document = new Document();
-        $response = new Response();
+        $document = new Document;
+        $response = new Response;
 
         $document->setResponse($response);
 
@@ -33,10 +33,10 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetErrors()
+    public function it_can_get_and_set_errors()
     {
-        $document = new Document();
-        $errors = new ErrorCollection();
+        $document = new Document;
+        $errors = new ErrorCollection;
 
         $document->setErrors($errors);
 
@@ -46,9 +46,9 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsABooleanIndicatingIfItHasErrors()
+    public function it_returns_a_boolean_indicating_if_it_has_errors()
     {
-        $document = new Document();
+        $document = new Document;
         $this->assertEquals($document->isSuccess(), true);
         $this->assertEquals($document->hasErrors(), false);
 
@@ -66,10 +66,10 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetIncluded()
+    public function it_can_get_and_set_included()
     {
-        $document = new Document();
-        $included = new Collection();
+        $document = new Document;
+        $included = new Collection;
 
         $document->setIncluded($included);
 
@@ -79,10 +79,10 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetJsonapi()
+    public function it_can_get_and_set_jsonapi()
     {
-        $document = new Document();
-        $jsonApi = new Jsonapi();
+        $document = new Document;
+        $jsonApi = new Jsonapi;
 
         $document->setJsonapi($jsonApi);
 
@@ -92,10 +92,10 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetAnItemAsData()
+    public function it_can_get_and_set_an_item_as_data()
     {
-        $document = new Document();
-        $data = new Item();
+        $document = new Document;
+        $data = new Item;
 
         $document->setData($data);
 
@@ -105,10 +105,10 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetACollectionAsData()
+    public function it_can_get_and_set_a_collection_as_data()
     {
-        $document = new Document();
-        $data = new Collection([new Item()]);
+        $document = new Document;
+        $data = new Collection([new Item]);
 
         $document->setData($data);
 
@@ -118,9 +118,9 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsOnlyFilledPropertiesInToArray()
+    public function it_returns_only_filled_properties_in_to_array()
     {
-        $document = new Document();
+        $document = new Document;
 
         $this->assertEquals([], $document->toArray());
 
@@ -235,16 +235,16 @@ class DocumentTest extends TestCase
     /**
      * @test
      */
-    public function itSerializesEmptyMembersAsEmptyObjects()
+    public function it_serializes_empty_members_as_empty_objects()
     {
-        $document = new Document();
+        $document = new Document;
 
         $this->assertEquals('{}', json_encode($document));
 
-        $document->setData(new Collection());
-        $document->setErrors(new ErrorCollection());
-        $document->setIncluded(new Collection());
-        $document->setJsonapi(new Jsonapi());
+        $document->setData(new Collection);
+        $document->setErrors(new ErrorCollection);
+        $document->setIncluded(new Collection);
+        $document->setJsonapi(new Jsonapi);
         $document->setLinks(new Links([]));
         $document->setMeta(new Meta([]));
 

@@ -18,7 +18,6 @@ class Util
     /**
      * Convert the given string to lower-case.
      *
-     * @param string $value
      *
      * @return string
      */
@@ -30,8 +29,6 @@ class Util
     /**
      * Convert a string to snake case.
      *
-     * @param string $value
-     * @param string $delimiter
      *
      * @return string
      */
@@ -43,7 +40,7 @@ class Util
             return self::$snakeCache[$key][$delimiter];
         }
 
-        if (!ctype_lower($value)) {
+        if (! ctype_lower($value)) {
             $value = preg_replace('/\s+/u', '', ucwords($value));
 
             $value = static::stringLower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
@@ -55,7 +52,6 @@ class Util
     /**
      * Convert a value to studly caps case.
      *
-     * @param string $value
      *
      * @return string
      */
@@ -75,7 +71,6 @@ class Util
     /**
      * Convert a value to camel case.
      *
-     * @param string $value
      *
      * @return string
      */
@@ -91,9 +86,7 @@ class Util
     /**
      * Remove array element from array.
      *
-     * @param array $array
-     * @param mixed $keys
-     *
+     * @param  mixed  $keys
      * @return array
      */
     public static function arrayExcept(array $array, $keys)

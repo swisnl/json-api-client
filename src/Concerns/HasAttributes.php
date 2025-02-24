@@ -62,10 +62,6 @@ trait HasAttributes
 
     /**
      * Get the relationship data (included).
-     *
-     * @param string $name
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\DataInterface|null
      */
     abstract public function getRelationValue(string $name): ?DataInterface;
 
@@ -102,8 +98,6 @@ trait HasAttributes
     /**
      * Add the mutated attributes to the attributes array.
      *
-     * @param array $attributes
-     * @param array $mutatedAttributes
      *
      * @return array
      */
@@ -113,7 +107,7 @@ trait HasAttributes
             // We want to spin through all the mutated attributes for this model and call
             // the mutator for the attribute. We cache off every mutated attributes so
             // we don't have to constantly check on attributes that actually change.
-            if (!array_key_exists($key, $attributes)) {
+            if (! array_key_exists($key, $attributes)) {
                 continue;
             }
 
@@ -131,15 +125,13 @@ trait HasAttributes
     /**
      * Add the casted attributes to the attributes array.
      *
-     * @param array $attributes
-     * @param array $mutatedAttributes
      *
      * @return array
      */
     protected function addCastAttributesToArray(array $attributes, array $mutatedAttributes)
     {
         foreach ($this->getCasts() as $key => $value) {
-            if (!array_key_exists($key, $attributes)
+            if (! array_key_exists($key, $attributes)
                 || in_array($key, $mutatedAttributes)) {
                 continue;
             }
@@ -176,7 +168,7 @@ trait HasAttributes
      */
     protected function getArrayableAppends()
     {
-        if (!count($this->appends)) {
+        if (! count($this->appends)) {
             return [];
         }
 
@@ -188,7 +180,6 @@ trait HasAttributes
     /**
      * Get an attribute array of all arrayable values.
      *
-     * @param array $values
      *
      * @return array
      */
@@ -208,13 +199,12 @@ trait HasAttributes
     /**
      * Get an attribute from the model.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function getAttribute($key)
     {
-        if (!$key) {
+        if (! $key) {
             return;
         }
 
@@ -240,8 +230,7 @@ trait HasAttributes
     /**
      * Get a plain attribute (not a relationship).
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return mixed
      */
     public function getAttributeValue($key)
@@ -252,7 +241,6 @@ trait HasAttributes
     /**
      * Get an attribute from the $attributes array.
      *
-     * @param string $key
      *
      * @return mixed
      */
@@ -264,8 +252,7 @@ trait HasAttributes
     /**
      * Determine if a get mutator exists for an attribute.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function hasGetMutator($key)
@@ -276,9 +263,8 @@ trait HasAttributes
     /**
      * Get the value of an attribute using its mutator.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return mixed
      */
     protected function mutateAttribute($key, $value)
@@ -289,9 +275,8 @@ trait HasAttributes
     /**
      * Get the value of an attribute using its mutator for array conversion.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return mixed
      */
     protected function mutateAttributeForArray($key, $value)
@@ -304,7 +289,6 @@ trait HasAttributes
     /**
      * Merge new casts with existing casts on the model.
      *
-     * @param array $casts
      *
      * @return $this
      */
@@ -318,9 +302,8 @@ trait HasAttributes
     /**
      * Cast an attribute to a native PHP type.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return mixed
      */
     protected function castAttribute($key, $value)
@@ -357,8 +340,7 @@ trait HasAttributes
     /**
      * Get the type of cast for a model attribute.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return string
      */
     protected function getCastType($key)
@@ -369,9 +351,8 @@ trait HasAttributes
     /**
      * Set a given attribute on the model.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return mixed
      */
     public function setAttribute($key, $value)
@@ -383,7 +364,7 @@ trait HasAttributes
             return $this->setMutatedAttributeValue($key, $value);
         }
 
-        if (!is_null($value) && $this->isJsonCastable($key)) {
+        if (! is_null($value) && $this->isJsonCastable($key)) {
             $value = $this->asJson($value);
         }
 
@@ -395,8 +376,7 @@ trait HasAttributes
     /**
      * Determine if a set mutator exists for an attribute.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     public function hasSetMutator($key)
@@ -407,9 +387,8 @@ trait HasAttributes
     /**
      * Set the value of an attribute using its mutator.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return mixed
      */
     protected function setMutatedAttributeValue($key, $value)
@@ -420,8 +399,7 @@ trait HasAttributes
     /**
      * Encode the given value as JSON.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return string
      */
     protected function asJson($value)
@@ -432,21 +410,18 @@ trait HasAttributes
     /**
      * Decode the given JSON back into an array or object.
      *
-     * @param string $value
-     * @param bool   $asObject
-     *
+     * @param  bool  $asObject
      * @return mixed
      */
     public function fromJson(string $value, $asObject = false)
     {
-        return json_decode($value, !$asObject, 512, JSON_THROW_ON_ERROR);
+        return json_decode($value, ! $asObject, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
      * Decode the given float.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return mixed
      */
     public function fromFloat($value)
@@ -466,9 +441,8 @@ trait HasAttributes
     /**
      * Determine whether an attribute should be cast to a native type.
      *
-     * @param string            $key
-     * @param array|string|null $types
-     *
+     * @param  string  $key
+     * @param  array|string|null  $types
      * @return bool
      */
     public function hasCast($key, $types = null)
@@ -493,8 +467,7 @@ trait HasAttributes
     /**
      * Determine whether a value is JSON castable for inbound manipulation.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return bool
      */
     protected function isJsonCastable($key)
@@ -515,8 +488,7 @@ trait HasAttributes
     /**
      * Get a subset of the model's attributes.
      *
-     * @param array|mixed $attributes
-     *
+     * @param  array|mixed  $attributes
      * @return array
      */
     public function only($attributes)
@@ -533,9 +505,8 @@ trait HasAttributes
     /**
      * Transform a raw model value using mutators, casts, etc.
      *
-     * @param string $key
-     * @param mixed  $value
-     *
+     * @param  string  $key
+     * @param  mixed  $value
      * @return mixed
      */
     protected function transformModelValue($key, $value)
@@ -560,7 +531,6 @@ trait HasAttributes
     /**
      * Set the accessors to append to model arrays.
      *
-     * @param array $appends
      *
      * @return $this
      */
@@ -574,8 +544,7 @@ trait HasAttributes
     /**
      * Add the accessors to append to model arrays.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return $this
      */
     public function mergeAppends($attributes)
@@ -588,8 +557,7 @@ trait HasAttributes
     /**
      * Return whether the accessor attribute has been appended.
      *
-     * @param string $attribute
-     *
+     * @param  string  $attribute
      * @return bool
      */
     public function hasAppended($attribute)
@@ -606,7 +574,7 @@ trait HasAttributes
     {
         $class = static::class;
 
-        if (!isset(static::$mutatorCache[$class])) {
+        if (! isset(static::$mutatorCache[$class])) {
             static::cacheMutatedAttributes($class);
         }
 
@@ -616,8 +584,7 @@ trait HasAttributes
     /**
      * Extract and cache all the mutated attributes of a class.
      *
-     * @param string $class
-     *
+     * @param  string  $class
      * @return void
      */
     public static function cacheMutatedAttributes($class)
@@ -637,8 +604,7 @@ trait HasAttributes
     /**
      * Get all of the attribute mutator methods.
      *
-     * @param mixed $class
-     *
+     * @param  mixed  $class
      * @return array
      */
     protected static function getMutatorMethods($class)

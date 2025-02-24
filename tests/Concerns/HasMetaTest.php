@@ -13,7 +13,7 @@ class HasMetaTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetMeta()
+    public function it_can_get_and_set_meta()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasMeta $mock */
         $mock = $this->getMockForTrait(HasMeta::class);

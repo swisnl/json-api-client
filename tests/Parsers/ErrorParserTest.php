@@ -19,9 +19,9 @@ class ErrorParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsDataToError()
+    public function it_converts_data_to_error()
     {
-        $parser = new ErrorParser(new LinksParser(new MetaParser()), new MetaParser());
+        $parser = new ErrorParser(new LinksParser(new MetaParser), new MetaParser);
         $error = $parser->parse($this->getError());
 
         $this->assertInstanceOf(Error::class, $error);
@@ -45,9 +45,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenDataIsNotAnObject($invalidData)
+    public function it_throws_when_data_is_not_an_object($invalidData)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -74,9 +74,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidIdError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenIdIsNotAString($invalidError)
+    public function it_throws_when_id_is_not_a_string($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -103,9 +103,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidStatusError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenStatusIsNotAString($invalidError)
+    public function it_throws_when_status_is_not_a_string($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -132,9 +132,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidCodeError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenCodeIsNotAString($invalidError)
+    public function it_throws_when_code_is_not_a_string($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -161,9 +161,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidTitleError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenTitleIsNotAString($invalidError)
+    public function it_throws_when_title_is_not_a_string($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -190,9 +190,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidDetailError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenDetailIsNotAString($invalidError)
+    public function it_throws_when_detail_is_not_a_string($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -219,9 +219,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidErrorSourceError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenErrorsourceIsNotAnObject($invalidError)
+    public function it_throws_when_errorsource_is_not_an_object($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -248,9 +248,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidErrorSourcePointerError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenErrorsourcePointerIsNotAnString($invalidError)
+    public function it_throws_when_errorsource_pointer_is_not_an_string($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 
@@ -277,9 +277,9 @@ class ErrorParserTest extends TestCase
      *
      * @dataProvider provideInvalidErrorSourceParameterError
      *
-     * @param mixed $invalidError
+     * @param  mixed  $invalidError
      */
-    public function itThrowsWhenErrorsourceParameterIsNotAnString($invalidError)
+    public function it_throws_when_errorsource_parameter_is_not_an_string($invalidError)
     {
         $parser = new ErrorParser($this->createMock(LinksParser::class), $this->createMock(MetaParser::class));
 

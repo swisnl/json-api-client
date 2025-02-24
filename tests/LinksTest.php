@@ -10,7 +10,7 @@ use Swis\JsonApi\Client\Links;
 
 class LinksTest extends TestCase
 {
-    public function testGet()
+    public function test_get()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -19,7 +19,7 @@ class LinksTest extends TestCase
         $this->assertNull($links->related);
     }
 
-    public function testOffsetGet()
+    public function test_offset_get()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -28,7 +28,7 @@ class LinksTest extends TestCase
         $this->assertNull($links['related']);
     }
 
-    public function testIsset()
+    public function test_isset()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -37,7 +37,7 @@ class LinksTest extends TestCase
         $this->assertFalse(isset($links->related));
     }
 
-    public function testOffsetExists()
+    public function test_offset_exists()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -46,7 +46,7 @@ class LinksTest extends TestCase
         $this->assertFalse(isset($links['related']));
     }
 
-    public function testSet()
+    public function test_set()
     {
         $link = new Link('http://example.com/self');
         $links = new Links([]);
@@ -56,7 +56,7 @@ class LinksTest extends TestCase
         $this->assertEquals($link, $links->self);
     }
 
-    public function testOffsetSet()
+    public function test_offset_set()
     {
         $link = new Link('http://example.com/self');
         $links = new Links([]);
@@ -66,7 +66,7 @@ class LinksTest extends TestCase
         $this->assertEquals($link, $links['self']);
     }
 
-    public function testUnset()
+    public function test_unset()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -76,7 +76,7 @@ class LinksTest extends TestCase
         $this->assertNull($links->self);
     }
 
-    public function testOffsetUnset()
+    public function test_offset_unset()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -86,7 +86,7 @@ class LinksTest extends TestCase
         $this->assertNull($links['self']);
     }
 
-    public function testToArray()
+    public function test_to_array()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -101,7 +101,7 @@ class LinksTest extends TestCase
         );
     }
 
-    public function testToJson()
+    public function test_to_json()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);
@@ -112,7 +112,7 @@ class LinksTest extends TestCase
         );
     }
 
-    public function testJsonSerialize()
+    public function test_json_serialize()
     {
         $link = new Link('http://example.com/self');
         $links = new Links(['self' => $link]);

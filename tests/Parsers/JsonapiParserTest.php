@@ -16,9 +16,9 @@ class JsonapiParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsDataToJsonapi()
+    public function it_converts_data_to_jsonapi()
     {
-        $parser = new JsonapiParser(new MetaParser());
+        $parser = new JsonapiParser(new MetaParser);
         $jsonapi = $parser->parse($this->getJsonapi());
 
         $this->assertInstanceOf(Jsonapi::class, $jsonapi);
@@ -33,9 +33,9 @@ class JsonapiParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenDataIsNotAnObject($invalidData)
+    public function it_throws_when_data_is_not_an_object($invalidData)
     {
         $parser = new JsonapiParser($this->createMock(MetaParser::class));
 
@@ -62,9 +62,9 @@ class JsonapiParserTest extends TestCase
      *
      * @dataProvider provideInvalidVersionJsonapi
      *
-     * @param mixed $invalidJsonapi
+     * @param  mixed  $invalidJsonapi
      */
-    public function itThrowsWhenVersionIsNotAString($invalidJsonapi)
+    public function it_throws_when_version_is_not_a_string($invalidJsonapi)
     {
         $parser = new JsonapiParser($this->createMock(MetaParser::class));
 

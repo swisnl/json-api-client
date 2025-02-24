@@ -42,21 +42,16 @@ class Document implements DocumentInterface
 
     public function __construct()
     {
-        $this->errors = new ErrorCollection();
-        $this->included = new Collection();
+        $this->errors = new ErrorCollection;
+        $this->included = new Collection;
     }
 
-    /**
-     * @return \Psr\Http\Message\ResponseInterface|null
-     */
     public function getResponse(): ?ResponseInterface
     {
         return $this->response;
     }
 
     /**
-     * @param \Psr\Http\Message\ResponseInterface|null $response
-     *
      * @return $this
      */
     public function setResponse(?ResponseInterface $response)
@@ -66,17 +61,12 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    /**
-     * @return \Swis\JsonApi\Client\ErrorCollection
-     */
     public function getErrors(): ErrorCollection
     {
         return $this->errors;
     }
 
     /**
-     * @param \Swis\JsonApi\Client\ErrorCollection $errors
-     *
      * @return $this
      */
     public function setErrors(ErrorCollection $errors)
@@ -86,33 +76,22 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function hasErrors(): bool
     {
-        return !$this->errors->isEmpty();
+        return ! $this->errors->isEmpty();
     }
 
-    /**
-     * @return bool
-     */
     public function isSuccess(): bool
     {
         return $this->errors->isEmpty();
     }
 
-    /**
-     * @return \Swis\JsonApi\Client\Collection
-     */
     public function getIncluded(): Collection
     {
         return $this->included;
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Collection $included
-     *
      * @return $this
      */
     public function setIncluded(Collection $included)
@@ -122,17 +101,12 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    /**
-     * @return \Swis\JsonApi\Client\Jsonapi|null
-     */
     public function getJsonapi(): ?Jsonapi
     {
         return $this->jsonapi;
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Jsonapi|null $jsonapi
-     *
      * @return $this
      */
     public function setJsonapi(?Jsonapi $jsonapi)
@@ -151,8 +125,6 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $data
-     *
      * @return $this
      */
     public function setData(DataInterface $data)
@@ -162,9 +134,6 @@ class Document implements DocumentInterface
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         $document = [];

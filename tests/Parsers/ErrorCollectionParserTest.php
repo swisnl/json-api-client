@@ -16,12 +16,12 @@ class ErrorCollectionParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsDataToErrorCollection()
+    public function it_converts_data_to_error_collection()
     {
         $errorParser = $this->createMock(ErrorParser::class);
         $errorParser->expects($this->exactly(2))
             ->method('parse')
-            ->willReturn(new Error());
+            ->willReturn(new Error);
 
         $parser = new ErrorCollectionParser($errorParser);
         $errorCollection = $parser->parse($this->getErrorCollection());
@@ -38,9 +38,9 @@ class ErrorCollectionParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenDataIsNotAnArray($invalidData)
+    public function it_throws_when_data_is_not_an_array($invalidData)
     {
         $parser = new ErrorCollectionParser($this->createMock(ErrorParser::class));
 
@@ -52,7 +52,7 @@ class ErrorCollectionParserTest extends TestCase
 
     public function provideInvalidData(): array
     {
-        $object = new \stdClass();
+        $object = new \stdClass;
         $object->foo = 'bar';
 
         return [
@@ -68,7 +68,7 @@ class ErrorCollectionParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenDataIsEmpty()
+    public function it_throws_when_data_is_empty()
     {
         $parser = new ErrorCollectionParser($this->createMock(ErrorParser::class));
 

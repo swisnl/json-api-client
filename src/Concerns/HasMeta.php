@@ -13,17 +13,12 @@ trait HasMeta
      */
     protected $meta;
 
-    /**
-     * @return \Swis\JsonApi\Client\Meta|null
-     */
     public function getMeta(): ?Meta
     {
         return $this->meta;
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Meta|null $meta
-     *
      * @return $this
      */
     public function setMeta(?Meta $meta)

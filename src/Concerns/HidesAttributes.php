@@ -33,7 +33,6 @@ trait HidesAttributes
     /**
      * Set the hidden attributes for the model.
      *
-     * @param array $hidden
      *
      * @return $this
      */
@@ -57,7 +56,6 @@ trait HidesAttributes
     /**
      * Set the visible attributes for the model.
      *
-     * @param array $visible
      *
      * @return $this
      */
@@ -71,8 +69,7 @@ trait HidesAttributes
     /**
      * Make the given, typically hidden, attributes visible.
      *
-     * @param array|string|null $attributes
-     *
+     * @param  array|string|null  $attributes
      * @return $this
      */
     public function makeVisible($attributes)
@@ -81,7 +78,7 @@ trait HidesAttributes
 
         $this->hidden = array_diff($this->hidden, $attributes);
 
-        if (!empty($this->visible)) {
+        if (! empty($this->visible)) {
             $this->visible = array_merge($this->visible, $attributes);
         }
 
@@ -91,8 +88,7 @@ trait HidesAttributes
     /**
      * Make the given, typically visible, attributes hidden.
      *
-     * @param array|string|null $attributes
-     *
+     * @param  array|string|null  $attributes
      * @return $this
      */
     public function makeHidden($attributes)

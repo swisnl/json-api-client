@@ -20,16 +20,14 @@ class JsonapiParser
     }
 
     /**
-     * @param mixed $data
-     *
-     * @return \Swis\JsonApi\Client\Jsonapi
+     * @param  mixed  $data
      */
     public function parse($data): Jsonapi
     {
-        if (!is_object($data)) {
+        if (! is_object($data)) {
             throw new ValidationException(sprintf('Jsonapi MUST be an object, "%s" given.', gettype($data)));
         }
-        if (property_exists($data, 'version') && !is_string($data->version)) {
+        if (property_exists($data, 'version') && ! is_string($data->version)) {
             throw new ValidationException(sprintf('Jsonapi property "version" MUST be a string, "%s" given.', gettype($data->version)));
         }
 

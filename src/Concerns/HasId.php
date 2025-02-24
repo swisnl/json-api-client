@@ -11,17 +11,12 @@ trait HasId
      */
     protected $id;
 
-    /**
-     * @return string|null
-     */
     public function getId(): ?string
     {
         return $this->id;
     }
 
     /**
-     * @param string|null $id
-     *
      * @return static
      */
     public function setId(?string $id)
@@ -31,9 +26,6 @@ trait HasId
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function hasId(): bool
     {
         return isset($this->id);

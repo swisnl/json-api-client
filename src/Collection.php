@@ -10,8 +10,6 @@ class Collection extends \Illuminate\Support\Collection implements DataInterface
 {
     /**
      * Get the collection of items as a plain json api array.
-     *
-     * @return array
      */
     public function toJsonApiArray(): array
     {

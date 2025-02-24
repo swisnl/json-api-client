@@ -20,13 +20,11 @@ class ErrorCollectionParser
     }
 
     /**
-     * @param mixed $data
-     *
-     * @return \Swis\JsonApi\Client\ErrorCollection
+     * @param  mixed  $data
      */
     public function parse($data): ErrorCollection
     {
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             throw new ValidationException(sprintf('ErrorCollection MUST be an array, "%s" given.', gettype($data)));
         }
         if (count($data) === 0) {

@@ -7,7 +7,7 @@ namespace Swis\JsonApi\Client;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
-class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
+class Links implements \ArrayAccess, \JsonSerializable, Arrayable, Jsonable
 {
     /**
      * @var \Swis\JsonApi\Client\Link[]
@@ -15,7 +15,7 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     protected $links = [];
 
     /**
-     * @param \Swis\JsonApi\Client\Link[] $links
+     * @param  \Swis\JsonApi\Client\Link[]  $links
      */
     public function __construct(array $links)
     {
@@ -23,8 +23,6 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     }
 
     /**
-     * @param $key
-     *
      * @return bool
      */
     public function __isset($key)
@@ -33,8 +31,6 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     }
 
     /**
-     * @param $key
-     *
      * @return mixed
      */
     public function __get($key)
@@ -42,18 +38,11 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
         return $this->offsetGet($key);
     }
 
-    /**
-     * @param $key
-     */
     public function __unset($key)
     {
         $this->offsetUnset($key);
     }
 
-    /**
-     * @param $key
-     * @param $value
-     */
     public function __set($key, $value)
     {
         $this->offsetSet($key, $value);
@@ -62,8 +51,7 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return bool
      */
     #[\ReturnTypeWillChange]
@@ -75,8 +63,7 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return mixed
      */
     #[\ReturnTypeWillChange]
@@ -88,8 +75,8 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param  mixed  $offset
+     * @param  mixed  $value
      */
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
@@ -100,7 +87,7 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param mixed $offset
+     * @param  mixed  $offset
      */
     #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
@@ -124,8 +111,7 @@ class Links implements \ArrayAccess, Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param int $options
-     *
+     * @param  int  $options
      * @return false|string
      */
     public function toJson($options = 0)

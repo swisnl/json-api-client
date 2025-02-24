@@ -12,10 +12,6 @@ trait Save
     use Update { update as protected saveExisting; }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
-     * @param array                                         $parameters
-     * @param array                                         $headers
-     *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function save(ItemInterface $item, array $parameters = [], array $headers = [])

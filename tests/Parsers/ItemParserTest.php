@@ -30,7 +30,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsDataToItem()
+    public function it_converts_data_to_item()
     {
         $parser = $this->getItemParser();
         $item = $parser->parse($this->getJsonApiItemMock('parent', '1'));
@@ -39,7 +39,7 @@ class ItemParserTest extends TestCase
 
         static::assertEquals('parent', $item->getType());
         static::assertEquals('1', $item->getId());
-        $object = new \stdClass();
+        $object = new \stdClass;
         $object->foo = 'bar';
         static::assertEquals(
             [
@@ -59,9 +59,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenDataIsNotAnObject($invalidData)
+    public function it_throws_when_data_is_not_an_object($invalidData)
     {
         $parser = $this->getItemParser();
 
@@ -86,7 +86,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenItemDoesNotHaveTypeProperty()
+    public function it_throws_when_item_does_not_have_type_property()
     {
         $parser = $this->getItemParser();
 
@@ -99,7 +99,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenItemDoesNotHaveIdProperty()
+    public function it_throws_when_item_does_not_have_id_property()
     {
         $parser = $this->getItemParser();
 
@@ -114,9 +114,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidIdItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenIdIsNotAString($invalidItem)
+    public function it_throws_when_id_is_not_a_string($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -141,9 +141,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidTypeItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenTypeIsNotAString($invalidItem)
+    public function it_throws_when_type_is_not_a_string($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -170,9 +170,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidAttributesItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenAttributesIsNotAnObject($invalidItem)
+    public function it_throws_when_attributes_is_not_an_object($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -197,7 +197,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenTypeIsPresentInAttributes()
+    public function it_throws_when_type_is_present_in_attributes()
     {
         $parser = $this->getItemParser();
 
@@ -210,7 +210,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenIdIsPresentInAttributes()
+    public function it_throws_when_id_is_present_in_attributes()
     {
         $parser = $this->getItemParser();
 
@@ -223,7 +223,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenRelationshipsIsPresentInAttributes()
+    public function it_throws_when_relationships_is_present_in_attributes()
     {
         $parser = $this->getItemParser();
 
@@ -236,7 +236,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenLinksIsPresentInAttributes()
+    public function it_throws_when_links_is_present_in_attributes()
     {
         $parser = $this->getItemParser();
 
@@ -251,9 +251,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidRelationshipsItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenRelationshipsIsNotAnObject($invalidItem)
+    public function it_throws_when_relationships_is_not_an_object($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -278,7 +278,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenTypeIsPresentInRelationships()
+    public function it_throws_when_type_is_present_in_relationships()
     {
         $parser = $this->getItemParser();
 
@@ -291,7 +291,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenIdIsPresentInRelationships()
+    public function it_throws_when_id_is_present_in_relationships()
     {
         $parser = $this->getItemParser();
 
@@ -304,7 +304,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenPropertyIsPresentInBothAttributesAndRelationships()
+    public function it_throws_when_property_is_present_in_both_attributes_and_relationships()
     {
         $parser = $this->getItemParser();
 
@@ -319,9 +319,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidRelationshipsItemItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenRelationshipsItemIsNotAnObject($invalidItem)
+    public function it_throws_when_relationships_item_is_not_an_object($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -346,7 +346,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenRelationshipsItemMissesLinksDataAndMeta()
+    public function it_throws_when_relationships_item_misses_links_data_and_meta()
     {
         $parser = $this->getItemParser();
 
@@ -361,9 +361,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidRelationshipsItemIdentifierItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenRelationshipsItemIdentifierIsNotAnObjectArrayOrNull($invalidItem)
+    public function it_throws_when_relationships_item_identifier_is_not_an_object_array_or_null($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -386,7 +386,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenRelationshipsItemIdentifierDoesNotHaveTypeProperty()
+    public function it_throws_when_relationships_item_identifier_does_not_have_type_property()
     {
         $parser = $this->getItemParser();
 
@@ -399,7 +399,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenRelationshipsItemIdentifierDoesNotHaveIdProperty()
+    public function it_throws_when_relationships_item_identifier_does_not_have_id_property()
     {
         $parser = $this->getItemParser();
 
@@ -414,9 +414,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidRelationshipsItemIdentifierIdItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenRelationshipsItemIdentifierIdIsNotAString($invalidItem)
+    public function it_throws_when_relationships_item_identifier_id_is_not_a_string($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -441,9 +441,9 @@ class ItemParserTest extends TestCase
      *
      * @dataProvider provideInvalidRelationshipsItemIdentifierTypeItem
      *
-     * @param mixed $invalidItem
+     * @param  mixed  $invalidItem
      */
-    public function itThrowsWhenRelationshipsItemIdentifierTypeIsNotAString($invalidItem)
+    public function it_throws_when_relationships_item_identifier_type_is_not_a_string($invalidItem)
     {
         $parser = $this->getItemParser();
 
@@ -468,9 +468,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAHasOneRelationship()
+    public function it_parses_a_has_one_relationship()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
@@ -489,9 +489,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAnEmptyHasOneRelationship()
+    public function it_parses_an_empty_has_one_relationship()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
@@ -508,9 +508,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAHasManyRelationship()
+    public function it_parses_a_has_many_relationship()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
@@ -532,9 +532,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAMorphToRelation()
+    public function it_parses_a_morph_to_relation()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
@@ -553,9 +553,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAMorphToManyRelation()
+    public function it_parses_a_morph_to_many_relation()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
@@ -579,9 +579,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAnUnknownSingularRelationAsMorphTo()
+    public function it_parses_an_unknown_singular_relation_as_morph_to()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
         $parser = $this->getItemParser($typeMapper);
 
@@ -597,9 +597,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAnUnknownPluralRelationAsMorphToMany()
+    public function it_parses_an_unknown_plural_relation_as_morph_to_many()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('item-without-relationships', WithoutRelationshipsItem::class);
         $parser = $this->getItemParser($typeMapper);
 
@@ -616,7 +616,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itDoesNotSetDataWhenThereIsNoDataPresent()
+    public function it_does_not_set_data_when_there_is_no_data_present()
     {
         $parser = $this->getItemParser();
 
@@ -631,7 +631,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesLinks()
+    public function it_parses_links()
     {
         $parser = $this->getItemParser();
 
@@ -645,7 +645,7 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesMeta()
+    public function it_parses_meta()
     {
         $parser = $this->getItemParser();
 
@@ -659,9 +659,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesMetaInRelationship()
+    public function it_parses_meta_in_relationship()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
@@ -677,9 +677,9 @@ class ItemParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesMetaInRelationshipData()
+    public function it_parses_meta_in_relationship_data()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('child', ChildItem::class);
         $typeMapper->setMapping('parent', ParentItem::class);
         $parser = $this->getItemParser($typeMapper);
@@ -693,17 +693,12 @@ class ItemParserTest extends TestCase
         $this->assertEquals('https://example.com/image/header/about-us.jpeg', $image);
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
-     *
-     * @return \Swis\JsonApi\Client\Parsers\ItemParser
-     */
     private function getItemParser(?TypeMapperInterface $typeMapper = null): ItemParser
     {
         return new ItemParser(
             $typeMapper ?? $this->getTypeMapperMock(),
-            new LinksParser(new MetaParser()),
-            new MetaParser()
+            new LinksParser(new MetaParser),
+            new MetaParser
         );
     }
 
@@ -719,7 +714,7 @@ class ItemParserTest extends TestCase
         $typeMapper->method('getMapping')
             ->willReturnCallback(
                 static function (string $type) {
-                    return (new PlainItem())->setType($type);
+                    return (new PlainItem)->setType($type);
                 }
             );
 
@@ -727,9 +722,6 @@ class ItemParserTest extends TestCase
     }
 
     /**
-     * @param $type
-     * @param $id
-     *
      * @return mixed
      */
     private function getJsonApiItemMock($type, $id)

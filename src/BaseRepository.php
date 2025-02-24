@@ -23,10 +23,6 @@ abstract class BaseRepository
      */
     protected $endpoint = '';
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client
-     * @param \Swis\JsonApi\Client\DocumentFactory                    $documentFactory
-     */
     public function __construct(DocumentClientInterface $client, DocumentFactory $documentFactory)
     {
         $this->client = $client;

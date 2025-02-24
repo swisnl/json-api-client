@@ -48,15 +48,13 @@ class DocumentParser implements DocumentParserInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
-     *
      * @return static
      */
     public static function create(?TypeMapperInterface $typeMapper = null): self
     {
-        $metaParser = new MetaParser();
+        $metaParser = new MetaParser;
         $linksParser = new LinksParser($metaParser);
-        $itemParser = new ItemParser($typeMapper ?? new TypeMapper(), $linksParser, $metaParser);
+        $itemParser = new ItemParser($typeMapper ?? new TypeMapper, $linksParser, $metaParser);
 
         return new static(
             $itemParser,
@@ -70,31 +68,26 @@ class DocumentParser implements DocumentParserInterface
         );
     }
 
-    /**
-     * @param string $json
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
-     */
     public function parse(string $json): DocumentInterface
     {
         $data = $this->decodeJson($json);
 
-        if (!is_object($data)) {
+        if (! is_object($data)) {
             throw new ValidationException(sprintf('Document MUST be an object, "%s" given.', gettype($data)));
         }
-        if (!property_exists($data, 'data') && !property_exists($data, 'errors') && !property_exists($data, 'meta')) {
+        if (! property_exists($data, 'data') && ! property_exists($data, 'errors') && ! property_exists($data, 'meta')) {
             throw new ValidationException('Document MUST contain at least one of the following properties: `data`, `errors`, `meta`.');
         }
         if (property_exists($data, 'data') && property_exists($data, 'errors')) {
             throw new ValidationException('The properties `data` and `errors` MUST NOT coexist in Document.');
         }
-        if (!property_exists($data, 'data') && property_exists($data, 'included')) {
+        if (! property_exists($data, 'data') && property_exists($data, 'included')) {
             throw new ValidationException('If Document does not contain a `data` property, the `included` property MUST NOT be present either.');
         }
-        if (property_exists($data, 'data') && !is_object($data->data) && !is_array($data->data) && $data->data !== null) {
+        if (property_exists($data, 'data') && ! is_object($data->data) && ! is_array($data->data) && $data->data !== null) {
             throw new ValidationException(sprintf('Document property "data" MUST be null, an array or an object, "%s" given.', gettype($data->data)));
         }
-        if (property_exists($data, 'included') && !is_array($data->included)) {
+        if (property_exists($data, 'included') && ! is_array($data->included)) {
             throw new ValidationException(sprintf('Document property "included" MUST be an array, "%s" given.', gettype($data->included)));
         }
 
@@ -120,8 +113,6 @@ class DocumentParser implements DocumentParserInterface
     }
 
     /**
-     * @param string $json
-     *
      * @return mixed
      */
     private function decodeJson(string $json)
@@ -134,21 +125,19 @@ class DocumentParser implements DocumentParserInterface
     }
 
     /**
-     * @param mixed $data
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     * @param  mixed  $data
      */
     private function getDocument($data): DocumentInterface
     {
-        if (!property_exists($data, 'data') || $data->data === null) {
-            return new Document();
+        if (! property_exists($data, 'data') || $data->data === null) {
+            return new Document;
         }
 
         if (is_array($data->data)) {
-            $document = (new CollectionDocument())
+            $document = (new CollectionDocument)
                 ->setData($this->collectionParser->parse($data->data));
         } else {
-            $document = (new ItemDocument())
+            $document = (new ItemDocument)
                 ->setData($this->itemParser->parse($data->data));
         }
 
@@ -170,9 +159,6 @@ class DocumentParser implements DocumentParserInterface
         return $document;
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Collection $items
-     */
     private function linkRelationships(Collection $items): void
     {
         $keyedItems = $items->keyBy(fn (ItemInterface $item) => $this->getItemKey($item));
@@ -209,32 +195,16 @@ class DocumentParser implements DocumentParserInterface
         );
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Collection               $included
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\ItemInterface|null
-     */
     private function getItem(Collection $included, ItemInterface $item): ?ItemInterface
     {
         return $included->get($this->getItemKey($item));
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
-     *
-     * @return string
-     */
     private function getItemKey(ItemInterface $item): string
     {
         return sprintf('%s:%s', $item->getType(), $item->getId());
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Collection $items
-     *
-     * @return \Swis\JsonApi\Client\Collection
-     */
     private function getDuplicateItems(Collection $items): Collection
     {
         return $items->duplicates(fn (ItemInterface $item) => $this->getItemKey($item));

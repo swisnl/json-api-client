@@ -7,10 +7,6 @@ namespace Swis\JsonApi\Client\Actions;
 trait Delete
 {
     /**
-     * @param string $id
-     * @param array  $parameters
-     * @param array  $headers
-     *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function delete(string $id, array $parameters = [], array $headers = [])

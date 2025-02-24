@@ -23,7 +23,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanInstantiateAnItem()
+    public function it_can_instantiate_an_item()
     {
         $item = new Item(['name' => 'john']);
         $this->assertInstanceOf(Item::class, $item);
@@ -33,9 +33,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanCreateANewInstanceWithAttributes()
+    public function it_can_create_a_new_instance_with_attributes()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->setType('foo-bar');
         $instance = $item->newInstance(['name' => 'john']);
 
@@ -47,7 +47,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isShowsTypeAndIdAndAttributesInToJsonApiArray()
+    public function is_shows_type_and_id_and_attributes_in_to_json_api_array()
     {
         $attributes = [
             'testKey' => 'testValue',
@@ -74,7 +74,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isDoesNotShowAttributesInToJsonApiArrayWhenItHasNoAttributes()
+    public function is_does_not_show_attributes_in_to_json_api_array_when_it_has_no_attributes()
     {
         $item = new WithHiddenItem(['testKey' => 'testValue']);
         $item->setType('testType');
@@ -92,11 +92,11 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsHasoneRelationInToJsonApiArray()
+    public function is_adds_hasone_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
-        $item->hasoneRelation()->associate((new RelatedItem())->setId('5678'));
+        $item->hasoneRelation()->associate((new RelatedItem)->setId('5678'));
         $item->hasoneRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
         $item->hasoneRelation()->setMeta(new Meta(['foo' => 'bar']));
 
@@ -128,9 +128,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsEmptyHasoneRelationInToJsonApiArray()
+    public function is_adds_empty_hasone_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->hasoneRelation()->dissociate();
 
@@ -151,9 +151,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isDoesNotAddHasoneRelationWithoutDataInToJsonApiArray()
+    public function is_does_not_add_hasone_relation_without_data_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->hasoneRelation();
         $item->hasoneRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
@@ -171,11 +171,11 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsHasmanyRelationInToJsonApiArray()
+    public function is_adds_hasmany_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
-        $item->hasmanyRelation()->associate(new Collection([(new RelatedItem())->setId('5678')]));
+        $item->hasmanyRelation()->associate(new Collection([(new RelatedItem)->setId('5678')]));
         $item->hasmanyRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
         $item->hasmanyRelation()->setMeta(new Meta(['foo' => 'bar']));
 
@@ -209,9 +209,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsEmptyHasmanyRelationInToJsonApiArray()
+    public function is_adds_empty_hasmany_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->hasmanyRelation()->dissociate();
 
@@ -232,9 +232,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isDoesNotAddHasmanyRelationWithoutDataInToJsonApiArray()
+    public function is_does_not_add_hasmany_relation_without_data_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->hasmanyRelation();
         $item->hasmanyRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
@@ -252,11 +252,11 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsMorphtoRelationInToJsonApiArray()
+    public function is_adds_morphto_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
-        $item->morphtoRelation()->associate((new RelatedItem())->setId('5678'));
+        $item->morphtoRelation()->associate((new RelatedItem)->setId('5678'));
         $item->morphtoRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
         $item->morphtoRelation()->setMeta(new Meta(['foo' => 'bar']));
 
@@ -288,9 +288,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsEmptyMorphtoRelationInToJsonApiArray()
+    public function is_adds_empty_morphto_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->morphtoRelation()->dissociate();
 
@@ -311,9 +311,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isDoesNotAddMorphtoRelationWithoutDataInToJsonApiArray()
+    public function is_does_not_add_morphto_relation_without_data_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->morphtoRelation();
         $item->morphtoRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
@@ -331,11 +331,11 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsMorphtomanyRelationInToJsonApiArray()
+    public function is_adds_morphtomany_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
-        $item->morphtomanyRelation()->associate(new Collection([(new RelatedItem())->setId('5678')]));
+        $item->morphtomanyRelation()->associate(new Collection([(new RelatedItem)->setId('5678')]));
         $item->morphtomanyRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
         $item->morphtomanyRelation()->setMeta(new Meta(['foo' => 'bar']));
 
@@ -369,9 +369,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsEmptyMorphtomanyRelationInToJsonApiArray()
+    public function is_adds_empty_morphtomany_relation_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->morphtomanyRelation()->dissociate();
 
@@ -392,9 +392,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isDoesNotAddMorphtomanyRelationWithoutDataInToJsonApiArray()
+    public function is_does_not_add_morphtomany_relation_without_data_in_to_json_api_array()
     {
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item->setId('1234');
         $item->morphtomanyRelation();
         $item->morphtomanyRelation()->setLinks(new Links(['self' => new Link('http://example.com/articles')]));
@@ -412,9 +412,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsLinksInToJsonApiArray()
+    public function is_adds_links_in_to_json_api_array()
     {
-        $item = new Item();
+        $item = new Item;
         $item->setType('testType');
         $item->setId('1');
         $item->setLinks(
@@ -452,9 +452,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function isAddsMetaInToJsonApiArray()
+    public function is_adds_meta_in_to_json_api_array()
     {
-        $item = new Item();
+        $item = new Item;
         $item->setType('testType');
         $item->setId('1');
         $item->setMeta(new Meta(['foo' => 'bar']));
@@ -474,9 +474,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itIsNewWhenNoIdIsset()
+    public function it_is_new_when_no_id_isset()
     {
-        $item = new Item();
+        $item = new Item;
         $item->setType('testType');
 
         $this->assertTrue($item->isNew());
@@ -488,10 +488,10 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetARelationValueUsingGetAttributeMethod()
+    public function it_can_get_a_relation_value_using_get_attribute_method()
     {
-        $parentItem = new ParentItem();
-        $childItem = new ChildItem();
+        $parentItem = new ParentItem;
+        $childItem = new ChildItem;
         $parentItem->child()->associate($childItem);
 
         $this->assertSame($childItem, $parentItem->getAttribute('child'));
@@ -500,7 +500,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsAttributes()
+    public function it_returns_attributes()
     {
         $attributes = [
             'foo' => 'bar',
@@ -512,9 +512,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsABooleanIndicatingIfItHasAttributes()
+    public function it_returns_a_boolean_indicating_if_it_has_attributes()
     {
-        $item = new Item();
+        $item = new Item;
         $this->assertFalse($item->hasAttributes());
 
         $item->fill(['foo' => 'bar']);
@@ -525,10 +525,10 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAllRelationships()
+    public function it_can_get_all_relationships()
     {
-        $parentItem = new ParentItem();
-        $childItem = new ChildItem();
+        $parentItem = new ParentItem;
+        $childItem = new ChildItem;
         $childItem->setId('1');
         $childItem->setMeta(new Meta(['foo' => 'bar']));
         $parentItem->child()->associate($childItem);
@@ -563,12 +563,12 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsABooleanIndicatingIfItHasRelationships()
+    public function it_returns_a_boolean_indicating_if_it_has_relationships()
     {
-        $parentItem = new ParentItem();
+        $parentItem = new ParentItem;
         $this->assertFalse($parentItem->hasRelationships());
 
-        $childItem = (new ChildItem())->setId('1');
+        $childItem = (new ChildItem)->setId('1');
         $parentItem->child()->associate($childItem);
 
         $this->assertTrue($parentItem->hasRelationships());
@@ -577,9 +577,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itUsesInitialValues()
+    public function it_uses_initial_values()
     {
-        $itemBuilder = new Item();
+        $itemBuilder = new Item;
         $itemBuilder->fill(['testKey' => 1, 'anotherTestKey' => 'someValue']);
         $itemBuilder->setInitial(['testKey' => 9999]);
         $itemBuilder->useInitial();
@@ -590,9 +590,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanSetTheIdUsingTheMagicMethod()
+    public function it_can_set_the_id_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
 
         $item->id = '1234';
         $this->assertEquals('1234', $item->getId());
@@ -601,9 +601,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetTheIdUsingTheMagicMethod()
+    public function it_can_get_the_id_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
         $item->setId('1234');
 
         $this->assertEquals('1234', $item->id);
@@ -612,9 +612,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanCheckIfTheIdIsSetUsingTheMagicMethod()
+    public function it_can_check_if_the_id_is_set_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
 
         $this->assertFalse(isset($item->id));
         $item->setId('1234');
@@ -624,9 +624,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanUnsetTheIdUsingTheMagicMethod()
+    public function it_can_unset_the_id_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
 
         $item->id = '1234';
         unset($item->id);
@@ -636,9 +636,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanSetAnAttributeUsingTheMagicMethod()
+    public function it_can_set_an_attribute_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
 
         $item->foo = 'bar';
         $this->assertEquals('bar', $item->getAttribute('foo'));
@@ -647,9 +647,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAnAttributeUsingTheMagicMethod()
+    public function it_can_get_an_attribute_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
         $item->setAttribute('foo', 'bar');
 
         $this->assertEquals('bar', $item->foo);
@@ -658,9 +658,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanCheckIfAnAttributeIsSetUsingTheMagicMethod()
+    public function it_can_check_if_an_attribute_is_set_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
 
         $this->assertFalse(isset($item->foo));
         $item->setAttribute('foo', 'bar');
@@ -670,9 +670,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanUnsetAnAttributeUsingTheMagicMethod()
+    public function it_can_unset_an_attribute_using_the_magic_method()
     {
-        $item = new Item();
+        $item = new Item;
 
         $item->setAttribute('foo', 'bar');
         $this->assertNotNull($item->getAttribute('foo'));
@@ -684,9 +684,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsNullWhenProvidedAnEmptyKey()
+    public function it_returns_null_when_provided_an_empty_key()
     {
-        $item = new Item();
+        $item = new Item;
 
         $this->assertNull($item->getAttribute(''));
     }
@@ -694,9 +694,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsNullWhenProvidedAKeyThatIsAMethodOnTheItem()
+    public function it_returns_null_when_provided_a_key_that_is_a_method_on_the_item()
     {
-        $item = new Item();
+        $item = new Item;
 
         $this->assertNull($item->getAttribute('getAttribute'));
     }
@@ -704,9 +704,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanManipulateAttributes()
+    public function it_can_manipulate_attributes()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->name = 'foo';
 
         $this->assertEquals('foo', $item->name);
@@ -724,9 +724,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itDoesNotShowHiddenAttributes()
+    public function it_does_not_show_hidden_attributes()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->password = 'secret';
 
         $attributes = $item->attributesToArray();
@@ -737,9 +737,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itDoesShowVisibleAttributes()
+    public function it_does_show_visible_attributes()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->setVisible(['name']);
         $item->name = 'John Doe';
         $item->city = 'Paris';
@@ -751,9 +751,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanReturnTheItemInArrayForm()
+    public function it_can_return_the_item_in_array_form()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->name = 'foo';
         $item->bar = null;
         $item->password = 'password1';
@@ -777,9 +777,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanReturnASubsetOfTheItemInArrayForm()
+    public function it_can_return_a_subset_of_the_item_in_array_form()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->name = 'foo';
         $item->bar = null;
         $array = $item->only('name');
@@ -792,13 +792,13 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanReturnTheItemInJsonForm()
+    public function it_can_return_the_item_in_json_form()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->name = 'john';
         $item->foo = 10;
 
-        $object = new \stdClass();
+        $object = new \stdClass;
         $object->name = 'john';
         $object->foo = 10;
 
@@ -809,9 +809,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanMutateAttributes()
+    public function it_can_mutate_attributes()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->list_items = ['name' => 'john'];
         $this->assertEquals(['name' => 'john'], $item->list_items);
         $attributes = $item->getAttributes();
@@ -819,7 +819,7 @@ class ItemTest extends TestCase
 
         $birthday = strtotime('245 months ago');
 
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->birthday = '245 months ago';
 
         $this->assertEquals(date('Y-m-d', $birthday), $item->birthday);
@@ -829,9 +829,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itUsesMutatorsInToArray()
+    public function it_uses_mutators_in_to_array()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->list_items = [1, 2, 3];
         $array = $item->toArray();
 
@@ -841,9 +841,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanReplicate()
+    public function it_can_replicate()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->name = 'John Doe';
         $item->city = 'Paris';
 
@@ -855,13 +855,13 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itAppendsMutators()
+    public function it_appends_mutators()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $array = $item->toArray();
         $this->assertFalse(isset($array['test']));
 
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->setAppends(['test']);
         $array = $item->toArray();
         $this->assertTrue(isset($array['test']));
@@ -871,9 +871,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanMergeAppends()
+    public function it_can_merge_appends()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->mergeAppends([__FUNCTION__]);
         $this->assertTrue($item->hasAppended(__FUNCTION__));
     }
@@ -881,9 +881,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanUseArrayAccess()
+    public function it_can_use_array_access()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->name = 'John Doen';
         $item['city'] = 'Paris';
 
@@ -894,9 +894,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanBeSerializedAndUnserialized()
+    public function it_can_be_serialized_and_unserialized()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->name = 'john';
         $item->foo = 10;
 
@@ -907,9 +907,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanCastAttributes()
+    public function it_can_cast_attributes()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->score = '0.34';
         $item->score_inf = 'Infinity';
         $item->score_inf_neg = '-Infinity';
@@ -963,9 +963,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanMergeCasts()
+    public function it_can_merge_casts()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->mergeCasts([__FUNCTION__ => 'int']);
         $this->assertArrayHasKey(__FUNCTION__, $item->getCasts());
     }
@@ -973,7 +973,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanGuardAttributes()
+    public function it_can_guard_attributes()
     {
         $item = new ItemStub(['secret' => 'foo']);
         $this->assertTrue($item->isGuarded('secret'));
@@ -995,9 +995,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanMergeGuarded()
+    public function it_can_merge_guarded()
     {
-        $item = new Item();
+        $item = new Item;
         $item->guard([]);
         $this->assertFalse($item->isGuarded('foo'));
 
@@ -1012,7 +1012,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanUseTheGuardedCallback()
+    public function it_can_use_the_guarded_callback()
     {
         $mock = $this->getMockBuilder(\stdClass::class)
             ->addMethods(['callback'])
@@ -1031,11 +1031,11 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanBeTotallyGuarded()
+    public function it_can_be_totally_guarded()
     {
         $this->expectException(MassAssignmentException::class);
 
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->guard(['*']);
         $item->fillable([]);
         $item->fill(['name' => 'John Doe']);
@@ -1044,7 +1044,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanBeFillable()
+    public function it_can_be_fillable()
     {
         $item = new ItemStub(['foo' => 'bar']);
         $this->assertFalse($item->isFillable('foo'));
@@ -1054,7 +1054,7 @@ class ItemTest extends TestCase
         $item->foo = 'bar';
         $this->assertEquals('bar', $item->foo);
 
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->forceFill(['foo' => 'bar']);
         $this->assertEquals('bar', $item->foo);
     }
@@ -1062,9 +1062,9 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanMergeFillable()
+    public function it_can_merge_fillable()
     {
-        $item = new ItemStub();
+        $item = new ItemStub;
         $item->fillable(['foo']);
         $item->mergeFillable(['bar']);
         $this->assertEquals(['foo', 'bar'], $item->getFillable());
@@ -1073,7 +1073,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function itCanHydrateAnArrayOfAttributes()
+    public function it_can_hydrate_an_array_of_attributes()
     {
         $items = ItemStub::hydrate([['name' => 'John Doe']]);
         $this->assertInstanceOf(ItemStub::class, $items[0]);

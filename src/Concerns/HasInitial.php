@@ -12,13 +12,12 @@ trait HasInitial
     protected $initial = [];
 
     /**
-     * @param string|null $key
-     *
+     * @param  string|null  $key
      * @return array|mixed
      */
     public function getInitial($key = null)
     {
-        if (null === $key) {
+        if ($key === null) {
             return $this->initial;
         }
 
@@ -26,8 +25,6 @@ trait HasInitial
     }
 
     /**
-     * @param array $initial
-     *
      * @return static
      */
     public function setInitial(array $initial)
@@ -38,14 +35,12 @@ trait HasInitial
     }
 
     /**
-     * @param string|null $key
-     *
-     * @return bool
+     * @param  string|null  $key
      */
     public function hasInitial($key = null): bool
     {
-        if (null === $key) {
-            return !empty($this->initial);
+        if ($key === null) {
+            return ! empty($this->initial);
         }
 
         return isset($this->initial[$key]);

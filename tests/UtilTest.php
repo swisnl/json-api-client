@@ -7,13 +7,13 @@ use Swis\JsonApi\Client\Util;
 
 class UtilTest extends TestCase
 {
-    public function testLower()
+    public function test_lower()
     {
         $this->assertSame('foo bar baz', Util::stringLower('FOO BAR BAZ'));
         $this->assertSame('foo bar baz', Util::stringLower('fOo Bar bAz'));
     }
 
-    public function testSnake()
+    public function test_snake()
     {
         $this->assertSame('laravel_p_h_p_framework', Util::stringSnake('LaravelPHPFramework'));
         $this->assertSame('laravel_php_framework', Util::stringSnake('LaravelPhpFramework'));
@@ -32,7 +32,7 @@ class UtilTest extends TestCase
         $this->assertSame('żółtałódka', Util::stringSnake('ŻółtaŁódka'));
     }
 
-    public function testStudly()
+    public function test_studly()
     {
         $this->assertSame('LaravelPHPFramework', Util::stringStudly('laravel_p_h_p_framework'));
         $this->assertSame('LaravelPhpFramework', Util::stringStudly('laravel_php_framework'));
@@ -46,7 +46,7 @@ class UtilTest extends TestCase
         $this->assertSame('FooBarBaz', Util::stringStudly('foo-bar_baz'));
     }
 
-    public function testArrayExcept()
+    public function test_array_except()
     {
         $testArray = [
             'first' => 'First',

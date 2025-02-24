@@ -13,9 +13,9 @@ use Swis\JsonApi\Client\Interfaces\RepositoryInterface;
 
 class Repository extends BaseRepository implements RepositoryInterface
 {
+    use Delete;
     use FetchMany;
     use FetchOne;
-    use TakeOne;
     use Save;
-    use Delete;
+    use TakeOne;
 }

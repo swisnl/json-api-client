@@ -16,10 +16,6 @@ class ErrorSource
      */
     protected $parameter;
 
-    /**
-     * @param string|null $pointer
-     * @param string|null $parameter
-     */
     public function __construct(?string $pointer = null, ?string $parameter = null)
     {
         $this->pointer = $pointer;

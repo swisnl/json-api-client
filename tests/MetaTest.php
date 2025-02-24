@@ -9,7 +9,7 @@ use Swis\JsonApi\Client\Meta;
 
 class MetaTest extends TestCase
 {
-    public function testGet()
+    public function test_get()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -17,7 +17,7 @@ class MetaTest extends TestCase
         $this->assertNull($meta->other);
     }
 
-    public function testOffsetGet()
+    public function test_offset_get()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -25,7 +25,7 @@ class MetaTest extends TestCase
         $this->assertNull($meta['other']);
     }
 
-    public function testIsset()
+    public function test_isset()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -33,7 +33,7 @@ class MetaTest extends TestCase
         $this->assertFalse(isset($meta->other));
     }
 
-    public function testOffsetExists()
+    public function test_offset_exists()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -41,7 +41,7 @@ class MetaTest extends TestCase
         $this->assertFalse(isset($meta['other']));
     }
 
-    public function testSet()
+    public function test_set()
     {
         $meta = new Meta([]);
 
@@ -50,7 +50,7 @@ class MetaTest extends TestCase
         $this->assertEquals('bar', $meta->foo);
     }
 
-    public function testOffsetSet()
+    public function test_offset_set()
     {
         $meta = new Meta([]);
 
@@ -59,7 +59,7 @@ class MetaTest extends TestCase
         $this->assertEquals('bar', $meta['foo']);
     }
 
-    public function testUnset()
+    public function test_unset()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -68,7 +68,7 @@ class MetaTest extends TestCase
         $this->assertNull($meta->foo);
     }
 
-    public function testOffsetUnset()
+    public function test_offset_unset()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -77,7 +77,7 @@ class MetaTest extends TestCase
         $this->assertNull($meta['foo']);
     }
 
-    public function testToArray()
+    public function test_to_array()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -87,7 +87,7 @@ class MetaTest extends TestCase
         );
     }
 
-    public function testToJson()
+    public function test_to_json()
     {
         $meta = new Meta(['foo' => 'bar']);
 
@@ -97,7 +97,7 @@ class MetaTest extends TestCase
         );
     }
 
-    public function testJsonSerialize()
+    public function test_json_serialize()
     {
         $meta = new Meta(['foo' => 'bar']);
 

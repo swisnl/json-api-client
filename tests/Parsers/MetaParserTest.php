@@ -14,9 +14,9 @@ class MetaParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsDataToMeta()
+    public function it_converts_data_to_meta()
     {
-        $parser = new MetaParser();
+        $parser = new MetaParser;
         $meta = $parser->parse($this->getMeta());
 
         $this->assertInstanceOf(Meta::class, $meta);
@@ -29,11 +29,11 @@ class MetaParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenDataIsNotAnObject($invalidData)
+    public function it_throws_when_data_is_not_an_object($invalidData)
     {
-        $parser = new MetaParser();
+        $parser = new MetaParser;
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(sprintf('Meta MUST be an object, "%s" given.', gettype($invalidData)));

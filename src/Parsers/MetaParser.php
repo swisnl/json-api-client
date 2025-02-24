@@ -13,13 +13,11 @@ use Swis\JsonApi\Client\Meta;
 class MetaParser
 {
     /**
-     * @param mixed $data
-     *
-     * @return \Swis\JsonApi\Client\Meta
+     * @param  mixed  $data
      */
     public function parse($data): Meta
     {
-        if (!is_object($data)) {
+        if (! is_object($data)) {
             throw new ValidationException(sprintf('Meta MUST be an object, "%s" given.', gettype($data)));
         }
 

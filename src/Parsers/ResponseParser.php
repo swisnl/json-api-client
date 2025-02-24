@@ -22,8 +22,6 @@ class ResponseParser implements ResponseParserInterface
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\TypeMapperInterface|null $typeMapper
-     *
      * @return static
      */
     public static function create(?TypeMapperInterface $typeMapper = null): self
@@ -31,19 +29,14 @@ class ResponseParser implements ResponseParserInterface
         return new static(DocumentParser::create($typeMapper));
     }
 
-    /**
-     * @param \Psr\Http\Message\ResponseInterface $response
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
-     */
     public function parse(ResponseInterface $response): DocumentInterface
     {
-        $document = new InvalidResponseDocument();
+        $document = new InvalidResponseDocument;
 
         if ($this->responseHasBody($response)) {
             $document = $this->parser->parse((string) $response->getBody());
         } elseif ($this->responseHasSuccessfulStatusCode($response)) {
-            $document = new Document();
+            $document = new Document;
         }
 
         $document->setResponse($response);
@@ -51,21 +44,11 @@ class ResponseParser implements ResponseParserInterface
         return $document;
     }
 
-    /**
-     * @param \Psr\Http\Message\ResponseInterface $response
-     *
-     * @return bool
-     */
     private function responseHasBody(ResponseInterface $response): bool
     {
         return (bool) $response->getBody()->getSize();
     }
 
-    /**
-     * @param \Psr\Http\Message\ResponseInterface $response
-     *
-     * @return bool
-     */
     private function responseHasSuccessfulStatusCode(ResponseInterface $response): bool
     {
         return $response->getStatusCode() >= 200 && $response->getStatusCode() < 300;

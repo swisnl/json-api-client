@@ -27,17 +27,11 @@ abstract class AbstractRelation
      */
     protected $omitIncluded = false;
 
-    /**
-     * @return bool
-     */
     public function hasData(): bool
     {
         return $this->data !== false;
     }
 
-    /**
-     * @return bool
-     */
     public function hasIncluded(): bool
     {
         return $this->included !== false;
@@ -54,17 +48,12 @@ abstract class AbstractRelation
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function hasAssociated(): bool
     {
         return $this->hasData() || $this->hasIncluded();
     }
 
     /**
-     * @param bool $omitIncluded
-     *
      * @return $this
      */
     public function setOmitIncluded(bool $omitIncluded)
@@ -74,9 +63,6 @@ abstract class AbstractRelation
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function shouldOmitIncluded(): bool
     {
         return $this->omitIncluded;

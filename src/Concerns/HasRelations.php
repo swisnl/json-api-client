@@ -26,8 +26,6 @@ trait HasRelations
     /**
      * Create a singular relation to another item.
      *
-     * @param string      $itemClass
-     * @param string|null $name
      *
      * @return \Swis\JsonApi\Client\Relations\HasOneRelation
      */
@@ -35,8 +33,8 @@ trait HasRelations
     {
         $name = $name ?: $this->guessRelationName();
 
-        if (!array_key_exists($name, $this->relations)) {
-            $this->relations[$name] = $this->newHasOne((new $itemClass())->getType());
+        if (! array_key_exists($name, $this->relations)) {
+            $this->relations[$name] = $this->newHasOne((new $itemClass)->getType());
         }
 
         return $this->relations[$name];
@@ -50,8 +48,6 @@ trait HasRelations
     /**
      * Create a plural relation to another item.
      *
-     * @param string      $itemClass
-     * @param string|null $name
      *
      * @return \Swis\JsonApi\Client\Relations\HasManyRelation
      */
@@ -59,8 +55,8 @@ trait HasRelations
     {
         $name = $name ?: $this->guessRelationName();
 
-        if (!array_key_exists($name, $this->relations)) {
-            $this->relations[$name] = $this->newHasMany((new $itemClass())->getType());
+        if (! array_key_exists($name, $this->relations)) {
+            $this->relations[$name] = $this->newHasMany((new $itemClass)->getType());
         }
 
         return $this->relations[$name];
@@ -74,7 +70,6 @@ trait HasRelations
     /**
      * Create a singular relation.
      *
-     * @param string|null $name
      *
      * @return \Swis\JsonApi\Client\Relations\MorphToRelation
      */
@@ -82,7 +77,7 @@ trait HasRelations
     {
         $name = $name ?: $this->guessRelationName();
 
-        if (!array_key_exists($name, $this->relations)) {
+        if (! array_key_exists($name, $this->relations)) {
             $this->relations[$name] = $this->newMorphTo();
         }
 
@@ -91,13 +86,12 @@ trait HasRelations
 
     protected function newMorphTo(): OneRelationInterface
     {
-        return new MorphToRelation();
+        return new MorphToRelation;
     }
 
     /**
      * Create a plural relation.
      *
-     * @param string|null $name
      *
      * @return \Swis\JsonApi\Client\Relations\MorphToManyRelation
      */
@@ -105,7 +99,7 @@ trait HasRelations
     {
         $name = $name ?: $this->guessRelationName();
 
-        if (!array_key_exists($name, $this->relations)) {
+        if (! array_key_exists($name, $this->relations)) {
             $this->relations[$name] = $this->newMorphToMany();
         }
 
@@ -114,13 +108,11 @@ trait HasRelations
 
     protected function newMorphToMany(): ManyRelationInterface
     {
-        return new MorphToManyRelation();
+        return new MorphToManyRelation;
     }
 
     /**
      * Guess the relationship name.
-     *
-     * @return string
      */
     protected function guessRelationName(): string
     {
@@ -138,8 +130,6 @@ trait HasRelations
     }
 
     /**
-     * @param string $name
-     *
      * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface|null
      */
     public function getRelation(string $name)
@@ -149,10 +139,6 @@ trait HasRelations
 
     /**
      * Get the relationship data (included).
-     *
-     * @param string $name
-     *
-     * @return \Swis\JsonApi\Client\Interfaces\DataInterface|null
      */
     public function getRelationValue(string $name): ?DataInterface
     {
@@ -175,11 +161,7 @@ trait HasRelations
     /**
      * Set the specific relationship on the model.
      *
-     * @param string                                                   $relation
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface|false|null $value
-     * @param \Swis\JsonApi\Client\Links|null                          $links
-     * @param \Swis\JsonApi\Client\Meta|null                           $meta
-     *
+     * @param  \Swis\JsonApi\Client\Interfaces\DataInterface|false|null  $value
      * @return static
      */
     public function setRelation(string $relation, $value = false, ?Links $links = null, ?Meta $meta = null)
@@ -206,19 +188,12 @@ trait HasRelations
         return $this;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function hasRelation(string $name): bool
     {
         return array_key_exists($name, $this->relations);
     }
 
     /**
-     * @param string $name
-     *
      * @return static
      */
     public function unsetRelation(string $name)

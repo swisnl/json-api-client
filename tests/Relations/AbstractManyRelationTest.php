@@ -14,11 +14,11 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function itCanAssociateACollectionAndGetTheIncluded()
+    public function it_can_associate_a_collection_and_get_the_included()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
-        $collection = new Collection([new Item()]);
+        $collection = new Collection([new Item]);
 
         $mock->associate($collection);
 
@@ -28,28 +28,28 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function itCanDissociateACollection()
+    public function it_can_dissociate_a_collection()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
-        $collection = new Collection([new Item()]);
+        $collection = new Collection([new Item]);
 
         $mock->associate($collection);
         $this->assertNotNull($mock->getIncluded());
 
         $mock->dissociate();
 
-        $this->assertEquals($mock->getIncluded(), new Collection());
+        $this->assertEquals($mock->getIncluded(), new Collection);
     }
 
     /**
      * @test
      */
-    public function itReturnsABooleanIndicatingIfItHasIncluded()
+    public function it_returns_a_boolean_indicating_if_it_has_included()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
-        $collection = new Collection([new Item()]);
+        $collection = new Collection([new Item]);
 
         $this->assertFalse($mock->hasIncluded());
         $mock->associate($collection);
@@ -60,7 +60,7 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function itCanSetAndGetOmitIncluded()
+    public function it_can_set_and_get_omit_included()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);
@@ -74,7 +74,7 @@ class AbstractManyRelationTest extends TestCase
     /**
      * @test
      */
-    public function itCanSortTheIncluded()
+    public function it_can_sort_the_included()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Relations\AbstractManyRelation $mock */
         $mock = $this->getMockForAbstractClass(AbstractManyRelation::class);

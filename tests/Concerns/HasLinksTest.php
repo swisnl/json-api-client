@@ -13,7 +13,7 @@ class HasLinksTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetLinks()
+    public function it_can_get_and_set_links()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasLinks $mock */
         $mock = $this->getMockForTrait(HasLinks::class);

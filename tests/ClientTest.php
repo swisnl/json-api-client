@@ -15,9 +15,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetTheBaseUrl()
+    public function it_can_get_and_set_the_base_url()
     {
-        $client = new Client();
+        $client = new Client;
 
         $this->assertEquals('', $client->getBaseUri());
         $client->setBaseUri('http://www.test-changed.com');
@@ -27,9 +27,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetTheDefaultHeaders()
+    public function it_can_get_and_set_the_default_headers()
     {
-        $client = new Client();
+        $client = new Client;
 
         $this->assertEquals(
             [
@@ -58,9 +58,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsAGetRequest()
+    public function it_builds_a_get_request()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $endpoint = '/test/1';
@@ -82,9 +82,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsADeleteRequest()
+    public function it_builds_a_delete_request()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $endpoint = '/test/1';
@@ -106,9 +106,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsAPatchRequest()
+    public function it_builds_a_patch_request()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $endpoint = '/test/1';
@@ -131,9 +131,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsAPostRequest()
+    public function it_builds_a_post_request()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $endpoint = '/test/1';
@@ -156,9 +156,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsOtherRequests()
+    public function it_builds_other_requests()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $endpoint = '/test/1';
@@ -180,9 +180,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsRequestsWithAStringAsBody()
+    public function it_builds_requests_with_a_string_as_body()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $body = 'testvar=testvalue';
@@ -195,9 +195,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsRequestsWithAResourceAsBody()
+    public function it_builds_requests_with_a_resource_as_body()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $body = fopen('php://temp', 'r+');
@@ -211,9 +211,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsRequestsWithAStreamAsBody()
+    public function it_builds_requests_with_a_stream_as_body()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $body = Utils::streamFor('testvar=testvalue');
@@ -226,9 +226,9 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itBuildsRequestsWithoutABody()
+    public function it_builds_requests_without_a_body()
     {
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
 
         $body = null;
@@ -241,12 +241,12 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itPrependsTheBaseUriIfTheEndpointIsRelative()
+    public function it_prepends_the_base_uri_if_the_endpoint_is_relative()
     {
         $baseUri = 'http://example.com/api';
         $endpoint = '/test/1';
 
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
         $client->setBaseUri($baseUri);
 
@@ -258,12 +258,12 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function itDoesNotPrependTheBaseUriIfTheEndpointIsAlreadyAbsolute()
+    public function it_does_not_prepend_the_base_uri_if_the_endpoint_is_already_absolute()
     {
         $baseUri = 'http://example.com/api';
         $endpoint = 'http://foo.bar/test/1';
 
-        $httpClient = new HttpMockClient();
+        $httpClient = new HttpMockClient;
         $client = new Client($httpClient);
         $client->setBaseUri($baseUri);
 

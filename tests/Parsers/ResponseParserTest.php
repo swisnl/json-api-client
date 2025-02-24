@@ -17,7 +17,7 @@ class ResponseParserTest extends TestCase
     /**
      * @test
      */
-    public function itCanCreateAnInstanceUsingAFactoryMethod()
+    public function it_can_create_an_instance_using_a_factory_method()
     {
         $this->assertInstanceOf(ResponseParser::class, ResponseParser::create());
     }
@@ -25,12 +25,12 @@ class ResponseParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsPsrReponseToDocument()
+    public function it_converts_psr_reponse_to_document()
     {
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser->expects($this->once())
             ->method('parse')
-            ->willReturn(new CollectionDocument());
+            ->willReturn(new CollectionDocument);
 
         $parser = new ResponseParser($documentParser);
 
@@ -44,7 +44,7 @@ class ResponseParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAResponseWithAnEmptyBody()
+    public function it_parses_a_response_with_an_empty_body()
     {
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser->expects($this->never())
@@ -62,7 +62,7 @@ class ResponseParserTest extends TestCase
     /**
      * @test
      */
-    public function itParsesAnErrorResponse()
+    public function it_parses_an_error_response()
     {
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser->expects($this->never())

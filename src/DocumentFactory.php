@@ -12,16 +12,14 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 class DocumentFactory
 {
     /**
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $data
-     *
      * @return \Swis\JsonApi\Client\ItemDocument|\Swis\JsonApi\Client\CollectionDocument
      */
     public function make(DataInterface $data): DocumentInterface
     {
         if ($data instanceof ItemInterface) {
-            $document = new ItemDocument();
+            $document = new ItemDocument;
         } elseif ($data instanceof Collection) {
-            $document = new CollectionDocument();
+            $document = new CollectionDocument;
         } else {
             throw new UnsupportedDataException(sprintf('%s is not supported as input', get_class($data)));
         }
@@ -29,11 +27,6 @@ class DocumentFactory
         return $document->setData($data)->setIncluded($this->getIncluded($data));
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\DataInterface $data
-     *
-     * @return \Swis\JsonApi\Client\Collection
-     */
     private function getIncluded(DataInterface $data): Collection
     {
         return Collection::wrap($data)
@@ -42,18 +35,13 @@ class DocumentFactory
             ->values();
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
-     *
-     * @return \Swis\JsonApi\Client\Collection
-     */
     private function getIncludedFromItem(ItemInterface $item): Collection
     {
         return Collection::make($item->getRelations())
             ->reject(
                 static function ($relationship) {
                     /* @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationship */
-                    return $relationship->shouldOmitIncluded() || !$relationship->hasIncluded();
+                    return $relationship->shouldOmitIncluded() || ! $relationship->hasIncluded();
                 }
             )
             ->flatMap(
@@ -66,11 +54,6 @@ class DocumentFactory
             ->filter(fn (ItemInterface $item) => $this->itemCanBeIncluded($item));
     }
 
-    /**
-     * @param \Swis\JsonApi\Client\Interfaces\ItemInterface $item
-     *
-     * @return bool
-     */
     private function itemCanBeIncluded(ItemInterface $item): bool
     {
         return $item->hasType()

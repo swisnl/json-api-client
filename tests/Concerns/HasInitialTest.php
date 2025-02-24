@@ -12,7 +12,7 @@ class HasInitialTest extends TestCase
     /**
      * @test
      */
-    public function itCanGetAndSetInitialAttributes()
+    public function it_can_get_and_set_initial_attributes()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasInitial $mock */
         $mock = $this->getMockForTrait(HasInitial::class);
@@ -27,7 +27,7 @@ class HasInitialTest extends TestCase
     /**
      * @test
      */
-    public function itReturnsABooleanIndicatingIfItHasInitialAttributes()
+    public function it_returns_a_boolean_indicating_if_it_has_initial_attributes()
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasInitial $mock */
         $mock = $this->getMockForTrait(HasInitial::class);

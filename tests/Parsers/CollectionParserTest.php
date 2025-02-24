@@ -16,12 +16,12 @@ class CollectionParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsDataToCollection()
+    public function it_converts_data_to_collection()
     {
         $itemParser = $this->createMock(ItemParser::class);
         $itemParser->expects($this->exactly(2))
             ->method('parse')
-            ->willReturn(new PlainItem());
+            ->willReturn(new PlainItem);
 
         $parser = new CollectionParser($itemParser);
         $collection = $parser->parse($this->getResourceCollection());
@@ -38,9 +38,9 @@ class CollectionParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenDataIsNotAnArray($invalidData)
+    public function it_throws_when_data_is_not_an_array($invalidData)
     {
         $parser = new CollectionParser($this->createMock(ItemParser::class));
 
@@ -52,7 +52,7 @@ class CollectionParserTest extends TestCase
 
     public function provideInvalidData(): array
     {
-        $object = new \stdClass();
+        $object = new \stdClass;
         $object->foo = 'bar';
 
         return [

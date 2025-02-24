@@ -14,8 +14,6 @@ use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 abstract class AbstractManyRelation extends AbstractRelation implements ManyRelationInterface
 {
     /**
-     * @param \Swis\JsonApi\Client\Collection|null $data
-     *
      * @return $this
      */
     public function setData(?Collection $data)
@@ -25,17 +23,12 @@ abstract class AbstractManyRelation extends AbstractRelation implements ManyRela
         return $this;
     }
 
-    /**
-     * @return \Swis\JsonApi\Client\Collection|null
-     */
     public function getData(): ?Collection
     {
         return $this->data ?: null;
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Collection $included
-     *
      * @return $this
      */
     public function setIncluded(Collection $included)
@@ -45,17 +38,12 @@ abstract class AbstractManyRelation extends AbstractRelation implements ManyRela
         return $this;
     }
 
-    /**
-     * @return \Swis\JsonApi\Client\Collection
-     */
     public function getIncluded(): Collection
     {
-        return $this->included ?: new Collection();
+        return $this->included ?: new Collection;
     }
 
     /**
-     * @param \Swis\JsonApi\Client\Collection $included
-     *
      * @return $this
      */
     public function associate(Collection $included)
@@ -64,9 +52,6 @@ abstract class AbstractManyRelation extends AbstractRelation implements ManyRela
             ->setIncluded($included);
     }
 
-    /**
-     * @return \Swis\JsonApi\Client\Collection
-     */
     public function getAssociated(): Collection
     {
         if ($this->hasIncluded()) {
@@ -77,17 +62,16 @@ abstract class AbstractManyRelation extends AbstractRelation implements ManyRela
             return $this->getData();
         }
 
-        return new Collection();
+        return new Collection;
     }
 
     /**
      * Sort the included collection by the given key.
      * You can also pass your own callback to determine how to sort the collection values.
      *
-     * @param callable $callback
-     * @param int      $options
-     * @param bool     $descending
-     *
+     * @param  callable  $callback
+     * @param  int  $options
+     * @param  bool  $descending
      * @return $this
      */
     public function sortBy($callback, $options = SORT_REGULAR, $descending = false)

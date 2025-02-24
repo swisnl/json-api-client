@@ -26,7 +26,7 @@ class ItemHydratorTest extends TestCase
      */
     private function getItemHydrator()
     {
-        $typeMapper = new TypeMapper();
+        $typeMapper = new TypeMapper;
         $typeMapper->setMapping('hydratedItem', Item::class);
 
         $typeMapper->setMapping('related-item', RelatedItem::class);
@@ -38,7 +38,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesAttributes()
+    public function it_hydrates_attributes()
     {
         $data = [
             'testattribute1' => 'test',
@@ -49,7 +49,7 @@ class ItemHydratorTest extends TestCase
             'testarray' => ['1', '2', '3'],
         ];
 
-        $item = new Item();
+        $item = new Item;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         $this->assertEquals($data, $item->getAttributes());
@@ -58,13 +58,13 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesHasoneRelationshipsById()
+    public function it_hydrates_hasone_relationships_by_id()
     {
         $data = [
             'hasone_relation' => '1',
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
@@ -80,7 +80,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesHasoneRelationshipsWithAttributes()
+    public function it_hydrates_hasone_relationships_with_attributes()
     {
         $data = [
             'hasone_relation' => [
@@ -90,7 +90,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
@@ -108,13 +108,13 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itDissociatesHasoneRelationshipsWhenNull()
+    public function it_dissociates_hasone_relationships_when_null()
     {
         $data = [
             'hasone_relation' => null,
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
@@ -130,7 +130,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesHasmanyRelationshipsById()
+    public function it_hydrates_hasmany_relationships_by_id()
     {
         $data = [
             'hasmany_relation' => [
@@ -139,7 +139,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
@@ -160,7 +160,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesHasmanyRelationshipsWithAttributes()
+    public function it_hydrates_hasmany_relationships_with_attributes()
     {
         $data = [
             'hasmany_relation' => [
@@ -177,7 +177,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
@@ -202,13 +202,13 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itDissociatesHasmanyRelationshipsWhenEmptyArray()
+    public function it_dissociates_hasmany_relationships_when_empty_array()
     {
         $data = [
             'hasmany_relation' => [],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
@@ -224,7 +224,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesMorphtoRelationshipsById()
+    public function it_hydrates_morphto_relationships_by_id()
     {
         $data = [
             'morphto_relation' => [
@@ -233,7 +233,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
@@ -250,7 +250,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesMorphtoRelationshipsWithAttributes()
+    public function it_hydrates_morphto_relationships_with_attributes()
     {
         $data = [
             'morphto_relation' => [
@@ -260,7 +260,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
@@ -278,13 +278,13 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itDissociatesMorphtoRelationshipsWhenNull()
+    public function it_dissociates_morphto_relationships_when_null()
     {
         $data = [
             'morphto_relation' => null,
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
@@ -300,7 +300,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesMorphtoRelationshipsWithUnmappedItems()
+    public function it_hydrates_morphto_relationships_with_unmapped_items()
     {
         $data = [
             'morphto_relation' => [
@@ -309,7 +309,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
@@ -324,7 +324,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsForMorphtoRelationshipsWithoutTypeAttribute()
+    public function it_throws_for_morphto_relationships_without_type_attribute()
     {
         $data = [
             'morphto_relation' => [
@@ -333,7 +333,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
 
         $this->expectException(HydrationException::class);
         $this->getItemHydrator()->hydrate($item, $data);
@@ -342,7 +342,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesMorphtomanyRelationshipsById()
+    public function it_hydrates_morphtomany_relationships_by_id()
     {
         $data = [
             'morphtomany_relation' => [
@@ -357,7 +357,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
@@ -380,7 +380,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesMorphtomanyRelationshipsWithAttributes()
+    public function it_hydrates_morphtomany_relationships_with_attributes()
     {
         $data = [
             'morphtomany_relation' => [
@@ -397,7 +397,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
@@ -422,13 +422,13 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itDissociatesMorphtomanyRelationshipsWhenEmptyArray()
+    public function it_dissociates_morphtomany_relationships_when_empty_array()
     {
         $data = [
             'morphtomany_relation' => [],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
@@ -444,7 +444,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesMorphtomanyRelationshipsWithUnmappedItems()
+    public function it_hydrates_morphtomany_relationships_with_unmapped_items()
     {
         $data = [
             'morphtomany_relation' => [
@@ -459,7 +459,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
@@ -479,7 +479,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsForMorphtomanyRelationshipsWithoutTypeAttribute()
+    public function it_throws_for_morphtomany_relationships_without_type_attribute()
     {
         $data = [
             'morphtomany_relation' => [
@@ -490,7 +490,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
 
         $this->expectException(HydrationException::class);
         $this->getItemHydrator()->hydrate($item, $data);
@@ -499,7 +499,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itHydratesNestedRelationshipItems()
+    public function it_hydrates_nested_relationship_items()
     {
         $data = [
             'hasone_relation' => [
@@ -508,7 +508,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
@@ -529,7 +529,7 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itDissociatesAndHydratesRelationshipsInOneCall()
+    public function it_dissociates_and_hydrates_relationships_in_one_call()
     {
         $data = [
             'hasone_relation' => null,
@@ -539,7 +539,7 @@ class ItemHydratorTest extends TestCase
             ],
         ];
 
-        $item = new WithRelationshipItem();
+        $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
         /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
@@ -557,13 +557,10 @@ class ItemHydratorTest extends TestCase
      * @test
      *
      * @dataProvider provideIdArguments
-     *
-     * @param $givenId
-     * @param $expectedId
      */
-    public function itHydratesTheIdWhenNotNullOrEmptyString($givenId, $expectedId)
+    public function it_hydrates_the_id_when_not_null_or_empty_string($givenId, $expectedId)
     {
-        $item = new Item();
+        $item = new Item;
         $item = $this->getItemHydrator()->hydrate($item, [], $givenId);
 
         static::assertSame($expectedId, $item->getId());
@@ -583,13 +580,13 @@ class ItemHydratorTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenRelationshipIsPresentInAvailableRelationshipsButTheMethodDoesNotExist()
+    public function it_throws_when_relationship_is_present_in_available_relationships_but_the_method_does_not_exist()
     {
         $data = [
             'does_not_exist' => '1',
         ];
 
-        $item = new ParentItem();
+        $item = new ParentItem;
 
         $this->expectException(HydrationException::class);
         $this->expectExceptionMessage(sprintf('Method doesNotExist not found on %s', ParentItem::class));

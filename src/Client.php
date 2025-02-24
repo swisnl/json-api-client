@@ -39,45 +39,28 @@ class Client implements ClientInterface
         $this->streamFactory = $streamFactory ?: Psr17FactoryDiscovery::findStreamFactory();
     }
 
-    /**
-     * @return string
-     */
     public function getBaseUri(): string
     {
         return $this->baseUri;
     }
 
-    /**
-     * @param string $baseUri
-     */
     public function setBaseUri(string $baseUri): void
     {
         $this->baseUri = $baseUri;
     }
 
-    /**
-     * @return array
-     */
     public function getDefaultHeaders(): array
     {
         return $this->defaultHeaders;
     }
 
-    /**
-     * @param array $defaultHeaders
-     */
     public function setDefaultHeaders(array $defaultHeaders): void
     {
         $this->defaultHeaders = $defaultHeaders;
     }
 
     /**
-     * @param string $endpoint
-     * @param array  $headers
-     *
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function get(string $endpoint, array $headers = []): ResponseInterface
     {
@@ -85,13 +68,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param string                                                 $endpoint
-     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
-     * @param array                                                  $headers
+     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function post(string $endpoint, $body, array $headers = []): ResponseInterface
     {
@@ -99,13 +78,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param string                                                 $endpoint
-     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
-     * @param array                                                  $headers
+     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function patch(string $endpoint, $body, array $headers = []): ResponseInterface
     {
@@ -113,12 +88,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param string $endpoint
-     * @param array  $headers
-     *
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function delete(string $endpoint, array $headers = []): ResponseInterface
     {
@@ -126,14 +96,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param string                                                 $method
-     * @param string                                                 $endpoint
-     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
-     * @param array                                                  $headers
+     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface
-     *
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function request(string $method, string $endpoint, $body = null, array $headers = []): ResponseInterface
     {
@@ -141,12 +106,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param string                                                 $method
-     * @param string                                                 $endpoint
-     * @param string|resource|\Psr\Http\Message\StreamInterface|null $body
-     * @param array                                                  $headers
-     *
-     * @return \Psr\Http\Message\RequestInterface
+     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
      */
     protected function buildRequest(string $method, string $endpoint, $body = null, array $headers = []): RequestInterface
     {
@@ -156,7 +116,7 @@ class Client implements ClientInterface
             if (is_resource($body)) {
                 $body = $this->streamFactory->createStreamFromResource($body);
             }
-            if (!($body instanceof StreamInterface)) {
+            if (! ($body instanceof StreamInterface)) {
                 $body = $this->streamFactory->createStream($body);
             }
 
@@ -170,11 +130,6 @@ class Client implements ClientInterface
         return $request;
     }
 
-    /**
-     * @param string $endpoint
-     *
-     * @return string
-     */
     protected function getEndpoint(string $endpoint): string
     {
         if (strpos($endpoint, 'http://') === 0 || strpos($endpoint, 'https://') === 0) {
@@ -184,11 +139,6 @@ class Client implements ClientInterface
         return $this->baseUri.$endpoint;
     }
 
-    /**
-     * @param array $headers
-     *
-     * @return array
-     */
     protected function mergeHeaders(array $headers): array
     {
         return array_merge($this->defaultHeaders, $headers);

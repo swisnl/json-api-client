@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Swis\JsonApi\Client\Concerns\HasMeta;
 
-class Jsonapi implements Arrayable, Jsonable, \JsonSerializable
+class Jsonapi implements \JsonSerializable, Arrayable, Jsonable
 {
     use HasMeta;
 
@@ -17,10 +17,6 @@ class Jsonapi implements Arrayable, Jsonable, \JsonSerializable
      */
     protected $version;
 
-    /**
-     * @param string|null                    $version
-     * @param \Swis\JsonApi\Client\Meta|null $meta
-     */
     public function __construct(?string $version = null, ?Meta $meta = null)
     {
         $this->version = $version;
@@ -37,8 +33,6 @@ class Jsonapi implements Arrayable, Jsonable, \JsonSerializable
 
     /**
      * {@inheritdoc}
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -58,8 +52,7 @@ class Jsonapi implements Arrayable, Jsonable, \JsonSerializable
     /**
      * {@inheritdoc}
      *
-     * @param int $options
-     *
+     * @param  int  $options
      * @return false|string
      */
     public function toJson($options = 0)

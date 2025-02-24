@@ -42,16 +42,6 @@ class Error
      */
     protected $source;
 
-    /**
-     * @param string|null                           $id
-     * @param \Swis\JsonApi\Client\Links|null       $links
-     * @param string|null                           $status
-     * @param string|null                           $code
-     * @param string|null                           $title
-     * @param string|null                           $detail
-     * @param \Swis\JsonApi\Client\ErrorSource|null $source
-     * @param \Swis\JsonApi\Client\Meta|null        $meta
-     */
     public function __construct(
         ?string $id = null,
         ?Links $links = null,

@@ -7,9 +7,6 @@ namespace Swis\JsonApi\Client\Actions;
 trait TakeOne
 {
     /**
-     * @param array $parameters
-     * @param array $headers
-     *
      * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
      */
     public function take(array $parameters = [], array $headers = [])

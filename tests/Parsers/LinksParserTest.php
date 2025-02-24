@@ -17,9 +17,9 @@ class LinksParserTest extends TestCase
     /**
      * @test
      */
-    public function itConvertsDataToLinks()
+    public function it_converts_data_to_links()
     {
-        $parser = new LinksParser(new MetaParser());
+        $parser = new LinksParser(new MetaParser);
         $links = $parser->parse($this->getLinks(), LinksParser::SOURCE_DOCUMENT);
 
         $this->assertInstanceOf(Links::class, $links);
@@ -54,9 +54,9 @@ class LinksParserTest extends TestCase
      *
      * @dataProvider provideInvalidData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenLinksIsNotAnObject($invalidData)
+    public function it_throws_when_links_is_not_an_object($invalidData)
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
@@ -83,9 +83,9 @@ class LinksParserTest extends TestCase
      *
      * @dataProvider provideInvalidLinkData
      *
-     * @param mixed $invalidData
+     * @param  mixed  $invalidData
      */
-    public function itThrowsWhenLinkIsNotAStringObjectOrNull($invalidData)
+    public function it_throws_when_link_is_not_a_string_object_or_null($invalidData)
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
@@ -108,7 +108,7 @@ class LinksParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenSelfLinkIsNull()
+    public function it_throws_when_self_link_is_null()
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
@@ -121,7 +121,7 @@ class LinksParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenRelatedLinkIsNull()
+    public function it_throws_when_related_link_is_null()
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
@@ -134,7 +134,7 @@ class LinksParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenRelationshipLinksMissesSelfAndRelatedLinks()
+    public function it_throws_when_relationship_links_misses_self_and_related_links()
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
@@ -147,7 +147,7 @@ class LinksParserTest extends TestCase
     /**
      * @test
      */
-    public function itThrowsWhenLinkDoesNotHaveHrefProperty()
+    public function it_throws_when_link_does_not_have_href_property()
     {
         $parser = new LinksParser($this->createMock(MetaParser::class));
 
