@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+* Nothing.
+
+## [2.5.0] - 2025-02-24
+
 ### Added
 
 * Added support for Laravel 12 [#104](https://github.com/swisnl/json-api-client/issues/104).
