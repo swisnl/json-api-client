@@ -2,7 +2,5 @@ composer.phar
 composer.lock
 /vendor/
 /.idea/
-/.php-cs-fixer.php
-/.php-cs-fixer.cache
 /.phpunit.result.cache
 /.phpunit.cache/test-results
