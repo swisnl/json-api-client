@@ -16,7 +16,7 @@
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^7.3",
-        "laravel/pint": "^1.21",
+        "laravel/pint": "^1.5",
         "php-http/mock-client": "^1.2",
         "phpunit/phpunit": "^9.5"
     },
