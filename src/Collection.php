@@ -6,6 +6,12 @@ namespace Swis\JsonApi\Client;
 
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 
+/**
+ * @template TKey of array-key
+ * @template TValue of \Swis\JsonApi\Client\Interfaces\ItemInterface
+ *
+ * @extends \Illuminate\Support\Collection<TKey, TValue>
+ */
 class Collection extends \Illuminate\Support\Collection implements DataInterface
 {
     /**
