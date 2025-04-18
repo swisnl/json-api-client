@@ -8,10 +8,20 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Links;
 use Swis\JsonApi\Client\Meta;
 
+/**
+ * @template TItem of \Swis\JsonApi\Client\Interfaces\ItemInterface
+ */
 interface ManyRelationInterface
 {
+    /**
+     * @param  \Swis\JsonApi\Client\Collection<array-key, TItem>|null  $data
+     * @return static
+     */
     public function setData(?Collection $data);
 
+    /**
+     * @return \Swis\JsonApi\Client\Collection<array-key, TItem>|null
+     */
     public function getData(): ?Collection;
 
     public function hasData(): bool;
@@ -23,6 +33,7 @@ interface ManyRelationInterface
     public function hasIncluded(): bool;
 
     /**
+     * @param  \Swis\JsonApi\Client\Collection<array-key, TItem>  $included
      * @return static
      */
     public function associate(Collection $included);
