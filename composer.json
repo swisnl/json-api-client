@@ -37,10 +37,6 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Hendrik Nijmeijer",
-            "email": "hendrik@swis.nl"
-        },
-        {
             "name": "Jasper Zonneveld",
             "email": "jasper@swis.nl",
             "homepage": "https://github.com/JaZo",
