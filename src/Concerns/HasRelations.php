@@ -26,8 +26,10 @@ trait HasRelations
     /**
      * Create a singular relation to another item.
      *
+     * @template TItem of \Swis\JsonApi\Client\Interfaces\ItemInterface
      *
-     * @return \Swis\JsonApi\Client\Relations\HasOneRelation
+     * @param  class-string<TItem>  $itemClass
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<TItem>
      */
     public function hasOne(string $itemClass, ?string $name = null): OneRelationInterface
     {
@@ -48,8 +50,10 @@ trait HasRelations
     /**
      * Create a plural relation to another item.
      *
+     * @template TItem of \Swis\JsonApi\Client\Interfaces\ItemInterface
      *
-     * @return \Swis\JsonApi\Client\Relations\HasManyRelation
+     * @param  class-string<TItem>  $itemClass
+     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<TItem>
      */
     public function hasMany(string $itemClass, ?string $name = null): ManyRelationInterface
     {
