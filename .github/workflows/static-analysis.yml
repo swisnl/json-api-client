@@ -1,0 +1,26 @@
+name: Run static analysis
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  types:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          tools: composer:v2
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
+
+      - name: Execute type checking
+        run: vendor/bin/phpstan --configuration="phpstan.types.neon.dist" --no-progress
