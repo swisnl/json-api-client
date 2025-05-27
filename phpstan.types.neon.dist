@@ -1,0 +1,5 @@
+parameters:
+  level: max
+  paths:
+    - tests\_mocks
+    - types
