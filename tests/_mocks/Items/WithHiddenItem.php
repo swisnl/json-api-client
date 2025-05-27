@@ -8,6 +8,9 @@ use Swis\JsonApi\Client\Item;
 
 class WithHiddenItem extends Item
 {
+    /**
+     * @var array<int, string>
+     */
     protected $hidden = [
         'testKey',
     ];

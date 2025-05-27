@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
+use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 use Swis\JsonApi\Client\Item;
 
 class RelatedItem extends Item
 {
-    /**
-     * @var string
-     */
     protected $type = 'related-item';
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $visible = [
         'test_related_attribute1',
@@ -22,13 +20,16 @@ class RelatedItem extends Item
     ];
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $availableRelations = [
         'parent_relation',
     ];
 
-    public function parentRelation()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem>
+     */
+    public function parentRelation(): OneRelationInterface
     {
         return $this->hasOne(WithRelationshipItem::class);
     }

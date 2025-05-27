@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
+use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
+use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 use Swis\JsonApi\Client\Item;
 
 class WithRelationshipItem extends Item
 {
-    /**
-     * @var string
-     */
     protected $type = 'item-with-relationship';
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $visible = [
         'test_attribute_1',
@@ -22,7 +21,7 @@ class WithRelationshipItem extends Item
     ];
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $availableRelations = [
         'hasone_relation',
@@ -31,22 +30,34 @@ class WithRelationshipItem extends Item
         'morphtomany_relation',
     ];
 
-    public function hasoneRelation()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem>
+     */
+    public function hasoneRelation(): OneRelationInterface
     {
         return $this->hasOne(RelatedItem::class);
     }
 
-    public function hasmanyRelation()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\RelatedItem>
+     */
+    public function hasmanyRelation(): ManyRelationInterface
     {
         return $this->hasMany(RelatedItem::class);
     }
 
-    public function morphtoRelation()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Interfaces\ItemInterface>
+     */
+    public function morphtoRelation(): OneRelationInterface
     {
         return $this->morphTo();
     }
 
-    public function morphtomanyRelation()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<\Swis\JsonApi\Client\Interfaces\ItemInterface>
+     */
+    public function morphtomanyRelation(): ManyRelationInterface
     {
         return $this->morphToMany();
     }
