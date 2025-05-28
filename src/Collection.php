@@ -7,7 +7,7 @@ namespace Swis\JsonApi\Client;
 use Swis\JsonApi\Client\Interfaces\DataInterface;
 
 /**
- * @template TKey of array-key
+ * @template TKey of int
  * @template TValue of \Swis\JsonApi\Client\Interfaces\ItemInterface
  *
  * @extends \Illuminate\Support\Collection<TKey, TValue>

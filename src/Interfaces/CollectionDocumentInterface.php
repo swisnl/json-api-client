@@ -10,7 +10,7 @@ namespace Swis\JsonApi\Client\Interfaces;
 interface CollectionDocumentInterface extends DocumentInterface
 {
     /**
-     * @return \Swis\JsonApi\Client\Collection<array-key, TItem>
+     * @return \Swis\JsonApi\Client\Collection<int, TItem>
      */
     public function getData();
 }

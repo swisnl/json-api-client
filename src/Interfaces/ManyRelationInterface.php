@@ -14,13 +14,13 @@ use Swis\JsonApi\Client\Meta;
 interface ManyRelationInterface
 {
     /**
-     * @param  \Swis\JsonApi\Client\Collection<array-key, TItem>|null  $data
+     * @param  \Swis\JsonApi\Client\Collection<int, TItem>|null  $data
      * @return static
      */
     public function setData(?Collection $data);
 
     /**
-     * @return \Swis\JsonApi\Client\Collection<array-key, TItem>|null
+     * @return \Swis\JsonApi\Client\Collection<int, TItem>|null
      */
     public function getData(): ?Collection;
 
@@ -33,7 +33,7 @@ interface ManyRelationInterface
     public function hasIncluded(): bool;
 
     /**
-     * @param  \Swis\JsonApi\Client\Collection<array-key, TItem>  $included
+     * @param  \Swis\JsonApi\Client\Collection<int, TItem>  $included
      * @return static
      */
     public function associate(Collection $included);
