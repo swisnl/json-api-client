@@ -6,10 +6,13 @@ namespace Swis\JsonApi\Client\Actions;
 
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 
+/**
+ * @template TItem of \Swis\JsonApi\Client\Interfaces\ItemInterface
+ */
 trait Create
 {
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface<TItem>
      */
     public function create(ItemInterface $item, array $parameters = [], array $headers = [])
     {
