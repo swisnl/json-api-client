@@ -8,13 +8,10 @@ use Swis\JsonApi\Client\Item;
 
 class AnotherRelatedItem extends Item
 {
-    /**
-     * @var string
-     */
     protected $type = 'another-related-item';
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $visible = [
         'test_related_attribute1',

@@ -18,6 +18,7 @@
         "guzzlehttp/guzzle": "^7.3",
         "laravel/pint": "^1.5",
         "php-http/mock-client": "^1.2",
+        "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^9.5"
     },
     "suggest": {
@@ -37,10 +38,6 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Hendrik Nijmeijer",
-            "email": "hendrik@swis.nl"
-        },
-        {
             "name": "Jasper Zonneveld",
             "email": "jasper@swis.nl",
             "homepage": "https://github.com/JaZo",
@@ -52,9 +49,10 @@
         }
     ],
     "scripts": {
-        "test": "phpunit",
         "check-style": "pint --test",
-        "fix-style": "pint"
+        "check-types": "phpstan --configuration=\"phpstan.types.neon.dist\"",
+        "fix-style": "pint",
+        "test": "phpunit"
     },
     "extra": {
         "branch-alias": {

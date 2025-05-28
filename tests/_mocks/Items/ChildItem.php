@@ -8,13 +8,10 @@ use Swis\JsonApi\Client\Item;
 
 class ChildItem extends Item
 {
-    /**
-     * @var string
-     */
     protected $type = 'child';
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $visible = [
         'active',
@@ -22,12 +19,15 @@ class ChildItem extends Item
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'active' => 'bool',
     ];
 
+    /**
+     * @var array<string, mixed>
+     */
     protected $attributes = [
         'active' => true,
     ];

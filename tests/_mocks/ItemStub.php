@@ -8,8 +8,14 @@ use Swis\JsonApi\Client\Item;
 
 class ItemStub extends Item
 {
+    /**
+     * @var array<int, string>
+     */
     protected $hidden = ['password'];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'age' => 'integer',
         'score' => 'float',
@@ -25,10 +31,16 @@ class ItemStub extends Item
         'foo' => 'bar',
     ];
 
+    /**
+     * @var array<int, string>
+     */
     protected $guarded = [
         'secret',
     ];
 
+    /**
+     * @var array<int, string>
+     */
     protected $fillable = [
         'name',
         'city',
@@ -42,34 +54,46 @@ class ItemStub extends Item
         'collection_data',
     ];
 
-    public function getListItemsAttribute($value)
+    /**
+     * @return array<int, string>
+     */
+    public function getListItemsAttribute(string $value): array
     {
-        return json_decode($value, true);
+        $result = json_decode($value, true);
+        assert(is_array($result));
+
+        /** @var array<int, string> $result */
+        return $result;
     }
 
-    public function setListItemsAttribute($value)
+    /**
+     * @param  array<int, string>  $value
+     */
+    public function setListItemsAttribute(array $value): void
     {
         $this->attributes['list_items'] = json_encode($value);
     }
 
-    public function setBirthdayAttribute($value)
+    public function setBirthdayAttribute(string $value): void
     {
         $this->attributes['birthday'] = strtotime($value);
     }
 
-    public function getBirthdayAttribute($value)
+    public function getBirthdayAttribute(int $value): string
     {
         return date('Y-m-d', $value);
     }
 
-    public function getAgeAttribute($value)
+    public function getAgeAttribute(mixed $value): int
     {
+        assert(is_int($this->attributes['birthday']));
         $date = \DateTime::createFromFormat('U', (string) $this->attributes['birthday']);
+        assert($date instanceof \DateTime);
 
         return $date->diff(new \DateTime('now'))->y;
     }
 
-    public function getTestAttribute($value)
+    public function getTestAttribute(mixed $value): string
     {
         return 'test';
     }

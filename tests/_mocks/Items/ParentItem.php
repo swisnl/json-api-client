@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
+use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
+use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 use Swis\JsonApi\Client\Item;
 
 class ParentItem extends Item
 {
-    /**
-     * @var string
-     */
     protected $type = 'parent';
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $visible = [
         'active',
@@ -23,21 +22,21 @@ class ParentItem extends Item
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'active' => 'bool',
     ];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [
         'active' => true,
     ];
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $availableRelations = [
         'child',
@@ -47,27 +46,42 @@ class ParentItem extends Item
         'does_not_exist',
     ];
 
-    public function child()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem>
+     */
+    public function child(): OneRelationInterface
     {
         return $this->hasOne(ChildItem::class);
     }
 
-    public function children()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem>
+     */
+    public function children(): ManyRelationInterface
     {
         return $this->hasMany(ChildItem::class);
     }
 
-    public function morph()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Interfaces\ItemInterface>
+     */
+    public function morph(): OneRelationInterface
     {
         return $this->morphTo();
     }
 
-    public function morphmany()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<\Swis\JsonApi\Client\Interfaces\ItemInterface>
+     */
+    public function morphmany(): ManyRelationInterface
     {
         return $this->morphToMany();
     }
 
-    public function empty()
+    /**
+     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem>
+     */
+    public function empty(): OneRelationInterface
     {
         return $this->hasOne(ChildItem::class);
     }

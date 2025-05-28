@@ -477,6 +477,52 @@ N.B. This example uses our [swisnl/php-http-fixture-client](https://github.com/s
 This package allows you to easily mock requests with static fixtures.
 Definitely worth a try!
 
+## Using generics
+
+This package provides support for generic types in repositories and relationships,
+so your IDE can provide type hinting and auto-completion for the items you are working with.
+
+This is achieved by using [generics in PHPDoc annotations](https://phpstan.org/blog/generics-in-php-using-phpdocs).
+
+### Repositories
+
+```php
+
+/** @extends \Swis\JsonApi\Client\Repository<BlogItem> */
+class BlogRepository extends \Swis\JsonApi\Client\Repository {...}
+
+```
+
+Now, when you use the `BlogRepository` class, your IDE understands the correct return types for the `all()`, `find()` and `save()` methods.
+
+### Relationships
+
+You can also use generics in your relationships to specify the type of the related item.
+Just use the `OneRelationInterface` or `ManyRelationInterface` interfaces in your relation method and specify the type of the related item:
+
+```php
+
+/** @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<AuthorItem> */
+public function author(): OneRelationInterface
+{
+    return $this->hasOne(AuthorItem::class);
+}
+
+```
+
+This way, when accessing the `$blog->author()->getData()`, your IDE will understand that it returns an `AuthorItem` instance.
+
+The same can be achieved for ManyRelations (`HasMany`, `MorphToMany`):
+
+```php
+
+/** @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<AuthorItem> */
+public function comments(): ManyRelationInterface
+{
+    return $this->hasMany(CommentItem::class);
+}
+
+```
 
 ## Advanced usage
 
