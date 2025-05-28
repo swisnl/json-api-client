@@ -488,7 +488,7 @@ This is achieved by using [generics in PHPDoc annotations](https://phpstan.org/b
 
 ```php
 
-/** @implements \Swis\JsonApi\Client\Interfaces\RepositoryInterface<BlogItem> */
+/** @extends \Swis\JsonApi\Client\Repository<BlogItem> */
 class BlogRepository extends \Swis\JsonApi\Client\Repository {...}
 
 ```
