@@ -13,6 +13,7 @@ use Swis\JsonApi\Client\Interfaces\RepositoryInterface;
 
 /**
  * @template TItem of \Swis\JsonApi\Client\Interfaces\ItemInterface
+ *
  * @implements RepositoryInterface<TItem>
  */
 class Repository extends BaseRepository implements RepositoryInterface
