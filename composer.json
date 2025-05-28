@@ -49,9 +49,10 @@
         }
     ],
     "scripts": {
-        "test": "phpunit",
         "check-style": "pint --test",
-        "fix-style": "pint"
+        "check-types": "phpstan --configuration=\"phpstan.types.neon.dist\"",
+        "fix-style": "pint",
+        "test": "phpunit"
     },
     "extra": {
         "branch-alias": {
