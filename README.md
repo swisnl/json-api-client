@@ -516,7 +516,7 @@ The same can be achieved for ManyRelations (`HasMany`, `MorphToMany`):
 
 ```php
 
-/** @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<AuthorItem> */
+/** @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<CommentItem> */
 public function comments(): ManyRelationInterface
 {
     return $this->hasMany(CommentItem::class);
