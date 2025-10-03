@@ -46,7 +46,24 @@ class ResponseParser implements ResponseParserInterface
 
     private function responseHasBody(ResponseInterface $response): bool
     {
-        return (bool) $response->getBody()->getSize();
+        $body = $response->getBody();
+        $size = $body->getSize();
+
+        if ($size === 0) {
+            return false;
+        }
+        if (is_int($size) && $size > 0) {
+            return true;
+        }
+
+        $contents = (string) $body;
+        $hasBody = trim($contents) !== '';
+
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        return $hasBody;
     }
 
     private function responseHasSuccessfulStatusCode(ResponseInterface $response): bool
