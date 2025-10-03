@@ -96,10 +96,11 @@ class ResponseParserTest extends TestCase
                 return false;
             }
             $done = true;
+
             return $json;
         });
 
-        $parsedDocument = new Document();
+        $parsedDocument = new Document;
 
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser
