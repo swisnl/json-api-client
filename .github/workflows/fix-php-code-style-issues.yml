@@ -25,4 +25,4 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "styling: fix styling"
+          commit_message: "style: fix styling"
