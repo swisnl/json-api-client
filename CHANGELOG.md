@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Nothing.
 
+## [2.6.1] - 2025-10-08
+
+### Fixed
+
+* Properly handle responses with an unknown size [#111](https://github.com/swisnl/json-api-client/issues/111).
+
 ## [2.6.0] - 2025-05-28
 
 ### Added
