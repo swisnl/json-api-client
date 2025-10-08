@@ -132,7 +132,7 @@ class ResponseParserTest extends TestCase
         $stream->expects($this->once())->method('read')->with(1)->willReturn('x');
         $stream->expects($this->once())->method('seek')->with(0);
 
-        $parsedDocument = new Document();
+        $parsedDocument = new Document;
 
         $documentParser = $this->createMock(DocumentParser::class);
         $documentParser
