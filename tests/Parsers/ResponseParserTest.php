@@ -7,6 +7,7 @@ namespace Swis\JsonApi\Client\Tests\Parsers;
 use GuzzleHttp\Psr7\PumpStream;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\StreamInterface;
 use Swis\JsonApi\Client\CollectionDocument;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\InvalidResponseDocument;
@@ -111,6 +112,36 @@ class ResponseParserTest extends TestCase
 
         $parser = new ResponseParser($documentParser);
 
+        $response = new Response(200, [], $stream);
+
+        $document = $parser->parse($response);
+
+        $this->assertSame($parsedDocument, $document);
+        $this->assertSame($response, $document->getResponse());
+    }
+
+    /**
+     * @test
+     */
+    public function it_parses_a_response_with_a_seekable_stream_and_unknown_size()
+    {
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->method('getSize')->willReturn(-1);
+        $stream->method('isSeekable')->willReturn(true);
+        $stream->method('tell')->willReturn(0);
+        $stream->expects($this->once())->method('read')->with(1)->willReturn('x');
+        $stream->expects($this->once())->method('seek')->with(0);
+
+        $parsedDocument = new Document();
+
+        $documentParser = $this->createMock(DocumentParser::class);
+        $documentParser
+            ->expects($this->once())
+            ->method('parse')
+            ->with($this->isType('string'))
+            ->willReturn($parsedDocument);
+
+        $parser = new ResponseParser($documentParser);
         $response = new Response(200, [], $stream);
 
         $document = $parser->parse($response);

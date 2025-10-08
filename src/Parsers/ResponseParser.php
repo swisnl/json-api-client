@@ -56,14 +56,15 @@ class ResponseParser implements ResponseParserInterface
             return true;
         }
 
-        $contents = (string) $body;
-        $hasBody = trim($contents) !== '';
-
         if ($body->isSeekable()) {
-            $body->rewind();
+            $pos = $body->tell();
+            $chunk = $body->read(1);
+            $body->seek($pos);
+        } else {
+            $chunk = $body->read(1);
         }
 
-        return $hasBody;
+        return $chunk !== '';
     }
 
     private function responseHasSuccessfulStatusCode(ResponseInterface $response): bool
