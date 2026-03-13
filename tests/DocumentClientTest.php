@@ -29,7 +29,7 @@ class DocumentClientTest extends TestCase
      */
     public function the_base_url_can_be_changed_after_instantiation()
     {
-        /** @var MockObject|ClientInterface $client */
+        /** @var MockObject&ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
@@ -40,7 +40,7 @@ class DocumentClientTest extends TestCase
             ->method('setBaseUri')
             ->with('http://www.test-changed.com');
 
-        /** @var MockObject|ResponseParserInterface $parser */
+        /** @var MockObject&ResponseParserInterface $parser */
         $parser = $this->createMock(ResponseParserInterface::class);
 
         $documentClient = new DocumentClient($client, $parser);
@@ -57,7 +57,7 @@ class DocumentClientTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $document = new Document;
 
-        /** @var MockObject|ClientInterface $client */
+        /** @var MockObject&ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
@@ -65,7 +65,7 @@ class DocumentClientTest extends TestCase
             ->with('/test/1', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var MockObject|ResponseParserInterface $parser */
+        /** @var MockObject&ResponseParserInterface $parser */
         $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())
@@ -88,7 +88,7 @@ class DocumentClientTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $document = new Document;
 
-        /** @var MockObject|ClientInterface $client */
+        /** @var MockObject&ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
@@ -96,7 +96,7 @@ class DocumentClientTest extends TestCase
             ->with('/test/1', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var MockObject|ResponseParserInterface $parser */
+        /** @var MockObject&ResponseParserInterface $parser */
         $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())
@@ -121,7 +121,7 @@ class DocumentClientTest extends TestCase
         $itemDocument = new ItemDocument;
         $itemDocument->setData((new Item)->setType('test')->setId('1'));
 
-        /** @var MockObject|ClientInterface $client */
+        /** @var MockObject&ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
@@ -129,7 +129,7 @@ class DocumentClientTest extends TestCase
             ->with('/test/1', '{"data":{"type":"test","id":"1"}}', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var MockObject|ResponseParserInterface $parser */
+        /** @var MockObject&ResponseParserInterface $parser */
         $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())
@@ -154,7 +154,7 @@ class DocumentClientTest extends TestCase
         $itemDocument = new ItemDocument;
         $itemDocument->setData((new Item)->setType('test'));
 
-        /** @var MockObject|ClientInterface $client */
+        /** @var MockObject&ClientInterface $client */
         $client = $this->createMock(ClientInterface::class);
 
         $client->expects($this->once())
@@ -162,7 +162,7 @@ class DocumentClientTest extends TestCase
             ->with('/test/1', '{"data":{"type":"test"}}', ['X-Foo' => 'bar'])
             ->willReturn($response);
 
-        /** @var MockObject|ResponseParserInterface $parser */
+        /** @var MockObject&ResponseParserInterface $parser */
         $parser = $this->createMock(ResponseParserInterface::class);
 
         $parser->expects($this->once())

@@ -20,7 +20,7 @@ class RepositoryTest extends TestCase
      */
     public function it_can_get_the_client()
     {
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
         $repository = new MockRepository($client, new DocumentFactory);
 
@@ -32,7 +32,7 @@ class RepositoryTest extends TestCase
      */
     public function it_can_get_the_endpoint()
     {
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
         $repository = new MockRepository($client, new DocumentFactory);
 
@@ -46,7 +46,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -66,7 +66,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -86,7 +86,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -107,7 +107,7 @@ class RepositoryTest extends TestCase
         $document = new ItemDocument;
         $document->setData(new Item);
 
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -128,7 +128,7 @@ class RepositoryTest extends TestCase
         $document = new ItemDocument;
         $document->setData((new Item)->setId('1'));
 
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -148,7 +148,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var MockObject|DocumentClientInterface $client */
+        /** @var MockObject&DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
