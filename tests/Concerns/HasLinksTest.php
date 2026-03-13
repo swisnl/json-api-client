@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Concerns;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Concerns\HasLinks;
 use Swis\JsonApi\Client\Links;
@@ -15,7 +16,7 @@ class HasLinksTest extends TestCase
      */
     public function it_can_get_and_set_links()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasLinks $mock */
+        /** @var MockObject&HasLinks $mock */
         $mock = $this->getMockForTrait(HasLinks::class);
         $links = new Links([]);
 

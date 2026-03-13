@@ -76,13 +76,13 @@ interface ItemInterface extends DataInterface
     /**
      * Set the specific relationship in the model.
      *
-     * @param  \Swis\JsonApi\Client\Interfaces\DataInterface|false|null  $value
+     * @param  DataInterface|false|null  $value
      * @return static
      */
     public function setRelation(string $relation, $value = false, ?Links $links = null, ?Meta $meta = null);
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
+     * @return OneRelationInterface[]|ManyRelationInterface[]
      */
     public function getRelations(): array;
 }

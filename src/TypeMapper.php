@@ -16,7 +16,7 @@ class TypeMapper implements TypeMapperInterface
     protected $typeMappings = [];
 
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\TypeMappingException
+     * @throws TypeMappingException
      */
     public function setMapping(string $type, string $class): void
     {
@@ -42,7 +42,7 @@ class TypeMapper implements TypeMapperInterface
     }
 
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\TypeMappingException
+     * @throws TypeMappingException
      */
     public function getMapping(string $type): ItemInterface
     {

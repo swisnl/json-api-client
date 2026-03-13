@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Parsers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Exceptions\ValidationException;
@@ -703,7 +704,7 @@ class ItemParserTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Interfaces\TypeMapperInterface
+     * @return MockObject&TypeMapperInterface
      */
     private function getTypeMapperMock()
     {

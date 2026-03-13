@@ -167,7 +167,7 @@ class DocumentParser implements DocumentParserInterface
             function (ItemInterface $item) use ($keyedItems) {
                 foreach ($item->getRelations() as $name => $relation) {
                     if ($relation instanceof OneRelationInterface) {
-                        /** @var \Swis\JsonApi\Client\Interfaces\ItemInterface|null $relatedItem */
+                        /** @var ItemInterface|null $relatedItem */
                         $relatedItem = $relation->getData();
 
                         if ($relatedItem === null) {
@@ -179,7 +179,7 @@ class DocumentParser implements DocumentParserInterface
                             $relation->setIncluded($includedItem);
                         }
                     } elseif ($relation instanceof ManyRelationInterface) {
-                        /** @var \Swis\JsonApi\Client\Collection|null $relatedCollection */
+                        /** @var Collection|null $relatedCollection */
                         $relatedCollection = $relation->getData();
 
                         if ($relatedCollection === null) {

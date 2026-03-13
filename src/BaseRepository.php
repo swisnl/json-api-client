@@ -9,12 +9,12 @@ use Swis\JsonApi\Client\Interfaces\DocumentClientInterface;
 abstract class BaseRepository
 {
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\DocumentClientInterface
+     * @var DocumentClientInterface
      */
     protected $client;
 
     /**
-     * @var \Swis\JsonApi\Client\DocumentFactory
+     * @var DocumentFactory
      */
     protected $documentFactory;
 
@@ -30,7 +30,7 @@ abstract class BaseRepository
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentClientInterface
+     * @return DocumentClientInterface
      */
     public function getClient()
     {

@@ -7,7 +7,7 @@ namespace Swis\JsonApi\Client\Tests\Mocks;
 use Swis\JsonApi\Client\Repository;
 
 /**
- * @extends Repository<\Swis\JsonApi\Client\Tests\Mocks\ItemStub>
+ * @extends Repository<ItemStub>
  */
 class MockRepository extends Repository
 {

@@ -19,7 +19,7 @@ use Swis\JsonApi\Client\Util;
 trait HasRelations
 {
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
+     * @var OneRelationInterface[]|ManyRelationInterface[]
      */
     protected $relations = [];
 
@@ -29,7 +29,7 @@ trait HasRelations
      * @template TItem of \Swis\JsonApi\Client\Interfaces\ItemInterface
      *
      * @param  class-string<TItem>  $itemClass
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<TItem>
+     * @return OneRelationInterface<TItem>
      */
     public function hasOne(string $itemClass, ?string $name = null): OneRelationInterface
     {
@@ -53,7 +53,7 @@ trait HasRelations
      * @template TItem of \Swis\JsonApi\Client\Interfaces\ItemInterface
      *
      * @param  class-string<TItem>  $itemClass
-     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<TItem>
+     * @return ManyRelationInterface<TItem>
      */
     public function hasMany(string $itemClass, ?string $name = null): ManyRelationInterface
     {
@@ -75,7 +75,7 @@ trait HasRelations
      * Create a singular relation.
      *
      *
-     * @return \Swis\JsonApi\Client\Relations\MorphToRelation
+     * @return MorphToRelation
      */
     public function morphTo(?string $name = null): OneRelationInterface
     {
@@ -97,7 +97,7 @@ trait HasRelations
      * Create a plural relation.
      *
      *
-     * @return \Swis\JsonApi\Client\Relations\MorphToManyRelation
+     * @return MorphToManyRelation
      */
     public function morphToMany(?string $name = null): ManyRelationInterface
     {
@@ -126,7 +126,7 @@ trait HasRelations
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface[]|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface[]
+     * @return OneRelationInterface[]|ManyRelationInterface[]
      */
     public function getRelations(): array
     {
@@ -134,7 +134,7 @@ trait HasRelations
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface|null
+     * @return OneRelationInterface|ManyRelationInterface|null
      */
     public function getRelation(string $name)
     {
@@ -165,14 +165,14 @@ trait HasRelations
     /**
      * Set the specific relationship on the model.
      *
-     * @param  \Swis\JsonApi\Client\Interfaces\DataInterface|false|null  $value
+     * @param  DataInterface|false|null  $value
      * @return static
      */
     public function setRelation(string $relation, $value = false, ?Links $links = null, ?Meta $meta = null)
     {
         $method = Util::stringCamel($relation);
         if (method_exists($this, $method)) {
-            /** @var \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface $relationObject */
+            /** @var OneRelationInterface|ManyRelationInterface $relationObject */
             $relationObject = $this->$method();
         } elseif ($value instanceof Collection) {
             $relationObject = $this->morphToMany($relation);

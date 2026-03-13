@@ -21,7 +21,7 @@ interface DocumentInterface extends \JsonSerializable
     public function setResponse(?ResponseInterface $response);
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\DataInterface
+     * @return DataInterface
      */
     public function getData();
 

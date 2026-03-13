@@ -6,6 +6,7 @@ namespace Swis\JsonApi\Client;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -60,7 +61,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface
      */
     public function get(string $endpoint, array $headers = []): ResponseInterface
     {
@@ -68,9 +69,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
+     * @param  string|resource|StreamInterface|null  $body
      *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface
      */
     public function post(string $endpoint, $body, array $headers = []): ResponseInterface
     {
@@ -78,9 +79,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
+     * @param  string|resource|StreamInterface|null  $body
      *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface
      */
     public function patch(string $endpoint, $body, array $headers = []): ResponseInterface
     {
@@ -88,7 +89,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface
      */
     public function delete(string $endpoint, array $headers = []): ResponseInterface
     {
@@ -96,9 +97,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
+     * @param  string|resource|StreamInterface|null  $body
      *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws ClientExceptionInterface
      */
     public function request(string $method, string $endpoint, $body = null, array $headers = []): ResponseInterface
     {
@@ -106,7 +107,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body
+     * @param  string|resource|StreamInterface|null  $body
      */
     protected function buildRequest(string $method, string $endpoint, $body = null, array $headers = []): RequestInterface
     {

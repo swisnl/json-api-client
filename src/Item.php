@@ -50,7 +50,7 @@ class Item implements \ArrayAccess, \JsonSerializable, Arrayable, ItemInterface,
      *
      * @return $this
      *
-     * @throws \Swis\JsonApi\Client\Exceptions\MassAssignmentException
+     * @throws MassAssignmentException
      */
     public function fill(array $attributes)
     {

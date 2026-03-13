@@ -6,6 +6,7 @@ namespace Swis\JsonApi\Client\Relations;
 
 use Swis\JsonApi\Client\Concerns\HasLinks;
 use Swis\JsonApi\Client\Concerns\HasMeta;
+use Swis\JsonApi\Client\Interfaces\DataInterface;
 
 abstract class AbstractRelation
 {
@@ -13,12 +14,12 @@ abstract class AbstractRelation
     use HasMeta;
 
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\DataInterface|false|null
+     * @var DataInterface|false|null
      */
     protected $data = false;
 
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\DataInterface|false|null
+     * @var DataInterface|false|null
      */
     protected $included = false;
 

@@ -16,27 +16,27 @@ class Document implements DocumentInterface
     use HasMeta;
 
     /**
-     * @var \Psr\Http\Message\ResponseInterface|null
+     * @var ResponseInterface|null
      */
     protected $response;
 
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\DataInterface
+     * @var DataInterface
      */
     protected $data;
 
     /**
-     * @var \Swis\JsonApi\Client\ErrorCollection
+     * @var ErrorCollection
      */
     protected $errors;
 
     /**
-     * @var \Swis\JsonApi\Client\Collection
+     * @var Collection
      */
     protected $included;
 
     /**
-     * @var \Swis\JsonApi\Client\Jsonapi|null
+     * @var Jsonapi|null
      */
     protected $jsonapi;
 
@@ -117,7 +117,7 @@ class Document implements DocumentInterface
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\DataInterface
+     * @return DataInterface
      */
     public function getData()
     {

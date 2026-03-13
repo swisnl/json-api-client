@@ -8,8 +8,8 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 
 /**
- * @property \Swis\JsonApi\Client\Interfaces\ItemInterface|false|null $data
- * @property \Swis\JsonApi\Client\Interfaces\ItemInterface|false|null $included
+ * @property ItemInterface|false|null $data
+ * @property ItemInterface|false|null $included
  */
 abstract class AbstractOneRelation extends AbstractRelation implements OneRelationInterface
 {

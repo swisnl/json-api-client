@@ -10,22 +10,22 @@ namespace Swis\JsonApi\Client\Interfaces;
 interface RepositoryInterface
 {
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\CollectionDocumentInterface<TItem>
+     * @return CollectionDocumentInterface<TItem>
      */
     public function all();
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface<TItem>
+     * @return ItemDocumentInterface<TItem>
      */
     public function find(string $id);
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface<TItem>
+     * @return ItemDocumentInterface<TItem>
      */
     public function save(ItemInterface $item);
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     * @return DocumentInterface
      */
     public function delete(string $id);
 }

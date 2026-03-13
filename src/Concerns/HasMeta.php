@@ -9,7 +9,7 @@ use Swis\JsonApi\Client\Meta;
 trait HasMeta
 {
     /**
-     * @var \Swis\JsonApi\Client\Meta|null
+     * @var Meta|null
      */
     protected $meta;
 

@@ -25,7 +25,7 @@ class LinksParserTest extends TestCase
         $this->assertInstanceOf(Links::class, $links);
         $this->assertCount(4, $links->toArray());
 
-        /** @var \Swis\JsonApi\Client\Link $link */
+        /** @var Link $link */
         $link = $links->self;
         $this->assertInstanceOf(Link::class, $link);
         $this->assertEquals('http://example.com/articles', $link->getHref());
@@ -36,13 +36,13 @@ class LinksParserTest extends TestCase
         $link = $links->prev;
         $this->assertNull($link);
 
-        /** @var \Swis\JsonApi\Client\Link $link */
+        /** @var Link $link */
         $link = $links->next;
         $this->assertInstanceOf(Link::class, $link);
         $this->assertEquals('http://example.com/articles?page[offset]=2', $link->getHref());
         $this->assertNull($link->getMeta());
 
-        /** @var \Swis\JsonApi\Client\Link $link */
+        /** @var Link $link */
         $link = $links->last;
         $this->assertInstanceOf(Link::class, $link);
         $this->assertEquals('http://example.com/articles?page[offset]=10', $link->getHref());

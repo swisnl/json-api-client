@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Actions;
 
+use Swis\JsonApi\Client\Interfaces\DocumentInterface;
+
 trait Delete
 {
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\DocumentInterface
+     * @return DocumentInterface
      */
     public function delete(string $id, array $parameters = [], array $headers = [])
     {

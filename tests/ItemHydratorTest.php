@@ -22,7 +22,7 @@ use Swis\JsonApi\Client\TypeMapper;
 class ItemHydratorTest extends TestCase
 {
     /**
-     * @return \Swis\JsonApi\Client\ItemHydrator
+     * @return ItemHydrator
      */
     private function getItemHydrator()
     {
@@ -67,7 +67,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
+        /** @var HasOneRelation $hasOne */
         $hasOne = $item->getRelation('hasone_relation');
         $this->assertInstanceOf(HasOneRelation::class, $hasOne);
 
@@ -93,7 +93,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
+        /** @var HasOneRelation $hasOne */
         $hasOne = $item->getRelation('hasone_relation');
         $this->assertInstanceOf(HasOneRelation::class, $hasOne);
 
@@ -117,7 +117,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
+        /** @var HasOneRelation $hasOne */
         $hasOne = $item->getRelation('hasone_relation');
         $this->assertInstanceOf(HasOneRelation::class, $hasOne);
 
@@ -142,7 +142,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
+        /** @var HasManyRelation $hasMany */
         $hasMany = $item->getRelation('hasmany_relation');
         $this->assertInstanceOf(HasManyRelation::class, $hasMany);
 
@@ -180,7 +180,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
+        /** @var HasManyRelation $hasMany */
         $hasMany = $item->getRelation('hasmany_relation');
         $this->assertInstanceOf(HasManyRelation::class, $hasMany);
 
@@ -211,7 +211,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\HasManyRelation $hasMany */
+        /** @var HasManyRelation $hasMany */
         $hasMany = $item->getRelation('hasmany_relation');
         $this->assertInstanceOf(HasManyRelation::class, $hasMany);
 
@@ -236,7 +236,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        /** @var MorphToRelation $morphTo */
         $morphTo = $item->getRelation('morphto_relation');
         $this->assertInstanceOf(MorphToRelation::class, $morphTo);
 
@@ -263,7 +263,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        /** @var MorphToRelation $morphTo */
         $morphTo = $item->getRelation('morphto_relation');
         $this->assertInstanceOf(MorphToRelation::class, $morphTo);
 
@@ -287,7 +287,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        /** @var MorphToRelation $morphTo */
         $morphTo = $item->getRelation('morphto_relation');
         $this->assertInstanceOf(MorphToRelation::class, $morphTo);
 
@@ -312,7 +312,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        /** @var MorphToRelation $morphTo */
         $morphTo = $item->getRelation('morphto_relation');
         $this->assertInstanceOf(MorphToRelation::class, $morphTo);
 
@@ -360,7 +360,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
+        /** @var MorphToManyRelation $morphToMany */
         $morphToMany = $item->getRelation('morphtomany_relation');
         $this->assertInstanceOf(MorphToManyRelation::class, $morphToMany);
 
@@ -400,7 +400,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
+        /** @var MorphToManyRelation $morphToMany */
         $morphToMany = $item->getRelation('morphtomany_relation');
         $this->assertInstanceOf(MorphToManyRelation::class, $morphToMany);
 
@@ -431,7 +431,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
+        /** @var MorphToManyRelation $morphToMany */
         $morphToMany = $item->getRelation('morphtomany_relation');
         $this->assertInstanceOf(MorphToManyRelation::class, $morphToMany);
 
@@ -462,7 +462,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToManyRelation $morphToMany */
+        /** @var MorphToManyRelation $morphToMany */
         $morphToMany = $item->getRelation('morphtomany_relation');
 
         $this->assertInstanceOf(Collection::class, $morphToMany->getIncluded());
@@ -511,14 +511,14 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOne */
+        /** @var HasOneRelation $hasOne */
         $hasOne = $item->getRelation('hasone_relation');
         $this->assertInstanceOf(HasOneRelation::class, $hasOne);
 
         $this->assertEquals($data['hasone_relation']['id'], $hasOne->getIncluded()->getId());
         $this->assertEquals('related-item', $hasOne->getIncluded()->getType());
 
-        /** @var \Swis\JsonApi\Client\Relations\HasOneRelation $hasOneParent */
+        /** @var HasOneRelation $hasOneParent */
         $hasOneParent = $hasOne->getIncluded()->getRelation('parent_relation');
         $this->assertInstanceOf(HasOneRelation::class, $hasOneParent);
 
@@ -542,7 +542,7 @@ class ItemHydratorTest extends TestCase
         $item = new WithRelationshipItem;
         $item = $this->getItemHydrator()->hydrate($item, $data);
 
-        /** @var \Swis\JsonApi\Client\Relations\MorphToRelation $morphTo */
+        /** @var MorphToRelation $morphTo */
         $morphTo = $item->getRelation('morphto_relation');
         $this->assertInstanceOf(MorphToRelation::class, $morphTo);
 

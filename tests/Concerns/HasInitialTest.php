@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Concerns;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Concerns\HasInitial;
 
@@ -14,7 +15,7 @@ class HasInitialTest extends TestCase
      */
     public function it_can_get_and_set_initial_attributes()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasInitial $mock */
+        /** @var MockObject&HasInitial $mock */
         $mock = $this->getMockForTrait(HasInitial::class);
         $initial = ['foo' => 'bar'];
 
@@ -29,7 +30,7 @@ class HasInitialTest extends TestCase
      */
     public function it_returns_a_boolean_indicating_if_it_has_initial_attributes()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasInitial $mock */
+        /** @var MockObject&HasInitial $mock */
         $mock = $this->getMockForTrait(HasInitial::class);
 
         $this->assertFalse($mock->hasInitial());

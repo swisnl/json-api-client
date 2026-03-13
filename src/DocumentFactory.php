@@ -12,7 +12,7 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 class DocumentFactory
 {
     /**
-     * @return \Swis\JsonApi\Client\ItemDocument|\Swis\JsonApi\Client\CollectionDocument
+     * @return ItemDocument|CollectionDocument
      */
     public function make(DataInterface $data): DocumentInterface
     {

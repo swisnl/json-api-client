@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Mocks\Items;
 
+use Swis\JsonApi\Client\Interfaces\ItemInterface;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 use Swis\JsonApi\Client\Interfaces\OneRelationInterface;
 use Swis\JsonApi\Client\Item;
@@ -47,7 +48,7 @@ class ParentItem extends Item
     ];
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem>
+     * @return OneRelationInterface<ChildItem>
      */
     public function child(): OneRelationInterface
     {
@@ -55,7 +56,7 @@ class ParentItem extends Item
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem>
+     * @return ManyRelationInterface<ChildItem>
      */
     public function children(): ManyRelationInterface
     {
@@ -63,7 +64,7 @@ class ParentItem extends Item
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Interfaces\ItemInterface>
+     * @return OneRelationInterface<ItemInterface>
      */
     public function morph(): OneRelationInterface
     {
@@ -71,7 +72,7 @@ class ParentItem extends Item
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\ManyRelationInterface<\Swis\JsonApi\Client\Interfaces\ItemInterface>
+     * @return ManyRelationInterface<ItemInterface>
      */
     public function morphmany(): ManyRelationInterface
     {
@@ -79,7 +80,7 @@ class ParentItem extends Item
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\ChildItem>
+     * @return OneRelationInterface<ChildItem>
      */
     public function empty(): OneRelationInterface
     {

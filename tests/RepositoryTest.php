@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Document;
 use Swis\JsonApi\Client\DocumentFactory;
@@ -19,7 +20,7 @@ class RepositoryTest extends TestCase
      */
     public function it_can_get_the_client()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
         $repository = new MockRepository($client, new DocumentFactory);
 
@@ -31,7 +32,7 @@ class RepositoryTest extends TestCase
      */
     public function it_can_get_the_endpoint()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
         $repository = new MockRepository($client, new DocumentFactory);
 
@@ -45,7 +46,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -65,7 +66,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -85,7 +86,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -106,7 +107,7 @@ class RepositoryTest extends TestCase
         $document = new ItemDocument;
         $document->setData(new Item);
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -127,7 +128,7 @@ class RepositoryTest extends TestCase
         $document = new ItemDocument;
         $document->setData((new Item)->setId('1'));
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())
@@ -147,7 +148,7 @@ class RepositoryTest extends TestCase
     {
         $document = new Document;
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Swis\JsonApi\Client\Interfaces\DocumentClientInterface $client */
+        /** @var MockObject|DocumentClientInterface $client */
         $client = $this->createMock(DocumentClientInterface::class);
 
         $client->expects($this->once())

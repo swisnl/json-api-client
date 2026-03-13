@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Concerns;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Concerns\HasId;
 
@@ -14,7 +15,7 @@ class HasIdTest extends TestCase
      */
     public function it_can_get_and_set_an_id()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasId $mock */
+        /** @var MockObject&HasId $mock */
         $mock = $this->getMockForTrait(HasId::class);
         $id = '123';
 
@@ -28,7 +29,7 @@ class HasIdTest extends TestCase
      */
     public function it_returns_a_boolean_indicating_if_it_has_an_id()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasId $mock */
+        /** @var MockObject&HasId $mock */
         $mock = $this->getMockForTrait(HasId::class);
 
         $this->assertFalse($mock->hasId());

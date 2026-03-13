@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Tests\Concerns;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Swis\JsonApi\Client\Concerns\HasType;
 
@@ -14,7 +15,7 @@ class HasTypeTest extends TestCase
      */
     public function it_can_get_and_set_a_type()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasType $mock */
+        /** @var MockObject&HasType $mock */
         $mock = $this->getMockForTrait(HasType::class);
         $type = 'foo-bar';
 
@@ -28,7 +29,7 @@ class HasTypeTest extends TestCase
      */
     public function it_returns_a_boolean_indicating_if_it_has_a_type()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Swis\JsonApi\Client\Concerns\HasType $mock */
+        /** @var MockObject&HasType $mock */
         $mock = $this->getMockForTrait(HasType::class);
 
         $this->assertFalse($mock->hasType());

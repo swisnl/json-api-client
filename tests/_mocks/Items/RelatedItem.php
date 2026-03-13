@@ -27,7 +27,7 @@ class RelatedItem extends Item
     ];
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface<\Swis\JsonApi\Client\Tests\Mocks\Items\WithRelationshipItem>
+     * @return OneRelationInterface<WithRelationshipItem>
      */
     public function parentRelation(): OneRelationInterface
     {

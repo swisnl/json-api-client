@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Swis\JsonApi\Client\Actions;
 
+use Swis\JsonApi\Client\Interfaces\ItemDocumentInterface;
 use Swis\JsonApi\Client\Interfaces\ItemInterface;
 
 /**
@@ -12,7 +13,7 @@ use Swis\JsonApi\Client\Interfaces\ItemInterface;
 trait Update
 {
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\ItemDocumentInterface<TItem>
+     * @return ItemDocumentInterface<TItem>
      */
     public function update(ItemInterface $item, array $parameters = [], array $headers = [])
     {

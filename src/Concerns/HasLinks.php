@@ -9,7 +9,7 @@ use Swis\JsonApi\Client\Links;
 trait HasLinks
 {
     /**
-     * @var \Swis\JsonApi\Client\Links|null
+     * @var Links|null
      */
     protected $links;
 

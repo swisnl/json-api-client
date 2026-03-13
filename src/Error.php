@@ -38,7 +38,7 @@ class Error
     protected $detail;
 
     /**
-     * @var \Swis\JsonApi\Client\ErrorSource|null
+     * @var ErrorSource|null
      */
     protected $source;
 
@@ -103,7 +103,7 @@ class Error
     }
 
     /**
-     * @return \Swis\JsonApi\Client\ErrorSource|null
+     * @return ErrorSource|null
      */
     public function getSource()
     {

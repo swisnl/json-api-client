@@ -10,12 +10,12 @@ use Illuminate\Contracts\Support\Jsonable;
 class Links implements \ArrayAccess, \JsonSerializable, Arrayable, Jsonable
 {
     /**
-     * @var \Swis\JsonApi\Client\Link[]
+     * @var Link[]
      */
     protected $links = [];
 
     /**
-     * @param  \Swis\JsonApi\Client\Link[]  $links
+     * @param  Link[]  $links
      */
     public function __construct(array $links)
     {

@@ -17,7 +17,7 @@ use Swis\JsonApi\Client\Relations\MorphToRelation;
 class ItemHydrator
 {
     /**
-     * @var \Swis\JsonApi\Client\Interfaces\TypeMapperInterface
+     * @var TypeMapperInterface
      */
     protected $typeMapper;
 
@@ -27,7 +27,7 @@ class ItemHydrator
     }
 
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     public function hydrate(ItemInterface $item, array $attributes, ?string $id = null): ItemInterface
     {
@@ -50,7 +50,7 @@ class ItemHydrator
      * Get relationships from the attributes and add them to the item.
      *
      *
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     protected function fillRelations(ItemInterface $item, array $attributes): void
     {
@@ -87,9 +87,9 @@ class ItemHydrator
     }
 
     /**
-     * @return \Swis\JsonApi\Client\Interfaces\OneRelationInterface|\Swis\JsonApi\Client\Interfaces\ManyRelationInterface
+     * @return OneRelationInterface|ManyRelationInterface
      *
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     protected function getRelationFromItem(ItemInterface $item, string $availableRelation)
     {
@@ -104,7 +104,7 @@ class ItemHydrator
     /**
      * @param  array|string  $attributes
      *
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     protected function hydrateHasOneRelation(HasOneRelation $relation, $attributes): void
     {
@@ -118,7 +118,7 @@ class ItemHydrator
     }
 
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     protected function hydrateHasManyRelation(HasManyRelation $relation, array $attributes): void
     {
@@ -134,7 +134,7 @@ class ItemHydrator
     }
 
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     protected function hydrateMorphToRelation(MorphToRelation $relation, array $attributes): void
     {
@@ -147,7 +147,7 @@ class ItemHydrator
     }
 
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     protected function hydrateMorphToManyRelation(MorphToManyRelation $relation, array $attributes): void
     {
@@ -162,7 +162,7 @@ class ItemHydrator
     }
 
     /**
-     * @throws \Swis\JsonApi\Client\Exceptions\HydrationException
+     * @throws HydrationException
      */
     protected function buildItem(string $type, array $attributes): ItemInterface
     {

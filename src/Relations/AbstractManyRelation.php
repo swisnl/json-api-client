@@ -8,8 +8,8 @@ use Swis\JsonApi\Client\Collection;
 use Swis\JsonApi\Client\Interfaces\ManyRelationInterface;
 
 /**
- * @property \Swis\JsonApi\Client\Collection|false|null $data
- * @property \Swis\JsonApi\Client\Collection|false|null $included
+ * @property Collection|false|null $data
+ * @property Collection|false|null $included
  */
 abstract class AbstractManyRelation extends AbstractRelation implements ManyRelationInterface
 {
